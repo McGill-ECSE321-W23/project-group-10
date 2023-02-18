@@ -10,4 +10,6 @@ For more information about the application, please consult the [wiki](https://gi
 | Name           | GitHub username |
 |----------------|-----------------|
 | Luke E         | JiaxiangE       |
+| Weiheng Xiao   | Louis896        |
+
 
