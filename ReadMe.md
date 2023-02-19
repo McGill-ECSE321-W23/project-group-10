@@ -12,4 +12,4 @@ For more information about the application, please consult the [wiki](https://gi
 | Luke E         | JiaxiangE       |
 | Weiheng Xiao   | Louis896        |
 | Marco Vidalon  | MarcVida        |
-
+| Mike Zhang     | Mikez08         |
