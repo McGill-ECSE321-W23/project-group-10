@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.parkinglotsystem.Model;
+package ca.mcgill.ecse321.parkinglotsystem.model;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
