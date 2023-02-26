@@ -18,14 +18,16 @@ import ca.mcgill.ecse321.parkinglotsystem.model.SubWithoutAccount;
 public class SubWithoutAccountRepositoryTests {
     @Autowired
     private SubWithoutAccountRepository subWithoutAccountRepository;
-    //private ParkingSpotTypeRepository parkingSpotTypeRepository;
-    //private ParkingSpotRepository parkingSpotRepository;
+    /* @Autowired
+    private ParkingSpotTypeRepository parkingSpotTypeRepository;
+    @Autowired
+    private ParkingSpotRepository parkingSpotRepository; */
 
     @AfterEach
     public void clearDatabase() {
         subWithoutAccountRepository.deleteAll();
-        //parkingSpotTypeRepository.deleteAll();
         //parkingSpotRepository.deleteAll();
+        //parkingSpotTypeRepository.deleteAll();
     }
 
     @Test
