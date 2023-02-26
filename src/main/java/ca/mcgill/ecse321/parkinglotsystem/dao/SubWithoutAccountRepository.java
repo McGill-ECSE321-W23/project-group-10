@@ -13,4 +13,6 @@ public interface SubWithoutAccountRepository extends CrudRepository<SubWithoutAc
 
     List<SubWithoutAccount> findSubWithoutAccountByParkingSpot(ParkingSpot parkingSpot);
 
+    List<SubWithoutAccount> findSubWithoutAccountByLicenseNumber(String licenseNumber);
+
 }
