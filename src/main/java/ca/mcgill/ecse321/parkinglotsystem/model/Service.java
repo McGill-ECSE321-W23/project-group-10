@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Service {
+public class Service extends ServiceRequest {
     private String description;
     private int price;
 
