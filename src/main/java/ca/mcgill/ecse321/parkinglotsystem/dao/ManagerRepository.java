@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ManagerRepository extends CrudRepository<Manager, String>{
 
-	Manager findManagerById(String id);
+	Manager findManagerByEmail(String email);
 	List<Manager> findManagerByName(String name);
 	List<Manager> findManagerByPhone(String phone);
 	List<Manager> findManagerByPassword(String password);

@@ -38,7 +38,7 @@ public class ManagerRepositoryTests {
 		String id = walter.getEmail();
 
 		// Read object from database
-		walter = managerRepository.findManagerById(id);
+		walter = managerRepository.findManagerByEmail(id);
 
 		// Assert that object has correct attributes
 		assertNotNull(walter);

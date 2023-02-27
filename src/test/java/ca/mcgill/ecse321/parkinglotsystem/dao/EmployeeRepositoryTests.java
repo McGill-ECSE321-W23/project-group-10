@@ -38,7 +38,7 @@ public class EmployeeRepositoryTests {
 		String id = jesse.getEmail();
 
 		// Read object from database
-		jesse = employeeRepository.findEmployeeById(id);
+		jesse = employeeRepository.findEmployeeByEmail(id);
 
 		// Assert that object has correct attributes
 		assertNotNull(jesse);

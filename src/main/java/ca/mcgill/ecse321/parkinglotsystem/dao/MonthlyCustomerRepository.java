@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MonthlyCustomerRepository extends CrudRepository<MonthlyCustomer, String>{
     
-	MonthlyCustomer findMonthlyCustomerById(String id);
+	MonthlyCustomer findMonthlyCustomerByEmail(String email);
     List<MonthlyCustomer> findMonthlyByName(String name);
 	List<MonthlyCustomer> findMonthlyCustomerByPhone(String phone);
 	List<MonthlyCustomer> findMonthlyCustomerByPassword(String password);

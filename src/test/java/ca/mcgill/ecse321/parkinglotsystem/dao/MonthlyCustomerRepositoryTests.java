@@ -21,7 +21,7 @@ public class MonthlyCustomerRepositoryTests {
 	}
 
     @Test
-	public void testPersistAndLoadManager() {
+	public void testPersistAndLoadMonthlyCustomer() {
         // Create object
 		String name = "Jonas";
         String email="jonas@outlook.com";
@@ -38,7 +38,7 @@ public class MonthlyCustomerRepositoryTests {
 		String id = jonas.getEmail();
 
 		// Read object from database
-		jonas = monthlyCustomerRepository.findMonthlyCustomerById(id);
+		jonas = monthlyCustomerRepository.findMonthlyCustomerByEmail(id);
 
 		// Assert that object has correct attributes
 		assertNotNull(jonas);

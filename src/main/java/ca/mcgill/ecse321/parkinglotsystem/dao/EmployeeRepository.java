@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface EmployeeRepository extends CrudRepository<Employee, String>{
 
-    Employee findEmployeeById(String id);
+    Employee findEmployeeByEmail(String email);
     List<Employee> findEmployeeByName(String name);
 	List<Employee> findEmployeeByPhone(String phone);
-	List<Employee> findEmployeeByPassword(String password);
+    List<Employee> findEmployeeByPassword(String password);
 
 }
