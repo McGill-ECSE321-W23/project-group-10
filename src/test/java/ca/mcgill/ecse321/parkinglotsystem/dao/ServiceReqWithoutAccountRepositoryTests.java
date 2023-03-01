@@ -33,14 +33,13 @@ public class ServiceReqWithoutAccountRepositoryTests {
 
         // Create object
         ServiceReqWithoutAccount obj = new ServiceReqWithoutAccount();
-        //obj.setId([id_value]);
-        obj.setId(id);
         obj.setAssigned(isAssigned);
         obj.setLicenseNumber(licenseNumber);
         obj.setService(service);
 
         // Save object
         obj = serviceReqWithoutAccountRepository.save(obj);
+        serviceRepository.save(service);
 
         // Read object from database
         List<ServiceReqWithoutAccount> objs = new ArrayList<ServiceReqWithoutAccount>();
