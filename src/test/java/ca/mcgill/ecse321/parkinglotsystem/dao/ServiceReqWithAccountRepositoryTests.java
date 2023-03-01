@@ -34,14 +34,14 @@ public class ServiceReqWithAccountRepositoryTests {
 
         // Create object
         ServiceReqWithAccount obj = new ServiceReqWithAccount();
-        //obj.setId([id_value]);
-        obj.setId(id);
         obj.setAssigned(isAssigned);
         obj.setCustomer(monthlyCustomer);
         obj.setService(service);
 
         // Save object
         obj = serviceReqWithAccountRepository.save(obj);
+        serviceRepository.save(service);
+        monthlyCustomerRepository.save(monthlyCustomer);
 
         // Read object from database
         List<ServiceReqWithAccount> objs = new ArrayList<ServiceReqWithAccount>();
