@@ -19,6 +19,8 @@ import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 public class ServiceReqWithAccountRepositoryTests {
     @Autowired
     private ServiceReqWithAccountRepository serviceReqWithAccountRepository;
+    private ServiceRepository serviceRepository;
+    private MonthlyCustomerRepository monthlyCustomerRepository;
 
     @AfterEach
     public void clearDatabase() {
