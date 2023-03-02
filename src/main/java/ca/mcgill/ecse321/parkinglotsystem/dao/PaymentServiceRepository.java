@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.parkinglotsystem.dao;
 
-import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceRequest;
 import org.springframework.data.repository.CrudRepository;
 

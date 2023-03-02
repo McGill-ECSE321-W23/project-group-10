@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import ca.mcgill.ecse321.parkinglotsystem.model.PaymentService;
 import java.sql.Timestamp;
+import java.sql.Date;
 
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithAccount;
+import ca.mcgill.ecse321.parkinglotsystem.model.ServiceRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class PaymentServiceRepositoryTests {
     @Autowired
     private PaymentServiceRepository paymentServiceRepository;
-
+    private ServiceReqWithAccountRepository serviceRequestRepository;
     @AfterEach
     public void clearDatabase() {
         paymentServiceRepository.deleteAll();
@@ -27,7 +29,8 @@ public class PaymentServiceRepositoryTests {
         // Create object
         int id = 180;
         double amount = 99.99;
-        Timestamp date = Timestamp.valueOf("2023-03-01");
+        Date date_date = Date.valueOf("2023-03-01");
+        Timestamp date = new Timestamp(date_date.getTime());
         ServiceReqWithAccount service_request = new ServiceReqWithAccount();
         PaymentService obj = new PaymentService ();
         obj.setId (id);
@@ -36,6 +39,7 @@ public class PaymentServiceRepositoryTests {
         obj.setServiceReq(service_request);
 
         // Save object
+        service_request = serviceRequestRepository.save(service_request);
         obj = paymentServiceRepository.save(obj);
         int payment_service_id = obj.getId ();
 
