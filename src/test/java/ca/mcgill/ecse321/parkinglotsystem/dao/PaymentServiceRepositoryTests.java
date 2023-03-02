@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import ca.mcgill.ecse321.parkinglotsystem.model.PaymentService;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithAccount;
 import org.junit.jupiter.api.AfterEach;
@@ -27,7 +27,7 @@ public class PaymentServiceRepositoryTests {
         // Create object
         int id = 180;
         double amount = 99.99;
-        Date date = Date.valueOf("2023-03-01");
+        Timestamp date = Timestamp.valueOf("2023-03-01");
         ServiceReqWithAccount service_request = new ServiceReqWithAccount();
         PaymentService obj = new PaymentService ();
         obj.setId (id);

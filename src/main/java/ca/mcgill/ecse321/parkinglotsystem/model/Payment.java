@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.parkinglotsystem.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Id;
@@ -22,7 +21,7 @@ public abstract class Payment{
     public Timestamp getDateTime() {
         return dateTime;
     }
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(Timestamp dateTime) {
         this.dateTime = dateTime;
     }
     public double getAmount() {
