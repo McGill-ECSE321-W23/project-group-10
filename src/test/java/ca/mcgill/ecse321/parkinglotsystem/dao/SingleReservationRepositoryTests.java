@@ -31,8 +31,8 @@ public class SingleReservationRepositoryTests {
         ParkingSpotType type = new ParkingSpotType();
         type.setFee(3.50);
         type.setName("regular");
-        // spot = ParkingSpotRepository.save(spot);
-        // type = ParkingSpotTypeRepository.save(type);
+        // TODO: Merge and uncomment this line spot = ParkingSpotRepository.save(spot);
+        // TODO: Merge and uncomment this line type = ParkingSpotTypeRepository.save(type);
 
         // Create a new SingleReservation
         SingleReservation singleReservation = new SingleReservation();

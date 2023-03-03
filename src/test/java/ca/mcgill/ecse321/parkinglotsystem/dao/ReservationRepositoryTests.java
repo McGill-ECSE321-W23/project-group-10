@@ -34,22 +34,22 @@ public class ReservationRepositoryTests {
         // Create some data
         ParkingSpot spotForSingle = new ParkingSpot();
         spotForSingle.setId(2);
-        // spotForSingle = ParkingSpotRepository.save(spotForSingle);
+        // TODO : Merge and uncomment spotForSingle = ParkingSpotRepository.save(spotForSingle);
         ParkingSpotType typeForSingle = new ParkingSpotType();
         typeForSingle.setName("regular");
         typeForSingle.setFee(3.50);
         spotForSingle.setType(typeForSingle);
-        // typeForSingle = ParkingSpotTypeRepository.save(typeForSingle);
+        // TODO: Merge and uncomment typeForSingle = ParkingSpotTypeRepository.save(typeForSingle);
 
         ParkingSpot spotForSubWithAccount = new ParkingSpot();
         spotForSubWithAccount.setId(3);
-        //spotForSubWithAccount = ParkingSpotRepository.save(spotForSubWithAccount);
+        // TODO: Merge and uncomment spotForSubWithAccount = ParkingSpotRepository.save(spotForSubWithAccount);
 
         ParkingSpotType typeForSubWithAccount = new ParkingSpotType();
         typeForSubWithAccount.setName("regular");
         typeForSubWithAccount.setFee(20);
         spotForSubWithAccount.setType(typeForSubWithAccount);
-        // typeForSubWithAccount = ParkingSpotTypeRepository.save(typeForSubWithAccount);
+        // TODO: merge and uncomment typeForSubWithAccount = ParkingSpotTypeRepository.save(typeForSubWithAccount);
         
         MonthlyCustomer customer1 = new MonthlyCustomer();
         customer1.setEmail("customer1@gmail.com");
@@ -57,17 +57,17 @@ public class ReservationRepositoryTests {
         customer1.setPassword("123456");
         customer1.setPhone("514-320-1349");
         customer1.setLicenseNumber("CA1562");
-        // customer1 = MonthlyCustomerRepository.save(customer1);
+        // TODO: merge and uncomment customer1 = MonthlyCustomerRepository.save(customer1);
 
         ParkingSpot spotForSubWithoutAccount = new ParkingSpot();
         spotForSubWithoutAccount.setId(4);
-        // spotForSubWithoutAccount = ParkingSpotRepository.save(spotForSubWithoutAccount);
+        // TODO: merge and uncomment spotForSubWithoutAccount = ParkingSpotRepository.save(spotForSubWithoutAccount);
 
         ParkingSpotType typeForSubWithoutAccount = new ParkingSpotType();
         typeForSubWithoutAccount.setName("regular");
         typeForSubWithoutAccount.setFee(20);
         spotForSubWithoutAccount.setType(typeForSubWithoutAccount);
-        // typeForSubWithoutAccount = ParkingSpotTypeRepository.save(typeForSubWithoutAccount);
+        // TODO: merge and uncomment typeForSubWithoutAccount = ParkingSpotTypeRepository.save(typeForSubWithoutAccount);
 
         // Create new reservations
         SingleReservation singleReservation = new SingleReservation();
