@@ -12,8 +12,6 @@ public interface SingleReservationRepository extends CrudRepository<SingleReserv
 
     List<SingleReservation> findSingleReservationsByDate(Date date);
 
-    SingleReservation findSingleReservationByPaymentReservation(PaymentReservation paymentReservation); 
-
     List<SingleReservation> findSingleReservationsByLicenseNumber(String licenseNumber);
     
 }

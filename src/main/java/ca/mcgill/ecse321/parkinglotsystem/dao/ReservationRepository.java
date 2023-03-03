@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321.parkinglotsystem.dao;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -17,10 +17,7 @@ public interface ReservationRepository extends CrudRepository<Reservation, Integ
     SubWithAccount findSubWithAccountById(int id);
     SubWithoutAccount findSubWithoutAccountById(int id);
 
+    List<Reservation> findReservationsByDate(Date date);
 
-    List<Reservation> findReservationsbyDate(Date date);
-
-    Reservation findReservationByPaymentReservation(PaymentReservation paymentReservation); 
-
-    List<Reservation> findReservationsByLicenseNumber(String licenseNumber);
+    // List<Reservation> findReservationsByLicenseNumber(String licenseNumber);
 }

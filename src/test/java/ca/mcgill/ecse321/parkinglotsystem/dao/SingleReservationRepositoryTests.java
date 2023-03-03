@@ -24,7 +24,7 @@ public class SingleReservationRepositoryTests {
         singleReservationRepository.deleteAll();
     }
     @Test
-    public void testPersistenceAndLoadReservation() {
+    public void testPersistenceAndLoadSingleReservation() {
         // create data
         ParkingSpot spot = new ParkingSpot();
         spot.setId(99);
