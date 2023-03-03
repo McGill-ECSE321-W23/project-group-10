@@ -6,6 +6,6 @@ import ca.mcgill.ecse321.parkinglotsystem.model.Manager;
 
 public interface ManagerRepository extends CrudRepository<Manager, String>{
 
-	Manager findManagerByEmail(String id);
+	Manager findManagerByEmail(String email);
 
 }
