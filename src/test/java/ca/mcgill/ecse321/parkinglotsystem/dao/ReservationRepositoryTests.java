@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class ReservationRepositoryTests {
     @Autowired
     private ReservationRepository reservationRepository;
@@ -122,7 +123,7 @@ public class ReservationRepositoryTests {
         assertEquals(3,subWithAccount.getNbrMonths());
         assertEquals(5, subWithoutAccount.getNbrMonths());
         assertEquals(customer1, subWithAccount.getCustomer());
-        
+
 
     }
 }
