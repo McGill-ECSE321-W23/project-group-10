@@ -58,7 +58,7 @@ public class PaymentReservationRepositoryTests {
         singleReservation.setLicenseNumber("ABC123");
         singleReservation.setParkingSpot(parkingSpot);
         singleReservation = singleReservationRepository.save(singleReservation);
-
+        int reservationId = singleReservation.getId();
 
         String time="2018-09-01 09:01:15"; 
         Timestamp timestamp= Timestamp.valueOf(time); 
@@ -80,6 +80,7 @@ public class PaymentReservationRepositoryTests {
         assertEquals(amount, paymentReservationRepository.findPaymentReservationById(9).getAmount());
         assertEquals(timestamp, paymentReservationRepository.findPaymentReservationById(9).getDateTime());
         assertEquals(1, paymentReservationRepository.findPaymentReservationByReservation(singleReservation).size());
+        assertEquals(reservationId, paymentReservation.getReservation().getId());
     }
 
 }
