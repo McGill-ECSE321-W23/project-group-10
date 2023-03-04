@@ -42,8 +42,8 @@ public class ServiceReqWithAccountRepositoryTests {
 
         // Save object
         obj = serviceReqWithAccountRepository.save(obj);
-        serviceRepository.save(service);
-        monthlyCustomerRepository.save(monthlyCustomer);
+        service = serviceRepository.save(service);
+        monthlyCustomer = monthlyCustomerRepository.save(monthlyCustomer);
 
         // Read object from database
         List<ServiceReqWithAccount> objs = new ArrayList<ServiceReqWithAccount>();
