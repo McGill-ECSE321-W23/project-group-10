@@ -32,13 +32,14 @@ public class SingleReservationRepositoryTests {
     @Test
     public void testPersistenceAndLoadSingleReservation() {
         // create data
-        ParkingSpot spot = new ParkingSpot();
-        spot.setId(99);
+        
         ParkingSpotType type = new ParkingSpotType();
         type.setFee(3.50);
         type.setName("regular");
-        spot = parkingSpotRepository.save(spot);
         type = parkingSpotTypeRepository.save(type);
+        ParkingSpot spot = new ParkingSpot();
+        spot.setType(type);
+        spot = parkingSpotRepository.save(spot);
 
         // Create a new SingleReservation
         SingleReservation singleReservation = new SingleReservation();
@@ -56,9 +57,8 @@ public class SingleReservationRepositoryTests {
 
         // Assert that singleReservation has correct attributes
         assertNotNull(singleReservation);
-        assertEquals(1, singleReservation.getId());
         assertEquals("ABC123", singleReservation.getLicenseNumber());
-        assertEquals(spot, singleReservation.getParkingSpot());
+        assertEquals(spot.getId(), singleReservation.getParkingSpot().getId());
         assertEquals(Date.valueOf("2023-02-27"), singleReservation.getDate());
         assertEquals(1, singleReservationRepository.findSingleReservationsByLicenseNumber("ABC123").size());
         assertEquals(1, singleReservationRepository.findSingleReservationsByDate(Date.valueOf("2023-02-27")).size());
