@@ -36,7 +36,7 @@ public class ServiceReqWithoutAccountRepositoryTests {
 
         // Create object
         ServiceReqWithoutAccount obj = new ServiceReqWithoutAccount();
-        obj.setAssigned(isAssigned);
+        obj.setIsAssigned(isAssigned);
         obj.setLicenseNumber(licenseNumber);
         obj.setService(service);
 
@@ -61,7 +61,7 @@ public class ServiceReqWithoutAccountRepositoryTests {
         for (ServiceReqWithoutAccount aServiceReqWithoutAccount : all_obj){
             assertNotNull(aServiceReqWithoutAccount);
             assertEquals(id, aServiceReqWithoutAccount.getId());
-            assertEquals(isAssigned, aServiceReqWithoutAccount.isAssigned());
+            assertEquals(isAssigned, aServiceReqWithoutAccount.getIsAssigned());
             assertEquals(licenseNumber, aServiceReqWithoutAccount.getLicenseNumber());
             assertEquals(service, aServiceReqWithoutAccount.getService());
         }
@@ -70,7 +70,7 @@ public class ServiceReqWithoutAccountRepositoryTests {
             for (ServiceReqWithoutAccount aServiceReqWithoutAccount : aServiceReqWithoutAccountList){
                 assertNotNull(aServiceReqWithoutAccount);
                 assertEquals(id, aServiceReqWithoutAccount.getId());
-                assertEquals(isAssigned, aServiceReqWithoutAccount.isAssigned());
+                assertEquals(isAssigned, aServiceReqWithoutAccount.getIsAssigned());
                 assertEquals(licenseNumber, aServiceReqWithoutAccount.getLicenseNumber());
                 assertEquals(service, aServiceReqWithoutAccount.getService());
             }

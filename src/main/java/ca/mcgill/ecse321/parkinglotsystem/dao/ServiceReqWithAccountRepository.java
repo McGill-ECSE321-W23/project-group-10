@@ -12,8 +12,8 @@ import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 public interface ServiceReqWithAccountRepository extends CrudRepository<ServiceReqWithAccount, Integer>{
 
     ServiceReqWithAccount findServiceReqWithAccountById(int id);
-    List<ServiceReqWithAccount> findServiceReqWithAccountByIsAssigned(Boolean isAssigned);
+    List<ServiceReqWithAccount> findServiceReqWithAccountByIsAssigned(boolean isAssigned);
     List<ServiceReqWithAccount> findServiceReqWithAccountByService(Service service);
-    List<ServiceReqWithAccount> findServiceReqWithAccountByMonthlyCustomer(MonthlyCustomer monthlyCustomer);
+    List<ServiceReqWithAccount> findServiceReqWithAccountByCustomer(MonthlyCustomer monthlyCustomer);
 
 }

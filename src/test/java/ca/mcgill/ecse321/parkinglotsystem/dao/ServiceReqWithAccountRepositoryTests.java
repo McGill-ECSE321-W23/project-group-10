@@ -38,7 +38,7 @@ public class ServiceReqWithAccountRepositoryTests {
 
         // Create object
         ServiceReqWithAccount obj = new ServiceReqWithAccount();
-        obj.setAssigned(isAssigned);
+        obj.setIsAssigned(isAssigned);
         obj.setCustomer(monthlyCustomer);
         obj.setService(service);
 
@@ -57,14 +57,14 @@ public class ServiceReqWithAccountRepositoryTests {
         all_objs.add(objs);
         objs = serviceReqWithAccountRepository.findServiceReqWithAccountByService(service);
         all_objs.add(objs);
-        objs = serviceReqWithAccountRepository.findServiceReqWithAccountByMonthlyCustomer(monthlyCustomer);
+        objs = serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer);
         all_objs.add(objs);
 
         // Assert that object has correct attributes
         for (ServiceReqWithAccount aServiceReqWithAccount : all_obj){
             assertNotNull(aServiceReqWithAccount);
             assertEquals(id, aServiceReqWithAccount.getId());
-            assertEquals(isAssigned, aServiceReqWithAccount.isAssigned());
+            assertEquals(isAssigned, aServiceReqWithAccount.getIsAssigned());
             assertEquals(monthlyCustomer, aServiceReqWithAccount.getCustomer());
             assertEquals(service, aServiceReqWithAccount.getService());
         }
@@ -73,7 +73,7 @@ public class ServiceReqWithAccountRepositoryTests {
             for (ServiceReqWithAccount aServiceReqWithAccount : aServiceReqWithAccountList){
                 assertNotNull(aServiceReqWithAccount);
                 assertEquals(id, aServiceReqWithAccount.getId());
-                assertEquals(isAssigned, aServiceReqWithAccount.isAssigned());
+                assertEquals(isAssigned, aServiceReqWithAccount.getIsAssigned());
                 assertEquals(monthlyCustomer, aServiceReqWithAccount.getCustomer());
                 assertEquals(service, aServiceReqWithAccount.getService());
             }
