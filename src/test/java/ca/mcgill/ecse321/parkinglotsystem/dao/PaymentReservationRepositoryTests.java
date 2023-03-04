@@ -21,8 +21,9 @@ public class PaymentReservationRepositoryTests {
 
 
     //should I create a reservation repository or a repo for each subclass
-    @Autowired
-    private Reservation reservation;
+    //TODO: Delete this (?)
+    //@Autowired
+    //private Reservation reservation;
 
     @AfterEach
     public void clearDatabase() {
@@ -30,19 +31,20 @@ public class PaymentReservationRepositoryTests {
 
     }
 
-    // @Test
-    // public void testPersistAndLoadPaymentReservation() {
+    @Test
+    public void testPersistAndLoadPaymentReservation() {
 
-    //     String time="2018-09-01 09:01:15"; 
-    //     Timestamp timestamp= Timestamp.valueOf(time); 
-    //     double amount = 70.0;
+        String time="2018-09-01 09:01:15"; 
+        Timestamp timestamp= Timestamp.valueOf(time); 
+        double amount = 70.0;
 
 
-    //     PaymentReservation paymentReservation = new PaymentReservation();
-    //     paymentReservation.setAmount(amount);
-    //     paymentReservation.setDateTime(timestamp);
+        PaymentReservation paymentReservation = new PaymentReservation();
+        paymentReservation.setAmount(amount);
+        paymentReservation.setDateTime(timestamp);
 
-    //     paymentReservation = paymentReservationRepository.save(paymentReservation);
-    // }
+        paymentReservation = paymentReservationRepository.save(paymentReservation);
+        //TODO: Add assertions
+    }
 
 }

@@ -18,11 +18,13 @@ import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 public class ServiceReqWithoutAccountRepositoryTests {
     @Autowired
     private ServiceReqWithoutAccountRepository serviceReqWithoutAccountRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
 
     @AfterEach
     public void clearDatabase() {
         serviceReqWithoutAccountRepository.deleteAll();
-        private ServiceRepository serviceRepository;
+        serviceRepository.deleteAll();
     }
 
     @Test

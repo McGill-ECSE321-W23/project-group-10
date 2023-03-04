@@ -18,21 +18,20 @@ import ca.mcgill.ecse321.parkinglotsystem.model.SubWithoutAccount;
 public class SubWithoutAccountRepositoryTests {
     @Autowired
     private SubWithoutAccountRepository subWithoutAccountRepository;
-    /* @Autowired
+    @Autowired
     private ParkingSpotTypeRepository parkingSpotTypeRepository;
     @Autowired
-    private ParkingSpotRepository parkingSpotRepository; */
+    private ParkingSpotRepository parkingSpotRepository;
 
     @AfterEach
     public void clearDatabase() {
         subWithoutAccountRepository.deleteAll();
-        //parkingSpotRepository.deleteAll();
-        //parkingSpotTypeRepository.deleteAll();
+        parkingSpotRepository.deleteAll();
+        parkingSpotTypeRepository.deleteAll();
     }
 
     @Test
     public void testPersistAndLoadSubWithoutAccount() {
-        // TODO: Remove comments for other repos
         // Create dummy data
         Date date = Date.valueOf("2023-02-22");
         String licenseNumber = "12345";
@@ -40,10 +39,10 @@ public class SubWithoutAccountRepositoryTests {
         ParkingSpotType pSpotType = new ParkingSpotType();
         pSpotType.setName("regular");
         pSpotType.setFee(5.0);
-        //parkingSpotTypeRepository.save(pSpotType);
+        parkingSpotTypeRepository.save(pSpotType);
         ParkingSpot parkingSpot = new ParkingSpot();
         parkingSpot.setType(pSpotType);
-        //parkingSpotRepository.save(parkingSpot);
+        parkingSpotRepository.save(parkingSpot);
 
         // Create object
         SubWithoutAccount obj = new SubWithoutAccount();

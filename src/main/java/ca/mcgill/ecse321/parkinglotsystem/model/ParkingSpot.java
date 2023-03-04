@@ -13,7 +13,7 @@ public class ParkingSpot {
     private ParkingSpotType type;
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     public int getId() {
         return id;

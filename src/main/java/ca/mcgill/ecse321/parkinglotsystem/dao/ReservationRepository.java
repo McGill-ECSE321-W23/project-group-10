@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import ca.mcgill.ecse321.parkinglotsystem.model.PaymentReservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SubWithAccount;

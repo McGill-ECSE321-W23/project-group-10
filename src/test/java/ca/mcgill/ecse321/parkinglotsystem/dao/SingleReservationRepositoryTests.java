@@ -18,10 +18,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class SingleReservationRepositoryTests {
     @Autowired
     private SingleReservationRepository singleReservationRepository;
+    @Autowired
+    private ParkingSpotRepository parkingSpotRepository;
+    @Autowired
+    private ParkingSpotTypeRepository parkingSpotTypeRepository;
 
     @AfterEach
     public void clearDataBase() {
         singleReservationRepository.deleteAll();
+        parkingSpotRepository.deleteAll();
+        parkingSpotTypeRepository.deleteAll();
     }
     @Test
     public void testPersistenceAndLoadSingleReservation() {
@@ -31,12 +37,12 @@ public class SingleReservationRepositoryTests {
         ParkingSpotType type = new ParkingSpotType();
         type.setFee(3.50);
         type.setName("regular");
-        // TODO: Merge and uncomment this line spot = ParkingSpotRepository.save(spot);
-        // TODO: Merge and uncomment this line type = ParkingSpotTypeRepository.save(type);
+        spot = parkingSpotRepository.save(spot);
+        type = parkingSpotTypeRepository.save(type);
 
         // Create a new SingleReservation
         SingleReservation singleReservation = new SingleReservation();
-        singleReservation.setId(1);
+        //singleReservation.setId(1); TODO: confirm that it works
         singleReservation.setDate(Date.valueOf("2023-02-27"));
         singleReservation.setLicenseNumber("ABC123");
         singleReservation.setParkingSpot(spot);
