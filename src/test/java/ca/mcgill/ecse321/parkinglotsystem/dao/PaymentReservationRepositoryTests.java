@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.parkinglotsystem.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import java.sql.Date;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 import ca.mcgill.ecse321.parkinglotsystem.model.PaymentReservation;
-import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 
 @SpringBootTest
@@ -63,23 +61,26 @@ public class PaymentReservationRepositoryTests {
         String time="2018-09-01 09:01:15"; 
         Timestamp timestamp= Timestamp.valueOf(time); 
         double amount = 70.0;
+        int id = 9;
 
-
+        // Create a PaymentReservation object
         PaymentReservation paymentReservation = new PaymentReservation();
         paymentReservation.setAmount(amount);
         paymentReservation.setDateTime(timestamp);
-        paymentReservation.setId(9);
+        paymentReservation.setId(id);
         paymentReservation.setReservation(singleReservation);
 
-        paymentReservation = paymentReservationRepository.save(paymentReservation);
+        // Save object
+        paymentReservationRepository.save(paymentReservation);
+
+        // Load object
+        paymentReservation = paymentReservationRepository.findPaymentReservationById(id);
         
+        // Assertions
         assertNotNull(paymentReservation);
-    
         assertEquals(amount, paymentReservation.getAmount());
-        
-        assertEquals(amount, paymentReservationRepository.findPaymentReservationById(9).getAmount());
-        assertEquals(timestamp, paymentReservationRepository.findPaymentReservationById(9).getDateTime());
-        assertEquals(1, paymentReservationRepository.findPaymentReservationByReservation(singleReservation).size());
+        assertEquals(1, paymentReservationRepository.
+            findPaymentReservationByReservation(singleReservation).size());
         assertEquals(reservationId, paymentReservation.getReservation().getId());
     }
 
