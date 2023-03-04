@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.parkinglotsystem.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -74,9 +73,9 @@ public class PaymentReservationRepositoryTests {
         paymentReservation = paymentReservationRepository.findPaymentReservationById(id);
         
         assertNotNull(paymentReservation);
-        assertEquals(paymentReservation.getAmount(), amount);
-        assertEquals(paymentReservation.getDateTime(), timestamp);
-        assertEquals(paymentReservation.getReservation().getId(), reservationId);
+        assertEquals(amount, paymentReservation.getAmount());
+        assertEquals(timestamp, paymentReservation.getDateTime());
+        assertEquals(reservationId, paymentReservation.getReservation().getId());
     }
 
 }

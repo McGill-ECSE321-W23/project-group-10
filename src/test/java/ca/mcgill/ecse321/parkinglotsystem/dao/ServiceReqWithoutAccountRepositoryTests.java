@@ -55,14 +55,14 @@ public class ServiceReqWithoutAccountRepositoryTests {
 
         // Assertions
         assertNotNull(obj);
-        assertEquals(obj.getIsAssigned(), isAssigned);
-        assertEquals(obj.getLicenseNumber(), licenseNumber);
-        assertEquals(obj.getService().getDescription(), serviceDesc);
-        assertEquals(objs1.size(), 1);
-        assertEquals(objs2.size(), 1);
-        assertEquals(objs3.size(), 1);
-        assertEquals(objs1.get(0).getId(), id);
-        assertEquals(objs2.get(0).getId(), id);
-        assertEquals(objs3.get(0).getId(), id);
+        assertEquals(isAssigned, obj.getIsAssigned());
+        assertEquals(licenseNumber, obj.getLicenseNumber());
+        assertEquals(serviceDesc, obj.getService().getDescription());
+        assertEquals(1, objs1.size());
+        assertEquals(1, objs2.size());
+        assertEquals(1, objs3.size());
+        assertEquals(id, objs1.get(0).getId());
+        assertEquals(id, objs2.get(0).getId());
+        assertEquals(id, objs3.get(0).getId());
     }
 }
