@@ -48,6 +48,7 @@ public class ParkingSpotRepositoryTests {
 
         assertNotNull(parkingSpot);
         assertEquals("regular", parkingSpot.getType().getName());
+        assertEquals(1, parkingSpotRepository.findParkingSpotByType(parkingSpotType).size());
     }
     
 }

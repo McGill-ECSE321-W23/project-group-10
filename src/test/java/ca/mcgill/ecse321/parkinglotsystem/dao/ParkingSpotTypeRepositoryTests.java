@@ -20,7 +20,6 @@ public class ParkingSpotTypeRepositoryTests {
 
     @AfterEach
     public void clearDatabase() {
-        System.out.println("cleaning db");
         parkingSpotTypeRepository.deleteAll();
 
     }
@@ -35,10 +34,10 @@ public class ParkingSpotTypeRepositoryTests {
         parkingSpotType.setFee(fee);
         parkingSpotType = parkingSpotTypeRepository.save(parkingSpotType);
 
-        assertNotNull(parkingSpotType);
+        
         assertEquals(typeName, parkingSpotType.getName());
-        assertEquals(fee, parkingSpotType.getFee());
         assertEquals(typeName, parkingSpotTypeRepository.findParkingSpotTypeByName(typeName).getName());
+        assertEquals(fee, parkingSpotTypeRepository.findParkingSpotTypeByName(typeName).getFee());
     }
 
 
