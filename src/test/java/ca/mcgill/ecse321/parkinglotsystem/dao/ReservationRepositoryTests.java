@@ -39,24 +39,25 @@ public class ReservationRepositoryTests {
     @Test
     public void testPersistenceAndLoadReservation() {
         // Create some data
-        ParkingSpot spotForSingle = new ParkingSpot();
-        spotForSingle.setId(2);
-        spotForSingle = parkingSpotRepository.save(spotForSingle);
         ParkingSpotType typeForSingle = new ParkingSpotType();
         typeForSingle.setName("regular");
         typeForSingle.setFee(3.50);
-        spotForSingle.setType(typeForSingle);
         typeForSingle = parkingSpotTypeRepository.save(typeForSingle);
 
-        ParkingSpot spotForSubWithAccount = new ParkingSpot();
-        spotForSubWithAccount.setId(3);
-        spotForSubWithAccount = parkingSpotRepository.save(spotForSubWithAccount);
+        ParkingSpot spotForSingle = new ParkingSpot();
+        spotForSingle.setId(2);
+        spotForSingle.setType(typeForSingle);
+        spotForSingle = parkingSpotRepository.save(spotForSingle);
 
         ParkingSpotType typeForSubWithAccount = new ParkingSpotType();
         typeForSubWithAccount.setName("regular");
         typeForSubWithAccount.setFee(20);
-        spotForSubWithAccount.setType(typeForSubWithAccount);
         typeForSubWithAccount = parkingSpotTypeRepository.save(typeForSubWithAccount);
+
+        ParkingSpot spotForSubWithAccount = new ParkingSpot();
+        spotForSubWithAccount.setId(3);
+        spotForSubWithAccount.setType(typeForSubWithAccount);
+        spotForSubWithAccount = parkingSpotRepository.save(spotForSubWithAccount);
         
         MonthlyCustomer customer1 = new MonthlyCustomer();
         customer1.setEmail("customer1@gmail.com");
@@ -66,33 +67,30 @@ public class ReservationRepositoryTests {
         customer1.setLicenseNumber("CA1562");
         customer1 = monthlyCustomerRepository.save(customer1);
 
-        ParkingSpot spotForSubWithoutAccount = new ParkingSpot();
-        spotForSubWithoutAccount.setId(4);
-        spotForSubWithoutAccount = parkingSpotRepository.save(spotForSubWithoutAccount);
-
         ParkingSpotType typeForSubWithoutAccount = new ParkingSpotType();
         typeForSubWithoutAccount.setName("regular");
         typeForSubWithoutAccount.setFee(20);
-        spotForSubWithoutAccount.setType(typeForSubWithoutAccount);
         typeForSubWithoutAccount = parkingSpotTypeRepository.save(typeForSubWithoutAccount);
+
+        ParkingSpot spotForSubWithoutAccount = new ParkingSpot();
+        spotForSubWithoutAccount.setId(4);
+        spotForSubWithoutAccount.setType(typeForSubWithoutAccount);
+        spotForSubWithoutAccount = parkingSpotRepository.save(spotForSubWithoutAccount);
 
         // Create new reservations
         SingleReservation singleReservation = new SingleReservation();
         SubWithAccount subWithAccount = new SubWithAccount();
         SubWithoutAccount subWithoutAccount = new SubWithoutAccount();
-        singleReservation.setId(01);
         singleReservation.setDate(Date.valueOf("2023-02-28"));
         singleReservation.setLicenseNumber("CA021B");
         singleReservation.setParkingSpot(spotForSingle);
         singleReservation.setParkingTime(30);
 
-        subWithAccount.setId(05);
         subWithAccount.setDate(Date.valueOf("2023-02-28"));
         subWithAccount.setNbrMonths(3);
         subWithAccount.setParkingSpot(spotForSubWithAccount);
         subWithAccount.setCustomer(customer1);
 
-        subWithoutAccount.setId(10);
         subWithoutAccount.setDate(Date.valueOf("2023-02-28"));
         subWithoutAccount.setLicenseNumber("CA123E");
         subWithoutAccount.setNbrMonths(5);
@@ -105,31 +103,28 @@ public class ReservationRepositoryTests {
         subWithoutAccount = reservationRepository.save(subWithoutAccount);
         int idSingle = singleReservation.getId();
         int idSubWith = subWithAccount.getId();
-        int idSubWithOut = subWithAccount.getId();
+        int idSubWithOut = subWithoutAccount.getId();
 
         // Read the reservations from the ReservationRepository
-        singleReservation = reservationRepository.findSingleReservationById(idSingle);
-        subWithAccount = reservationRepository.findSubWithAccountById(idSubWith);
-        subWithoutAccount = reservationRepository.findSubWithoutAccountById(idSubWithOut);
+        singleReservation = (SingleReservation) reservationRepository.findReservationById(idSingle);
+        subWithAccount = (SubWithAccount) reservationRepository.findReservationById(idSubWith);
+        subWithoutAccount = (SubWithoutAccount) reservationRepository.findReservationById(idSubWithOut);
 
         // assert all reservations have the correct attributes
         assertNotNull(singleReservation);
         assertNotNull(subWithoutAccount);
         assertNotNull(subWithAccount);
-        assertEquals(01, singleReservation.getId());
-        assertEquals(05, subWithAccount.getId());
-        assertEquals(10,subWithoutAccount.getId());
         assertEquals(Date.valueOf("2023-02-28"), singleReservation.getDate());
         assertEquals(Date.valueOf("2023-02-28"), subWithAccount.getDate());
         assertEquals(Date.valueOf("2023-02-28"), subWithoutAccount.getDate());
-        assertEquals(spotForSingle, singleReservation.getParkingSpot());
-        assertEquals(spotForSubWithAccount, subWithAccount.getParkingSpot());
-        assertEquals(spotForSubWithoutAccount, subWithoutAccount.getParkingSpot());
-        assertEquals("CA012B", singleReservation.getLicenseNumber());
+        assertEquals(spotForSingle.getId(), singleReservation.getParkingSpot().getId());
+        assertEquals(spotForSubWithAccount.getId(), subWithAccount.getParkingSpot().getId());
+        assertEquals(spotForSubWithoutAccount.getId(), subWithoutAccount.getParkingSpot().getId());
+        assertEquals("CA021B", singleReservation.getLicenseNumber());
         assertEquals("CA123E", subWithoutAccount.getLicenseNumber());
         assertEquals(3,subWithAccount.getNbrMonths());
         assertEquals(5, subWithoutAccount.getNbrMonths());
-        assertEquals(customer1, subWithAccount.getCustomer());
+        assertEquals(customer1.getEmail(), subWithAccount.getCustomer().getEmail());
 
 
     }

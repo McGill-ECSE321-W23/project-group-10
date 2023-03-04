@@ -43,12 +43,12 @@ public class ParkingSpotRepositoryTests {
         //parkingSpot.setId(1); TODO: Confirm that it works
         
         parkingSpot = parkingSpotRepository.save(parkingSpot);
+        int id = parkingSpot.getId();
+
+        parkingSpot = parkingSpotRepository.findParkingSpotById(id);
 
         assertNotNull(parkingSpot);
-        assertEquals(1, parkingSpot.getId());
-        assertEquals(1, parkingSpotRepository.findParkingSpotById(1).getId());
-        
-
+        assertEquals("regular", parkingSpot.getType().getName());
     }
     
 }

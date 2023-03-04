@@ -12,9 +12,12 @@ import ca.mcgill.ecse321.parkinglotsystem.model.SubWithoutAccount;
 
 public interface ReservationRepository extends CrudRepository<Reservation, Integer>{
     
-    SingleReservation findSingleReservationById(int id);
-    SubWithAccount findSubWithAccountById(int id);
-    SubWithoutAccount findSubWithoutAccountById(int id);
+    // TODO: Confirm that it works
+    //SingleReservation findSingleReservationById(int id);
+    //SubWithAccount findSubWithAccountById(int id);
+    //SubWithoutAccount findSubWithoutAccountById(int id);
+
+    Reservation findReservationById(int id);
 
     List<Reservation> findReservationsByDate(Date date);
 
