@@ -3,9 +3,6 @@ package ca.mcgill.ecse321.parkinglotsystem.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +26,13 @@ public class ServiceReqWithoutAccountRepositoryTests {
 
     @Test
     public void testPersistAndLoadServiceReqWithoutAccount() {
-        int id = 1234;
         boolean isAssigned = true;
         String licenseNumber = "abcd"; 
+        String serviceDesc = "someService";
         Service service = new Service();
+        service.setDescription(serviceDesc);
+        service.setPrice(50);
+        service = serviceRepository.save(service);
 
         // Create object
         ServiceReqWithoutAccount obj = new ServiceReqWithoutAccount();
@@ -42,38 +42,27 @@ public class ServiceReqWithoutAccountRepositoryTests {
 
         // Save object
         obj = serviceReqWithoutAccountRepository.save(obj);
-        serviceRepository.save(service);
+        int id = obj.getId();
 
         // Read object from database
-        List<ServiceReqWithoutAccount> objs = new ArrayList<ServiceReqWithoutAccount>();
-        List<List<ServiceReqWithoutAccount>> all_objs = new ArrayList<List<ServiceReqWithoutAccount>>();
-        List<ServiceReqWithoutAccount> all_obj = new ArrayList<ServiceReqWithoutAccount>();
         obj = serviceReqWithoutAccountRepository.findServiceReqWithoutAccountById(id);
-        all_obj.add(obj);
-        objs = serviceReqWithoutAccountRepository.findServiceReqWithoutAccountByIsAssigned(isAssigned);
-        all_objs.add(objs);
-        objs = serviceReqWithoutAccountRepository.findServiceReqWithoutAccountByService(service);
-        all_objs.add(objs);
-        obj = serviceReqWithoutAccountRepository.findServiceReqWithoutAccountBylicenseNumber(licenseNumber);
-        all_obj.add(obj);
+        var objs1 = serviceReqWithoutAccountRepository.
+            findServiceReqWithoutAccountByIsAssigned(isAssigned);
+        var objs2 = serviceReqWithoutAccountRepository.
+            findServiceReqWithoutAccountByService(service);
+        var objs3 = serviceReqWithoutAccountRepository.
+            findServiceReqWithoutAccountBylicenseNumber(licenseNumber);
 
-        // Assert that object has correct attributes
-        for (ServiceReqWithoutAccount aServiceReqWithoutAccount : all_obj){
-            assertNotNull(aServiceReqWithoutAccount);
-            assertEquals(id, aServiceReqWithoutAccount.getId());
-            assertEquals(isAssigned, aServiceReqWithoutAccount.getIsAssigned());
-            assertEquals(licenseNumber, aServiceReqWithoutAccount.getLicenseNumber());
-            assertEquals(service, aServiceReqWithoutAccount.getService());
-        }
-
-        for (List<ServiceReqWithoutAccount> aServiceReqWithoutAccountList : all_objs){
-            for (ServiceReqWithoutAccount aServiceReqWithoutAccount : aServiceReqWithoutAccountList){
-                assertNotNull(aServiceReqWithoutAccount);
-                assertEquals(id, aServiceReqWithoutAccount.getId());
-                assertEquals(isAssigned, aServiceReqWithoutAccount.getIsAssigned());
-                assertEquals(licenseNumber, aServiceReqWithoutAccount.getLicenseNumber());
-                assertEquals(service, aServiceReqWithoutAccount.getService());
-            }
-        }
+        // Assertions
+        assertNotNull(obj);
+        assertEquals(obj.getIsAssigned(), isAssigned);
+        assertEquals(obj.getLicenseNumber(), licenseNumber);
+        assertEquals(obj.getService().getDescription(), serviceDesc);
+        assertEquals(objs1.size(), 1);
+        assertEquals(objs2.size(), 1);
+        assertEquals(objs3.size(), 1);
+        assertEquals(objs1.get(0).getId(), id);
+        assertEquals(objs2.get(0).getId(), id);
+        assertEquals(objs3.get(0).getId(), id);
     }
 }
