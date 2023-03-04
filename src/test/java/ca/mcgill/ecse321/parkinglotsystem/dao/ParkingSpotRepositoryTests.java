@@ -40,7 +40,6 @@ public class ParkingSpotRepositoryTests {
         //create Parking spot instance
         ParkingSpot parkingSpot = new ParkingSpot();
         parkingSpot.setType(parkingSpotType);
-        //parkingSpot.setId(1); TODO: Confirm that it works
         
         parkingSpot = parkingSpotRepository.save(parkingSpot);
         int id = parkingSpot.getId();
@@ -49,6 +48,7 @@ public class ParkingSpotRepositoryTests {
 
         assertNotNull(parkingSpot);
         assertEquals("regular", parkingSpot.getType().getName());
+        assertEquals(1, parkingSpotRepository.findParkingSpotByType(parkingSpotType).size());
     }
     
 }
