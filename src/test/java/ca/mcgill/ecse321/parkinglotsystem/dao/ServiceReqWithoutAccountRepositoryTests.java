@@ -23,6 +23,7 @@ public class ServiceReqWithoutAccountRepositoryTests {
     @AfterEach
     public void clearDatabase() {
         serviceReqWithoutAccountRepository.deleteAll();
+        ServiceRepository.deleteAll();
     }
 
     @Test

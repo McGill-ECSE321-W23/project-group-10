@@ -25,6 +25,8 @@ public class ServiceReqWithAccountRepositoryTests {
     @AfterEach
     public void clearDatabase() {
         serviceReqWithAccountRepository.deleteAll();
+        ServiceRepository.deleteAll();
+        MonthlyCustomerRepository.deleteAll();
     }
 
     @Test
