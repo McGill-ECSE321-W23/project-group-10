@@ -30,3 +30,4 @@ For more information about the application, please consult the [wiki](https://gi
 | Marco Vidalon  | MarcVida        |
 | Mike Zhang     | Mikez08         |
 | Chenxin Xun    | ChenxinXun-123  |
+| Shaun Soobagrah| Shaun210       |
