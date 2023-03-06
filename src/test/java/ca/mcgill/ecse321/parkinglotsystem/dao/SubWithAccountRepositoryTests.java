@@ -44,6 +44,7 @@ public class SubWithAccountRepositoryTests {
         pSpotType.setFee(5.0);
         parkingSpotTypeRepository.save(pSpotType);
         ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpot.setId(1);
         parkingSpot.setType(pSpotType);
         parkingSpotRepository.save(parkingSpot);
         MonthlyCustomer customer = new MonthlyCustomer();
@@ -72,6 +73,7 @@ public class SubWithAccountRepositoryTests {
         assertNotNull(obj);
         assertEquals(date, obj.getDate());
         assertEquals(nbrMonths, obj.getNbrMonths());
+        assertEquals(parkingSpot.getId(), obj.getParkingSpot().getId());
         assertEquals(customer.getEmail(), obj.getCustomer().getEmail());
         assertEquals(1, subWithAccountRepository.
                 findSubWithAccountByParkingSpot(parkingSpot).size());

@@ -47,6 +47,7 @@ public class PaymentReservationRepositoryTests {
 
         // create a parking spot 
         ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpot.setId(1);
         parkingSpot.setType(parkingSpotType);
         parkingSpot = parkingSpotRepository.save(parkingSpot);
 

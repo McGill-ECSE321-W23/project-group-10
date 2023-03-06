@@ -28,6 +28,7 @@ public class ParkingSpotRepositoryTests {
 
     @Test
     public void testPersistAndLoadParkingSpot() {
+        int id = 1000;
         String typeName = "regular";
         double fee = 30.0;
 
@@ -39,10 +40,10 @@ public class ParkingSpotRepositoryTests {
 
         //create Parking spot instance
         ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpot.setId(id);
         parkingSpot.setType(parkingSpotType);
 
         parkingSpot = parkingSpotRepository.save(parkingSpot);
-        int id = parkingSpot.getId();
 
         parkingSpot = parkingSpotRepository.findParkingSpotById(id);
 

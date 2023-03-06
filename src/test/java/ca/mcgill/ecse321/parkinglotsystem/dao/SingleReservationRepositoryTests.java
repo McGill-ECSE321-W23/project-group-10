@@ -39,6 +39,7 @@ public class SingleReservationRepositoryTests {
         type.setName("regular");
         type = parkingSpotTypeRepository.save(type);
         ParkingSpot spot = new ParkingSpot();
+        spot.setId(1);
         spot.setType(type);
         spot = parkingSpotRepository.save(spot);
 
