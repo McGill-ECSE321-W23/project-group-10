@@ -63,27 +63,27 @@ public class PaymentReservationRepositoryTests {
         String time = "2018-09-01 09:01:15";
         Timestamp timestamp = Timestamp.valueOf(time);
         double amount = 70.0;
-        int id = 9;
 
         // Create a PaymentReservation object
         PaymentReservation paymentReservation = new PaymentReservation();
         paymentReservation.setAmount(amount);
         paymentReservation.setDateTime(timestamp);
-        paymentReservation.setId(id);
         paymentReservation.setReservation(singleReservation);
 
         // Save object
-        paymentReservationRepository.save(paymentReservation);
+        paymentReservation = paymentReservationRepository.save(paymentReservation);
+        int id = paymentReservation.getId();
 
         // Load object
         paymentReservation = paymentReservationRepository.findPaymentReservationById(id);
 
         // Assertions
         assertNotNull(paymentReservation);
+        assertEquals(timestamp, paymentReservation.getDateTime());
         assertEquals(amount, paymentReservation.getAmount());
+        assertEquals(reservationId, paymentReservation.getReservation().getId());
         assertEquals(1, paymentReservationRepository.
                 findPaymentReservationByReservation(singleReservation).size());
-        assertEquals(reservationId, paymentReservation.getReservation().getId());
     }
 
 }

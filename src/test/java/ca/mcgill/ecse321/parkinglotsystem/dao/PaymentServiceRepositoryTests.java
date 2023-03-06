@@ -38,7 +38,6 @@ public class PaymentServiceRepositoryTests {
     @Test
     public void testPersistAndLoadPaymentService() {
 
-        int id = 180;
         double amount = 99.99;
         Date date_date = Date.valueOf("2023-03-01");
         Timestamp date = new Timestamp(date_date.getTime());
@@ -67,13 +66,11 @@ public class PaymentServiceRepositoryTests {
 
         // Create object
         PaymentService obj = new PaymentService();
-        obj.setId(id);
         obj.setAmount(amount);
         obj.setDateTime(date);
         obj.setServiceReq(service_request);
 
         // Save object
-
         obj = paymentServiceRepository.save(obj);
         int payment_service_id = obj.getId();
 
