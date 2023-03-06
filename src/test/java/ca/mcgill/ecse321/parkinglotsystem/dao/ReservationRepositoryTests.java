@@ -109,6 +109,8 @@ public class ReservationRepositoryTests {
         singleReservation = (SingleReservation) reservationRepository.findReservationById(idSingle);
         subWithAccount = (SubWithAccount) reservationRepository.findReservationById(idSubWith);
         subWithoutAccount = (SubWithoutAccount) reservationRepository.findReservationById(idSubWithOut);
+        var objsDate = reservationRepository.findReservationByDate(Date.valueOf("2023-02-28"));
+        var objsSpot = reservationRepository.findReservationByParkingSpot(spotForSingle);
 
         // assert all reservations have the correct attributes
         assertNotNull(singleReservation);
@@ -125,7 +127,8 @@ public class ReservationRepositoryTests {
         assertEquals(3, subWithAccount.getNbrMonths());
         assertEquals(5, subWithoutAccount.getNbrMonths());
         assertEquals(customer1.getEmail(), subWithAccount.getCustomer().getEmail());
-
+        assertEquals(3, objsDate.size());
+        assertEquals(1, objsSpot.size());
 
     }
 }

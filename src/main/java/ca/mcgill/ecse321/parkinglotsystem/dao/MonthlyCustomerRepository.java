@@ -10,7 +10,7 @@ public interface MonthlyCustomerRepository extends CrudRepository<MonthlyCustome
 
     MonthlyCustomer findMonthlyCustomerByEmail(String email);
 
-    List<MonthlyCustomer> findMonthlyByName(String name);
+    List<MonthlyCustomer> findMonthlyCustomerByName(String name);
 
     List<MonthlyCustomer> findMonthlyCustomerByPhone(String phone);
 

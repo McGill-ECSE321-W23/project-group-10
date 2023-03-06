@@ -39,11 +39,17 @@ public class EmployeeRepositoryTests {
 
         // Read object from database
         jesse = employeeRepository.findEmployeeByEmail(id);
+        var objsByName = employeeRepository.findEmployeeByName(name);
+        var objsByPass = employeeRepository.findEmployeeByPassword(password);
+        var objsByPhone = employeeRepository.findEmployeeByPhone(phone);
 
         // Assert that object has correct attributes
         assertNotNull(jesse);
         assertEquals(name, jesse.getName());
         assertEquals(phone, jesse.getPhone());
         assertEquals(password, jesse.getPassword());
+        assertEquals(1, objsByName.size());
+        assertEquals(1, objsByPass.size());
+        assertEquals(1, objsByPhone.size());
     }
 }

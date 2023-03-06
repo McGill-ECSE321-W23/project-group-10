@@ -39,11 +39,17 @@ public class MonthlyCustomerRepositoryTests {
 
         // Read object from database
         jonas = monthlyCustomerRepository.findMonthlyCustomerByEmail(id);
+        var objsByName = monthlyCustomerRepository.findMonthlyCustomerByName(name);
+        var objsByPass = monthlyCustomerRepository.findMonthlyCustomerByPassword(password);
+        var objsByPhone = monthlyCustomerRepository.findMonthlyCustomerByPhone(phone);
 
         // Assert that object has correct attributes
         assertNotNull(jonas);
         assertEquals(name, jonas.getName());
         assertEquals(phone, jonas.getPhone());
         assertEquals(password, jonas.getPassword());
+        assertEquals(1, objsByName.size());
+        assertEquals(1, objsByPass.size());
+        assertEquals(1, objsByPhone.size());
     }
 }

@@ -39,11 +39,17 @@ public class ManagerRepositoryTests {
 
         // Read object from database
         walter = managerRepository.findManagerByEmail(id);
+        var objsByName = managerRepository.findManagerByName(name);
+        var objsByPass = managerRepository.findManagerByPassword(password);
+        var objsByPhone = managerRepository.findManagerByPhone(phone);
 
         // Assert that object has correct attributes
         assertNotNull(walter);
         assertEquals(name, walter.getName());
         assertEquals(phone, walter.getPhone());
         assertEquals(password, walter.getPassword());
+        assertEquals(1, objsByName.size());
+        assertEquals(1, objsByPass.size());
+        assertEquals(1, objsByPhone.size());
     }
 }
