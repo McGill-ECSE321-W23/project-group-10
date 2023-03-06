@@ -29,10 +29,11 @@ public class SingleReservationRepositoryTests {
         parkingSpotRepository.deleteAll();
         parkingSpotTypeRepository.deleteAll();
     }
+    
     @Test
     public void testPersistenceAndLoadSingleReservation() {
+
         // create data
-        
         ParkingSpotType type = new ParkingSpotType();
         type.setFee(3.50);
         type.setName("regular");
@@ -43,7 +44,6 @@ public class SingleReservationRepositoryTests {
 
         // Create a new SingleReservation
         SingleReservation singleReservation = new SingleReservation();
-        //singleReservation.setId(1); TODO: confirm that it works
         singleReservation.setDate(Date.valueOf("2023-02-27"));
         singleReservation.setLicenseNumber("ABC123");
         singleReservation.setParkingSpot(spot);
@@ -62,7 +62,6 @@ public class SingleReservationRepositoryTests {
         assertEquals(Date.valueOf("2023-02-27"), singleReservation.getDate());
         assertEquals(1, singleReservationRepository.findSingleReservationsByLicenseNumber("ABC123").size());
         assertEquals(1, singleReservationRepository.findSingleReservationsByDate(Date.valueOf("2023-02-27")).size());
-
 
     }
 
