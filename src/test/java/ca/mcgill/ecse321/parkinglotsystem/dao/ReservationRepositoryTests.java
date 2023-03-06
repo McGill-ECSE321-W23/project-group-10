@@ -58,7 +58,7 @@ public class ReservationRepositoryTests {
         spotForSubWithAccount.setId(3);
         spotForSubWithAccount.setType(typeForSubWithAccount);
         spotForSubWithAccount = parkingSpotRepository.save(spotForSubWithAccount);
-        
+
         MonthlyCustomer customer1 = new MonthlyCustomer();
         customer1.setEmail("customer1@gmail.com");
         customer1.setName("Jennifer Black");
@@ -122,7 +122,7 @@ public class ReservationRepositoryTests {
         assertEquals(spotForSubWithoutAccount.getId(), subWithoutAccount.getParkingSpot().getId());
         assertEquals("CA021B", singleReservation.getLicenseNumber());
         assertEquals("CA123E", subWithoutAccount.getLicenseNumber());
-        assertEquals(3,subWithAccount.getNbrMonths());
+        assertEquals(3, subWithAccount.getNbrMonths());
         assertEquals(5, subWithoutAccount.getNbrMonths());
         assertEquals(customer1.getEmail(), subWithAccount.getCustomer().getEmail());
 

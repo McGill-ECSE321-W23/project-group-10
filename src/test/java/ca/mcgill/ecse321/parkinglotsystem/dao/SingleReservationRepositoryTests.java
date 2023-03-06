@@ -29,7 +29,7 @@ public class SingleReservationRepositoryTests {
         parkingSpotRepository.deleteAll();
         parkingSpotTypeRepository.deleteAll();
     }
-    
+
     @Test
     public void testPersistenceAndLoadSingleReservation() {
 
@@ -65,7 +65,7 @@ public class SingleReservationRepositoryTests {
 
     }
 
-    
+
 }
 
 

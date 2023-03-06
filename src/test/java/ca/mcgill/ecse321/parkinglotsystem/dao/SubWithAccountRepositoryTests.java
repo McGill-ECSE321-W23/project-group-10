@@ -74,8 +74,8 @@ public class SubWithAccountRepositoryTests {
         assertEquals(nbrMonths, obj.getNbrMonths());
         assertEquals(customer.getEmail(), obj.getCustomer().getEmail());
         assertEquals(1, subWithAccountRepository.
-            findSubWithAccountByParkingSpot(parkingSpot).size());
+                findSubWithAccountByParkingSpot(parkingSpot).size());
         assertEquals(1, subWithAccountRepository.
-            findSubWithAccountByCustomer(customer).size());
+                findSubWithAccountByCustomer(customer).size());
     }
 }

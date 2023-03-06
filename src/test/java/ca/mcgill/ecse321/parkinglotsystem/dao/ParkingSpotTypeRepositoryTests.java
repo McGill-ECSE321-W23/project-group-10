@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.parkinglotsystem.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ public class ParkingSpotTypeRepositoryTests {
 
     @Autowired
     private ParkingSpotTypeRepository parkingSpotTypeRepository;
-
 
 
     @AfterEach
@@ -33,7 +33,7 @@ public class ParkingSpotTypeRepositoryTests {
         parkingSpotType.setFee(fee);
         parkingSpotType = parkingSpotTypeRepository.save(parkingSpotType);
 
-        
+
         assertEquals(typeName, parkingSpotType.getName());
         assertEquals(typeName, parkingSpotTypeRepository.findParkingSpotTypeByName(typeName).getName());
         assertEquals(fee, parkingSpotTypeRepository.findParkingSpotTypeByName(typeName).getFee());

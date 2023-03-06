@@ -6,11 +6,14 @@ import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 
 import java.util.List;
 
-public interface MonthlyCustomerRepository extends CrudRepository<MonthlyCustomer, String>{
-    
-	MonthlyCustomer findMonthlyCustomerByEmail(String email);
+public interface MonthlyCustomerRepository extends CrudRepository<MonthlyCustomer, String> {
+
+    MonthlyCustomer findMonthlyCustomerByEmail(String email);
+
     List<MonthlyCustomer> findMonthlyByName(String name);
-	List<MonthlyCustomer> findMonthlyCustomerByPhone(String phone);
-	List<MonthlyCustomer> findMonthlyCustomerByPassword(String password);
+
+    List<MonthlyCustomer> findMonthlyCustomerByPhone(String phone);
+
+    List<MonthlyCustomer> findMonthlyCustomerByPassword(String password);
 
 }

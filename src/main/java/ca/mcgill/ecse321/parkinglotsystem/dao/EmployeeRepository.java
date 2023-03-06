@@ -6,11 +6,14 @@ import ca.mcgill.ecse321.parkinglotsystem.model.Employee;
 
 import java.util.List;
 
-public interface EmployeeRepository extends CrudRepository<Employee, String>{
+public interface EmployeeRepository extends CrudRepository<Employee, String> {
 
     Employee findEmployeeByEmail(String email);
+
     List<Employee> findEmployeeByName(String name);
-	List<Employee> findEmployeeByPhone(String phone);
+
+    List<Employee> findEmployeeByPhone(String phone);
+
     List<Employee> findEmployeeByPassword(String password);
 
 }

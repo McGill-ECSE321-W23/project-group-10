@@ -69,7 +69,7 @@ public class PaymentServiceRepositoryTests {
         obj.setServiceReq(service_request);
 
         // Save object
-        
+
         obj = paymentServiceRepository.save(obj);
         int payment_service_id = obj.getId();
 

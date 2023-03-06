@@ -29,7 +29,7 @@ public class ServiceRequestRepositoryTests {
         // Create dummy data
         boolean isAssigned = false;
         String licenseNumber = "123";
-        
+
         Service service = new Service();
         service.setDescription("someService");
         service.setPrice(50);
