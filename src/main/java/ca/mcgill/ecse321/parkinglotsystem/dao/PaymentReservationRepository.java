@@ -9,7 +9,9 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface PaymentReservationRepository extends CrudRepository<PaymentReservation, Integer> {
 
+    //find a payment reservation by id
     PaymentReservation findPaymentReservationById(int id);
 
+    //find payments for reservation by reservation
     List<PaymentReservation> findPaymentReservationByReservation(Reservation reservation);
 }

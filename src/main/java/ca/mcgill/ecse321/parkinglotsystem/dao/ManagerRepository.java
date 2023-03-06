@@ -8,12 +8,16 @@ import java.util.List;
 
 public interface ManagerRepository extends CrudRepository<Manager, String> {
 
+    //find manager by email
     Manager findManagerByEmail(String email);
 
+    //find manager by name
     List<Manager> findManagerByName(String name);
 
+    //find manager by phone number
     List<Manager> findManagerByPhone(String phone);
 
+    //find manager by password
     List<Manager> findManagerByPassword(String password);
 
 }
