@@ -33,7 +33,7 @@ public class SingleReservationRepositoryTests {
     @Test
     public void testPersistenceAndLoadSingleReservation() {
 
-        // create data
+        // create dummy data
         ParkingSpotType type = new ParkingSpotType();
         type.setFee(3.50);
         type.setName("regular");

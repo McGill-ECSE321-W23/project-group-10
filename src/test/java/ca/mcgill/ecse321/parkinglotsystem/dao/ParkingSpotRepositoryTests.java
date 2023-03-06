@@ -46,6 +46,7 @@ public class ParkingSpotRepositoryTests {
 
         parkingSpot = parkingSpotRepository.findParkingSpotById(id);
 
+        // Assert that object has correct attributes
         assertNotNull(parkingSpot);
         assertEquals("regular", parkingSpot.getType().getName());
         assertEquals(1, parkingSpotRepository.findParkingSpotByType(parkingSpotType).size());

@@ -38,7 +38,7 @@ public class ReservationRepositoryTests {
 
     @Test
     public void testPersistenceAndLoadReservation() {
-        // Create some data
+        // Create test data
         ParkingSpotType typeForSingle = new ParkingSpotType();
         typeForSingle.setName("regular");
         typeForSingle.setFee(3.50);
