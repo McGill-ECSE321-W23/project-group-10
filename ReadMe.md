@@ -1,9 +1,19 @@
-# Parking Lot System
-## ECSE 321 Project Group 10
+# Parking Lot System: ECSE 321 Project Group 10
 
 Welcome to the ECSE 321 Group 10 project.
 
 Please check the wiki for information on the architecture of the system.
+
+## Team Members
+
+| Name           | GitHub username |
+|----------------|-----------------|
+| Luke E         | JiaxiangE       |
+| Weiheng Xiao   | Louis896        |
+| Marco Vidalon  | MarcVida        |
+| Mike Zhang     | Mikez08         |
+| Chenxin Xun    | ChenxinXun-123  |
+| Shaun Soobagrah| Shaun210       |
 
 ***
 
@@ -17,16 +27,6 @@ The parking lot is managed by its owner, who gets their own user account. The lo
 
 ***
 
-## Deliverable 1
+## Links
+<a href="https://github.com/McGill-ECSE321-W23/project-group-10/wiki/Sprint-1:-Project-Report">Sprint 1: Project Report</a>
 
-For more information about the application, please consult the [wiki](https://github.com/McGill-ECSE321-W23/project-group-10/wiki).
-
-## Team Members
-
-| Name           | GitHub username |
-|----------------|-----------------|
-| Luke E         | JiaxiangE       |
-| Weiheng Xiao   | Louis896        |
-| Marco Vidalon  | MarcVida        |
-| Mike Zhang     | Mikez08         |
-| Chenxin Xun    | ChenxinXun-123  |

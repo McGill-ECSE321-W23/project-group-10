@@ -3,9 +3,6 @@ package ca.mcgill.ecse321.parkinglotsystem.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,9 @@ import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 public class ServiceReqWithAccountRepositoryTests {
     @Autowired
     private ServiceReqWithAccountRepository serviceReqWithAccountRepository;
+    @Autowired
     private ServiceRepository serviceRepository;
+    @Autowired
     private MonthlyCustomerRepository monthlyCustomerRepository;
 
     @AfterEach
@@ -31,10 +30,21 @@ public class ServiceReqWithAccountRepositoryTests {
 
     @Test
     public void testPersistAndLoadServiceReqWithAccount() {
-        int id = 1234;
+        //int id = 1234;
         boolean isAssigned = true;
+
         Service service = new Service();
+        service.setDescription("someService");
+        service.setPrice(50);
+        service = serviceRepository.save(service);
+
         MonthlyCustomer monthlyCustomer = new MonthlyCustomer();
+        monthlyCustomer.setEmail("hello@world.com");
+        monthlyCustomer.setLicenseNumber("123");
+        monthlyCustomer.setName("Marc");
+        monthlyCustomer.setPassword("456");
+        monthlyCustomer.setPhone("450");
+        monthlyCustomer = monthlyCustomerRepository.save(monthlyCustomer);
 
         // Create object
         ServiceReqWithAccount obj = new ServiceReqWithAccount();
@@ -44,39 +54,24 @@ public class ServiceReqWithAccountRepositoryTests {
 
         // Save object
         obj = serviceReqWithAccountRepository.save(obj);
-        serviceRepository.save(service);
-        monthlyCustomerRepository.save(monthlyCustomer);
+        int id = obj.getId();
 
         // Read object from database
-        List<ServiceReqWithAccount> objs = new ArrayList<ServiceReqWithAccount>();
-        List<List<ServiceReqWithAccount>> all_objs = new ArrayList<List<ServiceReqWithAccount>>();
-        List<ServiceReqWithAccount> all_obj = new ArrayList<ServiceReqWithAccount>();
         obj = serviceReqWithAccountRepository.findServiceReqWithAccountById(id);
-        all_obj.add(obj);
-        objs = serviceReqWithAccountRepository.findServiceReqWithAccountByIsAssigned(isAssigned);
-        all_objs.add(objs);
-        objs = serviceReqWithAccountRepository.findServiceReqWithAccountByService(service);
-        all_objs.add(objs);
-        objs = serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer);
-        all_objs.add(objs);
+        var objs1 = serviceReqWithAccountRepository.findServiceReqWithAccountByIsAssigned(isAssigned);
+        var objs2 = serviceReqWithAccountRepository.findServiceReqWithAccountByService(service);
+        var objs3 = serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer);
 
-        // Assert that object has correct attributes
-        for (ServiceReqWithAccount aServiceReqWithAccount : all_obj){
-            assertNotNull(aServiceReqWithAccount);
-            assertEquals(id, aServiceReqWithAccount.getId());
-            assertEquals(isAssigned, aServiceReqWithAccount.getIsAssigned());
-            assertEquals(monthlyCustomer, aServiceReqWithAccount.getCustomer());
-            assertEquals(service, aServiceReqWithAccount.getService());
-        }
-
-        for (List<ServiceReqWithAccount> aServiceReqWithAccountList : all_objs){
-            for (ServiceReqWithAccount aServiceReqWithAccount : aServiceReqWithAccountList){
-                assertNotNull(aServiceReqWithAccount);
-                assertEquals(id, aServiceReqWithAccount.getId());
-                assertEquals(isAssigned, aServiceReqWithAccount.getIsAssigned());
-                assertEquals(monthlyCustomer, aServiceReqWithAccount.getCustomer());
-                assertEquals(service, aServiceReqWithAccount.getService());
-            }
-        }
+        // Assertions
+        assertNotNull(obj);
+        assertEquals(isAssigned, obj.getIsAssigned());
+        assertEquals(service.getDescription(), obj.getService().getDescription());
+        assertEquals(monthlyCustomer.getEmail(), obj.getCustomer().getEmail());
+        assertEquals(1, objs1.size());
+        assertEquals(1, objs2.size());
+        assertEquals(1, objs3.size());
+        assertEquals(id, objs1.get(0).getId());
+        assertEquals(id, objs2.get(0).getId());
+        assertEquals(id, objs3.get(0).getId());
     }
 }

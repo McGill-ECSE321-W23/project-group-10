@@ -37,17 +37,18 @@ public class PaymentServiceRepositoryTests {
 
     @Test
     public void testPersistAndLoadPaymentService() {
-        // Create object
-        int id = 180;
+
         double amount = 99.99;
         Date date_date = Date.valueOf("2023-03-01");
         Timestamp date = new Timestamp(date_date.getTime());
 
+        //Create service
         Service service = new Service();
         service.setDescription("someService");
         service.setPrice(100);
         service = serviceRepository.save(service);
 
+        //Create customer
         MonthlyCustomer customer = new MonthlyCustomer();
         customer.setEmail("hello@world.com");
         customer.setLicenseNumber("1234");
@@ -56,20 +57,20 @@ public class PaymentServiceRepositoryTests {
         customer.setPhone("567");
         customer = customerRepository.save(customer);
 
+        //Create service request
         ServiceReqWithAccount service_request = new ServiceReqWithAccount();
         service_request.setIsAssigned(false);
         service_request.setService(service);
         service_request.setCustomer(customer);
         service_request = serviceRequestRepository.save(service_request);
 
+        // Create object
         PaymentService obj = new PaymentService();
-        obj.setId(id);
         obj.setAmount(amount);
         obj.setDateTime(date);
         obj.setServiceReq(service_request);
 
         // Save object
-        
         obj = paymentServiceRepository.save(obj);
         int payment_service_id = obj.getId();
 

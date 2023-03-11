@@ -10,31 +10,34 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
-import ca.mcgill.ecse321.parkinglotsystem.model.SubWithoutAccount;
+import ca.mcgill.ecse321.parkinglotsystem.model.SubWithAccount;
 
 @SpringBootTest
-public class SubWithoutAccountRepositoryTests {
+public class SubWithAccountRepositoryTests {
     @Autowired
-    private SubWithoutAccountRepository subWithoutAccountRepository;
+    private SubWithAccountRepository subWithAccountRepository;
     @Autowired
     private ParkingSpotTypeRepository parkingSpotTypeRepository;
     @Autowired
     private ParkingSpotRepository parkingSpotRepository;
+    @Autowired
+    private MonthlyCustomerRepository monthlyCustomerRepository;
 
     @AfterEach
     public void clearDatabase() {
-        subWithoutAccountRepository.deleteAll();
+        subWithAccountRepository.deleteAll();
         parkingSpotRepository.deleteAll();
         parkingSpotTypeRepository.deleteAll();
+        monthlyCustomerRepository.deleteAll();
     }
 
     @Test
-    public void testPersistAndLoadSubWithoutAccount() {
+    public void testPersistAndLoadSubWithAccount() {
         // Create dummy data
         Date date = Date.valueOf("2023-02-22");
-        String licenseNumber = "12345";
         int nbrMonths = 1;
         ParkingSpotType pSpotType = new ParkingSpotType();
         pSpotType.setName("regular");
@@ -44,31 +47,37 @@ public class SubWithoutAccountRepositoryTests {
         parkingSpot.setId(1);
         parkingSpot.setType(pSpotType);
         parkingSpotRepository.save(parkingSpot);
+        MonthlyCustomer customer = new MonthlyCustomer();
+        customer.setEmail("hello@world.com");
+        customer.setLicenseNumber("12345");
+        customer.setName("Marc");
+        customer.setPassword("456");
+        customer.setPhone("450");
+        customer = monthlyCustomerRepository.save(customer);
 
         // Create object
-        SubWithoutAccount obj = new SubWithoutAccount();
+        SubWithAccount obj = new SubWithAccount();
         obj.setDate(date);
-        obj.setLicenseNumber(licenseNumber);
         obj.setNbrMonths(nbrMonths);
         obj.setParkingSpot(parkingSpot);
+        obj.setCustomer(customer);
 
         // Save object
-        obj = subWithoutAccountRepository.save(obj);
+        obj = subWithAccountRepository.save(obj);
         int id = obj.getId();
 
         // Read object from database
-        obj = subWithoutAccountRepository.findSubWithoutAccountById(id);
+        obj = subWithAccountRepository.findSubWithAccountById(id);
 
         // Assert that object has correct attributes
         assertNotNull(obj);
-        assertEquals(id, obj.getId());
         assertEquals(date, obj.getDate());
-        assertEquals(licenseNumber, obj.getLicenseNumber());
         assertEquals(nbrMonths, obj.getNbrMonths());
         assertEquals(parkingSpot.getId(), obj.getParkingSpot().getId());
-        assertEquals(1, subWithoutAccountRepository.
-                findSubWithoutAccountByLicenseNumber(licenseNumber).size());
-        assertEquals(1, subWithoutAccountRepository.
-                findSubWithoutAccountByParkingSpot(parkingSpot).size());
+        assertEquals(customer.getEmail(), obj.getCustomer().getEmail());
+        assertEquals(1, subWithAccountRepository.
+                findSubWithAccountByParkingSpot(parkingSpot).size());
+        assertEquals(1, subWithAccountRepository.
+                findSubWithAccountByCustomer(customer).size());
     }
 }

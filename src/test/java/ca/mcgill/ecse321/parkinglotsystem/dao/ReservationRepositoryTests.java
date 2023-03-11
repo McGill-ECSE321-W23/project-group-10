@@ -38,7 +38,7 @@ public class ReservationRepositoryTests {
 
     @Test
     public void testPersistenceAndLoadReservation() {
-        // Create some data
+        // Create test data
         ParkingSpotType typeForSingle = new ParkingSpotType();
         typeForSingle.setName("regular");
         typeForSingle.setFee(3.50);
@@ -58,7 +58,7 @@ public class ReservationRepositoryTests {
         spotForSubWithAccount.setId(3);
         spotForSubWithAccount.setType(typeForSubWithAccount);
         spotForSubWithAccount = parkingSpotRepository.save(spotForSubWithAccount);
-        
+
         MonthlyCustomer customer1 = new MonthlyCustomer();
         customer1.setEmail("customer1@gmail.com");
         customer1.setName("Jennifer Black");
@@ -109,6 +109,8 @@ public class ReservationRepositoryTests {
         singleReservation = (SingleReservation) reservationRepository.findReservationById(idSingle);
         subWithAccount = (SubWithAccount) reservationRepository.findReservationById(idSubWith);
         subWithoutAccount = (SubWithoutAccount) reservationRepository.findReservationById(idSubWithOut);
+        var objsDate = reservationRepository.findReservationByDate(Date.valueOf("2023-02-28"));
+        var objsSpot = reservationRepository.findReservationByParkingSpot(spotForSingle);
 
         // assert all reservations have the correct attributes
         assertNotNull(singleReservation);
@@ -122,10 +124,11 @@ public class ReservationRepositoryTests {
         assertEquals(spotForSubWithoutAccount.getId(), subWithoutAccount.getParkingSpot().getId());
         assertEquals("CA021B", singleReservation.getLicenseNumber());
         assertEquals("CA123E", subWithoutAccount.getLicenseNumber());
-        assertEquals(3,subWithAccount.getNbrMonths());
+        assertEquals(3, subWithAccount.getNbrMonths());
         assertEquals(5, subWithoutAccount.getNbrMonths());
         assertEquals(customer1.getEmail(), subWithAccount.getCustomer().getEmail());
-
+        assertEquals(3, objsDate.size());
+        assertEquals(1, objsSpot.size());
 
     }
 }
