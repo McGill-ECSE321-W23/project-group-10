@@ -6,11 +6,18 @@ import ca.mcgill.ecse321.parkinglotsystem.model.Manager;
 
 import java.util.List;
 
-public interface ManagerRepository extends CrudRepository<Manager, String>{
+public interface ManagerRepository extends CrudRepository<Manager, String> {
 
-	Manager findManagerByEmail(String email);
-	List<Manager> findManagerByName(String name);
-	List<Manager> findManagerByPhone(String phone);
-	List<Manager> findManagerByPassword(String password);
+    //find manager by email
+    Manager findManagerByEmail(String email);
+
+    //find manager by name
+    List<Manager> findManagerByName(String name);
+
+    //find manager by phone number
+    List<Manager> findManagerByPhone(String phone);
+
+    //find manager by password
+    List<Manager> findManagerByPassword(String password);
 
 }
