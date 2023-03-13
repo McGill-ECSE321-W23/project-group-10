@@ -49,10 +49,8 @@ public class HelperMethods {
             throw new IllegalArgumentException("There is no such parking spot type! ");
         }
         ParkingSpotDto parkingSpotDto = new ParkingSpotDto();
-        
-
         parkingSpotDto.setId(parkingSpot.getId());
-        parkingSpotDto.setType(parkingSpot.getType());
+        parkingSpotDto.setType(convertParkingSpotTypeToDto(parkingSpot.getType()));
         return parkingSpotDto;
     }
 }
