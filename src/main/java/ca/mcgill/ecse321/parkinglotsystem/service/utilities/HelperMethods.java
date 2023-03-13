@@ -27,7 +27,7 @@ public class HelperMethods {
      * @param parkingSpotType
      * @return Dto
      */
-    private ParkingSpotTypeDto convertParkingSpotTypeToDto(ParkingSpotType parkingSpotType) {
+    public ParkingSpotTypeDto convertParkingSpotTypeToDto(ParkingSpotType parkingSpotType) {
 
         if (parkingSpotType == null) {
             throw new IllegalArgumentException("There is no such parking spot type! ");
@@ -43,7 +43,7 @@ public class HelperMethods {
      * @param parkingSpot  
      * @return Dto
      */
-    private ParkingSpotDto convertParkingSpotToDto(ParkingSpot parkingSpot) {
+    public ParkingSpotDto convertParkingSpotToDto(ParkingSpot parkingSpot) {
 
         if (parkingSpot == null) {
             throw new IllegalArgumentException("There is no such parking spot type! ");
