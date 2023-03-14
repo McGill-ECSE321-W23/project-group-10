@@ -29,7 +29,7 @@ public class ServiceRequestRepositoryTests {
         // Create dummy data
         boolean isAssigned = false;
         String licenseNumber = "123";
-        
+
         Service service = new Service();
         service.setDescription("someService");
         service.setPrice(50);
@@ -47,11 +47,15 @@ public class ServiceRequestRepositoryTests {
 
         // Read object from database
         obj = (ServiceReqWithoutAccount) serviceRequestRepository.findServiceRequestById(id);
+        var objsIsAssigned = serviceRequestRepository.findServiceRequestByIsAssigned(isAssigned);
+        var objsService = serviceRequestRepository.findServiceRequestByService(service);
 
         // Assert that object has correct attributes
         assertNotNull(obj);
         assertEquals(isAssigned, obj.getIsAssigned());
         assertEquals(licenseNumber, obj.getLicenseNumber());
         assertEquals(service.getDescription(), obj.getService().getDescription());
+        assertEquals(1, objsIsAssigned.size());
+        assertEquals(1, objsService.size());
     }
 }

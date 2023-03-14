@@ -16,7 +16,7 @@ public class SubWithAccount extends Reservation {
     public void setNbrMonths(int nbrMonths) {
         this.nbrMonths = nbrMonths;
     }
-    @ManyToOne(optional = true) // TODO: Discuss with team about this
+    @ManyToOne(optional = true)
     public MonthlyCustomer getCustomer() {
         return customer;
     }

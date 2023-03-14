@@ -41,6 +41,7 @@ public class SubWithoutAccountRepositoryTests {
         pSpotType.setFee(5.0);
         parkingSpotTypeRepository.save(pSpotType);
         ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpot.setId(1);
         parkingSpot.setType(pSpotType);
         parkingSpotRepository.save(parkingSpot);
 
@@ -64,9 +65,10 @@ public class SubWithoutAccountRepositoryTests {
         assertEquals(date, obj.getDate());
         assertEquals(licenseNumber, obj.getLicenseNumber());
         assertEquals(nbrMonths, obj.getNbrMonths());
+        assertEquals(parkingSpot.getId(), obj.getParkingSpot().getId());
         assertEquals(1, subWithoutAccountRepository.
-            findSubWithoutAccountByLicenseNumber(licenseNumber).size());
+                findSubWithoutAccountByLicenseNumber(licenseNumber).size());
         assertEquals(1, subWithoutAccountRepository.
-            findSubWithoutAccountByParkingSpot(parkingSpot).size());
+                findSubWithoutAccountByParkingSpot(parkingSpot).size());
     }
 }

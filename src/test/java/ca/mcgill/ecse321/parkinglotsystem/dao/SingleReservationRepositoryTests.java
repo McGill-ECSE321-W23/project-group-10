@@ -29,16 +29,17 @@ public class SingleReservationRepositoryTests {
         parkingSpotRepository.deleteAll();
         parkingSpotTypeRepository.deleteAll();
     }
-    
+
     @Test
     public void testPersistenceAndLoadSingleReservation() {
 
-        // create data
+        // create dummy data
         ParkingSpotType type = new ParkingSpotType();
         type.setFee(3.50);
         type.setName("regular");
         type = parkingSpotTypeRepository.save(type);
         ParkingSpot spot = new ParkingSpot();
+        spot.setId(1);
         spot.setType(type);
         spot = parkingSpotRepository.save(spot);
 
@@ -65,7 +66,7 @@ public class SingleReservationRepositoryTests {
 
     }
 
-    
+
 }
 
 

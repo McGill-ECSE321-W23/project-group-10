@@ -27,7 +27,7 @@ public class ServiceReqWithoutAccountRepositoryTests {
     @Test
     public void testPersistAndLoadServiceReqWithoutAccount() {
         boolean isAssigned = true;
-        String licenseNumber = "abcd"; 
+        String licenseNumber = "abcd";
         String serviceDesc = "someService";
         Service service = new Service();
         service.setDescription(serviceDesc);
@@ -47,11 +47,11 @@ public class ServiceReqWithoutAccountRepositoryTests {
         // Read object from database
         obj = serviceReqWithoutAccountRepository.findServiceReqWithoutAccountById(id);
         var objs1 = serviceReqWithoutAccountRepository.
-            findServiceReqWithoutAccountByIsAssigned(isAssigned);
+                findServiceReqWithoutAccountByIsAssigned(isAssigned);
         var objs2 = serviceReqWithoutAccountRepository.
-            findServiceReqWithoutAccountByService(service);
+                findServiceReqWithoutAccountByService(service);
         var objs3 = serviceReqWithoutAccountRepository.
-            findServiceReqWithoutAccountBylicenseNumber(licenseNumber);
+                findServiceReqWithoutAccountBylicenseNumber(licenseNumber);
 
         // Assertions
         assertNotNull(obj);

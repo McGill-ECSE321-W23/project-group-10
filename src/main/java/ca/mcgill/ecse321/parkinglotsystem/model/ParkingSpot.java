@@ -2,8 +2,6 @@ package ca.mcgill.ecse321.parkinglotsystem.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -13,7 +11,6 @@ public class ParkingSpot {
     private ParkingSpotType type;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     public int getId() {
         return id;
