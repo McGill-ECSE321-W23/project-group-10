@@ -15,6 +15,7 @@ import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotTypeRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dto.ParkingSpotTypeDto;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
+import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 
 
 @Service
@@ -40,15 +41,19 @@ public class ParkingSpotTypeService {
             error = error + "Parking spot type fee cannot be less than or equal to zero! ";
         }
 
+        ParkingSpotType parkingSpotType = new ParkingSpotType();
 
         if (error.length() > 0) {
 			throw new IllegalArgumentException(error);
 		}
 
-        ParkingSpotType parkingSpotType = new ParkingSpotType();
-        parkingSpotType.setFee(fee);
-        parkingSpotType.setName(name);
-        parkingSpotTypeRepository.save(parkingSpotType);
+        else {
+            parkingSpotType.setFee(fee);
+            parkingSpotType.setName(name);
+            parkingSpotTypeRepository.save(parkingSpotType);
+        }
+
+        
         return parkingSpotType;
     } 
 
@@ -56,7 +61,7 @@ public class ParkingSpotTypeService {
     @Transactional
     public List<ParkingSpotType> getAllParkingSpotTypes() {
         Iterable <ParkingSpotType> parkingSTs = parkingSpotTypeRepository.findAll();
-        return toList(parkingSTs) ;
+        return HelperMethods.toList(parkingSTs) ;
     }
 
     // method to delete a parking spot type 
@@ -69,7 +74,6 @@ public class ParkingSpotTypeService {
             error = error + "a name must be mention to delete parking spot type! ";
         }
 
-        
 
         ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(name);
 
@@ -143,14 +147,5 @@ public class ParkingSpotTypeService {
 
     }
 
-    // Helper method that converts iterable to list
-    // @param iterable item
-    // @return list
-	private <T> List<T> toList(Iterable<T> iterable){
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-	}
+
 }
