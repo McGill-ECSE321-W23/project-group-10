@@ -6,15 +6,16 @@ import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 
 public class SubWithAccountDto extends ReservationDto {
     private int nbrMonths;
-    private MonthlyCustomerDto monthlyCustomerDto;
+    private MonthlyCustomerDto monthlyCustomer;
 
     public SubWithAccountDto() {
         super();
     }
 
-    public SubWithAccountDto(int id, Date date, ParkingSpotDto parkingSpot, MonthlyCustomerDto monthlyCustomer) {
+    public SubWithAccountDto(int id, Date date, ParkingSpotDto parkingSpot, int nbrMonths, MonthlyCustomerDto monthlyCustomer) {
         super(id,date, parkingSpot);
-        this.monthlyCustomerDto = monthlyCustomer;
+        this.nbrMonths = nbrMonths;
+        this.monthlyCustomer = monthlyCustomer;
     }
 
     public int getNbrMonths() {
@@ -23,10 +24,10 @@ public class SubWithAccountDto extends ReservationDto {
     public void setNbrMonths(int nbrMonths) {
         this.nbrMonths = nbrMonths;
     }
-    public MonthlyCustomerDto getMonthlyCustomerDto() {
-        return monthlyCustomerDto;
+    public MonthlyCustomerDto getMonthlyCustomer() {
+        return monthlyCustomer;
     }
-    public void setMonthlyCustomerDto(MonthlyCustomerDto monthlyCustomerDto) {
-        this.monthlyCustomerDto = monthlyCustomerDto;
+    public void setMonthlyCustomer(MonthlyCustomerDto monthlyCustomer) {
+        this.monthlyCustomer = monthlyCustomer;
     }
 }
