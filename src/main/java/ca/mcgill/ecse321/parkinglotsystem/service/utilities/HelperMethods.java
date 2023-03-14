@@ -53,4 +53,21 @@ public class HelperMethods {
         parkingSpotDto.setType(convertParkingSpotTypeToDto(parkingSpot.getType()));
         return parkingSpotDto;
     }
+
+    /**
+     * Converts a SubWithAccount object to a DTO.
+     * @param subWithAccount
+     * @return a DTO representing the SubWithAccount object
+     */
+    public static SubWithAccountDto convertSubWithAccountToDto(SubWithAccount subWithAccount) {
+        var parkingSpot = convertParkingSpotToDto(subWithAccount.getParkingSpot());
+        var monthlyCustomer = convertMonthlyCustomerToDto(subWithAccount.getCustomer());
+
+        return new SubWithAccountDto(
+            subWithAccount.getId(),
+            subWithAccount.getDate(),
+            parkingSpot,
+            monthlyCustomer
+        );
+    }
 }

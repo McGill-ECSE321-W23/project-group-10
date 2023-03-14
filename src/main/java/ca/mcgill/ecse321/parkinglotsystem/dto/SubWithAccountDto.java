@@ -24,9 +24,9 @@ public class SubWithAccountDto extends ReservationDto {
         this.nbrMonths = nbrMonths;
     }
     public MonthlyCustomerDto getMonthlyCustomerDto() {
-        return MonthlyCustomerDto;
+        return monthlyCustomerDto;
     }
     public void setMonthlyCustomerDto(MonthlyCustomerDto monthlyCustomerDto) {
-        MonthlyCustomerDto = monthlyCustomerDto;
+        this.monthlyCustomerDto = monthlyCustomerDto;
     }
 }
