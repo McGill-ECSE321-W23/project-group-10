@@ -51,7 +51,7 @@ public class ManagerController {
         @PathVariable("password") String password){
         try {
             //ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
-            Manager manager = managerService.createManager(name,email,phone,password);
+            Manager manager = managerService.createManager(email,name,phone,password);
             return HelperMethods.convertManagerToDto(manager);
         }catch(IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -121,7 +121,29 @@ public class ManagerController {
     }
 
 
-    
+    @DeleteMapping(value = {"/delete/{email}","/delete/{email}/"})
+    public ManagerDto deleteManagerDtoByEmail(@PathVariable("email") String email) {
+        try {
+            Manager ma = managerService.deleteManagerByEmail(email);
+            return HelperMethods.convertManagerToDto(ma);
+        }catch(IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        } 
+    }
+
+
+    @PutMapping(value ={"/update/{email}/{name}/{phone}/{password}", "/update/{email}/{name}/{phone}/{password}/"})
+    public ManagerDto updateManagerDto(@PathVariable("email") String email, 
+        @PathVariable("name") String name,
+        @PathVariable("phone") String phone,
+        @PathVariable("password") String password) {
+        try {
+            Manager ma = managerService.updateManager(email, name, phone, password);
+            return HelperMethods.convertManagerToDto(ma);
+        } catch(IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        } 
+    } 
 
 
 }

@@ -1,12 +1,8 @@
 package ca.mcgill.ecse321.parkinglotsystem.service;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jmx.access.InvalidInvocationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +25,7 @@ public class ManagerService {
      * @return newly created Manager or null
      */
     @Transactional
-     public Manager createManager(String name,String email,String phone,String password){
+     public Manager createManager(String email,String name,String phone,String password){
         String error="";
         if(name==null || name.trim().length()==0){
             error=error+"Manager name cannot be empty!";
@@ -89,5 +85,39 @@ public class ManagerService {
      public List<Manager> getAllManagers(){
         Iterable<Manager> mIterable=managerRepository.findAll();
         return HelperMethods.toList(mIterable);
+     }
+
+
+     @Transactional
+     public Manager deleteManagerByEmail(String email){
+        String error="";
+        Manager ma=managerRepository.findManagerByEmail(email);
+        if(ma==null){
+            error=error+"No manager with that email was found!";
+        }
+        if(error.length()>0){
+            throw new IllegalArgumentException(error);
+        }else{
+            managerRepository.delete(ma);
+            return ma;
+        }
+     }
+
+     @Transactional
+     public Manager updateManager(String email,String name,String phone,String password){
+        String error="";
+
+        Manager ma=managerRepository.findManagerByEmail(email);
+        if(managerRepository.findManagerByEmail(email)==null){
+            error=error+"No manager with that email exists!";
+        }
+        if(error.length()>0){
+            throw new IllegalArgumentException(error);
+        }else{
+            ma.setName(name);
+            ma.setPhone(phone);
+            ma.setPassword(password);
+            return ma;
+        }
      }
 }
