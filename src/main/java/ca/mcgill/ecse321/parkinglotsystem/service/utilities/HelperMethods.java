@@ -70,4 +70,21 @@ public class HelperMethods {
             monthlyCustomer
         );
     }
+
+    /**
+     * Helper method to convert parking spot type to a DTO
+     * @param manager  
+     * @return Dto
+     */
+    public static ManagerDto convertManagerToDto(Manager manager) {
+        if (manager == null) {
+            throw new IllegalArgumentException("There is no such manager! ");
+        }
+        ManagerDto managerDto = new ManagerDto();
+        managerDto.setEmail(manager.getEmail());
+        managerDto.setName(manager.getName());
+        managerDto.setPhone(manager.getPhone());
+        managerDto.setPassword(manager.getPassword());
+        return managerDto;
+    }
 }
