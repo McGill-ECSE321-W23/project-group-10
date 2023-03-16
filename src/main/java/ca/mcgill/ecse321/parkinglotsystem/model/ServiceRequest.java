@@ -27,10 +27,10 @@ public abstract class ServiceRequest {
     public void setId(int id) {
         this.id = id;
     }
-    public boolean isAssigned() {
+    public boolean getIsAssigned() {
         return isAssigned;
     }
-    public void setAssigned(boolean isAssigned) {
+    public void setIsAssigned(boolean isAssigned) {
         this.isAssigned = isAssigned;
     }
     @ManyToOne(optional = false)

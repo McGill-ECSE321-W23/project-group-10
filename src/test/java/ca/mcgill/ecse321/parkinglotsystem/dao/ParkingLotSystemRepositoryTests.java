@@ -52,15 +52,15 @@ public class ParkingLotSystemRepositoryTests {
         all_objs.add(objs);
 
         // Assert that object has correct attributes
-        for (ParkingLotSystem aParkingLotSystem : all_obj){
+        for (ParkingLotSystem aParkingLotSystem : all_obj) {
             assertNotNull(aParkingLotSystem);
             assertEquals(id, aParkingLotSystem.getId());
             assertEquals(openTime, aParkingLotSystem.getOpenTime());
             assertEquals(closeTime, aParkingLotSystem.getCloseTime());
         }
 
-        for (List<ParkingLotSystem> aParkingLotSystemList : all_objs){
-            for (ParkingLotSystem aParkingLotSystem : aParkingLotSystemList){
+        for (List<ParkingLotSystem> aParkingLotSystemList : all_objs) {
+            for (ParkingLotSystem aParkingLotSystem : aParkingLotSystemList) {
                 assertNotNull(aParkingLotSystem);
                 assertEquals(id, aParkingLotSystem.getId());
                 assertEquals(openTime, aParkingLotSystem.getOpenTime());

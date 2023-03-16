@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 public class ServiceReqWithAccount extends ServiceRequest {
     private MonthlyCustomer customer;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     public MonthlyCustomer getCustomer() {
         return customer;
     }
