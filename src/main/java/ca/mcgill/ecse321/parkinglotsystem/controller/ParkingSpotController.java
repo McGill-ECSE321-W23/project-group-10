@@ -25,7 +25,6 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
 /**
  * author Shaun Soobagrah
  */
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = {"/api/parking_spot", "/api/parking_spot/"})
