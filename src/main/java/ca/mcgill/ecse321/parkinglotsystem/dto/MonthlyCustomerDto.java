@@ -1,16 +1,17 @@
 package ca.mcgill.ecse321.parkinglotsystem.dto;
 
-public class ManagerDto {
+public class MonthlyCustomerDto {
     private String email;
     private String name;
     private String password;
     private String phone;
+    private String licenseNumber;
 
     
-    public ManagerDto(){};
+    public MonthlyCustomerDto(){};
 
 
-    public ManagerDto(String email,String name,String phone,String password){
+    public MonthlyCustomerDto(String email,String name,String phone,String password,String licenseNumber){
         this.email=email;
         this.name=name;
         this.phone=phone;
@@ -55,6 +56,16 @@ public class ManagerDto {
 
     public void setPassword(String password){
         this.password=password;
+    }
+
+
+    public String getLicenseNumber(){
+        return licenseNumber;
+    }
+
+
+    public void setLicenseNumber(String licenseNumber){
+        this.licenseNumber=licenseNumber;
     }
 
 }

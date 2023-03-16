@@ -10,7 +10,7 @@ public class EmployeeDto {
     public EmployeeDto(){};
 
 
-    public EmployeeDto(String name,String email,String phone,String password){
+    public EmployeeDto(String email,String name,String phone,String password){
         this.email=email;
         this.name=name;
         this.phone=phone;
