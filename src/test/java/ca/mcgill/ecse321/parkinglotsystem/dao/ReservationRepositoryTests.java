@@ -109,8 +109,8 @@ public class ReservationRepositoryTests {
         singleReservation = (SingleReservation) reservationRepository.findReservationById(idSingle);
         subWithAccount = (SubWithAccount) reservationRepository.findReservationById(idSubWith);
         subWithoutAccount = (SubWithoutAccount) reservationRepository.findReservationById(idSubWithOut);
-        var objsDate = reservationRepository.findReservationByDate(Date.valueOf("2023-02-28"));
-        var objsSpot = reservationRepository.findReservationByParkingSpot(spotForSingle);
+        var objsDate = reservationRepository.findReservationsByDate(Date.valueOf("2023-02-28"));
+        var objsSpot = reservationRepository.findReservationsByParkingSpot(spotForSingle);
 
         // assert all reservations have the correct attributes
         assertNotNull(singleReservation);
