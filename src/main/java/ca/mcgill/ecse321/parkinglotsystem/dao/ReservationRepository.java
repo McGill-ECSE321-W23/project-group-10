@@ -14,9 +14,9 @@ public interface ReservationRepository extends CrudRepository<Reservation, Integ
     Reservation findReservationById(int id);
 
     //find reservations by date
-    List<Reservation> findReservationByDate(Date date);
+    List<Reservation> findReservationsByDate(Date date);
 
     //find reservations by parking spot
-    List<Reservation> findReservationByParkingSpot(ParkingSpot parkingSpot);
+    List<Reservation> findReservationsByParkingSpot(ParkingSpot parkingSpot);
 
 }

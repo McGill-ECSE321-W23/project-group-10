@@ -53,4 +53,40 @@ public class HelperMethods {
         parkingSpotDto.setType(convertParkingSpotTypeToDto(parkingSpot.getType()));
         return parkingSpotDto;
     }
+
+    /**
+     * Converts a SubWithAccount object to a DTO.
+     * @param subWithAccount
+     * @return a DTO representing the SubWithAccount object
+     */
+    public static SubWithAccountDto convertSubWithAccountToDto(SubWithAccount subWithAccount) {
+        ParkingSpotDto parkingSpot = convertParkingSpotToDto(subWithAccount.getParkingSpot());
+        MonthlyCustomerDto monthlyCustomer = 
+            convertMonthlyCustomerToDto(subWithAccount.getCustomer());
+
+        return new SubWithAccountDto(
+            subWithAccount.getId(),
+            subWithAccount.getDate(),
+            parkingSpot,
+            subWithAccount.getNbrMonths(),
+            monthlyCustomer
+        );
+    }
+
+    /**
+     * Helper method to convert parking spot type to a DTO
+     * @param manager  
+     * @return Dto
+     */
+    public static ManagerDto convertManagerToDto(Manager manager) {
+        if (manager == null) {
+            throw new IllegalArgumentException("There is no such manager! ");
+        }
+        ManagerDto managerDto = new ManagerDto();
+        managerDto.setEmail(manager.getEmail());
+        managerDto.setName(manager.getName());
+        managerDto.setPhone(manager.getPhone());
+        managerDto.setPassword(manager.getPassword());
+        return managerDto;
+    }
 }

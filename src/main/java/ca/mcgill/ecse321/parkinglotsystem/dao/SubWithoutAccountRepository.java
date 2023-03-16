@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.parkinglotsystem.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -13,9 +14,11 @@ public interface SubWithoutAccountRepository extends CrudRepository<SubWithoutAc
     SubWithoutAccount findSubWithoutAccountById(int id);
 
     //find subscriptions without account by parking spot
-    List<SubWithoutAccount> findSubWithoutAccountByParkingSpot(ParkingSpot parkingSpot);
+    List<SubWithoutAccount> findSubWithoutAccountsByParkingSpot(ParkingSpot parkingSpot);
 
     //find subscriptions without account by license number
-    List<SubWithoutAccount> findSubWithoutAccountByLicenseNumber(String licenseNumber);
+    List<SubWithoutAccount> findSubWithoutAccountsByLicenseNumber(String licenseNumber);
+
+    List<SubWithoutAccount> findSubWithoutAccountbyDate(Date date);
 
 }
