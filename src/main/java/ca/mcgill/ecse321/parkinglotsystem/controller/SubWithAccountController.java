@@ -44,21 +44,24 @@ public class SubWithAccountController {
     @GetMapping(value = {"/active-by-customer/{email}", "/active-by-customer/{email}/"})
     public SubWithAccountDto getActiveSubWithAccount(
         @PathVariable("email") String monthlyCustomerEmail) {
-        return convertSubWithAccountToDto(subWithAccountService.getActiveSubWithAccount(monthlyCustomerEmail));
+        return convertSubWithAccountToDto(
+            subWithAccountService.getActiveSubWithAccount(monthlyCustomerEmail));
     }
     
     @PostMapping(value = {"", "/"})
     public SubWithAccountDto createSubWithAccount(
         @RequestParam(value = "customer-email") String monthlyCustomerEmail,
         @RequestParam(value = "parking-spot-id") int parkingSpotId) {
-        SubWithAccount sub = subWithAccountService.createSubWithAccount(monthlyCustomerEmail, parkingSpotId);
+        SubWithAccount sub = 
+            subWithAccountService.createSubWithAccount(monthlyCustomerEmail, parkingSpotId);
         return convertSubWithAccountToDto(sub);
     }
 
     @PostMapping(value = {"/{email}", "/{email}/"})
     public SubWithAccountDto updateSubWithAccount(
         @PathVariable("email") String monthlyCustomerEmail) {
-        return convertSubWithAccountToDto(subWithAccountService.updateSubWithAccount(monthlyCustomerEmail));
+        return convertSubWithAccountToDto(
+            subWithAccountService.updateSubWithAccount(monthlyCustomerEmail));
     }
 
     private List<SubWithAccountDto> convertSubWithAccountToDtoList(List<SubWithAccount> subs) {

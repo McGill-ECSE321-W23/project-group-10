@@ -25,6 +25,8 @@ public class SubWithAccountService {
     @Autowired
     private ParkingSpotRepository parkingSpotRepository;
 
+    // TODO: Use service methods to get monthly customers & parking spot
+
     /**
      * Creates a subscription with the given monthly customer account and parking spot.
      * 
