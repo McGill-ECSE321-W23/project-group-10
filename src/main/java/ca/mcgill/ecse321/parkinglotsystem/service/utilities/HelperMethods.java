@@ -60,13 +60,15 @@ public class HelperMethods {
      * @return a DTO representing the SubWithAccount object
      */
     public static SubWithAccountDto convertSubWithAccountToDto(SubWithAccount subWithAccount) {
-        var parkingSpot = convertParkingSpotToDto(subWithAccount.getParkingSpot());
-        var monthlyCustomer = convertMonthlyCustomerToDto(subWithAccount.getCustomer());
+        ParkingSpotDto parkingSpot = convertParkingSpotToDto(subWithAccount.getParkingSpot());
+        MonthlyCustomerDto monthlyCustomer = 
+            convertMonthlyCustomerToDto(subWithAccount.getCustomer());
 
         return new SubWithAccountDto(
             subWithAccount.getId(),
             subWithAccount.getDate(),
             parkingSpot,
+            subWithAccount.getNbrMonths(),
             monthlyCustomer
         );
     }
