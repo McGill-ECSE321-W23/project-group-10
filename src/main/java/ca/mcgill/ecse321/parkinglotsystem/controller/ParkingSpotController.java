@@ -122,6 +122,12 @@ public class ParkingSpotController {
         } 
     }
 
+    /**
+     * method to send request to update parking spot type
+     * @param id
+     * @param typeName
+     * @return parking spot type dto
+     */
     @PutMapping(value ={"/update/{id}/{typeName}", "/update/{id}/{typeName}/"})
     public ParkingSpotDto updateParkingSpotDto(@PathVariable("id") int id, @PathVariable("typeName") String typeName) {
         try {
