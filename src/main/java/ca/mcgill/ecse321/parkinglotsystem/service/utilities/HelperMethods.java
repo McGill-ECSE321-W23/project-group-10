@@ -89,4 +89,40 @@ public class HelperMethods {
         managerDto.setPassword(manager.getPassword());
         return managerDto;
     }
+
+    /**
+     * Helper method to convert parking spot type to a DTO
+     * @param employee  
+     * @return Dto
+     */
+    public static EmployeeDto convertEmployeeToDto(Employee employee) {
+        if (employee == null) {
+            throw new IllegalArgumentException("There is no such employee! ");
+        }
+        EmployeeDto employeeDto = new EmployeeDto();
+        employeeDto.setEmail(employee.getEmail());
+        employee.setName(employee.getName());
+        employeeDto.setPhone(employee.getPhone());
+        employeeDto.setPassword(employee.getPassword());
+        return employeeDto;
+    }
+
+
+    /**
+     * Helper method to convert parking spot type to a DTO
+     * @param monthlyCustomer  
+     * @return Dto
+     */
+    public static MonthlyCustomerDto convertMonthlyCustomerToDto(MonthlyCustomer mc) {
+        if (mc == null) {
+            throw new IllegalArgumentException("There is no such monthly customer! ");
+        }
+        MonthlyCustomerDto mcDto = new MonthlyCustomerDto();
+        mcDto.setEmail(mc.getEmail());
+        mc.setName(mc.getName());
+        mcDto.setPhone(mc.getPhone());
+        mcDto.setPassword(mc.getPassword());
+        mcDto.setLicenseNumber(mc.getLicenseNumber());
+        return mcDto;
+    }
 }
