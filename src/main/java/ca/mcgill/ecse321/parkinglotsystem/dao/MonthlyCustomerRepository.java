@@ -20,4 +20,7 @@ public interface MonthlyCustomerRepository extends CrudRepository<MonthlyCustome
     //find monthly customers by password
     List<MonthlyCustomer> findMonthlyCustomerByPassword(String password);
 
+    //find monthly customers by password
+    List<MonthlyCustomer> findMonthlyCustomerByLicenseNumber(String licenseNumber);
+
 }
