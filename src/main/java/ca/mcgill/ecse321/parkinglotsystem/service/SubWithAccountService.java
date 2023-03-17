@@ -30,7 +30,7 @@ public class SubWithAccountService {
     // TODO: Check if other service methods (MonthlyCustomer, ParkingSpot) perform input valdidation (IMPORTANT)
 
     /**
-     * Creates a subscription with the given monthly customer account and parking spot.
+     * Creates a subscription with the given monthly customer and parking spot.
      * 
      * @param monthlyCustomerEmail the email of the monthly customer for whom to create the subscription
      * @param parkingSpotId the id of the parking spot to reserve
