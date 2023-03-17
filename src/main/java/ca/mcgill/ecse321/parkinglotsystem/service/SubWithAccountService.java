@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.parkinglotsystem.dao.MonthlyCustomerRepository;
-import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.SubWithAccountRepository;
+import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
+import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.SubWithAccount;
 import static ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods.toList;
 
@@ -21,11 +21,11 @@ public class SubWithAccountService {
     @Autowired
     private SubWithAccountRepository subWithAccountRepository;
     @Autowired
-    private MonthlyCustomerRepository monthlyCustomerRepository;
+    private MonthlyCustomerService monthlyCustomerService;
     @Autowired
-    private ParkingSpotRepository parkingSpotRepository;
+    private ParkingSpotService parkingSpotService;
 
-    // TODO: Use service methods to get monthly customers & parking spot
+    // TODO: Add javadoc comments
 
     /**
      * Creates a subscription with the given monthly customer account and parking spot.
@@ -38,22 +38,12 @@ public class SubWithAccountService {
     public SubWithAccount createSubWithAccount(
         String monthlyCustomerEmail, int parkingSpotId) {
         
-        // Get monthly customer
-        var monthlyCustomer = monthlyCustomerRepository.findMonthlyCustomerByEmail(monthlyCustomerEmail);
-        if (monthlyCustomer == null) {
-            throw new IllegalArgumentException("The provided monthly customer email is invalid.");
-        }
-
-        // Get parking spot
-        var parkingSpot = parkingSpotRepository.findParkingSpotById(parkingSpotId);
-        if (parkingSpot == null) {
-            throw new IllegalArgumentException("The provided parking spot ID is invalid.");
-        }
+        // Data validation
         if (!(parkingSpotId >= 2000 && parkingSpotId < 3000)){
-            throw new IllegalArgumentException("The parking spot is not available for monthly customers");
+            throw new IllegalArgumentException("The parking spot is not available for monthly customers.");
         }
-
-        // Check whether an active subscription exists
+        MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomer(monthlyCustomerEmail);
+        ParkingSpot parkingSpot = parkingSpotService.getParkingSpot(parkingSpotId);
         for(SubWithAccount sub : subWithAccountRepository.findSubWithAccountByCustomer(monthlyCustomer)) {
             if (isActive(sub)) {
                 throw new IllegalArgumentException("The monthly customer already has an active subscription.");
@@ -100,13 +90,8 @@ public class SubWithAccountService {
     @Transactional
     public List<SubWithAccount> getAll(String monthlyCustomerEmail) {
 
-        // Get monthly customer
-        var monthlyCustomer = monthlyCustomerRepository.findMonthlyCustomerByEmail(monthlyCustomerEmail);
-        if (monthlyCustomer == null) {
-            throw new IllegalArgumentException("The provided monthly customer email is invalid.");
-        }
-
         // Get sorted list of subscriptions (from oldest to most recent)
+        MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomer(monthlyCustomerEmail);
         List<SubWithAccount> subs = toList(subWithAccountRepository.findSubWithAccountByCustomer(monthlyCustomer));
         if (subs.size() <= 0) {
             throw new IllegalArgumentException("No subscription found");
