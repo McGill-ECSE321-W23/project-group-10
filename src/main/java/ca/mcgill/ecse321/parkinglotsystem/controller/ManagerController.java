@@ -28,9 +28,6 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
 
 public class ManagerController {
 
-    
-    @Autowired
-    Manager manager;    //This line of code fails building
 
     @Autowired
     ManagerRepository managerRepository;
