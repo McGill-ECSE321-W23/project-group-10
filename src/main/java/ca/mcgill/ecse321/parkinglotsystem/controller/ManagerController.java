@@ -24,12 +24,13 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/parking_spot", "/api/parking_spot/"})
+@RequestMapping(value = {"/api/manager", "/api/manager/"})
 
 public class ManagerController {
+
     
     @Autowired
-    Manager manager;
+    Manager manager;    //This line of code fails building
 
     @Autowired
     ManagerRepository managerRepository;
