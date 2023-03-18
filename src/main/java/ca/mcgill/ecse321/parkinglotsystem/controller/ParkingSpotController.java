@@ -44,7 +44,7 @@ public class ParkingSpotController {
      * method to send request to get all parking spot Dtos
      * @return List<ParkingSpotDto> 
      */
-    @GetMapping(value = {"/all/","/all"})
+    @GetMapping(value = {"/"})
     public List<ParkingSpotDto> getAllParkingSpotDtos(){
        return parkingSpotService.getAllParkingSpots().stream().map(
         pSpot -> HelperMethods.convertParkingSpotToDto(pSpot)).collect(Collectors.toList());
