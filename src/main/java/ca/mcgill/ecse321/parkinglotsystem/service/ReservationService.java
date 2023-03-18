@@ -94,7 +94,7 @@ public class ReservationService {
      * return a reservation created
      */
     @Transactional
-    public Reservation createReservation(int reservationId, Date date) {
+    public Reservation createReservation(int reservationId, Date date, ParkingSpot spot) {
         if (reservationId < 0){
             throw new IllegalArgumentException("ReservationId cannot be negative.");
         }
@@ -108,6 +108,7 @@ public class ReservationService {
             Reservation reservation = (Reservation) new SingleReservation();
             reservation.setId(reservationId); 
             reservation.setDate(date);
+            reservation.setParkingSpot(spot);
             reservationRepository.save(reservation);
             return reservation;
         }
