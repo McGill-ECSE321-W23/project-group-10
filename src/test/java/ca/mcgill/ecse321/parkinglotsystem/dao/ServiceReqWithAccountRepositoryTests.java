@@ -24,6 +24,7 @@ public class ServiceReqWithAccountRepositoryTests {
     @AfterEach
     public void clearDatabase() {
         serviceReqWithAccountRepository.deleteAll();
+        
         serviceRepository.deleteAll();
         monthlyCustomerRepository.deleteAll();
     }
@@ -54,7 +55,9 @@ public class ServiceReqWithAccountRepositoryTests {
 
         // Save object
         obj = serviceReqWithAccountRepository.save(obj);
+
         int id = obj.getId();
+
 
         // Read object from database
         obj = serviceReqWithAccountRepository.findServiceReqWithAccountById(id);

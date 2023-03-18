@@ -15,13 +15,16 @@ import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 public class ServiceReqWithoutAccountRepositoryTests {
     @Autowired
     private ServiceReqWithoutAccountRepository serviceReqWithoutAccountRepository;
+
     @Autowired
     private ServiceRepository serviceRepository;
 
     @AfterEach
     public void clearDatabase() {
         serviceReqWithoutAccountRepository.deleteAll();
+
         serviceRepository.deleteAll();
+
     }
 
     @Test
@@ -42,7 +45,9 @@ public class ServiceReqWithoutAccountRepositoryTests {
 
         // Save object
         obj = serviceReqWithoutAccountRepository.save(obj);
+
         int id = obj.getId();
+
 
         // Read object from database
         obj = serviceReqWithoutAccountRepository.findServiceReqWithoutAccountById(id);
