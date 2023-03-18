@@ -33,14 +33,14 @@ public class PaymentReservationController {
     @Autowired
     PaymentReservationService paymentReservationService;
 
-    @GetMapping(value = {"/all", "/all/"})
+    @GetMapping(value = {""})
     public List<PaymentReservationDto> getAllPaymentReservationDtos() {
         return paymentReservationService.getAllPaymentReservation().stream().map(
             pRes -> HelperMethods.convertPaymentReservationToDto(pRes)).collect(Collectors.toList());
     }
 
 
-    @PostMapping(value = {"/create/{dateTime}/{amount}/{reservationId}", "/create/{dateTime}/{amount}/{reservationId}/"})
+    @PostMapping(value = {"/{dateTime}/{amount}/{reservationId}", "/{dateTime}/{amount}/{reservationId}/"})
     public PaymentReservationDto createPaymentReservationDto(@PathVariable("dateTime") String dayTime, @PathVariable(
         "amount") double amount, @PathVariable("reservationId") int reservationId) {
 
