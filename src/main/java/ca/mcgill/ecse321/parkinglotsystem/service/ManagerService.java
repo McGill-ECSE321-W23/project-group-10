@@ -27,23 +27,8 @@ public class ManagerService {
     @Transactional
      public Manager createManager(String email,String name,String phone,String password){
         String error="";
-        if(name==null || name.trim().length()==0){
-            error=error+"Manager name cannot be empty!";
-        }
-        if((email==null || email.trim().length()==0)){
-            error=error+"Manager email cannot be empty!";
-        }else if(email.indexOf("@")==-1){
-            error=error+"Manager email must contain \"@\"!";
-        }
-        if(phone.trim().length()!=10){
-            error=error+"Manager phone must have exactlty 10 digits!";
-        }
-        if(phone.trim().matches("\\d+")==false){
-            error=error+"Manager phone cannot have non-number digits!";
-        }
-        if(password.trim().length()<8){
-            error=error+"Manager password cannot be shorter than 8 digits!";
-        }
+        error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+            +HelperMethods.verifyPassword(password);
         if(error.length()>0){
             throw new IllegalArgumentException(error);
         }
