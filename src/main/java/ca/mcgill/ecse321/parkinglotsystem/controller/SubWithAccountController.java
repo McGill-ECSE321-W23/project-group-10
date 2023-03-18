@@ -18,7 +18,7 @@ import static ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/sub-with-account")
+@RequestMapping("/api/sub-with-account")
 public class SubWithAccountController {
     
     @Autowired
