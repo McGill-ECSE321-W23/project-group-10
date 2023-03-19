@@ -61,7 +61,7 @@ public class SubWithAccountService {
         subWithAccount.setNbrMonths(1);
         subWithAccount.setParkingSpot(parkingSpot);
         subWithAccount.setCustomer(monthlyCustomer);
-        subWithAccountRepository.save(subWithAccount);
+        subWithAccount = subWithAccountRepository.save(subWithAccount);
 
         return subWithAccount;
     }
