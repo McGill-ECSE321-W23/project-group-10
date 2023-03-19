@@ -70,6 +70,11 @@ public class ParkingSpotService {
         return parkingSpot;
     }
 
+    public ParkingSpot getParkingSpotById(int id) {
+        // TODO: implement this method
+        return null;
+    }
+
     public List<ParkingSpot> getAllParkingSpots() {
 
         Iterable<ParkingSpot> pIterable = parkingSpotRepository.findAll();
