@@ -33,7 +33,7 @@ public class PaymentReservationController {
     @Autowired
     PaymentReservationService paymentReservationService;
 
-    @GetMapping(value = {""})
+    @GetMapping(value = {"", "/"})
     public List<PaymentReservationDto> getAllPaymentReservationDtos() {
         return paymentReservationService.getAllPaymentReservation().stream().map(
             pRes -> HelperMethods.convertPaymentReservationToDto(pRes)).collect(Collectors.toList());
@@ -44,14 +44,22 @@ public class PaymentReservationController {
     public PaymentReservationDto createPaymentReservationDto(@PathVariable("dateTime") String dayTime, @PathVariable(
         "amount") double amount, @PathVariable("reservationId") int reservationId) {
 
-        String time = "2018-09-01 09:01:15";
+        String time = "2018-09-01 09:01:15"; //change this
         Timestamp timestamp = Timestamp.valueOf(time);
         try {
-            PaymentReservation paymentReservation = paymentReservationService.createPaymentReservation(timestamp, amount, null); // change reservation
+            PaymentReservation paymentReservation = paymentReservationService.createPaymentReservation(timestamp, amount, reservationId); // change reservation
             return HelperMethods.convertPaymentReservationToDto(paymentReservation);
         }catch(IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }  
 
     }
+    @DeleteMapping(value = {"/{paymentReservationId}/","/{paymentReservationId}" })
+    public PaymentReservationDto deletePaymentReservationDto(@PathVariable("paymentReservationId") int paymentReservationId) {
+        
+        PaymentReservation paymentReservation = paymentReservationService.deletePaymentReservation(paymentReservationId);
+        return HelperMethods.convertPaymentReservationToDto(paymentReservation);
+        
+    }
+    
 }
