@@ -3,13 +3,13 @@ package ca.mcgill.ecse321.parkinglotsystem.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import ca.mcgill.ecse321.parkinglotsystem.model.Services;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithoutAccount;
-import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 
 @SpringBootTest
 public class ServiceReqWithoutAccountRepositoryTests {
@@ -17,7 +17,7 @@ public class ServiceReqWithoutAccountRepositoryTests {
     private ServiceReqWithoutAccountRepository serviceReqWithoutAccountRepository;
 
     @Autowired
-    private ServiceRepository serviceRepository;
+    private ServicesRepository serviceRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -32,16 +32,16 @@ public class ServiceReqWithoutAccountRepositoryTests {
         boolean isAssigned = true;
         String licenseNumber = "abcd";
         String serviceDesc = "someService";
-        Service service = new Service();
-        service.setDescription(serviceDesc);
-        service.setPrice(50);
-        service = serviceRepository.save(service);
+        Services services = new Services();
+        services.setDescription(serviceDesc);
+        services.setPrice(50);
+        services = serviceRepository.save(services);
 
         // Create object
         ServiceReqWithoutAccount obj = new ServiceReqWithoutAccount();
         obj.setIsAssigned(isAssigned);
         obj.setLicenseNumber(licenseNumber);
-        obj.setService(service);
+        obj.setService(services);
 
         // Save object
         obj = serviceReqWithoutAccountRepository.save(obj);
@@ -54,7 +54,7 @@ public class ServiceReqWithoutAccountRepositoryTests {
         var objs1 = serviceReqWithoutAccountRepository.
                 findServiceReqWithoutAccountByIsAssigned(isAssigned);
         var objs2 = serviceReqWithoutAccountRepository.
-                findServiceReqWithoutAccountByService(service);
+                findServiceReqWithoutAccountByService(services);
         var objs3 = serviceReqWithoutAccountRepository.
                 findServiceReqWithoutAccountBylicenseNumber(licenseNumber);
 

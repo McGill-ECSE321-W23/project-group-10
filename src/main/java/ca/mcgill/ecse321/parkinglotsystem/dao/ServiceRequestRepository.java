@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import ca.mcgill.ecse321.parkinglotsystem.model.Service;
+import ca.mcgill.ecse321.parkinglotsystem.model.Services;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceRequest;
 
 public interface ServiceRequestRepository extends CrudRepository<ServiceRequest, Integer> {
@@ -16,6 +16,6 @@ public interface ServiceRequestRepository extends CrudRepository<ServiceRequest,
     List<ServiceRequest> findServiceRequestByIsAssigned(boolean isAssigned);
 
     //find service requests by service
-    List<ServiceRequest> findServiceRequestByService(Service service);
+    List<ServiceRequest> findServiceRequestByService(Services services);
 
 }

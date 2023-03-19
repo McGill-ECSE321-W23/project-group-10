@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.parkinglotsystem.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import ca.mcgill.ecse321.parkinglotsystem.model.Service;
+import ca.mcgill.ecse321.parkinglotsystem.model.Services;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class ServiceRepositoryTests {
     @Autowired
-    private ServiceRepository serviceRepository;
+    private ServicesRepository serviceRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -25,7 +25,7 @@ public class ServiceRepositoryTests {
         // Create object
         String service_description = "this is the Genesis service";
         int service_price = 30;
-        Service obj = new Service();
+        Services obj = new Services();
         obj.setPrice(service_price);
         obj.setDescription(service_description);
         // Save object

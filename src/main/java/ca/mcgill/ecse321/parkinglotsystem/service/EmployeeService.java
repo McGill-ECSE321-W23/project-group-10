@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.EmployeeRepository;
+import ca.mcgill.ecse321.parkinglotsystem.dao.PaymentServiceRepository;
+import ca.mcgill.ecse321.parkinglotsystem.model.PaymentService;
 import ca.mcgill.ecse321.parkinglotsystem.model.Employee;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 

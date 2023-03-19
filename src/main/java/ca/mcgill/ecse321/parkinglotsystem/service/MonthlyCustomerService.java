@@ -37,7 +37,7 @@ public class MonthlyCustomerService {
             error=error+"MonthlyCustomer email must contain \"@\"!";
         }
         if(phone.trim().length()!=10){
-            error=error+"MonthlyCustomer phone must have exactlty 10 digits!";
+            error=error+"MonthlyCustomer phone must have exactly 10 digits!";
         }
         if(phone.trim().matches("\\d+")==false){
             error=error+"MonthlyCustomer phone cannot have non-number digits!";
