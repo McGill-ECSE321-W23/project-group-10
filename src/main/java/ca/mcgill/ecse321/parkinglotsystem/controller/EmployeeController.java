@@ -47,86 +47,61 @@ public class EmployeeController {
         @PathVariable("name") String name,
         @PathVariable("phone") String phone,
         @PathVariable("password") String password){
-        try {
-            //ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
-            Employee em = employeeService.createEmployee(email,name,phone,password);
-            return HelperMethods.convertEmployeeToDto(em);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }                                   
+        Employee em = employeeService.createEmployee(email,name,phone,password);
+        return HelperMethods.convertEmployeeToDto(em);                                  
     }
 
 
     @GetMapping(value = {"/getByName/{name}", "/getByName/{name}/"})
     public List<EmployeeDto> getEmployeeDtoByName(@PathVariable("name") String name) {
         List<EmployeeDto> employeeDtos = new ArrayList<EmployeeDto>();
-        try {
-            List<Employee> ems = employeeService.getEmployeeByName(name);
-            if (ems.size() != 0){
-                for (Employee em: ems){
-                    employeeDtos.add(HelperMethods.convertEmployeeToDto(em));
-                }
-            }     
-            return employeeDtos;
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        List<Employee> ems = employeeService.getEmployeeByName(name);
+        if (ems.size() != 0){
+            for (Employee em: ems){
+                employeeDtos.add(HelperMethods.convertEmployeeToDto(em));
+            }
+        }     
+        return employeeDtos;
     }
 
 
     @GetMapping(value = {"/getByPhone/{phone}", "/getByPhone/{phone}/"})
     public List<EmployeeDto> getEmployeeDtoByPhone(@PathVariable("phone") String phone) {
         List<EmployeeDto> employeeDtos = new ArrayList<EmployeeDto>();
-        try {
-            List<Employee> ems = employeeService.getEmployeeByPhone(phone);
-            if (ems.size() != 0){
-                for (Employee em: ems){
-                    employeeDtos.add(HelperMethods.convertEmployeeToDto(em));
-                }
-            }     
-            return employeeDtos;
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        List<Employee> ems = employeeService.getEmployeeByPhone(phone);
+        if (ems.size() != 0){
+            for (Employee em: ems){
+                employeeDtos.add(HelperMethods.convertEmployeeToDto(em));
+            }
+        }     
+        return employeeDtos;
     }
 
 
     @GetMapping(value = {"/getByPassword/{password}", "/getByPassword/{password}/"})
     public List<EmployeeDto> getEmployeeDtoByPassword(@PathVariable("name") String password) {
         List<EmployeeDto> employeeDtos = new ArrayList<EmployeeDto>();
-        try {
-            List<Employee> ems = employeeService.getEmployeeByPassword(password);
-            if (ems.size() != 0){
-                for (Employee em: ems){
-                    employeeDtos.add(HelperMethods.convertEmployeeToDto(em));
-                }
-            }     
-            return employeeDtos;
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        List<Employee> ems = employeeService.getEmployeeByPassword(password);
+        if (ems.size() != 0){
+            for (Employee em: ems){
+                employeeDtos.add(HelperMethods.convertEmployeeToDto(em));
+            }
+        }     
+        return employeeDtos;
     }
 
 
     @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
     public EmployeeDto getEmployeeDtoByEmail(@PathVariable("email") String email) {
-        try {
-            Employee em = employeeService.getEmployeeByEmail(email);
-            return HelperMethods.convertEmployeeToDto(em);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        Employee em = employeeService.getEmployeeByEmail(email);
+        return HelperMethods.convertEmployeeToDto(em); 
     }
 
 
     @DeleteMapping(value = {"/delete/{email}","/delete/{email}/"})
     public EmployeeDto deleteEmployeeDtoByEmail(@PathVariable("email") String email) {
-        try {
-            Employee em = employeeService.deleteEmployeeByEmail(email);
-            return HelperMethods.convertEmployeeToDto(em);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        } 
+        Employee em = employeeService.deleteEmployeeByEmail(email);
+        return HelperMethods.convertEmployeeToDto(em);
     }
 
 
@@ -135,12 +110,8 @@ public class EmployeeController {
         @PathVariable("name") String name,
         @PathVariable("phone") String phone,
         @PathVariable("password") String password) {
-        try {
-            Employee em = employeeService.updateEmployee(email, name, phone, password);
-            return HelperMethods.convertEmployeeToDto(em);
-        } catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        } 
+        Employee em = employeeService.updateEmployee(email, name, phone, password);
+        return HelperMethods.convertEmployeeToDto(em);
     } 
 
 

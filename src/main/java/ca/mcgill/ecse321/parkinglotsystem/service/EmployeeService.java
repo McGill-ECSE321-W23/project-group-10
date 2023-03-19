@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.EmployeeRepository;
-import ca.mcgill.ecse321.parkinglotsystem.dao.PaymentServiceRepository;
-import ca.mcgill.ecse321.parkinglotsystem.model.PaymentService;
 import ca.mcgill.ecse321.parkinglotsystem.model.Employee;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
+import org.springframework.http.HttpStatus;
 
 @Service
 public class EmployeeService {
@@ -32,7 +32,7 @@ public class EmployeeService {
         error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
         +HelperMethods.verifyPassword(password);
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }
         Employee employee=new Employee();
         employee.setEmail(email);
@@ -83,7 +83,7 @@ public class EmployeeService {
             error=error+"No employee with that email was found!";
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }else{
             employeeRepository.delete(em);
             return em;
@@ -99,7 +99,7 @@ public class EmployeeService {
             error=error+"No employee with that email exists!";
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }else{
             em.setName(name);
             em.setPhone(phone);

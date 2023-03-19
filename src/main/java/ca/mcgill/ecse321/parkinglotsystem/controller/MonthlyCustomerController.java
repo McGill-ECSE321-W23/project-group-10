@@ -42,70 +42,53 @@ public class MonthlyCustomerController {
     }
 
 
-    @PostMapping(value = {"/create/{email}/{name}/{phone}/{password}/{licenseNumber}", "/create/{email}/{name}/{phone}/{password}/{licenseNumber}/"})
+    @PostMapping(value = {"/create/{email}", "/create/{email}/"})
     public MonthlyCustomerDto createMonthlyCustomerDto(@PathVariable("email") String email, 
-        @PathVariable("name") String name,
-        @PathVariable("phone") String phone,
-        @PathVariable("password") String password,
-        @PathVariable("licenseNumber") String licenseNumber){
-        try {
-            //ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
-            MonthlyCustomer mc = monthlyCustomerService.createMonthlyCustomer(email,name,phone,password,licenseNumber);
-            return HelperMethods.convertMonthlyCustomerToDto(mc);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }                                   
+        @RequestParam("name") String name,
+        @RequestParam("phone") String phone,
+        @RequestParam("password") String password,
+        @RequestParam("licenseNumber") String licenseNumber){
+        MonthlyCustomer mc = monthlyCustomerService.createMonthlyCustomer(email,name,phone,password,licenseNumber);
+        return HelperMethods.convertMonthlyCustomerToDto(mc);                                
     }
 
 
     @GetMapping(value = {"/getByName/{name}", "/getByName/{name}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByName(@PathVariable("name") String name) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
-        try {
-            List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByName(name);
-            if (mcs.size() != 0){
-                for (MonthlyCustomer mc: mcs){
-                    monthlyCustomerDtos.add(HelperMethods.convertMonthlyCustomerToDto(mc));
-                }
-            }     
-            return monthlyCustomerDtos;
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByName(name);
+        if (mcs.size() != 0){
+            for (MonthlyCustomer mc: mcs){
+                monthlyCustomerDtos.add(HelperMethods.convertMonthlyCustomerToDto(mc));
+            }
+        }     
+        return monthlyCustomerDtos; 
     }
 
 
     @GetMapping(value = {"/getByPhone/{phone}", "/getByPhone/{phone}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByPhone(@PathVariable("phone") String phone) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
-        try {
-            List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByPhone(phone);
-            if (mcs.size() != 0){
-                for (MonthlyCustomer mc: mcs){
-                    monthlyCustomerDtos.add(HelperMethods.convertMonthlyCustomerToDto(mc));
-                }
-            }     
-            return monthlyCustomerDtos;
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByPhone(phone);
+        if (mcs.size() != 0){
+            for (MonthlyCustomer mc: mcs){
+                monthlyCustomerDtos.add(HelperMethods.convertMonthlyCustomerToDto(mc));
+            }
+        }     
+        return monthlyCustomerDtos; 
     }
 
 
     @GetMapping(value = {"/getByPassword/{password}", "/getByPassword/{password}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByPassword(@PathVariable("name") String password) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
-        try {
-            List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByPassword(password);
-            if (mcs.size() != 0){
-                for (MonthlyCustomer mc: mcs){
-                    monthlyCustomerDtos.add(HelperMethods.convertMonthlyCustomerToDto(mc));
-                }
-            }     
-            return monthlyCustomerDtos;
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByPassword(password);
+        if (mcs.size() != 0){
+            for (MonthlyCustomer mc: mcs){
+                monthlyCustomerDtos.add(HelperMethods.convertMonthlyCustomerToDto(mc));
+            }
+        }     
+        return monthlyCustomerDtos;  
     }
 
 
@@ -113,54 +96,38 @@ public class MonthlyCustomerController {
     @GetMapping(value = {"/getByLicenseNumber/{licenseNumber}", "/getByLicenseNumber/{licenseNumber}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByLicenseNumber(@PathVariable("name") String licenseNumber) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
-        try {
-            List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByLicenseNumber(licenseNumber);
-            if (mcs.size() != 0){
-                for (MonthlyCustomer mc: mcs){
-                    monthlyCustomerDtos.add(HelperMethods.convertMonthlyCustomerToDto(mc));
-                }
-            }     
-            return monthlyCustomerDtos;
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByLicenseNumber(licenseNumber);
+        if (mcs.size() != 0){
+            for (MonthlyCustomer mc: mcs){
+                monthlyCustomerDtos.add(HelperMethods.convertMonthlyCustomerToDto(mc));
+            }
+        }     
+        return monthlyCustomerDtos;
     }
 
 
     @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
     public MonthlyCustomerDto getMonthlyCustomerDtoByEmail(@PathVariable("email") String email) {
-        try {
-            MonthlyCustomer mc = monthlyCustomerService.getMonthlyCustomerByEmail(email);
-            return HelperMethods.convertMonthlyCustomerToDto(mc);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        MonthlyCustomer mc = monthlyCustomerService.getMonthlyCustomerByEmail(email);
+        return HelperMethods.convertMonthlyCustomerToDto(mc);
     }
 
 
     @DeleteMapping(value = {"/delete/{email}","/delete/{email}/"})
     public MonthlyCustomerDto deleteMonthlyCustomerDtoByEmail(@PathVariable("email") String email) {
-        try {
-            MonthlyCustomer mc = monthlyCustomerService.deleteMonthlyCustomerByEmail(email);
-            return HelperMethods.convertMonthlyCustomerToDto(mc);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        } 
+        MonthlyCustomer mc = monthlyCustomerService.deleteMonthlyCustomerByEmail(email);
+        return HelperMethods.convertMonthlyCustomerToDto(mc);
     }
 
 
-    @PutMapping(value ={"/update/{email}/{name}/{phone}/{password}/{licenseNumber}", "/update/{email}/{name}/{phone}/{password}/{licenseNumber}/"})
+    @PutMapping(value ={"/update/{email}", "/update/{email}/"})
     public MonthlyCustomerDto updateMonthlyCustomerDto(@PathVariable("email") String email, 
-        @PathVariable("name") String name,
-        @PathVariable("phone") String phone,
-        @PathVariable("password") String password,
-        @PathVariable("licenseNumber") String licenseNumber) {
-        try {
-            MonthlyCustomer mc = monthlyCustomerService.updateMonthlyCustomer(email, name, phone, password,licenseNumber);
-            return HelperMethods.convertMonthlyCustomerToDto(mc);
-        } catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        } 
+        @RequestParam("name") String name,
+        @RequestParam("phone") String phone,
+        @RequestParam("password") String password,
+        @RequestParam("licenseNumber") String licenseNumber) {
+        MonthlyCustomer mc = monthlyCustomerService.updateMonthlyCustomer(email, name, phone, password,licenseNumber);
+        return HelperMethods.convertMonthlyCustomerToDto(mc);
     } 
 
 

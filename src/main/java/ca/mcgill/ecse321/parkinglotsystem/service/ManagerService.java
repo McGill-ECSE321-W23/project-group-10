@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ManagerRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.Manager;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
+import org.springframework.http.HttpStatus;
 
 @Service
 public class ManagerService {
@@ -30,7 +32,7 @@ public class ManagerService {
         error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
             +HelperMethods.verifyPassword(password);
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }
         Manager manager=new Manager();
         manager.setEmail(email);
@@ -81,7 +83,7 @@ public class ManagerService {
             error=error+"No manager with that email was found!";
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }else{
             managerRepository.delete(ma);
             return ma;
@@ -97,7 +99,7 @@ public class ManagerService {
             error=error+"No manager with that email exists!";
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }else{
             ma.setName(name);
             ma.setPhone(phone);
