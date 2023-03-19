@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -42,11 +43,11 @@ public class EmployeeController {
     }
 
 
-    @PostMapping(value = {"/create/{email}/{name}/{phone}/{password}", "/create/{email}/{name}/{phone}/{password}/"})
+    @PostMapping(value = {"/create/{email}", "/create/{email}/"})
     public EmployeeDto createEmployeeDto(@PathVariable("email") String email, 
-        @PathVariable("name") String name,
-        @PathVariable("phone") String phone,
-        @PathVariable("password") String password){
+        @RequestParam("name") String name,
+        @RequestParam("phone") String phone,
+        @RequestParam("password") String password){
         Employee em = employeeService.createEmployee(email,name,phone,password);
         return HelperMethods.convertEmployeeToDto(em);                                  
     }
@@ -105,11 +106,11 @@ public class EmployeeController {
     }
 
 
-    @PutMapping(value ={"/update/{email}/{name}/{phone}/{password}", "/update/{email}/{name}/{phone}/{password}/"})
+    @PutMapping(value ={"/update/{email}", "/update/{email}/"})
     public EmployeeDto updateEmployeeDto(@PathVariable("email") String email, 
-        @PathVariable("name") String name,
-        @PathVariable("phone") String phone,
-        @PathVariable("password") String password) {
+        @RequestParam("name") String name,
+        @RequestParam("phone") String phone,
+        @RequestParam("password") String password) {
         Employee em = employeeService.updateEmployee(email, name, phone, password);
         return HelperMethods.convertEmployeeToDto(em);
     } 
