@@ -21,6 +21,7 @@ public class PaymentServiceService {
 
     /**
      * method to create a payment service
+     *
      * @param id
      * @param amount
      * @param dateTime
@@ -32,10 +33,9 @@ public class PaymentServiceService {
         // Input validation
         String val_int = id + "";
         String val_double = amount + "";
-        if (val_int == null||id<0) {
+        if (val_int == null || id < 0) {
             throw new IllegalArgumentException("payment service id cannot be null or negative!");
-        }
-        else if(paymentServiceRepository.findPaymentServiceById(id) != null){
+        } else if (paymentServiceRepository.findPaymentServiceById(id) != null) {
             throw new IllegalArgumentException("payment service id already exist!");
         }
         if (val_double == null) {
@@ -63,10 +63,11 @@ public class PaymentServiceService {
         return HelperMethods.toList(pIterable);
 
     }
-    // method to find a payment service by date time
+
+    // method to find a payment service by id
     @Transactional
-    public List<PaymentService> getPaymentServiceByDateTime(Timestamp DateTime) {
-        return paymentServiceRepository.findPaymentServiceByDateTime(DateTime);
+    public PaymentService getPaymentServiceById(Integer id) {
+        return paymentServiceRepository.findPaymentServiceById(id);
     }
 
     // method to find a payment service by payment amount
@@ -74,6 +75,13 @@ public class PaymentServiceService {
     public List<PaymentService> getPaymentServiceByAmount(Double amount) {
         return paymentServiceRepository.findPaymentServiceByAmount(amount);
     }
+
+    // method to find a payment service by date time
+    @Transactional
+    public List<PaymentService> getPaymentServiceByDateTime(Timestamp DateTime) {
+        return paymentServiceRepository.findPaymentServiceByDateTime(DateTime);
+    }
+
 
     // method to find a payment service by service request
     @Transactional
@@ -83,7 +91,7 @@ public class PaymentServiceService {
 
     // method to delete a payment service
     @Transactional
-    public PaymentService deletePaymentService(int id) {
+    public PaymentService deletePaymentService(Integer id) {
 
         // Input validation
         String error = "";
@@ -120,7 +128,7 @@ public class PaymentServiceService {
 
     // method to update the payment service
     @Transactional
-    public PaymentService updatePaymentService(int id, Timestamp dateTime, double amount, ServiceRequest serviceRequest){
+    public PaymentService updatePaymentService(int id, Timestamp dateTime, double amount, ServiceRequest serviceRequest) {
         // Input validation
         String val_double_1 = amount + "";
         PaymentService paymentService = paymentServiceRepository.findPaymentServiceById(id);

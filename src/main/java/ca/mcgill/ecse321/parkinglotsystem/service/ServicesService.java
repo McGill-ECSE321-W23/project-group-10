@@ -21,7 +21,7 @@ public class ServicesService {
      * @return newly created service or null
      */
     @Transactional
-    public Services createServices(String description, int price){
+    public Services createService(String description, int price){
         // Input validation
         String val_int = price + "";
         if (description == null) {
@@ -31,11 +31,11 @@ public class ServicesService {
             throw new IllegalArgumentException("price input cannot be empty or less than zero!");
         }
 
-        Services services=new Services();
-        services.setDescription(description);
-        services.setPrice(price);
-        servicesRepository.save(services);
-        return services;
+        Services service=new Services();
+        service.setDescription(description);
+        service.setPrice(price);
+        servicesRepository.save(service);
+        return service;
     }
 
     public List<Services> getAllServices() {
@@ -46,19 +46,19 @@ public class ServicesService {
 
     // method to find a service by description
     @Transactional
-    public Services getServicesByDescription(String description) {
+    public Services getServiceByDescription(String description) {
         return servicesRepository.findServiceByDescription(description);
     }
 
     // method to find a service by price
     @Transactional
-    public List<Services> getServicesByPrice(int price) {
+    public List<Services> getServiceByPrice(int price) {
         return servicesRepository.findServiceByPrice(price);
     }
 
     //method to delete a service
     @Transactional
-    public Services deleteServicesByDescription(String description){
+    public Services deleteServiceByDescription(String description){
         String error="";
         Services services=servicesRepository.findServiceByDescription(description);
         if(services==null){
@@ -74,7 +74,7 @@ public class ServicesService {
 
     //method to update a service
     @Transactional
-    public Services updateServices(String description, int price){
+    public Services updateService(String description, int price){
         String error="";
 
         Services services=servicesRepository.findServiceByDescription(description);
