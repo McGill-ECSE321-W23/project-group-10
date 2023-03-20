@@ -70,10 +70,19 @@ public class ParkingSpotService {
         return parkingSpot;
     }
 
+    public ParkingSpot getParkingSpotById(int id) {
+        // TODO: implement this method
+        return null;
+    }
+
     public List<ParkingSpot> getAllParkingSpots() {
 
         Iterable<ParkingSpot> pIterable = parkingSpotRepository.findAll();
         return HelperMethods.toList(pIterable);
 
+    }
+    public ParkingSpot getParkingSpot(int parkingSpotId) {
+        // TODO: Implement this
+        return null;
     }
 }

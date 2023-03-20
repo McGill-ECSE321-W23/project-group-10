@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithoutAccount;
-import ca.mcgill.ecse321.parkinglotsystem.model.Service;
+import ca.mcgill.ecse321.parkinglotsystem.model.Services;
 
 public interface ServiceReqWithoutAccountRepository extends ServiceRequestRepository {
 
@@ -16,7 +16,7 @@ public interface ServiceReqWithoutAccountRepository extends ServiceRequestReposi
     List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByIsAssigned(Boolean isAssigned);
 
     //find service requests without account by service
-    List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByService(Service service);
+    List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByService(Services services);
 
     //find service requests without account by license number
     List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByLicenseNumber(String licenseNumber);

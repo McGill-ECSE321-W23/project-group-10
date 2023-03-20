@@ -25,7 +25,7 @@ public class SubWithoutAccountService extends ReservationService {
      * return a reservation created
      */
     @Transactional
-    public SubWithoutAccount createSubWithoutAccount(int reservationId, Date date, String licenseNumber, int nbrMonths, ParkingSpot parkingspot) {
+    public SubWithoutAccount createSubWithoutAccount(int reservationId, Date date, String licenseNumber, int nbrMonths, int parkingspotId) {
         if (reservationId < 0){
             throw new IllegalArgumentException("ReservationId cannot be negative.");
         }
@@ -47,7 +47,7 @@ public class SubWithoutAccountService extends ReservationService {
             subWithoutAccount.setDate(date);
             subWithoutAccount.setLicenseNumber(licenseNumber);
             subWithoutAccount.setNbrMonths(nbrMonths);
-            subWithoutAccount.setParkingSpot(parkingspot);
+            subWithoutAccount.setParkingSpot(parkingSpotRepository.findParkingSpotById(parkingspotId));
             subWithoutAccountRepository.save(subWithoutAccount);
             return subWithoutAccount;
         }
@@ -55,6 +55,9 @@ public class SubWithoutAccountService extends ReservationService {
     @Transactional
     public SubWithoutAccount getSubWithoutAccountById(int reservationId){
         SubWithoutAccount subWithoutAccount = subWithoutAccountRepository.findSubWithoutAccountById(reservationId);
+        if (subWithoutAccount == null) {
+            throw new IllegalArgumentException("SubWithoutAccount not found");
+        }
         return subWithoutAccount;
     }
 	
@@ -66,7 +69,7 @@ public class SubWithoutAccountService extends ReservationService {
 	 */
 	@Transactional
 	public List<SubWithoutAccount> getSubWithoutAccountByDate(Date date) {
-		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountbyDate(date);
+		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsbyDate(date);
 		return subWithoutAccounts;
 	}
 
@@ -89,7 +92,7 @@ public class SubWithoutAccountService extends ReservationService {
 	 * @return a list of reservations
 	 */
 	@Transactional
-	public List<SubWithoutAccount> getSubWithoutAccountssByLicenseNumber(String licenseNumber) {
+	public List<SubWithoutAccount> getSubWithoutAccountsByLicenseNumber(String licenseNumber) {
 		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByLicenseNumber(licenseNumber);
 		return subWithoutAccounts;
 	}
@@ -103,6 +106,38 @@ public class SubWithoutAccountService extends ReservationService {
 		return toList(subWithoutAccountRepository.findAll());
 	}
 
+    @Transactional
+    public SubWithoutAccount updateSubWithoutAccount(int reservationId, Date date, String licenseNumber, int nbrMonths, int parkingspotId){
+        
+        if (reservationId < 0){
+            throw new IllegalArgumentException("ReservationId cannot be negative.");
+        }
+        else if(date == null){
+            throw new IllegalArgumentException("date cannot be empty.");
+        }
+        else if(licenseNumber == null || licenseNumber.length() == 0){
+            throw new IllegalArgumentException("licenseNumber cannot be empty");
+        }
+        else if(licenseNumber.matches("^[a-zA-Z0-9]*$") || licenseNumber.length() > 7){
+            throw new IllegalArgumentException("Incorrect licenseNumber format");
+        }
+        else if (nbrMonths < 1){
+            throw new IllegalArgumentException("the number of month must be a natural integer");
+        }
+        else {
+            SubWithoutAccount subWithoutAccount = subWithoutAccountRepository.findSubWithoutAccountById(reservationId); 
+            if (subWithoutAccount == null){
+                throw new IllegalArgumentException("SubWithoutAccount not found");
+            } 
+            subWithoutAccount.setDate(date);
+            subWithoutAccount.setLicenseNumber(licenseNumber);
+            subWithoutAccount.setNbrMonths(nbrMonths);
+            subWithoutAccount.setParkingSpot(parkingSpotRepository.findParkingSpotById(parkingspotId));
+            subWithoutAccountRepository.save(subWithoutAccount);
+            return subWithoutAccount;
+        }
+
+    }
     /**
      * Delete a reservation
      * @author Mike
@@ -122,7 +157,6 @@ public class SubWithoutAccountService extends ReservationService {
         if(subWithoutAccount == null){
             throw new IllegalArgumentException("Reservation does not exist.");
         }
-
         subWithoutAccountRepository.delete(subWithoutAccount);
         return subWithoutAccount;
 

@@ -28,26 +28,8 @@ public class MonthlyCustomerService {
     @Transactional
      public MonthlyCustomer createMonthlyCustomer(String email,String name,String phone,String password,String licenseNumber){
         String error="";
-        if(name==null || name.trim().length()==0){
-            error=error+"MonthlyCustomer name cannot be empty!";
-        }
-        if((email==null || email.trim().length()==0)){
-            error=error+"MonthlyCustomer email cannot be empty!";
-        }else if(email.indexOf("@")==-1){
-            error=error+"MonthlyCustomer email must contain \"@\"!";
-        }
-        if(phone.trim().length()!=10){
-            error=error+"MonthlyCustomer phone must have exactlty 10 digits!";
-        }
-        if(phone.trim().matches("\\d+")==false){
-            error=error+"MonthlyCustomer phone cannot have non-number digits!";
-        }
-        if(password.trim().length()<8){
-            error=error+"MonthlyCustomer password cannot be shorter than 8 digits!";
-        }
-        if(licenseNumber.trim().length()<4){
-            error=error+"MonthlyCustomer license number cannot be shorter than 4 digits!";
-        }
+        error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+            +HelperMethods.verifyPassword(password)+HelperMethods.verifyLicenseNumber(licenseNumber);
         if(error.length()>0){
             throw new IllegalArgumentException(error);
         }

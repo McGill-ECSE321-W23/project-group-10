@@ -48,6 +48,9 @@ public class ReservationService {
 
     public ParkingSpotType getParkingSpotTypebyName(String name){
         ParkingSpotType type = parkingSpotTypeRepository.findParkingSpotTypeByName(name);
+        if (type == null){ 
+            throw new IllegalArgumentException("no type found for name " + name);
+        }
         return type;
 
     }
@@ -78,6 +81,9 @@ public class ReservationService {
 
     public ParkingSpot getParkingSpotbyId(int id){
         ParkingSpot spot = parkingSpotRepository.findParkingSpotById(id);
+        if (spot == null){
+            throw new IllegalArgumentException("parkingSpot not found");
+        }
         return spot;
 
     }
@@ -94,7 +100,7 @@ public class ReservationService {
      * return a reservation created
      */
     @Transactional
-    public Reservation createReservation(int reservationId, Date date) {
+    public Reservation createReservation(int reservationId, Date date, int parkingSpotId) {
         if (reservationId < 0){
             throw new IllegalArgumentException("ReservationId cannot be negative.");
         }
@@ -108,6 +114,7 @@ public class ReservationService {
             Reservation reservation = (Reservation) new SingleReservation();
             reservation.setId(reservationId); 
             reservation.setDate(date);
+            reservation.setParkingSpot(parkingSpotRepository.findParkingSpotById(parkingSpotId));
             reservationRepository.save(reservation);
             return reservation;
         }
@@ -123,6 +130,10 @@ public class ReservationService {
     @Transactional
     public Reservation getReservationById(int reservationId){
         Reservation reservation = reservationRepository.findReservationById(reservationId);
+        if (reservation == null){
+            throw new IllegalArgumentException("Reservation is not found.");
+        }
+        
         return reservation;
     }
 
@@ -133,7 +144,7 @@ public class ReservationService {
 	 * @return a list of reservations
 	 */
 	@Transactional
-	public List<Reservation> getReservationsBydate(Date date) {
+	public List<Reservation> getReservationsByDate(Date date) {
 		List<Reservation> reservations = reservationRepository.findReservationsByDate(date);
 		return reservations;
 	}
