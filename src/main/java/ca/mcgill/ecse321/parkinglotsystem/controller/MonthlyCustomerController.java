@@ -82,7 +82,7 @@ public class MonthlyCustomerController {
 
 
     @GetMapping(value = {"/getByPassword/{password}", "/getByPassword/{password}/"})
-    public List<MonthlyCustomerDto> getMonthlyCustomerDtoByPassword(@PathVariable("name") String password) {
+    public List<MonthlyCustomerDto> getMonthlyCustomerDtoByPassword(@PathVariable("password") String password) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
         List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByPassword(password);
         if (mcs.size() != 0){

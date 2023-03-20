@@ -80,7 +80,7 @@ public class EmployeeController {
 
 
     @GetMapping(value = {"/getByPassword/{password}", "/getByPassword/{password}/"})
-    public List<EmployeeDto> getEmployeeDtoByPassword(@PathVariable("name") String password) {
+    public List<EmployeeDto> getEmployeeDtoByPassword(@PathVariable("password") String password) {
         List<EmployeeDto> employeeDtos = new ArrayList<EmployeeDto>();
         List<Employee> ems = employeeService.getEmployeeByPassword(password);
         if (ems.size() != 0){

@@ -64,7 +64,7 @@ public class EmployeeService {
 
      @Transactional
      public List<Employee> getEmployeeByPassword(String password){
-        return employeeRepository.findEmployeeByName(password);
+        return employeeRepository.findEmployeeByPassword(password);
      }
 
 

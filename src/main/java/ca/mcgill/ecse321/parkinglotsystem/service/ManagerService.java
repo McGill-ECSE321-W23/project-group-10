@@ -64,7 +64,7 @@ public class ManagerService {
 
      @Transactional
      public List<Manager> getManagerByPassword(String password){
-        return managerRepository.findManagerByName(password);
+        return managerRepository.findManagerByPassword(password);
      }
 
 

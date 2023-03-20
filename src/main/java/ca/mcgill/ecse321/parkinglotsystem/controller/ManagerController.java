@@ -81,7 +81,7 @@ public class ManagerController {
 
 
     @GetMapping(value = {"/getByPassword/{password}", "/getByPassword/{password}/"})
-    public List<ManagerDto> getManagerDtoByPassword(@PathVariable("name") String password) {
+    public List<ManagerDto> getManagerDtoByPassword(@PathVariable("password") String password) {
         List<ManagerDto> managerDtos = new ArrayList<ManagerDto>();
         List<Manager> managers = managerService.getManagerByPassword(password);
         if (managers.size() != 0){
