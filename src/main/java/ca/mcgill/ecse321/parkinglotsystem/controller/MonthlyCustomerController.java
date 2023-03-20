@@ -111,6 +111,9 @@ public class MonthlyCustomerController {
     @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
     public MonthlyCustomerDto getMonthlyCustomerDtoByEmail(@PathVariable("email") String email) {
         MonthlyCustomer mc = monthlyCustomerService.getMonthlyCustomerByEmail(email);
+        if(mc==null){
+            return null;
+        }
         return HelperMethods.convertMonthlyCustomerToDto(mc);
     }
 

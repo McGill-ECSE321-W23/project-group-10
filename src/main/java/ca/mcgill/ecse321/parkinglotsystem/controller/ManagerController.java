@@ -96,6 +96,9 @@ public class ManagerController {
     @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
     public ManagerDto getManagerDtoByEmail(@PathVariable("email") String email) {
         Manager ma = managerService.getManagerByEmail(email);
+        if(ma==null){
+            return null;
+        }
         return HelperMethods.convertManagerToDto(ma);
     }
 

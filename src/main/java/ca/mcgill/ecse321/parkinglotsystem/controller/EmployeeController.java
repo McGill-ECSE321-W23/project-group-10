@@ -95,6 +95,9 @@ public class EmployeeController {
     @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
     public EmployeeDto getEmployeeDtoByEmail(@PathVariable("email") String email) {
         Employee em = employeeService.getEmployeeByEmail(email);
+        if(em==null){
+            return null;
+        }
         return HelperMethods.convertEmployeeToDto(em); 
     }
 
