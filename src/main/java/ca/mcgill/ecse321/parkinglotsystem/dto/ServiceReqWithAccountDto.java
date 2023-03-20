@@ -5,6 +5,7 @@ import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 public class ServiceReqWithAccountDto extends ServiceRequestDto{
     private MonthlyCustomerDto monthlyCustomerDto;
 
+
     public ServiceReqWithAccountDto(){
         super();
     }

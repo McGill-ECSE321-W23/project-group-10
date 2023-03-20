@@ -8,7 +8,7 @@ public class ServiceReqWithoutAccountDto extends ServiceRequestDto{
         super();
     }
 
-    public ServiceReqWithoutAccountDto(int id, boolean isAssigned, ServiceDto serviceDto, String licenseNumber;){
+    public ServiceReqWithoutAccountDto(int id, boolean isAssigned, ServiceDto serviceDto, String licenseNumber){
         super(id, isAssigned, serviceDto);
         this.licenseNumber = licenseNumber;
     }

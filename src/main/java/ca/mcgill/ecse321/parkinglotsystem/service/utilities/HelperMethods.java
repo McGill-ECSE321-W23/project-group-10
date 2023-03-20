@@ -125,4 +125,47 @@ public class HelperMethods {
         mcDto.setLicenseNumber(mc.getLicenseNumber());
         return mcDto;
     }
+
+    /**
+     * Helper method to convert parking spot type to a DTO
+     * @param ParkingLotSystem  
+     * @return Dto
+     */
+    public static ParkingLotSystemDto convertParkingLotSystemToDto(ParkingLotSystem pls) {
+        if (pls == null) {
+            throw new IllegalArgumentException("There is no such parkingLotSystem! ");
+        }
+        ParkingLotSystemDto plsDto = new ParkingLotSystemDto();
+        plsDto.setId(pls.getId());
+        plsDto.setOpenTime(pls.getOpenTime());
+        plsDto.setCloseTime(pls.getCloseTime());
+        return plsDto;
+    }
+
+    /**
+     * Helper method to convert ServiceReqWithAccount type to a DTO
+     * @param ServiceReqWithAccount  
+     * @return Dto
+     */
+    public static ServiceReqWithAccountDto convertServiceReqWithAccountToDto(ServiceReqWithAccount srwa) {
+        if (srwa == null) {
+            throw new IllegalArgumentException("There is no such ServiceReqWithAccount! ");
+        }
+        ServiceReqWithAccountDto srwaDto = new ServiceReqWithAccountDto(srwa.getId(), srwa.getIsAssigned(), convertServiceToDtosrwa(srwa.getService()), convertMonthlyCustomerToDtosrwa(srwa.getCustomer()));
+        return srwaDto;
+    }
+
+    /**
+     * Helper method to convert ServiceReqWithAccount type to a DTO
+     * @param ServiceReqWithoutAccount  
+     * @return Dto
+     */
+    public static ServiceReqWithoutAccountDto convertServiceReqWithoutAccountToDto(ServiceReqWithoutAccount srwoa) {
+        if (srwoa == null) {
+            throw new IllegalArgumentException("There is no such ServiceReqWithoutAccount! ");
+        }
+        ServiceReqWithoutAccountDto srwoaDto = new ServiceReqWithoutAccountDto(srwoa.getId(), srwoa.getIsAssigned(), convertServiceToDtosrwa(srwoa.getService()), srwoa.getLicenseNumber());
+        return srwoaDto;
+    }
+
 }

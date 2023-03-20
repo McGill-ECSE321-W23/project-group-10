@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithoutAccount;
 import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 
-public interface ServiceReqWithoutAccountRepository extends CrudRepository<ServiceReqWithoutAccount, Integer> {
+public interface ServiceReqWithoutAccountRepository extends ServiceRequestRepository {
 
     //find a service request without account by id
     ServiceReqWithoutAccount findServiceReqWithoutAccountById(int id);
@@ -19,6 +19,6 @@ public interface ServiceReqWithoutAccountRepository extends CrudRepository<Servi
     List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByService(Service service);
 
     //find service requests without account by license number
-    List<ServiceReqWithoutAccount> findServiceReqWithoutAccountBylicenseNumber(String licenseNumber);
+    List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByLicenseNumber(String licenseNumber);
 
 }
