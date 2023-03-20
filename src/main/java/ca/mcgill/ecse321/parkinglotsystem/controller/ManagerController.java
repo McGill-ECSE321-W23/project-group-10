@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -42,106 +43,80 @@ public class ManagerController {
     }
 
 
-    @PostMapping(value = {"/create/{email}/{name}/{phone}/{password}", "/create/{email}/{name}/{phone}/{password}/"})
+    @PostMapping(value = {"/create/{email}", "/create/{email}/"})
     public ManagerDto createManagerDto(@PathVariable("email") String email, 
-        @PathVariable("name") String name,
-        @PathVariable("phone") String phone,
-        @PathVariable("password") String password){
-        try {
-            //ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
-            Manager manager = managerService.createManager(email,name,phone,password);
-            return HelperMethods.convertManagerToDto(manager);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }                                   
+        @RequestParam("name") String name,
+        @RequestParam("phone") String phone,
+        @RequestParam("password") String password){
+
+        Manager manager = managerService.createManager(email,name,phone,password);
+        return HelperMethods.convertManagerToDto(manager);                                  
     }
 
 
     @GetMapping(value = {"/getByName/{name}", "/getByName/{name}/"})
     public List<ManagerDto> getManagerDtoByName(@PathVariable("name") String name) {
         List<ManagerDto> managerDtos = new ArrayList<ManagerDto>();
-        try {
-            List<Manager> managers = managerService.getManagerByName(name);
-            if (managers.size() != 0){
-                for (Manager ma: managers){
-                    managerDtos.add(HelperMethods.convertManagerToDto(ma));
-                }
-            }     
-            return managerDtos;
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        List<Manager> managers = managerService.getManagerByName(name);
+        if (managers.size() != 0){
+            for (Manager ma: managers){
+                managerDtos.add(HelperMethods.convertManagerToDto(ma));
+            }
+        }     
+        return managerDtos; 
     }
 
 
     @GetMapping(value = {"/getByPhone/{phone}", "/getByPhone/{phone}/"})
     public List<ManagerDto> getManagerDtoByPhone(@PathVariable("phone") String phone) {
         List<ManagerDto> managerDtos = new ArrayList<ManagerDto>();
-        try {
-            List<Manager> managers = managerService.getManagerByPhone(phone);
-            if (managers.size() != 0){
-                for (Manager ma: managers){
-                    managerDtos.add(HelperMethods.convertManagerToDto(ma));
-                }
-            }     
-            return managerDtos;
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        List<Manager> managers = managerService.getManagerByPhone(phone);
+        if (managers.size() != 0){
+            for (Manager ma: managers){
+                managerDtos.add(HelperMethods.convertManagerToDto(ma));
+            }
+        }     
+        return managerDtos;
     }
 
 
     @GetMapping(value = {"/getByPassword/{password}", "/getByPassword/{password}/"})
-    public List<ManagerDto> getManagerDtoByPassword(@PathVariable("name") String password) {
+    public List<ManagerDto> getManagerDtoByPassword(@PathVariable("password") String password) {
         List<ManagerDto> managerDtos = new ArrayList<ManagerDto>();
-        try {
-            List<Manager> managers = managerService.getManagerByPassword(password);
-            if (managers.size() != 0){
-                for (Manager ma: managers){
-                    managerDtos.add(HelperMethods.convertManagerToDto(ma));
-                }
-            }     
-            return managerDtos;
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        List<Manager> managers = managerService.getManagerByPassword(password);
+        if (managers.size() != 0){
+            for (Manager ma: managers){
+                managerDtos.add(HelperMethods.convertManagerToDto(ma));
+            }
+        }     
+        return managerDtos;  
     }
 
 
     @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
     public ManagerDto getManagerDtoByEmail(@PathVariable("email") String email) {
-        try {
-            Manager ma = managerService.getManagerByEmail(email);
-            return HelperMethods.convertManagerToDto(ma);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }   
+        Manager ma = managerService.getManagerByEmail(email);
+        if(ma==null){
+            return null;
+        }
+        return HelperMethods.convertManagerToDto(ma);
     }
 
 
     @DeleteMapping(value = {"/delete/{email}","/delete/{email}/"})
     public ManagerDto deleteManagerDtoByEmail(@PathVariable("email") String email) {
-        try {
-            Manager ma = managerService.deleteManagerByEmail(email);
-            return HelperMethods.convertManagerToDto(ma);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        } 
+        Manager ma = managerService.deleteManagerByEmail(email);
+        return HelperMethods.convertManagerToDto(ma);
     }
 
 
-    @PutMapping(value ={"/update/{email}/{name}/{phone}/{password}", "/update/{email}/{name}/{phone}/{password}/"})
+    @PutMapping(value ={"/update/{email}", "/update/{email}"})
     public ManagerDto updateManagerDto(@PathVariable("email") String email, 
-        @PathVariable("name") String name,
-        @PathVariable("phone") String phone,
-        @PathVariable("password") String password) {
-        try {
-            Manager ma = managerService.updateManager(email, name, phone, password);
-            return HelperMethods.convertManagerToDto(ma);
-        } catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        } 
+        @RequestParam("name") String name,
+        @RequestParam("phone") String phone,
+        @RequestParam("password") String password) {
+        Manager ma = managerService.updateManager(email, name, phone, password);
+        return HelperMethods.convertManagerToDto(ma);
     } 
-
 
 }
