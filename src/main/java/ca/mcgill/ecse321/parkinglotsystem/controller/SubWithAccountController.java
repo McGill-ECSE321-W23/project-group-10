@@ -42,9 +42,20 @@ public class SubWithAccountController {
      * @return the list of subscriptions as DTOs
      */
     @GetMapping(value = {"/all-by-customer/{email}", "/all-by-customer/{email}/"})
-    public List<SubWithAccountDto> getAll(
-        @PathVariable("email") String monthlyCustomerEmail) {
-        return service.getAll(monthlyCustomerEmail).stream().
+    public List<SubWithAccountDto> getAllByCustomer(@PathVariable("email") String monthlyCustomerEmail) {
+        return service.getAllByCustomer(monthlyCustomerEmail).stream().
+            map(s -> convertSubWithAccountToDto(s)).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets all subscriptions with the given parking spot.
+     * 
+     * @param parkingSpotId the ID of the parking spot
+     * @return the list of subscriptions as DTOs
+     */
+    @GetMapping(value = {"/all-by-parking-spot/{id}", "/all-by-parking-spot/{id}/"})
+    public List<SubWithAccountDto> getAllByParkingSpot(@PathVariable("id") int parkingSpotId) {
+        return service.getAllByParkingSpot(parkingSpotId).stream().
             map(s -> convertSubWithAccountToDto(s)).collect(Collectors.toList());
     }
 
@@ -65,9 +76,19 @@ public class SubWithAccountController {
      * @return the active subscription as DTO
      */
     @GetMapping(value = {"/active-by-customer/{email}", "/active-by-customer/{email}/"})
-    public SubWithAccountDto getActiveSubWithAccount(
-        @PathVariable("email") String monthlyCustomerEmail) {
-        return convertSubWithAccountToDto(service.getActiveSubWithAccount(monthlyCustomerEmail));
+    public SubWithAccountDto getActiveByCustomer(@PathVariable("email") String monthlyCustomerEmail) {
+        return convertSubWithAccountToDto(service.getActiveByCustomer(monthlyCustomerEmail));
+    }
+
+    /**
+     * Gets the active subscription of the given parking spot.
+     * 
+     * @param parkingSpotId the ID of the parking spot
+     * @return the active subscription as DTO
+     */
+    @GetMapping(value = {"/active-by-parking-spot/{id}", "/active-by-parking-spot/{id}/"})
+    public SubWithAccountDto getActiveByParkingSpot(@PathVariable("id") int parkingSpotId) {
+        return convertSubWithAccountToDto(service.getActiveByParkingSpot(parkingSpotId));
     }
     
     /**
