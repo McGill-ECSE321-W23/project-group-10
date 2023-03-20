@@ -93,10 +93,12 @@ public class ManagerService {
      @Transactional
      public Manager updateManager(String email,String name,String phone,String password){
         String error="";
-
         Manager ma=managerRepository.findManagerByEmail(email);
         if(managerRepository.findManagerByEmail(email)==null){
             error=error+"No manager with that email exists!";
+        }else{
+            error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+                +HelperMethods.verifyPassword(password);
         }
         if(error.length()>0){
             throw new CustomException(error,HttpStatus.BAD_REQUEST);

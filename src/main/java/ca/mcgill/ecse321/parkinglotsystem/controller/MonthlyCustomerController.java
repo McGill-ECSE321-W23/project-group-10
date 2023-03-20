@@ -96,7 +96,7 @@ public class MonthlyCustomerController {
 
     
     @GetMapping(value = {"/getByLicenseNumber/{licenseNumber}", "/getByLicenseNumber/{licenseNumber}/"})
-    public List<MonthlyCustomerDto> getMonthlyCustomerDtoByLicenseNumber(@PathVariable("name") String licenseNumber) {
+    public List<MonthlyCustomerDto> getMonthlyCustomerDtoByLicenseNumber(@PathVariable("licenseNumber") String licenseNumber) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
         List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByLicenseNumber(licenseNumber);
         if (mcs.size() != 0){

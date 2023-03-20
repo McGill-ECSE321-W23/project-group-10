@@ -93,10 +93,12 @@ public class EmployeeService {
      @Transactional
      public Employee updateEmployee(String email,String name,String phone,String password){
         String error="";
-
         Employee em=employeeRepository.findEmployeeByEmail(email);
         if(employeeRepository.findEmployeeByEmail(email)==null){
             error=error+"No employee with that email exists!";
+        }else{
+            error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+            +HelperMethods.verifyPassword(password);
         }
         if(error.length()>0){
             throw new CustomException(error,HttpStatus.BAD_REQUEST);

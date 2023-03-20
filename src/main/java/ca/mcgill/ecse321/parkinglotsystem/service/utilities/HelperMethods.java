@@ -74,7 +74,7 @@ public class HelperMethods {
         }
         MonthlyCustomerDto mcDto = new MonthlyCustomerDto();
         mcDto.setEmail(mc.getEmail());
-        mc.setName(mc.getName());
+        mcDto.setName(mc.getName());
         mcDto.setPhone(mc.getPhone());
         mcDto.setPassword(mc.getPassword());
         mcDto.setLicenseNumber(mc.getLicenseNumber());
@@ -93,7 +93,7 @@ public class HelperMethods {
         if ((email == null || email.trim().length() == 0)) {
             error = error + "Email cannot be empty!";
         } else if (email.indexOf("@") == -1) {
-            error = error + "Email must contain \"@\"!";
+            error = error + "Email must contain @ !";
         }
         return error;
     }
@@ -125,7 +125,7 @@ public class HelperMethods {
         if (phone.trim().length() != 10) {
             error = error + "Phone must have exactlty 10 digits!";
         }
-        if (phone.trim().matches("\\d+") == false) {
+        if (phone.trim().matches("\\d+") == false && phone.trim().length()>0) {
             error = error + "Phone cannot have non-number digits!";
         }
         return error;

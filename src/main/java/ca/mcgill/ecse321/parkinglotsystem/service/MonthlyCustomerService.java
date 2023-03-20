@@ -101,10 +101,12 @@ public class MonthlyCustomerService {
      @Transactional
      public MonthlyCustomer updateMonthlyCustomer(String email,String name,String phone,String password,String licenseNumber){
         String error="";
-
         MonthlyCustomer mc=monthlyCustomerRepository.findMonthlyCustomerByEmail(email);
         if(monthlyCustomerRepository.findMonthlyCustomerByEmail(email)==null){
             error=error+"No monthly customer with that email exists!";
+        }else{
+            error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+            +HelperMethods.verifyPassword(password)+HelperMethods.verifyLicenseNumber(licenseNumber);
         }
         if(error.length()>0){
             throw new CustomException(error,HttpStatus.BAD_REQUEST);
