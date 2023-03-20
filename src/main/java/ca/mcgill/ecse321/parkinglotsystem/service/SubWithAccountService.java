@@ -90,9 +90,30 @@ public class SubWithAccountService {
      * @return the active subscription. Throws a CustomException if no active subscription is found.
      */
     @Transactional
-    public SubWithAccount getActiveSubWithAccount(String monthlyCustomerEmail) {
+    public SubWithAccount getActiveByCustomer(String monthlyCustomerEmail) {
 
-        List<SubWithAccount> subs = getAll(monthlyCustomerEmail);
+        List<SubWithAccount> subs = getAllByCustomer(monthlyCustomerEmail);
+        if(subs.size() <= 0) {
+            throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
+        }
+        SubWithAccount latestSub = subs.get(subs.size() - 1);
+        if (!isActive(latestSub)) {
+            throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
+        }
+
+        return latestSub;
+    }
+
+    /**
+     * Gets the active subscription of the given parking spot.
+     * 
+     * @param parkingSpotId the ID of the parking spot
+     * @return the active subscription. Throws a CustomException if no active subscription is found.
+     */
+    @Transactional
+    public SubWithAccount getActiveByParkingSpot(int parkingSpotId) {
+
+        List<SubWithAccount> subs = getAllByParkingSpot(parkingSpotId);
         if(subs.size() <= 0) {
             throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
         }
@@ -111,10 +132,26 @@ public class SubWithAccountService {
      * @return the list of subscriptions sorted by date (ascending).
      */
     @Transactional
-    public List<SubWithAccount> getAll(String monthlyCustomerEmail) {
+    public List<SubWithAccount> getAllByCustomer(String monthlyCustomerEmail) {
 
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
         List<SubWithAccount> subs = toList(subWithAccountRepository.findSubWithAccountByCustomer(monthlyCustomer));
+        Collections.sort(subs, Comparator.comparing(SubWithAccount::getDate));
+
+        return subs;
+    }
+
+    /**
+     * Gets all subscriptions of the given parking spot.
+     * 
+     * @param parkingSpotId the ID of the parking spot
+     * @return the list of subscriptions sorted by date (ascending).
+     */
+    @Transactional
+    public List<SubWithAccount> getAllByParkingSpot(int parkingSpotId) {
+
+        ParkingSpot parkingSpot = parkingSpotService.getParkingSpot(parkingSpotId);
+        List<SubWithAccount> subs = toList(subWithAccountRepository.findSubWithAccountByParkingSpot(parkingSpot));
         Collections.sort(subs, Comparator.comparing(SubWithAccount::getDate));
 
         return subs;
@@ -144,7 +181,7 @@ public class SubWithAccountService {
     @Transactional
     public SubWithAccount updateSubWithAccount(String monthlyCustomerEmail) {
 
-        SubWithAccount sub = getActiveSubWithAccount(monthlyCustomerEmail);
+        SubWithAccount sub = getActiveByCustomer(monthlyCustomerEmail);
         sub.setNbrMonths(sub.getNbrMonths() + 1);
         subWithAccountRepository.save(sub);
 
