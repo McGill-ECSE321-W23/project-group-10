@@ -57,23 +57,6 @@ public class HelperMethods {
         return parkingSpotDto;
     }
 
-    /**
-     * Helper method to convert parking spot type to a DTO
-     *
-     * @param manager
-     * @return Dto
-     */
-    public static ManagerDto convertManagerToDto(Manager manager) {
-        if (manager == null) {
-            throw new IllegalArgumentException("There is no such manager! ");
-        }
-        ManagerDto managerDto = new ManagerDto();
-        managerDto.setEmail(manager.getEmail());
-        managerDto.setName(manager.getName());
-        managerDto.setPhone(manager.getPhone());
-        managerDto.setPassword(manager.getPassword());
-        return managerDto;
-    }
 
     /**
      * <<<<<<< HEAD
@@ -153,6 +136,65 @@ public class HelperMethods {
 
     /**
      * Helper method to convert parking spot type to a DTO
+     * @param ParkingLotSystem  
+     * @return Dto
+     */
+    public static ParkingLotSystemDto convertParkingLotSystemToDto(ParkingLotSystem pls) {
+        if (pls == null) {
+            throw new IllegalArgumentException("There is no such parkingLotSystem! ");
+        }
+        ParkingLotSystemDto plsDto = new ParkingLotSystemDto();
+        plsDto.setId(pls.getId());
+        plsDto.setOpenTime(pls.getOpenTime());
+        plsDto.setCloseTime(pls.getCloseTime());
+        return plsDto;
+    }
+
+    /**
+     * Helper method to convert ServiceReqWithAccount type to a DTO
+     * @param ServiceReqWithAccount  
+     * @return Dto
+     */
+    public static ServiceReqWithAccountDto convertServiceReqWithAccountToDto(ServiceReqWithAccount srwa) {
+        if (srwa == null) {
+            throw new IllegalArgumentException("There is no such ServiceReqWithAccount! ");
+        }
+        ServiceReqWithAccountDto srwaDto = new ServiceReqWithAccountDto(srwa.getId(), srwa.getIsAssigned(), convertServiceToDtosrwa(srwa.getService()), convertMonthlyCustomerToDtosrwa(srwa.getCustomer()));
+        return srwaDto;
+    }
+
+    /**
+     * Helper method to convert ServiceReqWithAccount type to a DTO
+     * @param ServiceReqWithoutAccount  
+     * @return Dto
+     */
+    public static ServiceReqWithoutAccountDto convertServiceReqWithoutAccountToDto(ServiceReqWithoutAccount srwoa) {
+        if (srwoa == null) {
+            throw new IllegalArgumentException("There is no such ServiceReqWithoutAccount! ");
+        }
+        ServiceReqWithoutAccountDto srwoaDto = new ServiceReqWithoutAccountDto(srwoa.getId(), srwoa.getIsAssigned(), convertServiceToDtosrwa(srwoa.getService()), srwoa.getLicenseNumber());
+        return srwoaDto;
+
+    /**
+     * Helper method to convert parking spot type to a DTO
+     *
+     * @param manager
+     * @return Dto
+     */
+    public static ManagerDto convertManagerToDto(Manager manager) {
+        if (manager == null) {
+            throw new IllegalArgumentException("There is no such manager! ");
+        }
+        ManagerDto managerDto = new ManagerDto();
+        managerDto.setEmail(manager.getEmail());
+        managerDto.setName(manager.getName());
+        managerDto.setPhone(manager.getPhone());
+        managerDto.setPassword(manager.getPassword());
+        return managerDto;
+    }
+
+    /**
+     * Helper method to convert parking spot type to a DTO
      *
      * @param employee
      * @return Dto
@@ -163,7 +205,7 @@ public class HelperMethods {
         }
         EmployeeDto employeeDto = new EmployeeDto();
         employeeDto.setEmail(employee.getEmail());
-        employee.setName(employee.getName());
+        employeeDto.setName(employee.getName());
         employeeDto.setPhone(employee.getPhone());
         employeeDto.setPassword(employee.getPassword());
         return employeeDto;
@@ -182,7 +224,7 @@ public class HelperMethods {
         }
         MonthlyCustomerDto mcDto = new MonthlyCustomerDto();
         mcDto.setEmail(mc.getEmail());
-        mc.setName(mc.getName());
+        mcDto.setName(mc.getName());
         mcDto.setPhone(mc.getPhone());
         mcDto.setPassword(mc.getPassword());
         mcDto.setLicenseNumber(mc.getLicenseNumber());
@@ -201,7 +243,7 @@ public class HelperMethods {
         if ((email == null || email.trim().length() == 0)) {
             error = error + "Email cannot be empty!";
         } else if (email.indexOf("@") == -1) {
-            error = error + "Email must contain \"@\"!";
+            error = error + "Email must contain @ !";
         }
         return error;
     }
@@ -233,7 +275,7 @@ public class HelperMethods {
         if (phone.trim().length() != 10) {
             error = error + "Phone must have exactlty 10 digits!";
         }
-        if (phone.trim().matches("\\d+") == false) {
+        if (phone.trim().matches("\\d+") == false && phone.trim().length()>0) {
             error = error + "Phone cannot have non-number digits!";
         }
         return error;

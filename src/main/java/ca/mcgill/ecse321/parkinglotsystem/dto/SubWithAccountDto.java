@@ -2,8 +2,6 @@ package ca.mcgill.ecse321.parkinglotsystem.dto;
 
 import java.sql.Date;
 
-import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
-
 public class SubWithAccountDto extends ReservationDto {
     private int nbrMonths;
     private MonthlyCustomerDto monthlyCustomer;

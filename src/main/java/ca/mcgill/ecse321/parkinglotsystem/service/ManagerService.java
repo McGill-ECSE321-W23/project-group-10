@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ManagerRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.Manager;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
+import org.springframework.http.HttpStatus;
 
 @Service
 public class ManagerService {
@@ -27,25 +29,10 @@ public class ManagerService {
     @Transactional
      public Manager createManager(String email,String name,String phone,String password){
         String error="";
-        if(name==null || name.trim().length()==0){
-            error=error+"Manager name cannot be empty!";
-        }
-        if((email==null || email.trim().length()==0)){
-            error=error+"Manager email cannot be empty!";
-        }else if(email.indexOf("@")==-1){
-            error=error+"Manager email must contain \"@\"!";
-        }
-        if(phone.trim().length()!=10){
-            error=error+"Manager phone must have exactlty 10 digits!";
-        }
-        if(phone.trim().matches("\\d+")==false){
-            error=error+"Manager phone cannot have non-number digits!";
-        }
-        if(password.trim().length()<8){
-            error=error+"Manager password cannot be shorter than 8 digits!";
-        }
+        error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+            +HelperMethods.verifyPassword(password);
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }
         Manager manager=new Manager();
         manager.setEmail(email);
@@ -77,7 +64,7 @@ public class ManagerService {
 
      @Transactional
      public List<Manager> getManagerByPassword(String password){
-        return managerRepository.findManagerByName(password);
+        return managerRepository.findManagerByPassword(password);
      }
 
 
@@ -96,7 +83,7 @@ public class ManagerService {
             error=error+"No manager with that email was found!";
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }else{
             managerRepository.delete(ma);
             return ma;
@@ -106,13 +93,15 @@ public class ManagerService {
      @Transactional
      public Manager updateManager(String email,String name,String phone,String password){
         String error="";
-
         Manager ma=managerRepository.findManagerByEmail(email);
         if(managerRepository.findManagerByEmail(email)==null){
             error=error+"No manager with that email exists!";
+        }else{
+            error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+                +HelperMethods.verifyPassword(password);
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }else{
             ma.setName(name);
             ma.setPhone(phone);

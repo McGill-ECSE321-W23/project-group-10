@@ -9,7 +9,7 @@ import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 import ca.mcgill.ecse321.parkinglotsystem.model.Services;
 
 
-public interface ServiceReqWithAccountRepository extends CrudRepository<ServiceReqWithAccount, Integer> {
+public interface ServiceReqWithAccountRepository extends ServiceRequestRepository {
 
     //find a service request with account by id
     ServiceReqWithAccount findServiceReqWithAccountById(int id);
