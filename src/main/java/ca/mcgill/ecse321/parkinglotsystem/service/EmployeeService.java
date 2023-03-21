@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.parkinglotsystem.dao.EmployeeRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.Employee;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
+import org.springframework.http.HttpStatus;
 
 @Service
 public class EmployeeService {
@@ -27,25 +29,10 @@ public class EmployeeService {
     @Transactional
      public Employee createEmployee(String email,String name,String phone,String password){
         String error="";
-        if(name==null || name.trim().length()==0){
-            error=error+"Employee name cannot be empty!";
-        }
-        if((email==null || email.trim().length()==0)){
-            error=error+"Employee email cannot be empty!";
-        }else if(email.indexOf("@")==-1){
-            error=error+"Employee email must contain \"@\"!";
-        }
-        if(phone.trim().length()!=10){
-            error=error+"Employee phone must have exactlty 10 digits!";
-        }
-        if(phone.trim().matches("\\d+")==false){
-            error=error+"Employee phone cannot have non-number digits!";
-        }
-        if(password.trim().length()<8){
-            error=error+"Employee password cannot be shorter than 8 digits!";
-        }
+        error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+        +HelperMethods.verifyPassword(password);
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }
         Employee employee=new Employee();
         employee.setEmail(email);
@@ -77,7 +64,7 @@ public class EmployeeService {
 
      @Transactional
      public List<Employee> getEmployeeByPassword(String password){
-        return employeeRepository.findEmployeeByName(password);
+        return employeeRepository.findEmployeeByPassword(password);
      }
 
 
@@ -96,7 +83,7 @@ public class EmployeeService {
             error=error+"No employee with that email was found!";
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }else{
             employeeRepository.delete(em);
             return em;
@@ -106,13 +93,15 @@ public class EmployeeService {
      @Transactional
      public Employee updateEmployee(String email,String name,String phone,String password){
         String error="";
-
         Employee em=employeeRepository.findEmployeeByEmail(email);
         if(employeeRepository.findEmployeeByEmail(email)==null){
             error=error+"No employee with that email exists!";
+        }else{
+            error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+            +HelperMethods.verifyPassword(password);
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }else{
             em.setName(name);
             em.setPhone(phone);
