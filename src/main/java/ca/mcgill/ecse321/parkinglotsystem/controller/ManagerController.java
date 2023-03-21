@@ -80,19 +80,6 @@ public class ManagerController {
     }
 
 
-    @GetMapping(value = {"/getByPassword/{password}", "/getByPassword/{password}/"})
-    public List<ManagerDto> getManagerDtoByPassword(@PathVariable("password") String password) {
-        List<ManagerDto> managerDtos = new ArrayList<ManagerDto>();
-        List<Manager> managers = managerService.getManagerByPassword(password);
-        if (managers.size() != 0){
-            for (Manager ma: managers){
-                managerDtos.add(HelperMethods.convertManagerToDto(ma));
-            }
-        }     
-        return managerDtos;  
-    }
-
-
     @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
     public ManagerDto getManagerDtoByEmail(@PathVariable("email") String email) {
         Manager ma = managerService.getManagerByEmail(email);

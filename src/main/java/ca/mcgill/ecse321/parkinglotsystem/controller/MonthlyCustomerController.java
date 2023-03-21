@@ -80,20 +80,6 @@ public class MonthlyCustomerController {
         return monthlyCustomerDtos; 
     }
 
-
-    @GetMapping(value = {"/getByPassword/{password}", "/getByPassword/{password}/"})
-    public List<MonthlyCustomerDto> getMonthlyCustomerDtoByPassword(@PathVariable("password") String password) {
-        List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
-        List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByPassword(password);
-        if (mcs.size() != 0){
-            for (MonthlyCustomer mc: mcs){
-                monthlyCustomerDtos.add(HelperMethods.convertMonthlyCustomerToDto(mc));
-            }
-        }     
-        return monthlyCustomerDtos;  
-    }
-
-
     
     @GetMapping(value = {"/getByLicenseNumber/{licenseNumber}", "/getByLicenseNumber/{licenseNumber}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByLicenseNumber(@PathVariable("licenseNumber") String licenseNumber) {

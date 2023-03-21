@@ -79,19 +79,6 @@ public class EmployeeController {
     }
 
 
-    @GetMapping(value = {"/getByPassword/{password}", "/getByPassword/{password}/"})
-    public List<EmployeeDto> getEmployeeDtoByPassword(@PathVariable("password") String password) {
-        List<EmployeeDto> employeeDtos = new ArrayList<EmployeeDto>();
-        List<Employee> ems = employeeService.getEmployeeByPassword(password);
-        if (ems.size() != 0){
-            for (Employee em: ems){
-                employeeDtos.add(HelperMethods.convertEmployeeToDto(em));
-            }
-        }     
-        return employeeDtos;
-    }
-
-
     @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
     public EmployeeDto getEmployeeDtoByEmail(@PathVariable("email") String email) {
         Employee em = employeeService.getEmployeeByEmail(email);
