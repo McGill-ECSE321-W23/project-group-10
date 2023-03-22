@@ -14,6 +14,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import static ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods.toList;
 import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 
+@org.springframework.stereotype.Service
 public class ServiceReqWithoutAccountService {
     @Autowired
     private ServiceReqWithoutAccountRepository serviceReqwithoutAccountRepository;

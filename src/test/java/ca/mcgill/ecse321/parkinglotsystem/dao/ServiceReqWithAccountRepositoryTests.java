@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithAccount;
-import ca.mcgill.ecse321.parkinglotsystem.model.Services;
+import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 
 @SpringBootTest
@@ -17,7 +17,7 @@ public class ServiceReqWithAccountRepositoryTests {
     @Autowired
     private ServiceReqWithAccountRepository serviceReqWithAccountRepository;
     @Autowired
-    private ServicesRepository serviceRepository;
+    private ServiceRepository serviceRepository;
     @Autowired
     private MonthlyCustomerRepository monthlyCustomerRepository;
 
@@ -34,7 +34,7 @@ public class ServiceReqWithAccountRepositoryTests {
         //int id = 1234;
         boolean isAssigned = true;
 
-        Services services = new Services();
+        Service services = new Service();
         services.setDescription("someService");
         services.setPrice(50);
         services = serviceRepository.save(services);

@@ -84,7 +84,7 @@ public class ServiceRequestController {
      * @throws Exception
      */
     @GetMapping(value = {"/getByServices/{service}", "/getByServices/{service}/"})
-    public List<ServiceRequestDto> getServiceRequestsByService(@PathVariable("service") Services service) {
+    public List<ServiceRequestDto> getServiceRequestsByService(@PathVariable("service") Service service) {
         List<ServiceRequestDto> ServiceRequests = new ArrayList<>();
         try {
             List<ServiceRequest> serviceRequest = serviceRequestService.getPaymentServiceByServices(service);

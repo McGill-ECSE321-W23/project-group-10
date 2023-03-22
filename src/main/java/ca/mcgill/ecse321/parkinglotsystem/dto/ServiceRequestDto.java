@@ -3,13 +3,13 @@ package ca.mcgill.ecse321.parkinglotsystem.dto;
 public class ServiceRequestDto {
     private int id;
     private boolean isAssigned;
-    private ServicesDto servicesDto;
+    private ServiceDto servicesDto;
 
     public ServiceRequestDto() {
 
     }
 
-    public ServiceRequestDto(int id, boolean isAssigned, ServicesDto servicesDto) {
+    public ServiceRequestDto(int id, boolean isAssigned, ServiceDto servicesDto) {
         this.id = id;
         this.isAssigned = isAssigned;
         this.servicesDto = servicesDto;
@@ -23,7 +23,7 @@ public class ServiceRequestDto {
         return isAssigned;
     }
 
-    public ServicesDto getServicesDto() {
+    public ServiceDto getServicesDto() {
         return servicesDto;
     }
 
@@ -35,7 +35,7 @@ public class ServiceRequestDto {
         this.isAssigned = this.isAssigned;
     }
 
-    public void setServicesDto(ServicesDto servicesDto) {
+    public void setServicesDto(ServiceDto servicesDto) {
         this.servicesDto = this.servicesDto;
     }
 
