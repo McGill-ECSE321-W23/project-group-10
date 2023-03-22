@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Services {
+public class Service {
     private String description;
     private int price;
 

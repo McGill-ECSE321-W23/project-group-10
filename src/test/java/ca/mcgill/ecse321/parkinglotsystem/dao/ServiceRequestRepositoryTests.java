@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.parkinglotsystem.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import ca.mcgill.ecse321.parkinglotsystem.model.Services;
+import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class ServiceRequestRepositoryTests {
     @Autowired
     private ServiceRequestRepository serviceRequestRepository;
     @Autowired
-    private ServicesRepository serviceRepository;
+    private ServiceRepository serviceRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -30,7 +30,7 @@ public class ServiceRequestRepositoryTests {
         boolean isAssigned = false;
         String licenseNumber = "123";
 
-        Services services = new Services();
+        Service services = new Service();
         services.setDescription("someService");
         services.setPrice(50);
         services = serviceRepository.save(services);

@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.parkinglotsystem.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.mcgill.ecse321.parkinglotsystem.dto.ServicesDto;
+import ca.mcgill.ecse321.parkinglotsystem.dto.ServiceDto;
 import ca.mcgill.ecse321.parkinglotsystem.service.ServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotsystem.model.*;
-import static ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods.convertServicesToDto;
+import static ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods.convertServiceToDto;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -33,10 +33,10 @@ public class ServicesController {
      * @throws Exception
      */
     @GetMapping(value = {"/all", "/all/"})
-    public List<ServicesDto> getAllServices() throws Exception {
-        List<ServicesDto> pList = new ArrayList<>();
-        for (Services services : servicesService.getAllServices()) {
-            pList.add(convertServicesToDto(services));
+    public List<ServiceDto> getAllServices() throws Exception {
+        List<ServiceDto> pList = new ArrayList<>();
+        for (Service service : servicesService.getAllServices()) {
+            pList.add(convertServiceToDto(service));
         }
         if (pList.size() == 0) throw new Exception("There are no services");
         return pList;
@@ -50,10 +50,10 @@ public class ServicesController {
      * @return ServicesDto
      */
     @PostMapping(value = {"/create/{description}/{price}", "/create/{description}/{price}/"})
-    public ServicesDto createServices(@PathVariable("description") String description, @PathVariable("price") int price) {
+    public ServiceDto createServices(@PathVariable("description") String description, @PathVariable("price") int price) {
         try {
-            Services services = servicesService.createService(description, price);
-            return convertServicesToDto(services);
+            Service services = servicesService.createService(description, price);
+            return convertServiceToDto(services);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
 
@@ -67,10 +67,10 @@ public class ServicesController {
      * @return ServicesDto
      */
     @GetMapping(value = {"/getByDescription/{description}/", "/getByDescription/{description}"})
-    public ServicesDto getServicesByDescription(@PathVariable("description") String description) {
+    public ServiceDto getServicesByDescription(@PathVariable("description") String description) {
         try {
-            Services services = servicesService.getServiceByDescription(description);
-            return convertServicesToDto(services);
+            Service services = servicesService.getServiceByDescription(description);
+            return convertServiceToDto(services);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
 
@@ -85,13 +85,13 @@ public class ServicesController {
      * @throws Exception
      */
     @GetMapping(value = {"/getByPrice/{price}", "/getByPrice/{price}/"})
-    public List<ServicesDto> getServicesByPrice(@PathVariable("price") int price) {
-        List<ServicesDto> sList = new ArrayList<>();
+    public List<ServiceDto> getServicesByPrice(@PathVariable("price") int price) {
+        List<ServiceDto> sList = new ArrayList<>();
         try {
-            List<Services> services = servicesService.getServiceByPrice(price);
+            List<Service> services = servicesService.getServiceByPrice(price);
             if (services.size() != 0) {
-                for (Services se : services) {
-                    sList.add(convertServicesToDto(se));
+                for (Service se : services) {
+                    sList.add(convertServiceToDto(se));
                 }
             }
             return sList;
@@ -107,10 +107,10 @@ public class ServicesController {
      * @return service deleted
      */
     @DeleteMapping(value = {"/delete/{description}", "/delete/{description}/"})
-    public ServicesDto deleteServicesByDescription(@PathVariable("description") String description) {
+    public ServiceDto deleteServicesByDescription(@PathVariable("description") String description) {
         try {
-            Services services = servicesService.deleteServiceByDescription(description);
-            return convertServicesToDto(services);
+            Service services = servicesService.deleteServiceByDescription(description);
+            return convertServiceToDto(services);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
 
@@ -125,10 +125,10 @@ public class ServicesController {
      * @return service updated
      */
     @PutMapping(value = {"/update/{description}/{price}/", "/update/{description}/{price}"})
-    public ServicesDto updateServicesByDescription(@PathVariable("description") String description, @PathVariable("price") int price) {
+    public ServiceDto updateServicesByDescription(@PathVariable("description") String description, @PathVariable("price") int price) {
         try {
-            Services services = servicesService.updateService(description, price);
-            return convertServicesToDto(services);
+            Service services = servicesService.updateService(description, price);
+            return convertServiceToDto(services);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }

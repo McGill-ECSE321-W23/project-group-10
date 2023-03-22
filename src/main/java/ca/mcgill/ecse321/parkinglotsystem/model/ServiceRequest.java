@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 public abstract class ServiceRequest {
     private int id;
     private boolean isAssigned;
-    private Services services;
+    private Service services;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +34,10 @@ public abstract class ServiceRequest {
         this.isAssigned = isAssigned;
     }
     @ManyToOne(optional = false)
-    public Services getService() {
+    public Service getService() {
         return services;
     }
-    public void setService(Services services) {
+    public void setService(Service services) {
         this.services = services;
     }
 }

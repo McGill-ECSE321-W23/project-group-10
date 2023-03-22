@@ -2,16 +2,16 @@ package ca.mcgill.ecse321.parkinglotsystem.dto;
 
 import java.sql.Date;
 
-public class ServicesDto {
+public class ServiceDto {
 
     private String description;
     private int price;
 
-    public ServicesDto() {
+    public ServiceDto() {
 
     }
 
-    public ServicesDto(String description, int price) {
+    public ServiceDto(String description, int price) {
 
         this.description = description;
         this.price = price;

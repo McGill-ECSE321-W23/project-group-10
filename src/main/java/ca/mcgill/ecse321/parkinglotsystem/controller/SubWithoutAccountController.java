@@ -43,14 +43,14 @@ public class SubWithoutAccountController {
 
     }
 
-    @PostMapping(value = {"/{id}/{date}/{licenseNumber}/{parkingTime}/{parkingSpot}", "/{id}/{date}/{licenseNumber}/{parkingTime}/{parkingSpot}/" })
-    public SubWithoutAccountDto createSubWithoutAccount(@PathVariable("id") int id, @RequestParam(name = "date") Date date, @RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "nbrMonths") int nbrMonths, @RequestParam(name = "parkingSpotId") int parkingSpotId){
+    @PostMapping(value = {"", "/" })
+    public SubWithoutAccountDto createSubWithoutAccount(@RequestParam(name = "id") int id, @RequestParam(name = "date") Date date, @RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "nbrMonths") int nbrMonths, @RequestParam(name = "parkingSpotId") int parkingSpotId){
         SubWithoutAccount subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(id, date, licenseNumber, nbrMonths, parkingSpotId);
         return convertToDto(subWithoutAccount);
     }
 
     @GetMapping(value = { "/all-by-parking-spot/{parkingSpot}", "/all-by-parking-spot/{parkingSpot}/"})
-    public List<SubWithoutAccountDto> getSubWithoutAccountsByParkingSpot(ParkingSpot spot){
+    public List<SubWithoutAccountDto> getSubWithoutAccountsByParkingSpot(@PathVariable("parkingSpot") ParkingSpot spot){
         List<SubWithoutAccountDto> subWithoutAccountDtos = new ArrayList<SubWithoutAccountDto>();
         List<Reservation> reservations = subWithoutAccountService.getReservationsByParkingSpot(spot);
         for (Reservation r : reservations){
@@ -60,7 +60,7 @@ public class SubWithoutAccountController {
     }
 
     @GetMapping(value = { "/all-by-date/{date}", "/all-by-date/{date}/"})
-    public List<SubWithoutAccountDto> getSubWithoutAccountsByDate(Date date){
+    public List<SubWithoutAccountDto> getSubWithoutAccountsByDate(@PathVariable Date date){
         List<SubWithoutAccountDto> subWithoutAccountDtos = new ArrayList<SubWithoutAccountDto>();
         List<Reservation> reservations = subWithoutAccountService.getReservationsByDate(date);
         for (Reservation r : reservations){
@@ -70,7 +70,7 @@ public class SubWithoutAccountController {
     }
 
     @GetMapping(value = { "/by-id/{id}", "/by-id/{id}/"})
-    public SubWithoutAccountDto getSubWithoutAccountById(int id){
+    public SubWithoutAccountDto getSubWithoutAccountById(@PathVariable int id){
         
         SubWithoutAccount subWithoutAccount = subWithoutAccountService.getSubWithoutAccountById(id);
         
@@ -78,7 +78,7 @@ public class SubWithoutAccountController {
     }
 
     @GetMapping(value = { "/all-by-license-number/{licenseNumber}", "/all-by-license-number/{licenseNumber}/"})
-    public List<SubWithoutAccountDto> getSubWithoutAccountsByLicenseNumber(String licenseNumber){
+    public List<SubWithoutAccountDto> getSubWithoutAccountsByLicenseNumber(@PathVariable String licenseNumber){
         List<SubWithoutAccountDto> subWithoutAccountDtos = new ArrayList<SubWithoutAccountDto>();
         List<SubWithoutAccount> reservations = subWithoutAccountService.getSubWithoutAccountsByLicenseNumber(licenseNumber);
         for (Reservation r : reservations){

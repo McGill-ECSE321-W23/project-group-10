@@ -1,18 +1,17 @@
 package ca.mcgill.ecse321.parkinglotsystem.service;
 
-import ca.mcgill.ecse321.parkinglotsystem.dao.ServicesRepository;
-import ca.mcgill.ecse321.parkinglotsystem.model.Services;
+import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRepository;
+import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@org.springframework.stereotype.Service
 public class ServicesService {
     @Autowired
-    ServicesRepository servicesRepository;
+    ServiceRepository servicesRepository;
 
     /**
      * method to create a service
@@ -21,7 +20,7 @@ public class ServicesService {
      * @return newly created service or null
      */
     @Transactional
-    public Services createService(String description, int price){
+    public Service createService(String description, int price){
         // Input validation
         String val_int = price + "";
         if (description == null) {
@@ -31,36 +30,36 @@ public class ServicesService {
             throw new IllegalArgumentException("price input cannot be empty or less than zero!");
         }
 
-        Services service=new Services();
+        Service service=new Service();
         service.setDescription(description);
         service.setPrice(price);
         servicesRepository.save(service);
         return service;
     }
 
-    public List<Services> getAllServices() {
-        Iterable<Services> pIterable = servicesRepository.findAll();
+    public List<Service> getAllServices() {
+        Iterable<Service> pIterable = servicesRepository.findAll();
         return HelperMethods.toList(pIterable);
 
     }
 
     // method to find a service by description
     @Transactional
-    public Services getServiceByDescription(String description) {
+    public Service getServiceByDescription(String description) {
         return servicesRepository.findServiceByDescription(description);
     }
 
     // method to find a service by price
     @Transactional
-    public List<Services> getServiceByPrice(int price) {
+    public List<Service> getServiceByPrice(int price) {
         return servicesRepository.findServiceByPrice(price);
     }
 
     //method to delete a service
     @Transactional
-    public Services deleteServiceByDescription(String description){
+    public Service deleteServiceByDescription(String description){
         String error="";
-        Services services=servicesRepository.findServiceByDescription(description);
+        Service services=servicesRepository.findServiceByDescription(description);
         if(services==null){
             error=error+"No service with that description was found!";
         }
@@ -74,10 +73,10 @@ public class ServicesService {
 
     //method to update a service
     @Transactional
-    public Services updateService(String description, int price){
+    public Service updateService(String description, int price){
         String error="";
 
-        Services services=servicesRepository.findServiceByDescription(description);
+        Service services=servicesRepository.findServiceByDescription(description);
         if(servicesRepository.findServiceByDescription(description)==null){
             error=error+"No service with that description exists!";
         }
