@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,14 +44,15 @@ public class SingleReservationController {
 
     }
 
-    @PostMapping(value = {"/{id}/{date}/{licenseNumber}/{parkingTime}/{parkingSpot}", "/{id}/{date}/{licenseNumber}/{parkingTime}/{parkingSpot}/" })
-    public SingleReservationDto createSingleReservation(@PathVariable("id") int id, @RequestParam(name = "date") Date date, @RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "parkingTime") int parkingTime, @RequestParam(name = "parkingSpotId") int parkingSpotId){
+    @PostMapping(value = {"", "/" })
+    public SingleReservationDto createSingleReservation(@RequestParam(name = "id") int id, @RequestParam(name = "date") Date date, @RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "parkingTime") int parkingTime, @RequestParam(name = "parkingSpotId") int parkingSpotId){
         SingleReservation singleReservation = singleReservationService.createSingleReservation(id, date, licenseNumber, parkingTime, ParkingSpotService.getParkingSpotById(parkingSpotId));
         return convertToDto(singleReservation);
     }
 
-    @GetMapping(value = { "/all-by-parking-spot/{parkingSpot}", "/all-by-parking-spot/{parkingSpot}/"})
-    public List<SingleReservationDto> getSingleReservationsByParkingSpot(ParkingSpot spot){
+    // TODO: Replace "ParkingSpot spot" by "int id"
+    @GetMapping(value = { "/all-by-parking-spot", "/all-by-parking-spot/"})
+    public List<SingleReservationDto> getSingleReservationsByParkingSpot(@RequestBody ParkingSpot spot){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
         List<Reservation> reservations = singleReservationService.getReservationsByParkingSpot(spot);
         for (Reservation r : reservations){
@@ -60,7 +62,7 @@ public class SingleReservationController {
     }
 
     @GetMapping(value = { "/all-by-date/{date}", "/all-by-date/{date}/"})
-    public List<SingleReservationDto> getSingleReservationsByDate(Date date){
+    public List<SingleReservationDto> getSingleReservationsByDate(@PathVariable Date date){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
         List<Reservation> reservations = singleReservationService.getReservationsByDate(date);
         for (Reservation r : reservations){
@@ -70,7 +72,7 @@ public class SingleReservationController {
     }
 
     @GetMapping(value = { "/by-id/{id}", "/by-id/{id}/"})
-    public SingleReservationDto getSingleReservationById(int id){
+    public SingleReservationDto getSingleReservationById(@PathVariable int id){
         
         SingleReservation singleReservation = singleReservationService.getSingleReservationById(id);
         
@@ -78,7 +80,7 @@ public class SingleReservationController {
     }
 
     @GetMapping(value = { "/all-by-license-number/{licenseNumber}", "/all-by-license-number/{licenseNumber}/"})
-    public List<SingleReservationDto> getSingleReservationsByLicenseNumber(String licenseNumber){
+    public List<SingleReservationDto> getSingleReservationsByLicenseNumber(@PathVariable String licenseNumber){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
         List<SingleReservation> reservations = singleReservationService.getSingleReservationsByLicenseNumber(licenseNumber);
         for (Reservation r : reservations){
@@ -102,8 +104,8 @@ public class SingleReservationController {
         return convertToDto(sR);
     }
 
-    @GetMapping(value = {"/calculate-fee/{startTime}/{singleReservation}", "/calculate-fee/{startTime}/{singleReservation}/"})
-    public Double calculateFee(@PathVariable("startTime") Time startTime, @RequestParam(name = "singleReservationId") int singleReservationId){
+    @GetMapping(value = {"/calculate-fee", "/calculate-fee/"})
+    public Double calculateFee(@RequestParam(name = "startTime") Time startTime, @RequestParam(name = "singleReservationId") int singleReservationId){
         return singleReservationService.calculateFee(startTime, singleReservationId);
     }
 

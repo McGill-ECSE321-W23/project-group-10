@@ -6,7 +6,7 @@ import java.util.List;
 
 import ca.mcgill.ecse321.parkinglotsystem.dto.PaymentServiceDto;
 import ca.mcgill.ecse321.parkinglotsystem.dto.ServiceRequestDto;
-import ca.mcgill.ecse321.parkinglotsystem.dto.ServicesDto;
+import ca.mcgill.ecse321.parkinglotsystem.dto.ServiceDto;
 import ca.mcgill.ecse321.parkinglotsystem.service.PaymentServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

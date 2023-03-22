@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 import ca.mcgill.ecse321.parkinglotsystem.model.PaymentService;
-import ca.mcgill.ecse321.parkinglotsystem.model.Services;
+import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 
 import java.sql.Timestamp;
 import java.sql.Date;
@@ -23,7 +23,7 @@ public class PaymentServicesRepositoryTests {
     @Autowired
     private ServiceReqWithAccountRepository serviceRequestRepository;
     @Autowired
-    private ServicesRepository serviceRepository;
+    private ServiceRepository serviceRepository;
     @Autowired
     private MonthlyCustomerRepository customerRepository;
 
@@ -43,7 +43,7 @@ public class PaymentServicesRepositoryTests {
         Timestamp date = new Timestamp(date_date.getTime());
 
         //Create service
-        Services services = new Services();
+        Service services = new Service();
         services.setDescription("someService");
         services.setPrice(100);
         services = serviceRepository.save(services);
