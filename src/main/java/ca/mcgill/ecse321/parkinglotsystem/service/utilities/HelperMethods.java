@@ -136,7 +136,7 @@ public class HelperMethods {
 
     /**
      * Helper method to convert parking spot type to a DTO
-     * @param ParkingLotSystem  
+     * @param pls
      * @return Dto
      */
     public static ParkingLotSystemDto convertParkingLotSystemToDto(ParkingLotSystem pls) {
@@ -152,7 +152,7 @@ public class HelperMethods {
 
     /**
      * Helper method to convert ServiceReqWithAccount type to a DTO
-     * @param ServiceReqWithAccount  
+     * @param srwa
      * @return Dto
      */
     public static ServiceReqWithAccountDto convertServiceReqWithAccountToDto(ServiceReqWithAccount srwa) {
@@ -165,7 +165,7 @@ public class HelperMethods {
 
     /**
      * Helper method to convert ServiceReqWithAccount type to a DTO
-     * @param ServiceReqWithoutAccount  
+     * @param srwoa
      * @return Dto
      */
     public static ServiceReqWithoutAccountDto convertServiceReqWithoutAccountToDto(ServiceReqWithoutAccount srwoa) {
