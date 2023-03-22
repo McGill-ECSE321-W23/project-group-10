@@ -45,8 +45,14 @@ public class SubWithAccountService {
             throw new CustomException(
                 "The parking spot is not available for monthly customers.", HttpStatus.BAD_REQUEST);
         }
-        MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
         ParkingSpot parkingSpot = parkingSpotService.getParkingSpot(parkingSpotId);
+        for(SubWithAccount sub : subWithAccountRepository.findSubWithAccountByParkingSpot(parkingSpot)) {
+            if (isActive(sub)) {
+                throw new CustomException(
+                    "The parking spot is currently reserved by another customer.", HttpStatus.BAD_REQUEST);
+            }
+        }
+        MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
         for(SubWithAccount sub : subWithAccountRepository.findSubWithAccountByCustomer(monthlyCustomer)) {
             if (isActive(sub)) {
                 throw new CustomException(
