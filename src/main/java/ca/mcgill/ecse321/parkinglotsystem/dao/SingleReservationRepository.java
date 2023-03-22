@@ -12,9 +12,9 @@ public interface SingleReservationRepository extends CrudRepository<SingleReserv
     SingleReservation findSingleReservationById(int id);
 
     //find single reservations by date
-    List<SingleReservation> findSingleReservationsByDate(Date date);
+    List<SingleReservation> findSingleReservationByDate(Date date);
 
     //find single reservations by license number
-    List<SingleReservation> findSingleReservationsByLicenseNumber(String licenseNumber);
+    List<SingleReservation> findSingleReservationByLicenseNumber(String licenseNumber);
 
 }

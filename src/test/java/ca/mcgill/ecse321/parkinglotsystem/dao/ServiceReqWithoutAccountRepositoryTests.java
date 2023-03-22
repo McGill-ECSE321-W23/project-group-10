@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.parkinglotsystem.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import ca.mcgill.ecse321.parkinglotsystem.model.Services;
+import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class ServiceReqWithoutAccountRepositoryTests {
     private ServiceReqWithoutAccountRepository serviceReqWithoutAccountRepository;
 
     @Autowired
-    private ServicesRepository serviceRepository;
+    private ServiceRepository serviceRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -32,7 +32,7 @@ public class ServiceReqWithoutAccountRepositoryTests {
         boolean isAssigned = true;
         String licenseNumber = "abcd";
         String serviceDesc = "someService";
-        Services services = new Services();
+        Service services = new Service();
         services.setDescription(serviceDesc);
         services.setPrice(50);
         services = serviceRepository.save(services);
@@ -56,7 +56,7 @@ public class ServiceReqWithoutAccountRepositoryTests {
         var objs2 = serviceReqWithoutAccountRepository.
                 findServiceReqWithoutAccountByService(services);
         var objs3 = serviceReqWithoutAccountRepository.
-                findServiceReqWithoutAccountBylicenseNumber(licenseNumber);
+                findServiceReqWithoutAccountByLicenseNumber(licenseNumber);
 
         // Assertions
         assertNotNull(obj);

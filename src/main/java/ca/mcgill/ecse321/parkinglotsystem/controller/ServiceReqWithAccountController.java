@@ -45,7 +45,7 @@ public class ServiceReqWithAccountController {
         .map(s -> convertServiceReqWithAccountToDto(s)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = {"/monthly-customer-email/{monthlyCustomerEmail}","/monthly-customer-email/{monthlyCustomerEmail/"})
+    @GetMapping(value = {"/monthly-customer-email/{monthlyCustomerEmail}","/monthly-customer-email/{monthlyCustomerEmail}/"})
     public List<ServiceReqWithAccountDto> getServiceReqWithAccountByCustomer(@PathVariable("monthlyCustomerEmail") String monthlyCustomerEmail){
         return service.getServiceReqWithAccountByCustomer(monthlyCustomerEmail).stream()
         .map(s -> convertServiceReqWithAccountToDto(s)).collect(Collectors.toList());

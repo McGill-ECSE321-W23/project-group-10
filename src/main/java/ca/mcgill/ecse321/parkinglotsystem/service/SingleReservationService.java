@@ -81,14 +81,14 @@ public class SingleReservationService extends ReservationService {
      */
     @Transactional
     public List<SingleReservation> getSingleReservationsBydate(Date date) {
-        List<SingleReservation> singleReservations = singleReservationRepository.findSingleReservationsByDate(date);
+        List<SingleReservation> singleReservations = singleReservationRepository.findSingleReservationByDate(date);
         return singleReservations;
     }
 
     @Transactional
     public List<SingleReservation> getSingleReservationsByLicenseNumber(String licenseNumber) {
         List<SingleReservation> singleReservations = singleReservationRepository
-                .findSingleReservationsByLicenseNumber(licenseNumber);
+                .findSingleReservationByLicenseNumber(licenseNumber);
         return singleReservations;
     }
 
