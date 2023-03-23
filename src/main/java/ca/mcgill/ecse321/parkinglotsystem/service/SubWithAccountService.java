@@ -46,7 +46,7 @@ public class SubWithAccountService {
                 "The parking spot is not available for monthly customers.", HttpStatus.BAD_REQUEST);
         }
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
-        ParkingSpot parkingSpot = parkingSpotService.getParkingSpot(parkingSpotId);
+        ParkingSpot parkingSpot = parkingSpotService.getParkingSpotById(parkingSpotId);
         for(SubWithAccount sub : subWithAccountRepository.findSubWithAccountByCustomer(monthlyCustomer)) {
             if (isActive(sub)) {
                 throw new CustomException(
@@ -150,7 +150,7 @@ public class SubWithAccountService {
     @Transactional
     public List<SubWithAccount> getAllByParkingSpot(int parkingSpotId) {
 
-        ParkingSpot parkingSpot = parkingSpotService.getParkingSpot(parkingSpotId);
+        ParkingSpot parkingSpot = parkingSpotService.getParkingSpotById(parkingSpotId);
         List<SubWithAccount> subs = toList(subWithAccountRepository.findSubWithAccountByParkingSpot(parkingSpot));
         Collections.sort(subs, Comparator.comparing(SubWithAccount::getDate));
 
