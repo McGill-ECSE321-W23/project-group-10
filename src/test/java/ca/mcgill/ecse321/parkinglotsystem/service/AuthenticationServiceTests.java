@@ -79,6 +79,7 @@ public class AuthenticationServiceTests {
         assertEquals(VALID_MANAGER_EMAIL+",Manager", result);
     }
 
+    @Test
     public void testLoginManagerInvalidPassword() {
         String message = "";
         try {
@@ -126,13 +127,23 @@ public class AuthenticationServiceTests {
     }
 
     @Test
-    public void testAuthenticateEmployee() {
+    public void testAuthenticateEmployee1() {
         service.authenticateEmployee(VALID_EMPLOYEE_EMAIL);
     }
 
     @Test
-    public void testAuthenticateCustomer() {
+    public void testAuthenticateEmployee2() {
+        service.authenticateEmployee(VALID_MANAGER_EMAIL);
+    }
+
+    @Test
+    public void testAuthenticateCustomer1() {
         service.authenticateMonthlyCustomer(VALID_CUSTOMER_EMAIL);
+    }
+
+    @Test
+    public void testAuthenticateCustomer2() {
+        service.authenticateMonthlyCustomer(VALID_MANAGER_EMAIL);
     }
 
     @Test
