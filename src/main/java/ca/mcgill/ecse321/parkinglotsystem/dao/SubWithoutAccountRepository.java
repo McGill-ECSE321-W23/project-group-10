@@ -19,6 +19,6 @@ public interface SubWithoutAccountRepository extends CrudRepository<SubWithoutAc
     //find subscriptions without account by license number
     List<SubWithoutAccount> findSubWithoutAccountsByLicenseNumber(String licenseNumber);
 
-    List<SubWithoutAccount> findSubWithoutAccountsbyDate(Date date);
+    List<SubWithoutAccount> findSubWithoutAccountsByDate(Date date);
 
 }

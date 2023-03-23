@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.parkinglotsystem.dao.SingleReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
+import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotService;
 
 @Service
 public class SingleReservationService extends ReservationService {
@@ -20,6 +21,8 @@ public class SingleReservationService extends ReservationService {
     @Autowired
     private SingleReservationRepository singleReservationRepository;
 
+    @Autowired
+    private ParkingSpotService parkingSpotService;
     /**
      * Create a SingleReservation
      * 
@@ -80,7 +83,7 @@ public class SingleReservationService extends ReservationService {
      * @return a list of reservations
      */
     @Transactional
-    public List<SingleReservation> getSingleReservationsBydate(Date date) {
+    public List<SingleReservation> getSingleReservationsByDate(Date date) {
         List<SingleReservation> singleReservations = singleReservationRepository.findSingleReservationsByDate(date);
         return singleReservations;
     }
@@ -92,6 +95,12 @@ public class SingleReservationService extends ReservationService {
         return singleReservations;
     }
 
+    @Transactional
+    public List<SingleReservation> getSingleReservationsByParkingSpot(int parkingSpotId) {
+        List<SingleReservation> singleReservations = singleReservationRepository
+                .findSingleReservationsByParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
+        return singleReservations;
+    }
     /**
      * Find all reservations
      * 
@@ -129,9 +138,7 @@ public class SingleReservationService extends ReservationService {
     public SingleReservation deleteSingleReservation(int reservationId) {
         if (reservationId < 0) {
             throw new IllegalArgumentException("ReservationId cannot be negative.");
-        } else if (reservationRepository.findReservationById(reservationId) == null) {
-            throw new IllegalArgumentException("reservationId does not exist.");
-        }
+        } 
 
         SingleReservation singleReservation = singleReservationRepository.findSingleReservationById(reservationId);
         if (singleReservation == null) {

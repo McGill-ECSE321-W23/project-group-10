@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.parkinglotsystem.dao;
 
 import org.springframework.data.repository.CrudRepository;
+
+import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 
 import java.util.List;
@@ -16,5 +18,7 @@ public interface SingleReservationRepository extends CrudRepository<SingleReserv
 
     //find single reservations by license number
     List<SingleReservation> findSingleReservationsByLicenseNumber(String licenseNumber);
+
+    List<SingleReservation> findSingleReservationsByParkingSpot(ParkingSpot parkingSpot);
 
 }

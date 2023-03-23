@@ -182,9 +182,6 @@ public class ReservationService {
         if (reservationId < 0){
             throw new IllegalArgumentException("ReservationId cannot be negative.");
         }
-        else if(reservationRepository.findReservationById(reservationId) == null){
-            throw new IllegalArgumentException("reservationId does not exist.");
-        }
 
         Reservation reservation = reservationRepository.findReservationById(reservationId);
         if(reservation == null){
@@ -206,6 +203,7 @@ public class ReservationService {
 		reservationRepository.deleteAll();
 		return toList(reservations);
 	}
+
     /**
 	 * helper method that converts iterable to list
 	 * @param <T>

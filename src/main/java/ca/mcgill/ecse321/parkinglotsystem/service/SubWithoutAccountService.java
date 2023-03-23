@@ -17,6 +17,9 @@ public class SubWithoutAccountService extends ReservationService {
 
     @Autowired
     private SubWithoutAccountRepository subWithoutAccountRepository;
+
+    @Autowired
+    private ParkingSpotService parkingSpotService;
     /**
      * Create a Reservation
      * @author Mike Zhang
@@ -40,6 +43,9 @@ public class SubWithoutAccountService extends ReservationService {
         }
         else if(licenseNumber.matches("^[a-zA-Z0-9]*$") || licenseNumber.length() > 7){
             throw new IllegalArgumentException("Incorrect licenseNumber format");
+        }
+        else if(nbrMonths < 1 ){
+            throw new IllegalArgumentException("the length of reservation must be at least 1 month.");
         }
         else {
             SubWithoutAccount subWithoutAccount = new SubWithoutAccount();
@@ -68,8 +74,8 @@ public class SubWithoutAccountService extends ReservationService {
 	 * @return a list of reservations
 	 */
 	@Transactional
-	public List<SubWithoutAccount> getSubWithoutAccountByDate(Date date) {
-		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsbyDate(date);
+	public List<SubWithoutAccount> getSubWithoutAccountsByDate(Date date) {
+		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByDate(date);
 		return subWithoutAccounts;
 	}
 
@@ -80,8 +86,8 @@ public class SubWithoutAccountService extends ReservationService {
 	 * @return a list of reservations
 	 */
 	@Transactional
-	public List<SubWithoutAccount> getSubWithoutAccountsByLicenseNumber(ParkingSpot parkingSpot) {
-		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByParkingSpot(parkingSpot);
+	public List<SubWithoutAccount> getSubWithoutAccountsByParkingSpot(int parkingSpotId) {
+		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
 		return subWithoutAccounts;
 	}
 
