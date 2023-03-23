@@ -31,6 +31,14 @@ public class EmployeeService {
         String error="";
         error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
         +HelperMethods.verifyPassword(password);
+
+        List<Employee> existing=getAllEmployees();
+        for(int i=0;i<existing.size();i++){
+            if(existing.get(i).getEmail().trim().equals(email.trim())){
+                error=error+"Cannot have the same email as an existing account! ";
+            }
+        }
+
         if(error.length()>0){
             throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }
@@ -60,13 +68,6 @@ public class EmployeeService {
      public List<Employee> getEmployeeByPhone(String phone){
         return employeeRepository.findEmployeeByPhone(phone);
      }
-
-
-     @Transactional
-     public List<Employee> getEmployeeByPassword(String password){
-        return employeeRepository.findEmployeeByPassword(password);
-     }
-
 
      @Transactional
      public List<Employee> getAllEmployees(){

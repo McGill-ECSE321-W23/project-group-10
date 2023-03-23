@@ -106,7 +106,7 @@ public class SubWithAccountServiceTests {
                 return dummyCustomer(invocation.getArgument(0));
         });
 
-        lenient().when(parkingSpotService.getParkingSpot(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+        lenient().when(parkingSpotService.getParkingSpotById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             return dummyParkingSpot(invocation.getArgument(0));
         });
     }
