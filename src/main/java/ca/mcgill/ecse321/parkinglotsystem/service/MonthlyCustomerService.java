@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.parkinglotsystem.dao.MonthlyCustomerRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
+import org.springframework.http.HttpStatus;
 
 @Service
 public class MonthlyCustomerService {
@@ -28,28 +30,16 @@ public class MonthlyCustomerService {
     @Transactional
      public MonthlyCustomer createMonthlyCustomer(String email,String name,String phone,String password,String licenseNumber){
         String error="";
-        if(name==null || name.trim().length()==0){
-            error=error+"MonthlyCustomer name cannot be empty!";
-        }
-        if((email==null || email.trim().length()==0)){
-            error=error+"MonthlyCustomer email cannot be empty!";
-        }else if(email.indexOf("@")==-1){
-            error=error+"MonthlyCustomer email must contain \"@\"!";
-        }
-        if(phone.trim().length()!=10){
-            error=error+"MonthlyCustomer phone must have exactlty 10 digits!";
-        }
-        if(phone.trim().matches("\\d+")==false){
-            error=error+"MonthlyCustomer phone cannot have non-number digits!";
-        }
-        if(password.trim().length()<8){
-            error=error+"MonthlyCustomer password cannot be shorter than 8 digits!";
-        }
-        if(licenseNumber.trim().length()<4){
-            error=error+"MonthlyCustomer license number cannot be shorter than 4 digits!";
+        error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+            +HelperMethods.verifyPassword(password)+HelperMethods.verifyLicenseNumber(licenseNumber);
+        List<MonthlyCustomer> existing=getAllMonthlyCustomers();
+        for(int i=0;i<existing.size();i++){
+            if(existing.get(i).getEmail().trim().equals(email.trim())){
+                error=error+"Cannot have the same email as an existing account! ";
+            }
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }
         MonthlyCustomer mc=new MonthlyCustomer();
         mc.setEmail(email);
@@ -79,13 +69,6 @@ public class MonthlyCustomerService {
         return monthlyCustomerRepository.findMonthlyCustomerByPhone(phone);
      }
 
-
-     @Transactional
-     public List<MonthlyCustomer> getMonthlyCustomerByPassword(String password){
-        return monthlyCustomerRepository.findMonthlyCustomerByName(password);
-     }
-
-
      @Transactional
      public List<MonthlyCustomer> getMonthlyCustomerByLicenseNumber(String licenseNumber){
         return monthlyCustomerRepository.findMonthlyCustomerByLicenseNumber(licenseNumber);
@@ -107,7 +90,7 @@ public class MonthlyCustomerService {
             error=error+"No monthly customer with that email was found!";
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }else{
             monthlyCustomerRepository.delete(mc);
             return mc;
@@ -117,13 +100,15 @@ public class MonthlyCustomerService {
      @Transactional
      public MonthlyCustomer updateMonthlyCustomer(String email,String name,String phone,String password,String licenseNumber){
         String error="";
-
         MonthlyCustomer mc=monthlyCustomerRepository.findMonthlyCustomerByEmail(email);
         if(monthlyCustomerRepository.findMonthlyCustomerByEmail(email)==null){
             error=error+"No monthly customer with that email exists!";
+        }else{
+            error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
+            +HelperMethods.verifyPassword(password)+HelperMethods.verifyLicenseNumber(licenseNumber);
         }
         if(error.length()>0){
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }else{
             mc.setName(name);
             mc.setPhone(phone);

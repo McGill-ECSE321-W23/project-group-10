@@ -16,6 +16,6 @@ public interface ServiceRequestRepository extends CrudRepository<ServiceRequest,
     List<ServiceRequest> findServiceRequestByIsAssigned(boolean isAssigned);
 
     //find service requests by service
-    List<ServiceRequest> findServiceRequestByService(Service service);
+    List<ServiceRequest> findServiceRequestByService(Service services);
 
 }

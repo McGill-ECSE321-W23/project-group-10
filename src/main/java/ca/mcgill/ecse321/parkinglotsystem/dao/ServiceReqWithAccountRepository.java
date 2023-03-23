@@ -18,7 +18,7 @@ public interface ServiceReqWithAccountRepository extends CrudRepository<ServiceR
     List<ServiceReqWithAccount> findServiceReqWithAccountByIsAssigned(boolean isAssigned);
 
     //find service requests with account by service
-    List<ServiceReqWithAccount> findServiceReqWithAccountByService(Service service);
+    List<ServiceReqWithAccount> findServiceReqWithAccountByService(Service services);
 
     //find service requests with account by monthly customer
     List<ServiceReqWithAccount> findServiceReqWithAccountByCustomer(MonthlyCustomer monthlyCustomer);

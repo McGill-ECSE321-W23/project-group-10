@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotRepository;
+import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.SubWithoutAccountRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.SubWithoutAccount;
@@ -99,7 +101,7 @@ public class SubWithoutAccountService extends ReservationService {
 	 */
 	@Transactional
 	public List<SubWithoutAccount> getSubWithoutAccountsByLicenseNumber(String licenseNumber) {
-		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByLicenseNumber(licenseNumber);
+		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountByLicenseNumber(licenseNumber);
 		return subWithoutAccounts;
 	}
     /**

@@ -81,4 +81,8 @@ public class ParkingSpotService {
         return HelperMethods.toList(pIterable);
 
     }
+    public ParkingSpot getParkingSpot(int parkingSpotId) {
+        // TODO: Implement this
+        return null;
+    }
 }

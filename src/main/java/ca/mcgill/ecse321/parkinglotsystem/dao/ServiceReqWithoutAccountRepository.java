@@ -16,9 +16,9 @@ public interface ServiceReqWithoutAccountRepository extends CrudRepository<Servi
     List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByIsAssigned(Boolean isAssigned);
 
     //find service requests without account by service
-    List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByService(Service service);
+    List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByService(Service services);
 
     //find service requests without account by license number
-    List<ServiceReqWithoutAccount> findServiceReqWithoutAccountBylicenseNumber(String licenseNumber);
+    List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByLicenseNumber(String licenseNumber);
 
 }

@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class PaymentServiceRepositoryTests {
+public class PaymentServicesRepositoryTests {
     @Autowired
     private PaymentServiceRepository paymentServiceRepository;
     @Autowired
@@ -43,10 +43,10 @@ public class PaymentServiceRepositoryTests {
         Timestamp date = new Timestamp(date_date.getTime());
 
         //Create service
-        Service service = new Service();
-        service.setDescription("someService");
-        service.setPrice(100);
-        service = serviceRepository.save(service);
+        Service services = new Service();
+        services.setDescription("someService");
+        services.setPrice(100);
+        services = serviceRepository.save(services);
 
         //Create customer
         MonthlyCustomer customer = new MonthlyCustomer();
@@ -60,7 +60,7 @@ public class PaymentServiceRepositoryTests {
         //Create service request
         ServiceReqWithAccount service_request = new ServiceReqWithAccount();
         service_request.setIsAssigned(false);
-        service_request.setService(service);
+        service_request.setService(services);
         service_request.setCustomer(customer);
         service_request = serviceRequestRepository.save(service_request);
 

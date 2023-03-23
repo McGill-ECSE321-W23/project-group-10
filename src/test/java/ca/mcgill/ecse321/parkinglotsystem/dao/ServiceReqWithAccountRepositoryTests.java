@@ -34,10 +34,10 @@ public class ServiceReqWithAccountRepositoryTests {
         //int id = 1234;
         boolean isAssigned = true;
 
-        Service service = new Service();
-        service.setDescription("someService");
-        service.setPrice(50);
-        service = serviceRepository.save(service);
+        Service services = new Service();
+        services.setDescription("someService");
+        services.setPrice(50);
+        services = serviceRepository.save(services);
 
         MonthlyCustomer monthlyCustomer = new MonthlyCustomer();
         monthlyCustomer.setEmail("hello@world.com");
@@ -51,7 +51,7 @@ public class ServiceReqWithAccountRepositoryTests {
         ServiceReqWithAccount obj = new ServiceReqWithAccount();
         obj.setIsAssigned(isAssigned);
         obj.setCustomer(monthlyCustomer);
-        obj.setService(service);
+        obj.setService(services);
 
         // Save object
         obj = serviceReqWithAccountRepository.save(obj);
@@ -62,13 +62,13 @@ public class ServiceReqWithAccountRepositoryTests {
         // Read object from database
         obj = serviceReqWithAccountRepository.findServiceReqWithAccountById(id);
         var objs1 = serviceReqWithAccountRepository.findServiceReqWithAccountByIsAssigned(isAssigned);
-        var objs2 = serviceReqWithAccountRepository.findServiceReqWithAccountByService(service);
+        var objs2 = serviceReqWithAccountRepository.findServiceReqWithAccountByService(services);
         var objs3 = serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer);
 
         // Assertions
         assertNotNull(obj);
         assertEquals(isAssigned, obj.getIsAssigned());
-        assertEquals(service.getDescription(), obj.getService().getDescription());
+        assertEquals(services.getDescription(), obj.getService().getDescription());
         assertEquals(monthlyCustomer.getEmail(), obj.getCustomer().getEmail());
         assertEquals(1, objs1.size());
         assertEquals(1, objs2.size());

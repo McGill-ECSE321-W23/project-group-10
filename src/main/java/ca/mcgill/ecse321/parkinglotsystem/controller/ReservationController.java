@@ -36,13 +36,13 @@ public List<ReservationDto> getAllReservations() {
 }
 
 @GetMapping(value = { "/by-id/{id}", "/by-id/{id}/"})
-public ReservationDto getReservationById(int id){
+public ReservationDto getReservationById(@PathVariable int id){
     Reservation reservation = reservationService.getReservationById(id);
     return convertToDto(reservation);
 }
 
 @GetMapping(value = { "/reservations/{date}", "/reservations/{date}/"})
-public List<ReservationDto> getReservationsByDate(Date date){
+public List<ReservationDto> getReservationsByDate(@PathVariable Date date){
     List<ReservationDto> reservationDtos = new ArrayList<ReservationDto>();
     List<Reservation> reservations = reservationService.getReservationsByDate(date);
     for (Reservation r : reservations){
@@ -51,8 +51,8 @@ public List<ReservationDto> getReservationsByDate(Date date){
     return reservationDtos;
 }
 
-@GetMapping(value = { "/reservations/{date}", "/reservations/{date}/"})
-public List<ReservationDto> getReservationsByParkingSpot(int parkingSpotId){
+@GetMapping(value = { "/reservations/{id}", "/reservations/{id}/"})
+public List<ReservationDto> getReservationsByParkingSpot(@PathVariable("id") int parkingSpotId){
     List<ReservationDto> reservationDtos = new ArrayList<ReservationDto>();
     ParkingSpot spot = parkingSpotService.getParkingSpotById(parkingSpotId);
     List<Reservation> reservations = reservationService.getReservationsByParkingSpot(spot);
@@ -62,8 +62,8 @@ public List<ReservationDto> getReservationsByParkingSpot(int parkingSpotId){
     return reservationDtos;
 }
 
-@GetMapping(value = { "/reservations/{id}/{date}/{parkingSpot}", "/reservations/{id}/{date}/{parkingSpot}/"})
-public ReservationDto createReservation(@PathVariable("id") int id, @RequestParam(name ="date") Date date, @RequestParam(name = "parking-spot-id") int parkingSpotId) {
+@GetMapping(value = { "/reservations", "/reservations/"})
+public ReservationDto createReservation(@RequestParam(name="id") int id, @RequestParam(name ="date") Date date, @RequestParam(name = "parking-spot-id") int parkingSpotId) {
     Reservation reservation = reservationService.createReservation(id, date, parkingSpotId);
     return convertToDto(reservation);
 }
