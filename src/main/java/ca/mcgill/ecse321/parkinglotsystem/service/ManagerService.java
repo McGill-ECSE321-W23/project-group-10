@@ -31,6 +31,14 @@ public class ManagerService {
         String error="";
         error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
             +HelperMethods.verifyPassword(password);
+
+        List<Manager> existing=getAllManagers();
+        for(int i=0;i<existing.size();i++){
+            if(existing.get(i).getEmail().trim().equals(email.trim())){
+                error=error+"Cannot have the same email as an existing account! ";
+            }
+        }
+
         if(error.length()>0){
             throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }
