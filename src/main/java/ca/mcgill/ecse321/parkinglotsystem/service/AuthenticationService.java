@@ -44,6 +44,9 @@ public class AuthenticationService {
         if(p == null) {
             throw new CustomException("Invalid email", HttpStatus.BAD_REQUEST);
         }
+        if(!credentials.getPassword().equals(p.getPassword())) {
+            throw new CustomException("Incorrect password", HttpStatus.BAD_REQUEST);
+        }
 
         return p.getEmail() + "," + personType;
     }
@@ -99,7 +102,7 @@ public class AuthenticationService {
         if(p != null) return;
         p = customerRepository.findMonthlyCustomerByEmail(token);
         if(p != null) return;
-        throw new CustomException("You must be logged in as an Customer or Manager", HttpStatus.UNAUTHORIZED);
+        throw new CustomException("You must be logged in as a Monthly Customer or Manager", HttpStatus.UNAUTHORIZED);
     }
     
 }
