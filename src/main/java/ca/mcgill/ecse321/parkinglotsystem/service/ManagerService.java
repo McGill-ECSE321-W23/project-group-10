@@ -69,13 +69,7 @@ public class ManagerService {
         return managerRepository.findManagerByPhone(phone);
      }
 
-
-     @Transactional
-     public List<Manager> getManagerByPassword(String password){
-        return managerRepository.findManagerByPassword(password);
-     }
-
-
+     
      @Transactional
      public List<Manager> getAllManagers(){
         Iterable<Manager> mIterable=managerRepository.findAll();

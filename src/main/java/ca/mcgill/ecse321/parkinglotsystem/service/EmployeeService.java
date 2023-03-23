@@ -69,13 +69,6 @@ public class EmployeeService {
         return employeeRepository.findEmployeeByPhone(phone);
      }
 
-
-     @Transactional
-     public List<Employee> getEmployeeByPassword(String password){
-        return employeeRepository.findEmployeeByPassword(password);
-     }
-
-
      @Transactional
      public List<Employee> getAllEmployees(){
         Iterable<Employee> mIterable=employeeRepository.findAll();

@@ -69,13 +69,6 @@ public class MonthlyCustomerService {
         return monthlyCustomerRepository.findMonthlyCustomerByPhone(phone);
      }
 
-
-     @Transactional
-     public List<MonthlyCustomer> getMonthlyCustomerByPassword(String password){
-        return monthlyCustomerRepository.findMonthlyCustomerByPassword(password);
-     }
-
-
      @Transactional
      public List<MonthlyCustomer> getMonthlyCustomerByLicenseNumber(String licenseNumber){
         return monthlyCustomerRepository.findMonthlyCustomerByLicenseNumber(licenseNumber);
