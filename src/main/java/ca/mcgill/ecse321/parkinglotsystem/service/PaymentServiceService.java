@@ -46,7 +46,7 @@ public class PaymentServiceService {
             throw new IllegalArgumentException("payment amount cannot be negative!");
         }
         if (dateTime == null||compare_create < 0||compare_current>0) {
-            throw new IllegalArgumentException("payment service date Time is wrong!");
+            throw new IllegalArgumentException("payment service date time is wrong!");
         }
         if (serviceRequestRepository.findServiceRequestById(serviceRequest.getId()) == null) {
             throw new IllegalArgumentException("payment service does not exist in service request repository!");
@@ -140,11 +140,11 @@ public class PaymentServiceService {
         int compare_create = dateTime.compareTo(create_time);
         int compare_current = dateTime.compareTo(current_time);
         PaymentService paymentService = paymentServiceRepository.findPaymentServiceById(id);
-        if (val_double_1 == null||amount<0) {
+        if (amount<0) {
             throw new IllegalArgumentException("payment amount cannot be negative!");
         }
         if (dateTime == null||compare_create < 0||compare_current>0) {
-            throw new IllegalArgumentException("payment service date Time cannot be null!");
+            throw new IllegalArgumentException("payment service date time is wrong!");
         }
         if (serviceRequestRepository.findServiceRequestById(serviceRequest.getId()) == null) {
             throw new IllegalArgumentException("payment service does not exist in service request repository!");
