@@ -87,7 +87,7 @@ public class ServiceRequestController {
     public List<ServiceRequestDto> getServiceRequestsByService(@PathVariable("service") Service service) {
         List<ServiceRequestDto> ServiceRequests = new ArrayList<>();
         try {
-            List<ServiceRequest> serviceRequest = serviceRequestService.getPaymentServiceByServices(service);
+            List<ServiceRequest> serviceRequest = serviceRequestService.getServiceRequestByService(service);
             if (serviceRequest.size() != 0) {
                 for (ServiceRequest se : serviceRequest) {
                     ServiceRequests.add(convertServiceRequestToDto(se));
