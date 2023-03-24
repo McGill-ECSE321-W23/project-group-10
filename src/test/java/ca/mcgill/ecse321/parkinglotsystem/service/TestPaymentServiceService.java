@@ -29,8 +29,8 @@ public class TestPaymentServiceService {
 
     @Mock
     private PaymentServiceRepository paymentServiceRepository;
+    @Mock
     private ServiceRequestRepository serviceRequestRepository;
-    private ServiceRepository serviceRepository;
     @InjectMocks
     private PaymentServiceService service;
 
