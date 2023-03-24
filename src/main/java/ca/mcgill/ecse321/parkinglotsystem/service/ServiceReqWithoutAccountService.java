@@ -19,68 +19,73 @@ public class ServiceReqWithoutAccountService {
     @Autowired
     private ServiceReqWithoutAccountRepository serviceReqwithoutAccountRepository;
     @Autowired
-    private ServiceRepository serviceRepository;
-
+    private ServicesService serviceService;
 
     @Transactional
-    public ServiceReqWithoutAccount createServiceReqWithoutAccount(String licenseNumber, int price){
+    public ServiceReqWithoutAccount createServiceReqWithoutAccount(String licenseNumber, int price) {
         boolean flag = true;
-        for (Service aService : serviceRepository.findServiceByPrice(price)){
-            if(aService.getPrice()==price){
+        for (Service aService : serviceService.getServiceByPrice(price)) {
+            if (aService.getPrice() == price) {
                 flag = false;
             }
         }
-        if(flag){
+        if (flag) {
             throw new CustomException("No service with such price", HttpStatus.BAD_REQUEST);
         }
 
-        Service service = serviceRepository.findServiceByPrice(price).get(0);
+        Service service = serviceService.getServiceByPrice(price).get(0);
         ServiceReqWithoutAccount serviceReqWithoutAccount = new ServiceReqWithoutAccount();
         serviceReqWithoutAccount.setIsAssigned(true);
         serviceReqWithoutAccount.setService(service);
-        serviceReqWithoutAccount.setLicenseNumber(licenseNumber);;
+        serviceReqWithoutAccount.setLicenseNumber(licenseNumber);
+        ;
         serviceReqwithoutAccountRepository.save(serviceReqWithoutAccount);
 
         return serviceReqWithoutAccount;
     }
 
     @Transactional
-    public ServiceReqWithoutAccount getServiceReqWithoutAccountById(int id){
-        if (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountById(id)==null){
+    public ServiceReqWithoutAccount getServiceReqWithoutAccountById(int id) {
+        if (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountById(id) == null) {
             throw new CustomException("No serviceRequest Id", HttpStatus.BAD_REQUEST);
         }
         return serviceReqwithoutAccountRepository.findServiceReqWithoutAccountById(id);
     }
 
     @Transactional
-    public List<ServiceReqWithoutAccount> getServiceReqWithoutAccountByIsAssigned(boolean isAssigned){
+    public List<ServiceReqWithoutAccount> getServiceReqWithoutAccountByIsAssigned(boolean isAssigned) {
         return serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByIsAssigned(isAssigned);
     }
 
     // @Transactional
-    // public List<ServiceReqWithoutAccount> getServiceReqwithoutAccountByService(Service service){
-    //     if (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByService(service).isEmpty()){
-    //         throw new CustomException("No serviceRequest with such service", HttpStatus.BAD_REQUEST);
-    //     }
-    //     return serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByService(service);
+    // public List<ServiceReqWithoutAccount>
+    // getServiceReqwithoutAccountByService(Service service){
+    // if
+    // (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByService(service).isEmpty()){
+    // throw new CustomException("No serviceRequest with such service",
+    // HttpStatus.BAD_REQUEST);
     // }
-    
+    // return
+    // serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByService(service);
+    // }
+
     @Transactional
-    public List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByLicenseNumber(String licenseNumber){
-        if (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByLicenseNumber(licenseNumber).isEmpty()){
+    public List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByLicenseNumber(String licenseNumber) {
+        if (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByLicenseNumber(licenseNumber).isEmpty()) {
             throw new CustomException("No serviceRequest with such service", HttpStatus.BAD_REQUEST);
         }
         return serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByLicenseNumber(licenseNumber);
     }
 
     @Transactional
-    public List<ServiceReqWithoutAccount> getAll(){
-        return (List<ServiceReqWithoutAccount>)(ServiceRequest)toList(serviceReqwithoutAccountRepository.findAll());
+    public List<ServiceReqWithoutAccount> getAll() {
+        return (List<ServiceReqWithoutAccount>) (ServiceRequest) toList(serviceReqwithoutAccountRepository.findAll());
     }
 
     @Transactional
-    public ServiceReqWithoutAccount updateIsAssignedById(int id ,boolean isAssigned){
-        ServiceReqWithoutAccount serviceReqwithoutAccount = serviceReqwithoutAccountRepository.findServiceReqWithoutAccountById(id);
+    public ServiceReqWithoutAccount updateIsAssignedById(int id, boolean isAssigned) {
+        ServiceReqWithoutAccount serviceReqwithoutAccount = serviceReqwithoutAccountRepository
+                .findServiceReqWithoutAccountById(id);
         serviceReqwithoutAccount.setIsAssigned(isAssigned);
         serviceReqwithoutAccountRepository.save(serviceReqwithoutAccount);
         return serviceReqwithoutAccount;
