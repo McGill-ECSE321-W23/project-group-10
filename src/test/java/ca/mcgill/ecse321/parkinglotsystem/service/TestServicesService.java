@@ -49,8 +49,8 @@ public class TestServicesService {
 
         lenient().when(servicesRepository.save(any(Service.class))).thenAnswer((InvocationOnMock invocation) -> {
             Service se = invocation.getArgument(0);
-            se.setDescription(VALID__DESCRIPTION);
-            se.setPrice(VALID__PRICE);
+            //se.setDescription(VALID__DESCRIPTION);
+            //se.setPrice(VALID__PRICE);
             return se;
         });
 
@@ -74,13 +74,13 @@ public class TestServicesService {
 
     @Test
     public void testCreateService() {
-        Service ser = service.createService(VALID__DESCRIPTION_ACTIVE, VALID__PRICE_UPDATE);
+        Service ser = service.createService(VALID__DESCRIPTION_ACTIVE, VALID__PRICE);
         assertNotNull(ser);
         var description = ser.getDescription();
         assertNotNull(description);
         assertEquals(VALID__DESCRIPTION_ACTIVE, ser.getDescription());
         var price = ser.getPrice();
-        assertEquals(VALID__PRICE_UPDATE, ser.getPrice());
+        assertEquals(VALID__PRICE, ser.getPrice());
     }
 
     @Test
