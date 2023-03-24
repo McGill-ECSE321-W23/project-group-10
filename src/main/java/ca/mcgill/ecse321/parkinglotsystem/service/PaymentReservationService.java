@@ -139,6 +139,23 @@ public class PaymentReservationService {
         return paymentReservations;
      }
 
-     // write method for find by date and find by amount
+     @Transactional
+     public List<PaymentReservation> getPaymentReservationByDateTime(Timestamp dateTime) {
+
+        if (dateTime == null) {
+            throw new CustomException("Invalid Date and time! ", HttpStatus.BAD_REQUEST);
+        }
+       return paymentReservationRepository.findPaymentReservationByDateTime(dateTime);
+
+     }
+     @Transactional
+     public List<PaymentReservation> getPaymentReservationByAmout(double amount ) {
+
+        if (amount < 0) {
+            throw new CustomException("Invalid amount! ", HttpStatus.BAD_REQUEST);
+        }
+       return paymentReservationRepository.findPaymentReservationByAmount(amount);
+
+     }
   
 }

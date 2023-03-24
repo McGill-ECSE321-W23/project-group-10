@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
@@ -101,19 +102,28 @@ public class TestPaymentReservationService {
         });
 
         lenient().when(paymentReservationRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-                List<PaymentReservation> paymentReservations = new ArrayList<>();
-                paymentReservations.add(dummy(PAYMENT_ID1, PAYMENT_TIME, PAYMENT_AMOUNT1));
-                paymentReservations.add(dummy(PAYMENT_ID2, PAYMENT_TIME, PAYMENT_AMOUNT2));
-                return paymentReservations;
+            List<PaymentReservation> paymentReservations = new ArrayList<>();
+            paymentReservations.add(dummy(PAYMENT_ID1, PAYMENT_TIME, PAYMENT_AMOUNT1));
+            paymentReservations.add(dummy(PAYMENT_ID2, PAYMENT_TIME, PAYMENT_AMOUNT2));
+            return paymentReservations;
         });
 
         lenient().when(paymentReservationRepository.findPaymentReservationByReservation(any(Reservation.class))).thenAnswer((InvocationOnMock invocation) -> {
-
-                List<PaymentReservation> paymentReservations = new ArrayList<>();
-                paymentReservations.add(dummy(PAYMENT_ID1, PAYMENT_TIME, PAYMENT_AMOUNT1));
-                paymentReservations.add(dummy(PAYMENT_ID2, PAYMENT_TIME, PAYMENT_AMOUNT2));
-                return paymentReservations;
+            List<PaymentReservation> paymentReservations = new ArrayList<>();
+            paymentReservations.add(dummy(PAYMENT_ID1, PAYMENT_TIME, PAYMENT_AMOUNT1));
+            paymentReservations.add(dummy(PAYMENT_ID2, PAYMENT_TIME, PAYMENT_AMOUNT2));
+            return paymentReservations;
         });
+
+        lenient().when(paymentReservationRepository.findPaymentReservationByDateTime(any(Timestamp.class))).thenAnswer((InvocationOnMock invocation) -> {
+            List<PaymentReservation> paymentReservations = new ArrayList<>();
+            paymentReservations.add(dummy(PAYMENT_ID1, PAYMENT_TIME, PAYMENT_AMOUNT1));
+            return paymentReservations;
+        });
+
+        // lenient().when(paymentReservationRepository.findPaymentReservationByAmount(anyDouble())).thenAnswer((InvocationOnMock invocation) -> {
+
+        // };
 
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> invocation.getArgument(0);
         lenient().when(paymentReservationRepository.save(any(PaymentReservation.class))).thenAnswer(returnParameterAsAnswer);
@@ -317,7 +327,6 @@ public class TestPaymentReservationService {
 		}
         assertEquals("", error);
         assertEquals(PAYMENT_ID1, paymentReservations.get(0).getId());
-
         assertEquals(PAYMENT_AMOUNT1, paymentReservations.get(0).getAmount());
 
     }
@@ -352,6 +361,56 @@ public class TestPaymentReservationService {
 		}
         assertEquals("reservation id should be greater than 0! ", error);
 
+    }
+
+    @Test
+    public void testGetPaymentReservationByDate() {
+
+        String error = "";
+        List<PaymentReservation> paymentReservations = null;
+        try {
+            paymentReservations = paymentReservationService.getPaymentReservationByDateTime(PAYMENT_TIME);
+
+        }catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertEquals("", error);
+        assertEquals(PAYMENT_ID1, paymentReservations.get(0).getId());
+        assertEquals(PAYMENT_AMOUNT1, paymentReservations.get(0).getAmount());
+        assertEquals(PAYMENT_TIME, paymentReservations.get(0).getDateTime());
+    }
+
+    @Test
+    public void testGetPaymentReservationByDateWithInvalidDate() {
+
+        String error = "";
+        List<PaymentReservation> paymentReservations = null;
+        try {
+            paymentReservations = paymentReservationService.getPaymentReservationByDateTime(null);
+
+        }catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertEquals("Invalid Date and time! ", error);
+    }
+
+    @Test
+    public void testGetPaymentReservationByAmount() {
+        String error = "";
+        List<PaymentReservation> paymentReservations = null;
+        try {
+            paymentReservations = paymentReservationService.getPaymentReservationByAmout(PAYMENT_AMOUNT1);
+
+        }catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertEquals("", error);
+        assertEquals(PAYMENT_ID1, paymentReservations.get(0).getId());
+        assertEquals(PAYMENT_AMOUNT1, paymentReservations.get(0).getAmount());
+        assertEquals(PAYMENT_TIME, paymentReservations.get(0).getDateTime());
     }
 
     

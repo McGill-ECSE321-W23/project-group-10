@@ -71,4 +71,16 @@ public class PaymentReservationController {
         return paymentReservationService.getPaymentReservationByReservation(reservationId).stream().map(
             pRes -> HelperMethods.convertPaymentReservationToDto(pRes)).collect(Collectors.toList());
     }
+
+    @GetMapping(value = {"/by-date/{dateTime}", "/by-date/{dateTime}/"})
+    public List<PaymentReservationDto> getAllPaymentReservationDtosByDate(@PathVariable("dateTime") String timestamp) {
+        return paymentReservationService.getPaymentReservationByDateTime(Timestamp.valueOf(timestamp)).stream().map(
+            pRes -> HelperMethods.convertPaymentReservationToDto(pRes)).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = {"/by-amount/{amount}", "/by-amount/{amount}/"})
+    public List<PaymentReservationDto> getAllPaymentReservationDtosByAmount(@PathVariable("amount") double amount) {
+        return paymentReservationService.getPaymentReservationByAmout(amount).stream().map(
+            pRes -> HelperMethods.convertPaymentReservationToDto(pRes)).collect(Collectors.toList());
+    }
 }
