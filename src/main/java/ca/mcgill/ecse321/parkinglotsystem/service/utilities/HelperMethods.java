@@ -59,7 +59,22 @@ public class HelperMethods {
 
 
     /**
-     * <<<<<<< HEAD
+     * method to convert to dto
+     * @param paymentReservation
+     * @return
+     */
+    public static PaymentReservationDto convertPaymentReservationToDto(PaymentReservation paymentReservation) {
+        if (paymentReservation == null) {
+            throw new IllegalArgumentException("There is no such payment reservation to convert! ");
+        }
+        PaymentReservationDto paymentReservationDto = new PaymentReservationDto();
+        paymentReservationDto.setId(paymentReservation.getId());
+        paymentReservationDto.setAmount(paymentReservation.getAmount());
+        paymentReservationDto.setDateTime(paymentReservation.getDateTime());
+        paymentReservationDto.setReservation(paymentReservation.getReservation());
+        return paymentReservationDto;
+    }
+    /** 
      * Converts a SubWithAccount object to a DTO.
      *
      * @param subWithAccount
