@@ -30,6 +30,7 @@ public class TestServicesService {
 
     private static final String VALID__DESCRIPTION = "This is an valid description.";
     private static final String INVALID__DESCRIPTION = "";
+    private static final String NON_EXIST__DESCRIPTION = "feeling lucky";
 
     private static final int VALID__PRICE = 100;
     private static final int INVALID__PRICE = -50;
@@ -104,8 +105,14 @@ public class TestServicesService {
     }
 
     @Test
-    public void testGetServiceInValidDescription() {
+    public void testGetServiceInValidDescription1() {
         Service ser = service.getServiceByDescription(INVALID__DESCRIPTION);
+        assertNull(ser);
+    }
+
+    @Test
+    public void testGetServiceInValidDescription2() {
+        Service ser = service.getServiceByDescription(NON_EXIST__DESCRIPTION);
         assertNull(ser);
     }
 
