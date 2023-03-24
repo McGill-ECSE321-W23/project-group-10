@@ -33,6 +33,8 @@ public class TestServicesService {
     private static final String NON_EXIST__DESCRIPTION = "feeling lucky";
 
     private static final int VALID__PRICE = 100;
+    private static final int VALID__PRICE_UPDATE = 80;
+    private static final int INVALID__PRICE_UPDATE = -80;
     private static final int INVALID__PRICE = -50;
 
     @BeforeEach
@@ -127,6 +129,24 @@ public class TestServicesService {
     public void testGetServiceInValidPrice() {
         List<Service> serviceList = service.getServiceByPrice(INVALID__PRICE);
         assertEquals(serviceList, null);
+    }
+
+    @Test
+    public void testGetAll() {
+        List<Service> serviceList = service.getAllServices();
+        assertEquals(serviceList.size(), 1);
+    }
+
+    @Test
+    public void testUpdateServiceValid() {
+        Service ser = service.updateService(VALID__DESCRIPTION, VALID__PRICE_UPDATE);
+        assertEquals(ser.getPrice(), VALID__PRICE_UPDATE);
+    }
+
+    @Test
+    public void testUpdateServiceInvalid() {
+        Service ser = service.updateService(VALID__DESCRIPTION, INVALID__PRICE_UPDATE);
+        assertEquals(ser.getPrice(), VALID__PRICE);
     }
 
     private void testCreateServiceFailure(String description, int price, String message) {

@@ -36,9 +36,12 @@ public class TestPaymentServiceService {
     private static final int NON_EXIST__ID = 75;
 
     private static final double VALID__AMOUNT = 100.5;
+    private static final double VALID__AMOUNT_UPDATE = 200.6;
     private static final double INVALID__AMOUNT = -100.5;
+    private static final double INVALID__AMOUNT_UPDATE = 200.6;
     //creation 1648094400
     private static final Timestamp VALID__DATETIME = new Timestamp(1650000000);
+    private static final Timestamp VALID__DATETIME__UPDATE = new Timestamp(1640000000);
     private static final Timestamp INVALID_PAST__DATETIME = new Timestamp(1600000000);
     private static final Timestamp INVALID_FUTURE__DATETIME = new Timestamp(1980000000);
 
@@ -231,6 +234,48 @@ public class TestPaymentServiceService {
         List<PaymentService> paymentServiceList = service.getPaymentServiceByServiceRequest(dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
         assertEquals(paymentServiceList.size(),1);
         assertEquals(SERVICE_REQUEST__ID, paymentServiceList.get(0).getServiceReq().getId());
+    }
+
+    @Test
+    public void testGetAll() {
+        List<PaymentService> paymentServiceList = service.getAllPaymentService();
+        assertEquals(paymentServiceList.size(),1);
+    }
+
+    @Test
+    public void testUpdatePaymentServiceValid() {
+        PaymentService pa = service.updatePaymentService(VALID__ID, VALID__DATETIME__UPDATE, VALID__AMOUNT_UPDATE, dummyServiceReq(VALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+        assertNotNull(pa);
+        assertEquals(VALID__AMOUNT_UPDATE, pa.getAmount());
+        assertEquals(VALID__DATETIME__UPDATE, pa.getDateTime());
+        assertEquals(VALID__ID, pa.getServiceReq().getId());
+    }
+
+    @Test
+    public void testUpdatePaymentServiceInvalid1() {
+        PaymentService pa = service.updatePaymentService(VALID__ID, INVALID_PAST__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(VALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+        assertNotNull(pa);
+        assertEquals(VALID__AMOUNT_UPDATE, pa.getAmount());
+        assertEquals(VALID__DATETIME, pa.getDateTime());
+        assertEquals(VALID__ID, pa.getServiceReq().getId());
+    }
+
+    @Test
+    public void testUpdatePaymentServiceInvalid2() {
+        PaymentService pa = service.updatePaymentService(VALID__ID, INVALID_FUTURE__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(VALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+        assertNotNull(pa);
+        assertEquals(VALID__AMOUNT_UPDATE, pa.getAmount());
+        assertEquals(VALID__DATETIME, pa.getDateTime());
+        assertEquals(VALID__ID, pa.getServiceReq().getId());
+    }
+
+    @Test
+    public void testUpdatePaymentServiceInvalid3() {
+        PaymentService pa = service.updatePaymentService(VALID__ID, VALID__DATETIME__UPDATE, VALID__AMOUNT_UPDATE, dummyServiceReq(INVALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+        assertNotNull(pa);
+        assertEquals(VALID__AMOUNT_UPDATE, pa.getAmount());
+        assertEquals(VALID__DATETIME__UPDATE, pa.getDateTime());
+        assertEquals(SERVICE_REQUEST__ID, pa.getServiceReq().getId());
     }
 
     private void testCreatePaymentServiceFailure(int id, double amount, Timestamp dateTime, ServiceRequest serviceRequest, String message) {
