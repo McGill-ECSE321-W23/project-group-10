@@ -27,7 +27,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
  */
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/payment_reservation", "/api/payment_reservation/"})
+@RequestMapping(value = {"/api/payment-reservation", "/api/payment-reservation/"})
 public class PaymentReservationController {
     
     @Autowired
@@ -41,17 +41,12 @@ public class PaymentReservationController {
 
 
     @PostMapping(value = {"/{dateTime}/{amount}/{reservationId}", "/{dateTime}/{amount}/{reservationId}/"})
-    public PaymentReservationDto createPaymentReservationDto(@PathVariable("dateTime") String dayTime, @PathVariable(
+    public PaymentReservationDto createPaymentReservationDto(@PathVariable("dateTime") Timestamp timestamp, @PathVariable(
         "amount") double amount, @PathVariable("reservationId") int reservationId) {
 
-        String time = "2018-09-01 09:01:15"; //change this
-        Timestamp timestamp = Timestamp.valueOf(time);
-        try {
-            PaymentReservation paymentReservation = paymentReservationService.createPaymentReservation(timestamp, amount, reservationId); // change reservation
-            return HelperMethods.convertPaymentReservationToDto(paymentReservation);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }  
+        // String time = "2018-09-01 09:01:15"; //change this
+        PaymentReservation paymentReservation = paymentReservationService.createPaymentReservation(timestamp, amount, reservationId); // change reservation
+        return HelperMethods.convertPaymentReservationToDto(paymentReservation);
 
     }
     @DeleteMapping(value = {"/{paymentReservationId}/","/{paymentReservationId}" })
@@ -61,5 +56,19 @@ public class PaymentReservationController {
         return HelperMethods.convertPaymentReservationToDto(paymentReservation);
         
     }
-    
+
+    @PutMapping(value = {"/{paymentReservationId}/{dateTime}/{amount}/{reservationId}", "/{dateTime}/{amount}/{reservationId}/"})
+    public PaymentReservationDto updatePayemPaymentReservationDto(@PathVariable("paymentReservationId") int paymentReservationId ,
+    @PathVariable("dateTime") Timestamp timestamp, @PathVariable("amount") double amount, @PathVariable("reservationId") int reservationId) {
+
+        PaymentReservation paymentReservation = paymentReservationService.updatePaymentReservation(paymentReservationId, timestamp, amount, reservationId);
+        return HelperMethods.convertPaymentReservationToDto(paymentReservation);
+    }
+
+
+    @GetMapping(value = {"/by-reservation-id/{reservationId}", "/by-reservation-id/{reservationId}/"})
+    public List<PaymentReservationDto> getAllPaymentReservationDtosByReservationId(@PathVariable("reservationId") int reservationId) {
+        return paymentReservationService.getPaymentReservationByReservation(reservationId).stream().map(
+            pRes -> HelperMethods.convertPaymentReservationToDto(pRes)).collect(Collectors.toList());
+    }
 }

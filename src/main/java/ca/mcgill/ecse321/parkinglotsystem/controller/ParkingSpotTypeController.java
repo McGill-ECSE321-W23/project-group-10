@@ -22,7 +22,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/parking_spot_type", "/api/parking_spot_type/"})
+@RequestMapping(value = {"/api/parking-spot-type", "/api/parking-spot-type/"})
 public class ParkingSpotTypeController {
     
     @Autowired

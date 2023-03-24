@@ -156,6 +156,7 @@ public class ReservationService {
 	 */
 	@Transactional
 	public List<Reservation> getAllReservations() {
+        
 		return toList(reservationRepository.findAll());
 	}
 

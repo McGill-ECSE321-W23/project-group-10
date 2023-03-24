@@ -27,7 +27,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
  */
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/parking_spot", "/api/parking_spot/"})
+@RequestMapping(value = {"/api/parking-spot", "/api/parking-spot/"})
 public class ParkingSpotController {
 
     @Autowired
@@ -56,7 +56,7 @@ public class ParkingSpotController {
      * @param fee
      * @return parking spot type dto
      */
-    @PostMapping(value = {"/create/{id}/{parkingSpotTypeName}", "/create/{id}/{parkingSpotTypeName}/"})
+    @PostMapping(value = {"/{id}/{parkingSpotTypeName}", "/{id}/{parkingSpotTypeName}/"})
     public ParkingSpotDto createParkingSpotDto(@PathVariable("id") int id, 
                                             @PathVariable("parkingSpotTypeName") String parkingSpotTypeName){
 
