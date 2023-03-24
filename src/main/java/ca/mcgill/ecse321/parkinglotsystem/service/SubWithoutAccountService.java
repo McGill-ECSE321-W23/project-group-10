@@ -55,7 +55,7 @@ public class SubWithoutAccountService extends ReservationService {
             subWithoutAccount.setDate(date);
             subWithoutAccount.setLicenseNumber(licenseNumber);
             subWithoutAccount.setNbrMonths(nbrMonths);
-            subWithoutAccount.setParkingSpot(parkingSpotRepository.findParkingSpotById(parkingspotId));
+            subWithoutAccount.setParkingSpot(parkingSpotService.getParkingSpotById(parkingspotId));
             subWithoutAccountRepository.save(subWithoutAccount);
             return subWithoutAccount;
         }

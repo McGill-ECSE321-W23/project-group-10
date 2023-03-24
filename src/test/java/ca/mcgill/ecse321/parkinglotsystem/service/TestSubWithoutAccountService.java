@@ -145,8 +145,7 @@ public class TestSubWithoutAccountService {
         lenient().when(subWithoutAccountService.getSubWithoutAccountsByParkingSpot(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(ParkingSpot_ID)) {
                 SubWithoutAccount subWithoutAccount =  new SubWithoutAccount();
-                ParkingSpot spot = new ParkingSpot();
-                spot.setId(ParkingSpot_ID);
+                ParkingSpot spot = parkingSpotService.getParkingSpotById(ParkingSpot_ID);
                 subWithoutAccount.setId(RESERVATION_ID);
                 subWithoutAccount.setDate(date1);
                 subWithoutAccount.setLicenseNumber(license_number1);
@@ -158,8 +157,7 @@ public class TestSubWithoutAccountService {
             } 
         else if (invocation.getArgument(0).equals(ParkingSpot_ID2)) {
                 SubWithoutAccount subWithoutAccount =  new SubWithoutAccount();
-                ParkingSpot spot = new ParkingSpot();
-                spot.setId(ParkingSpot_ID);
+                ParkingSpot spot = parkingSpotService.getParkingSpotById(ParkingSpot_ID);
                 subWithoutAccount.setId(RESERVATION_ID2);
                 subWithoutAccount.setDate(date2);
                 subWithoutAccount.setLicenseNumber(license_number2);
@@ -557,8 +555,9 @@ public class TestSubWithoutAccountService {
     
     @Test
     public void testGetSubWithoutAccountsByParkingSpot() {
-        List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountService.getSubWithoutAccountsByParkingSpot(ParkingSpot_ID);
+        List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountService.getSubWithoutAccountsByParkingSpot(ParkingSpot_ID2);
         assertNotNull(subWithoutAccounts);
+        assertEquals(1, subWithoutAccounts.size());
         assertEquals(subWithoutAccounts.get(0).getId(), RESERVATION_ID);
     }
 
