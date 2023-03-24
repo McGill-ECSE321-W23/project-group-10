@@ -25,6 +25,9 @@ public class ServicesService {
     public Service createService(String description, int price) {
         // Input validation
         String val_int = price + "";
+        if (servicesRepository.findServiceByDescription(description)!=null) {
+            throw new IllegalArgumentException("service already exist!");
+        }
         if (description.equals("")) {
             throw new IllegalArgumentException("service description cannot be empty!");
         }

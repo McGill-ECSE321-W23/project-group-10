@@ -29,6 +29,7 @@ public class TestServicesService {
     private ServicesService service;
 
     private static final String VALID__DESCRIPTION = "This is an valid description.";
+    private static final String VALID__DESCRIPTION_ACTIVE = "This is an valid description activation.";
     private static final String INVALID__DESCRIPTION = "";
     private static final String NON_EXIST__DESCRIPTION = "feeling lucky";
 
@@ -73,20 +74,19 @@ public class TestServicesService {
 
     @Test
     public void testCreateService() {
-        Service ser = service.createService(VALID__DESCRIPTION, VALID__PRICE);
+        Service ser = service.createService(VALID__DESCRIPTION_ACTIVE, VALID__PRICE_UPDATE);
         assertNotNull(ser);
         var description = ser.getDescription();
         assertNotNull(description);
-        assertEquals(VALID__DESCRIPTION, ser.getDescription());
+        assertEquals(VALID__DESCRIPTION_ACTIVE, ser.getDescription());
         var price = ser.getPrice();
-        assertNotNull(price);
-        assertEquals(VALID__PRICE, ser.getPrice());
+        assertEquals(VALID__PRICE_UPDATE, ser.getPrice());
     }
 
     @Test
     public void testCreateServiceInvalidPrice() {
         testCreateServiceFailure(
-                VALID__DESCRIPTION,
+                VALID__DESCRIPTION_ACTIVE,
                 INVALID__PRICE,
                 "price input cannot be empty or less than zero!");
     }
@@ -128,7 +128,7 @@ public class TestServicesService {
     @Test
     public void testGetServiceInValidPrice() {
         List<Service> serviceList = service.getServiceByPrice(INVALID__PRICE);
-        assertEquals(serviceList, null);
+        assertNull(serviceList);
     }
 
     @Test

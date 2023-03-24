@@ -32,7 +32,7 @@ public class TestPaymentServiceService {
 
     private static final int VALID__ID = 100;
     private static final int INVALID__ID = -100;
-    private static final int REPEAT__ID = 50;
+    private static final int VALID__ID_Active = 50;
     private static final int NON_EXIST__ID = 75;
 
     private static final double VALID__AMOUNT = 100.5;
@@ -106,11 +106,11 @@ public class TestPaymentServiceService {
 
     @Test
     public void testCreatePaymentService() {
-        PaymentService pa = service.createPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+        PaymentService pa = service.createPaymentService(VALID__ID_Active, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
         assertNotNull(pa);
         var id = pa.getId();
         assertNotNull(id);
-        assertEquals(VALID__ID, pa.getId());
+        assertEquals(VALID__ID_Active, pa.getId());
         var amount = pa.getAmount();
         assertNotNull(amount);
         assertEquals(VALID__AMOUNT, pa.getAmount());
@@ -134,48 +134,57 @@ public class TestPaymentServiceService {
                 VALID__AMOUNT,
                 VALID__DATETIME,
                 dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
-                "Id cannot be negative ! ");
+                "payment service id cannot be null or negative!");
     }
 
+    @Test
+    public void testCreatePaymentServiceExist() {
+        testCreatePaymentServiceFailure(
+                VALID__ID,
+                VALID__AMOUNT,
+                VALID__DATETIME,
+                dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
+                "payment service id already exist!");
+    }
 
     @Test
     public void testCreatePaymentServiceInvalidAmount() {
         testCreatePaymentServiceFailure(
-                VALID__ID,
+                VALID__ID_Active,
                 INVALID__AMOUNT,
                 VALID__DATETIME,
                 dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
-                "Amount cannot be less than zero! ");
+                "payment amount cannot be negative!");
     }
 
     @Test
     public void testCreatePaymentServiceInvalidTimestamp1() {
         testCreatePaymentServiceFailure(
-                VALID__ID,
+                VALID__ID_Active,
                 VALID__AMOUNT,
                 INVALID_PAST__DATETIME,
                 dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
-                "Payment service cannot be issued before the system is deployed! ");
+                "payment service date Time is wrong!");
     }
 
     @Test
     public void testCreatePaymentServiceInvalidTimestamp2() {
         testCreatePaymentServiceFailure(
-                VALID__ID,
+                VALID__ID_Active,
                 VALID__AMOUNT,
                 INVALID_FUTURE__DATETIME,
                 dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
-                "Payment service cannot be issued when it have not happen! ");
+                "payment service date Time is wrong!");
     }
 
     @Test
     public void testCreatePaymentServiceInvalidServiceRequest() {
         testCreatePaymentServiceFailure(
-                VALID__ID,
+                VALID__ID_Active,
                 VALID__AMOUNT,
                 INVALID_FUTURE__DATETIME,
                 null,
-                "Service cannot be null! ");
+                "payment service does not exist in service request repository!");
     }
 
     @Test
