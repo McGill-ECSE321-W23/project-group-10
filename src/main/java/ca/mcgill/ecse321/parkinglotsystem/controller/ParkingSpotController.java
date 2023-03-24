@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.parkinglotsystem.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,10 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotTypeRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dto.ParkingSpotDto;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
-import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 import ca.mcgill.ecse321.parkinglotsystem.service.*;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
-import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 /**
  * author Shaun Soobagrah
@@ -60,29 +57,20 @@ public class ParkingSpotController {
     @PostMapping(value = {"/{id}/{parkingSpotTypeName}", "/{id}/{parkingSpotTypeName}/"})
     public ParkingSpotDto createParkingSpotDto(@PathVariable("id") int id, 
                                             @PathVariable("parkingSpotTypeName") String parkingSpotTypeName){
-        ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
-        ParkingSpot parkingSpot = parkingSpotService.createParkingSpot(id, parkingSpotType);
+        ParkingSpot parkingSpot = parkingSpotService.createParkingSpot(id, parkingSpotTypeName);
         return HelperMethods.convertParkingSpotToDto(parkingSpot);                             
         
     }
 
     /**
      * method to send request to 
-     * @param parkingSpotType
+     * @param typeName
      * @return
      */
     @GetMapping(value = {"/by-type/{typeName}", "/by-type/{typeName}/"})
     public List<ParkingSpotDto> getParkingSpotDtoByType(@PathVariable("typeName") String typeName) {
-        List<ParkingSpotDto> spotDtos = new ArrayList<ParkingSpotDto>();
-        List<ParkingSpot> spots = parkingSpotService.getParkingSpotByType(parkingSpotTypesService.getParkingSpotTypeByName(typeName));
-        if (spots.size() != 0){
-            for (ParkingSpot spot: spots){
-                spotDtos.add(HelperMethods.convertParkingSpotToDto(spot));
-            }
-        }     
-        return spotDtos;
-
-        
+        return parkingSpotService.getParkingSpotByType(typeName).stream().map(
+            spots -> HelperMethods.convertParkingSpotToDto(spots)).collect(Collectors.toList());        
     }
 
     /**
@@ -115,10 +103,7 @@ public class ParkingSpotController {
      */
     @PutMapping(value ={"/{id}/{typeName}", "/{id}/{typeName}/"})
     public ParkingSpotDto updateParkingSpotDto(@PathVariable("id") int id, @PathVariable("typeName") String typeName) {
-
-        ParkingSpot parkingSpot = parkingSpotService.updateParkingSpot
-            (id, parkingSpotTypesService.getParkingSpotTypeByName(typeName));
-        
+        ParkingSpot parkingSpot = parkingSpotService.updateParkingSpot(id, typeName);
         return HelperMethods.convertParkingSpotToDto(parkingSpot);
 
     } 

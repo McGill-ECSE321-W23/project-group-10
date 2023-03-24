@@ -2,12 +2,9 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.lenient;
 
 import java.sql.Date;
@@ -121,9 +118,16 @@ public class TestPaymentReservationService {
             return paymentReservations;
         });
 
-        // lenient().when(paymentReservationRepository.findPaymentReservationByAmount(anyDouble())).thenAnswer((InvocationOnMock invocation) -> {
-
-        // };
+        lenient().when(paymentReservationRepository.findPaymentReservationByAmount(anyDouble())).thenAnswer((InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(PAYMENT_AMOUNT1)) {
+                List<PaymentReservation> paymentReservations = new ArrayList<>();
+                paymentReservations.add(dummy(PAYMENT_ID1, PAYMENT_TIME, PAYMENT_AMOUNT1));
+                return paymentReservations;
+            }
+            else {
+                return null;
+            }
+        });
 
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> invocation.getArgument(0);
         lenient().when(paymentReservationRepository.save(any(PaymentReservation.class))).thenAnswer(returnParameterAsAnswer);
@@ -413,6 +417,20 @@ public class TestPaymentReservationService {
         assertEquals(PAYMENT_TIME, paymentReservations.get(0).getDateTime());
     }
 
+    @Test
+    public void testGetPaymentReservationByAmountWithInvalidInput() {
+        String error = "";
+        List<PaymentReservation> paymentReservations = null;
+        try {
+            paymentReservations = paymentReservationService.getPaymentReservationByAmout(-1);
+
+        }catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertEquals("Invalid amount! ", error);
+
+    }
     
     //  dummy classes //
     private PaymentReservation dummy(int id, Timestamp timestamp, double amount) {
