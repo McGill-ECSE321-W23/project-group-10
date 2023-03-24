@@ -108,6 +108,122 @@ public class ParkingSpotService {
 		}
 
         return parkingSpot;
+    /**
+     * method to get parking spot by id
+     * @param id
+     * @return parking spot 
+     */
+    @Transactional
+    public ParkingSpot getParkingSpotById(int id) {
+
+        // input validation
+        String error = "";
+
+        ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotById(id);
+
+        // if no parking spot found, throw execption
+        if (parkingSpot == null) {
+            error = error + "No parking spot with that id was found! ";
+        }
+
+        if (error.length() > 0) {
+			throw new IllegalArgumentException(error);
+		}
+
+        return parkingSpot;
+    }
+
+    /**
+     * method to delete a parking spot using its id
+     * @param id
+     * @return parking spot
+     */
+    @Transactional
+    public ParkingSpot deleteParkingSpotBy(int id) {
+
+        // input validation
+        
+        String error = "";
+        // if no parking spot found, throw execption
+        ParkingSpot spot = parkingSpotRepository.findParkingSpotById(id);
+        if (spot == null) {
+            error = error + "No parking spot with that id was found! ";
+        }
+        if (error.length() > 0) {
+			throw new IllegalArgumentException(error);
+		}
+        else {
+       
+            parkingSpotRepository.delete(spot);
+        }
+        
+        return spot;
+    }
+
+    /**
+     * method to get parking spots by type
+     * @param parkingSpotType
+     * @return list of parking spot
+     */
+    @Transactional
+    public List<ParkingSpot> getParkingSpotByType(ParkingSpotType parkingSpotType) {
+
+        List<ParkingSpot> pList = parkingSpotRepository.findParkingSpotByType(parkingSpotType);
+        if (pList.size() == 0) throw new IllegalArgumentException("List is empty! ");
+        return pList;
+    }
+
+    /**
+     * method to update a parking spot type
+     * @param id
+     * @param parkingSpotType
+     * @return ParkingSpot
+     */
+    @Transactional
+    public ParkingSpot updateParkingSpot(int id, ParkingSpotType parkingSpotType) {
+        String error = "";
+        //check if spot exists
+        ParkingSpot spot = parkingSpotRepository.findParkingSpotById(id);
+        if (parkingSpotRepository.findParkingSpotById(id) == null) {
+            error += "no parking spot with that id exists! ";
+        }
+        if (error.length() > 0) {
+			throw new IllegalArgumentException(error);
+		}
+        else {    
+            spot.setType(parkingSpotType);
+            parkingSpotRepository.save(spot);
+        }
+        return spot;
+    }
+
+
+    // Helper method //
+
+    /**
+     * method to check if id is valid
+     * @param id
+     * @return error
+     */
+    private String checkId(int id) {
+        String error = "";
+        if (id < 1) {
+            error = error + "Id must be greater than zero! ";
+        }
+        return error;
+    }
+
+    /**
+     * check if parking type exist
+     * @param parkingSpotType
+     * @return error
+     */
+    private String checkType(ParkingSpotType parkingSpotType) {
+        String error = "";
+        if (parkingSpotType == null){
+            error = error + "Parking spot type cannot be null!";
+        }
+        return error;
     }
 
     /**
