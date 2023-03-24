@@ -124,6 +124,22 @@ public class TestParkingSpotTypeService {
     }
 
     @Test
+    public void testCreateParkingSpotTypeWithZeroFee() {
+        String name = "TestSpotType";
+        double fee = 0.0;
+        String error = "";
+        ParkingSpotType parkingSpotType = null;
+        try {
+			parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
+		} catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        
+        assertEquals(error, "Parking spot type fee cannot be less than or equal to zero! ");
+    }
+
+    @Test
     public void testCreateParkingSpotTypeWithInvalidName() {
         String name = "";
         double fee = 2;
@@ -182,6 +198,19 @@ public class TestParkingSpotTypeService {
     }
 
     @Test
+    public void testGetAllParkingSpotType() {
+        List<ParkingSpotType> parkingSpotTypes = new ArrayList<ParkingSpotType>();
+        String error = "";
+        try {
+			parkingSpotTypes = parkingSpotTypeService.getAllParkingSpotTypes();
+		} catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertEquals(PARKING_SPOT_NAME_STRING, parkingSpotTypes.get(0).getName()); 
+    }
+
+    @Test
     public void testGetParkingSpotTypeByName(){
         String error = "";
         ParkingSpotType parkingSpotType = null;
@@ -227,6 +256,20 @@ public class TestParkingSpotTypeService {
 
     @Test
     public void testDeleteParkingSpotWithInvalidName() {
+        String error = "";
+        ParkingSpotType parkingSpotType = null;
+        try {
+		    parkingSpotType = parkingSpotTypeService.deleteParkingSpotType("");
+		} catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertEquals("a name must be mention to delete parking spot type! no such parking spot type exist! ", error);
+    
+    }
+
+    @Test
+    public void testDeleteParkingSpotWith() {
         String error = "";
         ParkingSpotType parkingSpotType = null;
         try {

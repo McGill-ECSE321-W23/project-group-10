@@ -31,7 +31,7 @@ public class ParkingSpotTypeService {
 
         // Input validation
         String error = "";
-        if (name == null || name.trim().length() == 0) {
+        if (name.trim().length() == 0) {
             error = error + "Parking spot type name cannot be empty! ";
         }
 
@@ -69,7 +69,7 @@ public class ParkingSpotTypeService {
         // Input validation
         String error = "";
         boolean canDelete = true;
-        if (name == null || name.trim().length() == 0) {
+        if (name.trim().length() == 0) {
             error = error + "a name must be mention to delete parking spot type! ";
         }
         ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(name);
@@ -113,7 +113,7 @@ public class ParkingSpotTypeService {
 
         // Input validation
         String error = "";
-        if (name == null || name.trim().length() == 0) {
+        if (name.trim().length() == 0) {
             error = error + "Parking spot type name cannot be empty! ";
         }
 
@@ -140,7 +140,7 @@ public class ParkingSpotTypeService {
     public ParkingSpotType getParkingSpotTypeByName(String name) {
         // Input validation
         String error = "";
-        if (name == null || name.trim().length() == 0) {
+        if (name.trim().length() == 0) {
             error = error + "Parking spot type name cannot be empty! ";
         }
 
