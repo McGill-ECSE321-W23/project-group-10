@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.PaymentServiceRepository;
+import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRepository;
+import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRequestRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,8 @@ public class TestPaymentServiceService {
 
     @Mock
     private PaymentServiceRepository paymentServiceRepository;
+    private ServiceRequestRepository serviceRequestRepository;
+    private ServiceRepository serviceRepository;
     @InjectMocks
     private PaymentServiceService service;
 
@@ -106,7 +110,9 @@ public class TestPaymentServiceService {
 
     @Test
     public void testCreatePaymentService() {
-        PaymentService pa = service.createPaymentService(VALID__ID_Active, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+        ServiceRequest serviceRequest = dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE));
+        serviceRequestRepository.save(serviceRequest);
+        PaymentService pa = service.createPaymentService(VALID__ID_Active, VALID__AMOUNT, VALID__DATETIME, serviceRequest);
         assertNotNull(pa);
         var id = pa.getId();
         assertNotNull(id);
@@ -117,14 +123,14 @@ public class TestPaymentServiceService {
         var dateTime = pa.getDateTime();
         assertNotNull(dateTime);
         assertEquals(VALID__DATETIME, pa.getDateTime());
-        ServiceRequest serviceRequest = pa.getServiceReq();
-        assertNotNull(serviceRequest.getId());
-        assertNotNull(serviceRequest.getIsAssigned());
-        assertNotNull(serviceRequest.getService().getDescription());
-        assertNotNull(serviceRequest.getService().getPrice());
-        assertEquals(serviceRequest.getId(), SERVICE_REQUEST__ID);
-        assertEquals(serviceRequest.getIsAssigned(), SERVICE__IS_ASSIGNED);
-        assertEquals(serviceRequest.getService().getPrice(), SERVICE__PRICE);
+        ServiceRequest serviceReq = pa.getServiceReq();
+        assertNotNull(serviceReq.getId());
+        assertNotNull(serviceReq.getIsAssigned());
+        assertNotNull(serviceReq.getService().getDescription());
+        assertNotNull(serviceReq.getService().getPrice());
+        assertEquals(serviceReq.getId(), SERVICE_REQUEST__ID);
+        assertEquals(serviceReq.getIsAssigned(), SERVICE__IS_ASSIGNED);
+        assertEquals(serviceReq.getService().getPrice(), SERVICE__PRICE);
     }
 
     @Test
