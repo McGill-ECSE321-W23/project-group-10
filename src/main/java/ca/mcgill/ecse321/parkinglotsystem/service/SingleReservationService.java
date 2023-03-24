@@ -33,7 +33,7 @@ public class SingleReservationService extends ReservationService {
      */
     @Transactional
     public SingleReservation createSingleReservation(int reservationId, Date date, String licenseNumber,
-            int parkingTime, ParkingSpot parkingSpot) {
+            int parkingTime, int parkingSpotId) {
         if (reservationId < 0) {
             throw new IllegalArgumentException("ReservationId cannot be negative.");
         } else if (reservationRepository.findReservationById(reservationId) != null) {
@@ -53,7 +53,7 @@ public class SingleReservationService extends ReservationService {
             singleReservation.setDate(date);
             singleReservation.setLicenseNumber(licenseNumber);
             singleReservation.setParkingTime(parkingTime);
-            singleReservation.setParkingSpot(parkingSpot);
+            singleReservation.setParkingSpot(parkingSpotService.getParkingSpot(parkingSpotId));
             singleReservationRepository.save(singleReservation);
             return singleReservation;
         }

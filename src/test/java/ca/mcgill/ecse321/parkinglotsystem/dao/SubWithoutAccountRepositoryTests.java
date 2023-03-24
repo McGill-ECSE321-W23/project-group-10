@@ -67,8 +67,8 @@ public class SubWithoutAccountRepositoryTests {
         assertEquals(nbrMonths, obj.getNbrMonths());
         assertEquals(parkingSpot.getId(), obj.getParkingSpot().getId());
         assertEquals(1, subWithoutAccountRepository.
-                findSubWithoutAccountByLicenseNumber(licenseNumber).size());
+                findSubWithoutAccountsByLicenseNumber(licenseNumber).size());
         assertEquals(1, subWithoutAccountRepository.
-                findSubWithoutAccountByParkingSpot(parkingSpot).size());
+                findSubWithoutAccountsByParkingSpot(parkingSpot).size());
     }
 }

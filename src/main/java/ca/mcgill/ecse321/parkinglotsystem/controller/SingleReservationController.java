@@ -45,16 +45,16 @@ public class SingleReservationController {
     }
 
     @PostMapping(value = {"", "/" })
-    public SingleReservationDto createSingleReservation(@RequestParam(name = "id") int id, @RequestParam(name = "date") Date date, @RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "parkingTime") int parkingTime, @RequestParam(name = "parkingSpotId") int parkingSpotId){
+    public SingleReservationDto createSingleReservation(@PathVariable int id, @RequestParam(name = "date") Date date, @RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "parkingTime") int parkingTime, @RequestParam(name = "parkingSpotId") int parkingSpotId){
         SingleReservation singleReservation = singleReservationService.createSingleReservation(id, date, licenseNumber, parkingTime, ParkingSpotService.getParkingSpotById(parkingSpotId));
         return convertToDto(singleReservation);
     }
 
-    // TODO: Replace "ParkingSpot spot" by "int id"
+   
     @GetMapping(value = { "/all-by-parking-spot", "/all-by-parking-spot/"})
-    public List<SingleReservationDto> getSingleReservationsByParkingSpot(@RequestBody ParkingSpot spot){
+    public List<SingleReservationDto> getSingleReservationsByParkingSpot(@PathVariable int parkingSpotId){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
-        List<Reservation> reservations = singleReservationService.getReservationsByParkingSpot(spot);
+        List<Reservation> reservations = singleReservationService.getReservationsByParkingSpot(parkingSpotId);
         for (Reservation r : reservations){
            singleReservationDtos.add((SingleReservationDto) convertToDto(r));
         }

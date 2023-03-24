@@ -26,7 +26,6 @@ public class ReservationService {
     @Autowired
     protected ParkingSpotTypeRepository parkingSpotTypeRepository;
 
-
     /**
      * @author Mike
      * @param name
@@ -146,6 +145,9 @@ public class ReservationService {
 	@Transactional
 	public List<Reservation> getReservationsByDate(Date date) {
 		List<Reservation> reservations = reservationRepository.findReservationsByDate(date);
+        if (reservations == null){
+            throw new IllegalArgumentException("Reservation is not found.");
+        }
 		return reservations;
 	}
 
@@ -166,8 +168,8 @@ public class ReservationService {
 	 * @return a list of reservations
 	 */
 	@Transactional
-	public List<Reservation> getReservationsByParkingSpot(ParkingSpot parkingSpot) {
-		List<Reservation> reservations = reservationRepository.findReservationsByParkingSpot(parkingSpot);
+	public List<Reservation> getReservationsByParkingSpot(int parkingSpotId) {
+		List<Reservation> reservations = reservationRepository.findReservationsByParkingSpot(parkingSpotRepository.findParkingSpotById(parkingSpotId));
 		return reservations;
 	}
 
@@ -185,7 +187,7 @@ public class ReservationService {
 
         Reservation reservation = reservationRepository.findReservationById(reservationId);
         if(reservation == null){
-            throw new IllegalArgumentException("Reservation does not exist.");
+            throw new IllegalArgumentException("ReservationId does not exist.");
         }
 
         reservationRepository.delete(reservation);

@@ -114,7 +114,7 @@ public class TestSubWithoutAccountService {
             return subWithoutAccounts;
         });
     
-        lenient().when(subWithoutAccountRepository.findSubWithoutAccountsByDate(Date.valueOf(anyString()))).thenAnswer((InvocationOnMock invocation) -> {
+        lenient().when(subWithoutAccountRepository.findSubWithoutAccountsByDate(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(date1)) {
                 SubWithoutAccount subWithoutAccount =  new SubWithoutAccount();
                 subWithoutAccount.setId(RESERVATION_ID);

@@ -101,7 +101,7 @@ public class SubWithoutAccountService extends ReservationService {
 	 */
 	@Transactional
 	public List<SubWithoutAccount> getSubWithoutAccountsByLicenseNumber(String licenseNumber) {
-		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountByLicenseNumber(licenseNumber);
+		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByLicenseNumber(licenseNumber);
 		return subWithoutAccounts;
 	}
     /**

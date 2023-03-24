@@ -5,6 +5,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -59,6 +60,7 @@ private static final int RESERVATION_ID = 100;
 private static final Date date1 = Date.valueOf("2023-03-22");
 private static final int RESERVATION_ID2 = 999;
 private static final Date date2 = Date.valueOf("2023-03-23");
+private static final int Available_Id = 217;
 
 private static final int ParkingSpot_ID = 1;
 private static final int ParkingSpot_ID2 = 2;
@@ -100,16 +102,16 @@ public void setMockOutput() {
         return reservations;
     });
 
-    lenient().when(reservationRepository.findReservationsByDate(Date.valueOf(anyString()))).thenAnswer((InvocationOnMock invocation) -> {
-        if (invocation.getArgument(0).equals(RESERVATION_ID)) {
+    lenient().when(reservationRepository.findReservationsByDate(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
+        if (invocation.getArgument(0).equals(date1)) {
             Reservation reservation = (Reservation) new SingleReservation();
             reservation.setId(RESERVATION_ID);
             reservation.setDate(date1);
             List<Reservation> reservations = new ArrayList<Reservation>();
             reservations.add(reservation);
-            return reservation;
+            return reservations;
         } 
-        else if (invocation.getArgument(0).equals(RESERVATION_ID2)) {
+        else if (invocation.getArgument(0).equals(date2)) {
             Reservation reservation = (Reservation) new SingleReservation();
             reservation.setId(RESERVATION_ID2);
             reservation.setDate(date2);
@@ -142,7 +144,7 @@ public void setMockOutput() {
     lenient().when(reservationRepository.findReservationsByParkingSpot(any(ParkingSpot.class))).thenAnswer( (InvocationOnMock invocation) -> { 
         
 
-        if (invocation.getArgument(0).equals(ParkingSpot_ID)) {
+        if (invocation.getArgument(0).equals(parkingSpotService.getParkingSpotById(ParkingSpot_ID))) {
             Reservation reservation1 = (Reservation) new SingleReservation();
             reservation1.setId(RESERVATION_ID);
             reservation1.setDate(date1);
@@ -152,7 +154,7 @@ public void setMockOutput() {
             return reservations;
         }
 
-        else if (invocation.getArgument(0).equals(ParkingSpot_ID)){
+        else if (invocation.getArgument(0).equals(parkingSpotService.getParkingSpotById(ParkingSpot_ID2))){
             Reservation reservation2 = (Reservation) new SingleReservation();
             reservation2.setId(RESERVATION_ID2);
             reservation2.setDate(date2);
@@ -181,12 +183,12 @@ public void testCreateReservationSuccessfully() {
 
     Reservation reservation = null;
     try {
-        reservation = reservationService.createReservation(RESERVATION_ID, date1, ParkingSpot_ID);
+        reservation = reservationService.createReservation(Available_Id, date1, ParkingSpot_ID);
     } catch (IllegalArgumentException e) {
-        fail();
+        fail(e.getMessage());
     }
     assertNotNull(reservation);
-    assertEquals(RESERVATION_ID, reservation.getId());
+    assertEquals(Available_Id, reservation.getId());
     assertEquals(date1, reservation.getDate());
     assertEquals(ParkingSpot_ID, reservation.getParkingSpot().getId());
 
@@ -202,7 +204,7 @@ public void testCreateReservationWithNegativeId() {
     } catch (IllegalArgumentException e) {
         error = e.getMessage();
     }
-    assertNotNull(reservation);
+    assertNull(reservation);
     assertEquals("ReservationId cannot be negative.", error);
 
 }
@@ -216,7 +218,7 @@ public void testCreateReservationWithExistingId() {
     } catch (IllegalArgumentException e) {
         error = e.getMessage();
     }
-    assertNotNull(reservation);
+    assertNull(reservation);
     assertEquals("ReservationId is in use.", error);
 
 }
@@ -227,11 +229,11 @@ public void testCreateReservationWithEmptyDate() {
     String error = null;
     Reservation reservation = null;
     try {
-        reservation = reservationService.createReservation(RESERVATION_ID, date, ParkingSpot_ID);
+        reservation = reservationService.createReservation(Available_Id, date, ParkingSpot_ID);
     } catch (IllegalArgumentException e) {
         error = e.getMessage();
     }
-    assertNotNull(reservation);
+    assertNull(reservation);
     assertEquals("date cannot be empty.", error);
 
 }
@@ -270,7 +272,7 @@ public void testDeleteReservationSuccessfully() {
     Reservation savedReservation = reservationService.getReservationById(RESERVATION_ID);
     assertNotNull(reservation);
     assertEquals(savedReservation.getId(), reservation.getId());
-    assertEquals(savedReservation.getDate(), reservation.getId());
+    assertEquals(savedReservation.getDate(), reservation.getDate());
     
 }
 @Test
@@ -285,8 +287,8 @@ public void testDeleteReservationWithNoExistingId() {
     } catch (IllegalArgumentException e) {
         error = e.getMessage();
     }
-    assertNotNull(reservation);
-    assertEquals("reservationId does not exist.", error);
+    assertNull(reservation);
+    assertEquals("ReservationId does not exist.", error);
     
 }
 
@@ -302,7 +304,7 @@ public void testDeleteReservationWithInvalidId() {
     } catch (IllegalArgumentException e) {
         error = e.getMessage();
     }
-    assertNotNull(reservation);
+    assertNull(reservation);
     assertEquals("ReservationId cannot be negative.", error);
     
 }
@@ -323,9 +325,8 @@ public void testGetReservationsByDate() {
 
 @Test
 public void testGetReservationsByParkingSpot() {
-    ParkingSpot spot = new ParkingSpot();
-    spot.setId(ParkingSpot_ID);
-    List<Reservation> reservations = reservationService.getReservationsByParkingSpot(spot);
+
+    List<Reservation> reservations = reservationService.getReservationsByParkingSpot(ParkingSpot_ID);
     assertNotNull(reservations);
     assertEquals(reservations.get(0).getId(), RESERVATION_ID);
     assertEquals(reservations.get(1).getId(), RESERVATION_ID2);
@@ -342,9 +343,8 @@ public void testGetAllReservations() {
 
 @Test
 public void testDeleteAllReservations() {
-    List<Reservation> reservations = reservationService.getAllReservations();
-    reservationService.deleteAllReservations();
+    List<Reservation> reservations = reservationService.deleteAllReservations();
     assertNotNull(reservations);
-    assertEquals(0, reservations.size());
+    assertEquals(2, reservations.size());
 }
 }

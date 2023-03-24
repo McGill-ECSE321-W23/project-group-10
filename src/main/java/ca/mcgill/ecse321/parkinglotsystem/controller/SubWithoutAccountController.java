@@ -50,9 +50,9 @@ public class SubWithoutAccountController {
     }
 
     @GetMapping(value = { "/all-by-parking-spot/{parkingSpot}", "/all-by-parking-spot/{parkingSpot}/"})
-    public List<SubWithoutAccountDto> getSubWithoutAccountsByParkingSpot(@PathVariable("parkingSpot") ParkingSpot spot){
+    public List<SubWithoutAccountDto> getSubWithoutAccountsByParkingSpot(@PathVariable("parkingSpotId") int parkingSpotId){
         List<SubWithoutAccountDto> subWithoutAccountDtos = new ArrayList<SubWithoutAccountDto>();
-        List<Reservation> reservations = subWithoutAccountService.getReservationsByParkingSpot(spot);
+        List<Reservation> reservations = subWithoutAccountService.getReservationsByParkingSpot(parkingSpotId);
         for (Reservation r : reservations){
            subWithoutAccountDtos.add((SubWithoutAccountDto) convertToDto(r));
         }

@@ -61,8 +61,8 @@ public class SingleReservationRepositoryTests {
         assertEquals("ABC123", singleReservation.getLicenseNumber());
         assertEquals(spot.getId(), singleReservation.getParkingSpot().getId());
         assertEquals(Date.valueOf("2023-02-27"), singleReservation.getDate());
-        assertEquals(1, singleReservationRepository.findSingleReservationByLicenseNumber("ABC123").size());
-        assertEquals(1, singleReservationRepository.findSingleReservationByDate(Date.valueOf("2023-02-27")).size());
+        assertEquals(1, singleReservationRepository.findSingleReservationsByLicenseNumber("ABC123").size());
+        assertEquals(1, singleReservationRepository.findSingleReservationsByDate(Date.valueOf("2023-02-27")).size());
 
     }
 
