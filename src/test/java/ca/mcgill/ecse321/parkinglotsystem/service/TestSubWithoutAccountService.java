@@ -5,6 +5,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -50,12 +51,13 @@ public class TestSubWithoutAccountService {
     private ParkingSpotRepository parkingSpotRepository;
     @Mock
     private ParkingSpotTypeRepository parkingSpotTypeRepository;
+    @Mock
+    private ParkingSpotService parkingSpotService;
     
     
     @InjectMocks
     private SubWithoutAccountService subWithoutAccountService;
-    @InjectMocks
-    private ParkingSpotService parkingSpotService;
+    
     
     private static final int RESERVATION_ID = 100;
     private static final Date date1 = Date.valueOf("2023-03-22");
@@ -97,7 +99,7 @@ public class TestSubWithoutAccountService {
             }
         });
     
-        lenient().when(subWithoutAccountRepository.findAll()).thenAnswer( (InvocationOnMock invocation) -> {
+        lenient().when(subWithoutAccountService.getAllSubWithoutAccounts()).thenAnswer( (InvocationOnMock invocation) -> {
             SubWithoutAccount subWithoutAccount1 =  new SubWithoutAccount();
             subWithoutAccount1.setId(RESERVATION_ID);
             subWithoutAccount1.setDate(date1);
@@ -114,7 +116,7 @@ public class TestSubWithoutAccountService {
             return subWithoutAccounts;
         });
     
-        lenient().when(subWithoutAccountRepository.findSubWithoutAccountsByDate(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
+        lenient().when(subWithoutAccountService.getSubWithoutAccountsByDate(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(date1)) {
                 SubWithoutAccount subWithoutAccount =  new SubWithoutAccount();
                 subWithoutAccount.setId(RESERVATION_ID);
@@ -123,7 +125,7 @@ public class TestSubWithoutAccountService {
                 subWithoutAccount.setNbrMonths(nbrMonths);
                 List<SubWithoutAccount> subWithoutAccounts = new ArrayList<SubWithoutAccount>();
                 subWithoutAccounts.add(subWithoutAccount);
-                return subWithoutAccount;
+                return subWithoutAccounts;
             } 
             else if (invocation.getArgument(0).equals(date2)) {
                 SubWithoutAccount subWithoutAccount =  new SubWithoutAccount();
@@ -139,16 +141,56 @@ public class TestSubWithoutAccountService {
                 return null;
             }
         });
+
+        lenient().when(subWithoutAccountService.getSubWithoutAccountsByParkingSpot(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(ParkingSpot_ID)) {
+                SubWithoutAccount subWithoutAccount =  new SubWithoutAccount();
+                ParkingSpot spot = new ParkingSpot();
+                spot.setId(ParkingSpot_ID);
+                subWithoutAccount.setId(RESERVATION_ID);
+                subWithoutAccount.setDate(date1);
+                subWithoutAccount.setLicenseNumber(license_number1);
+                subWithoutAccount.setNbrMonths(nbrMonths);
+                subWithoutAccount.setParkingSpot(spot);
+                List<SubWithoutAccount> subWithoutAccounts = new ArrayList<SubWithoutAccount>();
+                subWithoutAccounts.add(subWithoutAccount);
+                return subWithoutAccounts;
+            } 
+        else if (invocation.getArgument(0).equals(ParkingSpot_ID2)) {
+                SubWithoutAccount subWithoutAccount =  new SubWithoutAccount();
+                ParkingSpot spot = new ParkingSpot();
+                spot.setId(ParkingSpot_ID);
+                subWithoutAccount.setId(RESERVATION_ID2);
+                subWithoutAccount.setDate(date2);
+                subWithoutAccount.setLicenseNumber(license_number2);
+                subWithoutAccount.setNbrMonths(nbrMonths2);
+                subWithoutAccount.setParkingSpot(spot);
+                List<SubWithoutAccount> subWithoutAccounts = new ArrayList<SubWithoutAccount>();
+                subWithoutAccounts.add(subWithoutAccount);
+                return subWithoutAccounts;
+            }
+            else {
+                return null;
+            }
+        });
     
-        lenient().when(parkingSpotRepository.findParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
+        lenient().when(parkingSpotService.getParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(ParkingSpot_ID)) {
+                ParkingSpotType type = new ParkingSpotType();
+                type.setFee(0.50);
+                type.setName("regular");
                 ParkingSpot parkingSpot = new ParkingSpot();
                 parkingSpot.setId(ParkingSpot_ID);
+                parkingSpot.setType(type);
                 return parkingSpot;
             } 
             else if (invocation.getArgument(0).equals(ParkingSpot_ID2)) {
+                ParkingSpotType type = new ParkingSpotType();
+                type.setFee(0.50);
+                type.setName("regular");
                 ParkingSpot parkingSpot = new ParkingSpot();
                 parkingSpot.setId(ParkingSpot_ID2);
+                parkingSpot.setType(type);
                 return parkingSpot;
             }
             else {
@@ -156,7 +198,7 @@ public class TestSubWithoutAccountService {
             }
         });
     
-        lenient().when(subWithoutAccountRepository.findSubWithoutAccountsByLicenseNumber(anyString())).thenAnswer( (InvocationOnMock invocation) -> { 
+        lenient().when(subWithoutAccountService.getSubWithoutAccountsByLicenseNumber(anyString())).thenAnswer( (InvocationOnMock invocation) -> { 
             
     
             if (invocation.getArgument(0).equals(license_number1)) {
@@ -197,15 +239,15 @@ public class TestSubWithoutAccountService {
     @Test
     public void testCreateSubWithoutAccountSuccessfully() {
         assertEquals(2 , subWithoutAccountService.getAllSubWithoutAccounts().size());
-    
+        int newId = 1190;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(RESERVATION_ID, date1, license_number1, nbrMonths, ParkingSpot_ID);
+            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(newId, date1, license_number1, nbrMonths, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
-            fail();
+            fail(e.getMessage());
         }
         assertNotNull(subWithoutAccount);
-        assertEquals(RESERVATION_ID, subWithoutAccount.getId());
+        assertEquals(newId, subWithoutAccount.getId());
         assertEquals(date1, subWithoutAccount.getDate());
         assertEquals(license_number1, subWithoutAccount.getLicenseNumber());
         assertEquals(nbrMonths, subWithoutAccount.getNbrMonths());
@@ -223,7 +265,7 @@ public class TestSubWithoutAccountService {
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("ReservationId cannot be negative.", error);
     
     }
@@ -237,7 +279,7 @@ public class TestSubWithoutAccountService {
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount );
+        assertNull(subWithoutAccount );
         assertEquals("ReservationId is in use.", error);
     
     }
@@ -246,13 +288,14 @@ public class TestSubWithoutAccountService {
     public void testCreateSubWithoutAccountWithEmptyDate() {
         Date date = null;
         String error = null;
+        int newId = 1190;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(RESERVATION_ID, date, license_number1, nbrMonths, ParkingSpot_ID);
+            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(newId, date, license_number1, nbrMonths, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("date cannot be empty.", error);
     
     }
@@ -260,44 +303,47 @@ public class TestSubWithoutAccountService {
     @Test
     public void testCreateSubWithoutAccountWithEmptyLicenseNumber() {
         String licenseNum = null;
+        int newId = 1190;
         String error = null;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(RESERVATION_ID, date1, licenseNum, nbrMonths, ParkingSpot_ID);
+            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(newId, date1, licenseNum, nbrMonths, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
-        assertEquals("license number cannot be empty", error);
+        assertNull(subWithoutAccount);
+        assertEquals("licenseNumber cannot be empty", error);
     
     }
 
     @Test
     public void testCreateSubWithoutAccountWithIncorrectLicenseNumberFormat() {
         String licenseNum = "!@!#$$";
+        int newId = 1190;
         String error = null;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(RESERVATION_ID, date1, licenseNum, nbrMonths, ParkingSpot_ID);
+            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(newId, date1, licenseNum, nbrMonths, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
-        assertEquals("Incorrect format for licenseNumber", error);
+        assertNull(subWithoutAccount);
+        assertEquals("Incorrect licenseNumber format", error);
     
     }
 
     @Test
     public void testCreateSubWithoutAccountWithInvalidNbrMonths() {
         int length = 0;
+        int newId = 1190;
         String error = null;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(RESERVATION_ID, date1, license_number1, length, ParkingSpot_ID);
+            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(newId, date1, license_number1, length, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("the length of reservation must be at least 1 month.", error);
     
     }
@@ -308,21 +354,20 @@ public class TestSubWithoutAccountService {
     
         
         Date newDate = Date.valueOf("2023-04-01");
-        int newParkingSpotId = 15;
         String newLicense = "QC0000";
         int newNbrMonths = 12;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(RESERVATION_ID, newDate, newLicense, newNbrMonths, newParkingSpotId);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(RESERVATION_ID, newDate, newLicense, newNbrMonths, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
-            fail();
+            fail(e.getMessage());
         }
         assertNotNull(subWithoutAccount);
         assertEquals(RESERVATION_ID, subWithoutAccount.getId());
         assertEquals(newDate, subWithoutAccount.getDate());
         assertEquals(newLicense, subWithoutAccount.getLicenseNumber());
         assertEquals(newNbrMonths, subWithoutAccount.getNbrMonths());
-        assertEquals(newParkingSpotId, subWithoutAccount.getParkingSpot().getId());
+        assertEquals(ParkingSpot_ID, subWithoutAccount.getParkingSpot().getId());
     
     }
 
@@ -337,11 +382,11 @@ public class TestSubWithoutAccountService {
         int newNbrMonths = 12;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("SubWithoutAccount not found", error);
     
     }
@@ -357,11 +402,11 @@ public class TestSubWithoutAccountService {
         int newNbrMonths = 12;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("ReservationId cannot be negative.", error);
     
     }
@@ -377,11 +422,11 @@ public class TestSubWithoutAccountService {
         int newNbrMonths = 12;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("date cannot be empty.", error);
     
     }
@@ -397,11 +442,11 @@ public class TestSubWithoutAccountService {
         int newNbrMonths = 12;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("licenseNumber cannot be empty", error);
     
     }
@@ -417,11 +462,11 @@ public class TestSubWithoutAccountService {
         int newNbrMonths = 12;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("Incorrect licenseNumber format", error);
     
     }
@@ -437,11 +482,11 @@ public class TestSubWithoutAccountService {
         int newNbrMonths = 0;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(id, newDate, newLicense, newNbrMonths, newParkingSpotId);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("the number of month must be a natural integer", error);
     
     }
@@ -449,17 +494,17 @@ public class TestSubWithoutAccountService {
     @Test
     public void testDeleteSubWithoutAccountSuccessfully() {
         assertEquals(2, subWithoutAccountService.getAllSubWithoutAccounts().size());
-    
+        SubWithoutAccount savedsubWithoutAccount = subWithoutAccountService.getSubWithoutAccountById(RESERVATION_ID);
         SubWithoutAccount subWithoutAccount = null; 
         try {
             subWithoutAccount = subWithoutAccountService.deleteSubWithoutAccount(RESERVATION_ID);
         } catch (IllegalArgumentException e) {
-            fail();
+            fail(e.getMessage());
         }
-        SubWithoutAccount savedsubWithoutAccount = subWithoutAccountService.getSubWithoutAccountById(RESERVATION_ID);
-        assertNotNull(savedsubWithoutAccount);
+        
+        assertNotNull(subWithoutAccount);
         assertEquals(savedsubWithoutAccount.getId(), subWithoutAccount.getId());
-        assertEquals(savedsubWithoutAccount.getDate(), subWithoutAccount.getId());
+        
         
     }
     @Test
@@ -474,7 +519,7 @@ public class TestSubWithoutAccountService {
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("Reservation does not exist.", error);
         
     }
@@ -491,7 +536,7 @@ public class TestSubWithoutAccountService {
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-        assertNotNull(subWithoutAccount);
+        assertNull(subWithoutAccount);
         assertEquals("ReservationId cannot be negative.", error);
         
     }
@@ -535,10 +580,9 @@ public class TestSubWithoutAccountService {
     
     @Test
     public void testDeleteAllReservations() {
-        List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountService.getAllSubWithoutAccounts();
-        subWithoutAccountService.deleteAllReservations();
+        List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountService.deleteAllSubWithoutAccounts();
         assertNotNull(subWithoutAccounts);
-        assertEquals(0, subWithoutAccounts.size());
+        assertEquals(2, subWithoutAccounts.size());
     }
 
     

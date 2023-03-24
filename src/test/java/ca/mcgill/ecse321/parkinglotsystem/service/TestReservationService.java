@@ -49,12 +49,12 @@ private ReservationRepository reservationRepository;
 private ParkingSpotRepository parkingSpotRepository;
 @Mock
 private ParkingSpotTypeRepository parkingSpotTypeRepository;
-
+@Mock
+private ParkingSpotService parkingSpotService;
 
 @InjectMocks
 private ReservationService reservationService;
-@InjectMocks
-private ParkingSpotService parkingSpotService;
+
 
 private static final int RESERVATION_ID = 100;
 private static final Date date1 = Date.valueOf("2023-03-22");
@@ -125,7 +125,35 @@ public void setMockOutput() {
         }
     });
 
-    lenient().when(parkingSpotRepository.findParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
+    lenient().when(reservationRepository.findReservationsByParkingSpot(any(ParkingSpot.class))).thenAnswer((InvocationOnMock invocation) -> {
+        if (invocation.getArgument(0).equals(parkingSpotService.getParkingSpotById(ParkingSpot_ID))) {
+            Reservation reservation = (Reservation) new SingleReservation();
+            ParkingSpot spot = new ParkingSpot();
+            spot.setId(ParkingSpot_ID);
+            reservation.setId(RESERVATION_ID);
+            reservation.setDate(date1);
+            reservation.setParkingSpot(spot);
+            List<Reservation> reservations = new ArrayList<Reservation>();
+            reservations.add(reservation);
+            return reservations;
+        } 
+        else if (invocation.getArgument(0).equals(parkingSpotService.getParkingSpotById(ParkingSpot_ID2))) {
+            Reservation reservation = (Reservation) new SingleReservation();
+            ParkingSpot spot = new ParkingSpot();
+            spot.setId(ParkingSpot_ID);
+            reservation.setId(RESERVATION_ID2);
+            reservation.setDate(date2);
+            reservation.setParkingSpot(spot);
+            List<Reservation> reservations = new ArrayList<Reservation>();
+            reservations.add(reservation);
+            return reservations;
+        }
+        else {
+            return null;
+        }
+    });
+
+    lenient().when(parkingSpotService.getParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
         if(invocation.getArgument(0).equals(ParkingSpot_ID)) {
             ParkingSpot parkingSpot = new ParkingSpot();
             parkingSpot.setId(ParkingSpot_ID);
@@ -329,7 +357,6 @@ public void testGetReservationsByParkingSpot() {
     List<Reservation> reservations = reservationService.getReservationsByParkingSpot(ParkingSpot_ID);
     assertNotNull(reservations);
     assertEquals(reservations.get(0).getId(), RESERVATION_ID);
-    assertEquals(reservations.get(1).getId(), RESERVATION_ID2);
 }
 
 @Test

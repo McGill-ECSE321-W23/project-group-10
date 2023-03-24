@@ -25,7 +25,8 @@ public class ReservationService {
     protected ParkingSpotRepository parkingSpotRepository;
     @Autowired
     protected ParkingSpotTypeRepository parkingSpotTypeRepository;
-
+    @Autowired
+    protected ParkingSpotService parkingSpotService;
     /**
      * @author Mike
      * @param name
@@ -113,7 +114,7 @@ public class ReservationService {
             Reservation reservation = (Reservation) new SingleReservation();
             reservation.setId(reservationId); 
             reservation.setDate(date);
-            reservation.setParkingSpot(parkingSpotRepository.findParkingSpotById(parkingSpotId));
+            reservation.setParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
             reservationRepository.save(reservation);
             return reservation;
         }

@@ -48,19 +48,15 @@ import ca.mcgill.ecse321.parkinglotsystem.service.SingleReservationService;
 public class TestSingleReservationService {
     
     @Mock
-    private ReservationRepository reservationsRepository;
-    @Mock
     private SingleReservationRepository singleReservationRepository;
     @Mock
-    private ParkingSpotRepository parkingSpotRepository;
-    @Mock
-    private ParkingSpotTypeRepository parkingSpotTypeRepository;
+    private ParkingSpotService parkingSpotService;
+   
     
     
     @InjectMocks
     private SingleReservationService singleReservationService;
-    @InjectMocks
-    private ParkingSpotService parkingSpotService;
+    
     
     private static final int RESERVATION_ID = 100;
     private static final Date date1 = Date.valueOf("2023-03-22");
@@ -87,6 +83,7 @@ public class TestSingleReservationService {
                 singleReservation.setDate(date1);
                 singleReservation.setLicenseNumber(license_number1);
                 singleReservation.setParkingTime(parking_time);
+                singleReservation.setParkingSpot(parkingSpotService.getParkingSpotById(ParkingSpot_ID));
                 return singleReservation;
             } 
             else if (invocation.getArgument(0).equals(RESERVATION_ID2)) {
@@ -102,7 +99,7 @@ public class TestSingleReservationService {
             }
         });
     
-        lenient().when(singleReservationRepository.findAll()).thenAnswer( (InvocationOnMock invocation) -> {
+        lenient().when(singleReservationService.getAllSingleReservations()).thenAnswer( (InvocationOnMock invocation) -> {
             SingleReservation singleReservation1 =  new SingleReservation();
             singleReservation1.setId(RESERVATION_ID);
             singleReservation1.setDate(date1);
@@ -120,7 +117,7 @@ public class TestSingleReservationService {
             return singleReservations;
         });
     
-        lenient().when(singleReservationRepository.findSingleReservationsByDate(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
+        lenient().when(singleReservationService.getSingleReservationsByDate(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(date1)) {
                 SingleReservation singleReservation =  new SingleReservation();
                 singleReservation.setId(RESERVATION_ID);
@@ -146,10 +143,14 @@ public class TestSingleReservationService {
             }
         });
     
-        lenient().when(parkingSpotRepository.findParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
+        lenient().when(parkingSpotService.getParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(ParkingSpot_ID)) {
+                ParkingSpotType type = new ParkingSpotType();
+                type.setFee(0.50);
+                type.setName("regular");
                 ParkingSpot parkingSpot = new ParkingSpot();
                 parkingSpot.setId(ParkingSpot_ID);
+                parkingSpot.setType(type);
                 return parkingSpot;
             } 
             else if (invocation.getArgument(0).equals(ParkingSpot_ID2)) {
@@ -163,7 +164,7 @@ public class TestSingleReservationService {
         });
 
     
-        lenient().when(singleReservationRepository.findSingleReservationsByLicenseNumber(anyString())).thenAnswer( (InvocationOnMock invocation) -> { 
+        lenient().when(singleReservationService.getSingleReservationsByLicenseNumber(anyString())).thenAnswer( (InvocationOnMock invocation) -> { 
             
     
             if (invocation.getArgument(0).equals(license_number1)) {
@@ -195,6 +196,7 @@ public class TestSingleReservationService {
             
     
         });
+
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
                 return invocation.getArgument(0);
             };
@@ -203,16 +205,16 @@ public class TestSingleReservationService {
     
     @Test
     public void testCreateSingleReservationSuccessfully() {
-        assertEquals(2, singleReservationService.getAllReservations().size());
-    
+        assertEquals(2, singleReservationService.getAllSingleReservations().size());
+        int newId = 1190;
         SingleReservation singleReservation = null;
         try {
-            singleReservation = singleReservationService.createSingleReservation(RESERVATION_ID, date1, license_number1, parking_time, ParkingSpot_ID);
+            singleReservation = singleReservationService.createSingleReservation(newId, date1, license_number1, parking_time, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
-            fail();
+            fail(e.getMessage());
         }
         assertNotNull(singleReservation);
-        assertEquals(RESERVATION_ID, singleReservation.getId());
+        assertEquals(newId, singleReservation.getId());
         assertEquals(date1, singleReservation.getDate());
         assertEquals(license_number1, singleReservation.getLicenseNumber());
         assertEquals(parking_time, singleReservation.getParkingTime());
@@ -251,11 +253,12 @@ public class TestSingleReservationService {
     
     @Test
     public void testCreateSingleReservationWithEmptyDate() {
+        int newId = 1190;
         Date date = null;
         String error = null;
         SingleReservation singleReservation = null;
         try {
-            singleReservation = singleReservationService.createSingleReservation(RESERVATION_ID, date, license_number1, parking_time, ParkingSpot_ID);
+            singleReservation = singleReservationService.createSingleReservation(newId, date, license_number1, parking_time, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -266,11 +269,12 @@ public class TestSingleReservationService {
     
     @Test
     public void testCreateSingleReservationWithEmptyLicenseNumber() {
+        int newId = 1190;
         String licenseNum = null;
         String error = null;
         SingleReservation singleReservation = null;
         try {
-            singleReservation = singleReservationService.createSingleReservation(RESERVATION_ID, date1, licenseNum, parking_time, ParkingSpot_ID);
+            singleReservation = singleReservationService.createSingleReservation(newId, date1, licenseNum, parking_time, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -281,11 +285,12 @@ public class TestSingleReservationService {
 
     @Test
     public void testCreateSingleReservationWithIncorrectLicenseNumberFormat() {
+        int newId = 1190;
         String licenseNum = "!@!#$$";
         String error = null;
         SingleReservation singleReservation = null;
         try {
-            singleReservation = singleReservationService.createSingleReservation(RESERVATION_ID, date1, licenseNum, parking_time, ParkingSpot_ID);
+            singleReservation = singleReservationService.createSingleReservation(newId, date1, licenseNum, parking_time, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -296,11 +301,12 @@ public class TestSingleReservationService {
 
     @Test
     public void testCreateSingleReservationWithNegativeParkingTime() {
+        int newId = 1190;
         int parkingTime = -10;
         String error = null;
         SingleReservation singleReservation = null;
         try {
-            singleReservation = singleReservationService.createSingleReservation(RESERVATION_ID, date1, license_number1, parkingTime, ParkingSpot_ID);
+            singleReservation = singleReservationService.createSingleReservation(newId, date1, license_number1, parkingTime, ParkingSpot_ID);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -311,25 +317,24 @@ public class TestSingleReservationService {
     
     @Test
     public void testUpdateSingleReservationSuccessfully() {
-        assertEquals(2 , singleReservationService.getAllSingleReservations().size());
+        assertEquals(2, singleReservationService.getAllSingleReservations().size());
     
         
         Date newDate = Date.valueOf("2023-04-01");
-        int newParkingSpotId = 15;
         String newLicense = "QC0000";
         int newParkingTime = 75;
         SingleReservation singleReservation = null;
         try {
-            singleReservation = singleReservationService.createSingleReservation(RESERVATION_ID, newDate, newLicense, newParkingTime, newParkingSpotId);
+            singleReservation = singleReservationService.updateSingleReservation(RESERVATION_ID, newDate, newLicense, newParkingTime, ParkingSpot_ID2);
         } catch (IllegalArgumentException e) {
-            fail();
+            fail(e.getMessage());
         }
         assertNotNull(singleReservation);
         assertEquals(RESERVATION_ID, singleReservation.getId());
         assertEquals(newDate, singleReservation.getDate());
         assertEquals(newLicense, singleReservation.getLicenseNumber());
         assertEquals(newParkingTime, singleReservation.getParkingTime());
-        assertEquals(newParkingSpotId, singleReservation.getParkingSpot().getId());
+        assertEquals(ParkingSpot_ID2, singleReservation.getParkingSpot().getId());
     
     }
 
@@ -339,12 +344,11 @@ public class TestSingleReservationService {
         String error = null;
         int id = 99999;
         Date newDate = Date.valueOf("2023-04-01");
-        int newParkingSpotId = 15;
         String newLicense = "QC0000";
         int newParkingTime = 75;
         SingleReservation singleReservation = null;
         try {
-            singleReservation = singleReservationService.createSingleReservation(id, newDate, newLicense, newParkingTime, newParkingSpotId);
+            singleReservation = singleReservationService.updateSingleReservation(id, newDate, newLicense, newParkingTime, ParkingSpot_ID2);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -447,7 +451,7 @@ public class TestSingleReservationService {
         type.setFee(0.50);
         type.setName("regular");;
         ParkingSpot spot = new ParkingSpot();
-        spot.setId(ParkingSpot_ID);
+        spot.setId(ParkingSpot_ID2);
         spot.setType(type);
         singleReservation.setParkingSpot(spot);
         Double fee = singleReservationService.calculateFee(Time.valueOf("09:30:00"), RESERVATION_ID);

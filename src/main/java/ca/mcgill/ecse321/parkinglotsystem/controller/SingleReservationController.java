@@ -46,7 +46,7 @@ public class SingleReservationController {
 
     @PostMapping(value = {"", "/" })
     public SingleReservationDto createSingleReservation(@PathVariable int id, @RequestParam(name = "date") Date date, @RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "parkingTime") int parkingTime, @RequestParam(name = "parkingSpotId") int parkingSpotId){
-        SingleReservation singleReservation = singleReservationService.createSingleReservation(id, date, licenseNumber, parkingTime, ParkingSpotService.getParkingSpotById(parkingSpotId));
+        SingleReservation singleReservation = singleReservationService.createSingleReservation(id, date, licenseNumber, parkingTime, parkingSpotId);
         return convertToDto(singleReservation);
     }
 
@@ -94,7 +94,7 @@ public class SingleReservationController {
 	public SingleReservationDto updateSingleReservationDto(@PathVariable("id") int id, @PathVariable("newDate") Date newDate, @PathVariable("newLicenseNumber") String newLicenseNumber, 
     @PathVariable("newParkingTime") int newParkingTime, @PathVariable("parkingSpot") int newSpotId) {
         ParkingSpot newSpot = ParkingSpotService.getParkingSpotById(newSpotId);
-		SingleReservation singleReservation = singleReservationService.updateSingleReservation(id, newDate, newLicenseNumber, newParkingTime, newSpot);
+		SingleReservation singleReservation = singleReservationService.updateSingleReservation(id, newDate, newLicenseNumber, newParkingTime, newSpotId);
 		return convertToDto(singleReservation);
 	}
 

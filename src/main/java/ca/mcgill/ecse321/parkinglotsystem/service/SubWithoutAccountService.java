@@ -34,7 +34,7 @@ public class SubWithoutAccountService extends ReservationService {
         if (reservationId < 0){
             throw new IllegalArgumentException("ReservationId cannot be negative.");
         }
-        else if(reservationRepository.findReservationById(reservationId) != null){
+        else if(subWithoutAccountRepository.findSubWithoutAccountById(reservationId) != null){
             throw new IllegalArgumentException("ReservationId is in use.");
         }
         else if(date == null){
@@ -43,7 +43,7 @@ public class SubWithoutAccountService extends ReservationService {
         else if(licenseNumber == null || licenseNumber.length() == 0){
             throw new IllegalArgumentException("licenseNumber cannot be empty");
         }
-        else if(licenseNumber.matches("^[a-zA-Z0-9]*$") || licenseNumber.length() > 7){
+        else if(!licenseNumber.matches("^[a-zA-Z0-9]*$") || licenseNumber.length() > 7){
             throw new IllegalArgumentException("Incorrect licenseNumber format");
         }
         else if(nbrMonths < 1 ){
@@ -126,7 +126,7 @@ public class SubWithoutAccountService extends ReservationService {
         else if(licenseNumber == null || licenseNumber.length() == 0){
             throw new IllegalArgumentException("licenseNumber cannot be empty");
         }
-        else if(licenseNumber.matches("^[a-zA-Z0-9]*$") || licenseNumber.length() > 7){
+        else if(!licenseNumber.matches("^[a-zA-Z0-9]*$") || licenseNumber.length() > 7){
             throw new IllegalArgumentException("Incorrect licenseNumber format");
         }
         else if (nbrMonths < 1){
@@ -140,7 +140,7 @@ public class SubWithoutAccountService extends ReservationService {
             subWithoutAccount.setDate(date);
             subWithoutAccount.setLicenseNumber(licenseNumber);
             subWithoutAccount.setNbrMonths(nbrMonths);
-            subWithoutAccount.setParkingSpot(parkingSpotRepository.findParkingSpotById(parkingspotId));
+            subWithoutAccount.setParkingSpot(parkingSpotService.getParkingSpotById(parkingspotId));
             subWithoutAccountRepository.save(subWithoutAccount);
             return subWithoutAccount;
         }
@@ -156,9 +156,6 @@ public class SubWithoutAccountService extends ReservationService {
      public SubWithoutAccount deleteSubWithoutAccount(int reservationId){
         if (reservationId < 0){
             throw new IllegalArgumentException("ReservationId cannot be negative.");
-        }
-        else if(reservationRepository.findReservationById(reservationId) == null){
-            throw new IllegalArgumentException("reservationId does not exist.");
         }
 
         SubWithoutAccount subWithoutAccount = subWithoutAccountRepository.findSubWithoutAccountById(reservationId);
