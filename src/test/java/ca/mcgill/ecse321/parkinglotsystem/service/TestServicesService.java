@@ -88,7 +88,7 @@ public class TestServicesService {
         testCreateServiceFailure(
                 VALID__DESCRIPTION,
                 INVALID__PRICE,
-                "Price cannot be negative! ");
+                "price input cannot be empty or less than zero!");
     }
 
     @Test
@@ -96,7 +96,7 @@ public class TestServicesService {
         testCreateServiceFailure(
                 INVALID__DESCRIPTION,
                 VALID__PRICE,
-                "Description cannot be empty! ");
+                "service description cannot be empty!");
     }
 
     @Test
@@ -145,8 +145,14 @@ public class TestServicesService {
 
     @Test
     public void testUpdateServiceInvalid() {
-        Service ser = service.updateService(VALID__DESCRIPTION, INVALID__PRICE_UPDATE);
-        assertEquals(ser.getPrice(), VALID__PRICE);
+        String errMsg = "";
+        try {
+            Service ser = service.updateService(VALID__DESCRIPTION, INVALID__PRICE_UPDATE);
+            assertEquals(ser.getPrice(), VALID__PRICE);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals(errMsg, "price input cannot be empty or less than zero!");
     }
 
     private void testCreateServiceFailure(String description, int price, String message) {

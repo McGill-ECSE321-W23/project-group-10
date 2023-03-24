@@ -139,7 +139,7 @@ public class TestPaymentServiceService {
 
 
     @Test
-    public void testCreateManagerInvalidAmount() {
+    public void testCreatePaymentServiceInvalidAmount() {
         testCreatePaymentServiceFailure(
                 VALID__ID,
                 INVALID__AMOUNT,

@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @org.springframework.stereotype.Service
 public class ServicesService {
@@ -24,7 +25,7 @@ public class ServicesService {
     public Service createService(String description, int price) {
         // Input validation
         String val_int = price + "";
-        if (description == null) {
+        if (description.equals("")) {
             throw new IllegalArgumentException("service description cannot be empty!");
         }
         if ((val_int == null || price < 0)) {
