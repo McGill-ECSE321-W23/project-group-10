@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.mcgill.ecse321.parkinglotsystem.model.ServiceRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,12 +35,14 @@ public class ServiceReqWithoutAccountServiceTests {
 
     @Mock
     private ServiceReqWithoutAccountRepository repository;
+    private ServiceRequestRepository serviceRequestRepository;
 
     @Mock
     private ServicesService serviceService;
 
     @InjectMocks
     private ServiceReqWithoutAccountService service;
+    private ServiceRequestService serviceRequestService;
 
     private static final int VALID_ID = 1;
     private static final int INVALID_ID = 2;
@@ -97,11 +100,26 @@ public class ServiceReqWithoutAccountServiceTests {
             return srwas;
         });
 
+        lenient().when(serviceRequestRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+            List<ServiceRequest> serviceRequestList = new ArrayList<>();
+            serviceRequestList.add(dummy(VALID_ID, true, null, null));
+            serviceRequestList.add(dummy(VALID_ID + 1, true, null, null));
+            return serviceRequestList;
+        });
+
         lenient().when(repository.save(any(ServiceReqWithoutAccount.class)))
                 .thenAnswer((InvocationOnMock invocation) -> {
                     ServiceReqWithoutAccount srwa = invocation.getArgument(0);
                     srwa.setId(VALID_ID);
                     return srwa;
+                });
+
+
+        lenient().when(serviceRequestRepository.save(any(ServiceReqWithoutAccount.class)))
+                .thenAnswer((InvocationOnMock invocation) -> {
+                    ServiceRequest ser = invocation.getArgument(0);
+                    ser.setId(VALID_ID);
+                    return ser;
                 });
     }
 
@@ -113,7 +131,7 @@ public class ServiceReqWithoutAccountServiceTests {
         assertEquals(VALID_ID, srwa.getId());
         assertEquals(true, srwa.getIsAssigned());
         assertEquals(VALID_LICENSE_ASSIGNED, srwa.getLicenseNumber());
-        assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE), srwa.getService());
+        assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE).get(0), srwa.getService());
     }
 
     @Test
@@ -145,7 +163,7 @@ public class ServiceReqWithoutAccountServiceTests {
             assertEquals(VALID_ID, srwa.getId());
             assertEquals(true, srwa.getIsAssigned());
             assertEquals(VALID_LICENSE_ASSIGNED, srwa.getLicenseNumber());
-            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE), srwa.getService());
+            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE).get(0), srwa.getService());
         }
     }
 
@@ -172,7 +190,7 @@ public class ServiceReqWithoutAccountServiceTests {
             assertEquals(VALID_ID, srwa.getId());
             assertEquals(true, srwa.getIsAssigned());
             assertEquals(VALID_LICENSE_ASSIGNED, srwa.getLicenseNumber());
-            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE), srwa.getService());
+            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE).get(0), srwa.getService());
         }
     }
 
@@ -186,7 +204,7 @@ public class ServiceReqWithoutAccountServiceTests {
             assertEquals(VALID_ID, srwa.getId());
             assertEquals(false, srwa.getIsAssigned());
             assertEquals(VALID_LICENSE_NOTASSIGNED, srwa.getLicenseNumber());
-            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE), srwa.getService());
+            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE).get(0), srwa.getService());
         }
     }
 
@@ -195,6 +213,44 @@ public class ServiceReqWithoutAccountServiceTests {
         List<ServiceReqWithoutAccount> srwas = service.getAll();
         assertNotNull(srwas);
         assertTrue(srwas.size() > 0);
+    }
+
+    @Test
+    public void testGetServiceRequestById() {
+        ServiceRequest ser = serviceRequestService.getServiceRequestById(VALID_ID);
+        assertNotNull(ser);
+        assertEquals(VALID_ID, ser.getId());
+    }
+
+    @Test
+    public void testGetServiceRequestByIsAssigned() {
+        List<ServiceRequest> serviceRequestList = serviceRequestService.getServiceRequestByIsAssigned(true);
+        assertNotNull(serviceRequestList);
+        for (ServiceRequest ser : serviceRequestList) {
+            assertNotNull(ser);
+            assertEquals(VALID_ID, ser.getId());
+            assertEquals(true, ser.getIsAssigned());
+            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE).get(0), ser.getService());
+        }
+    }
+
+    @Test
+    public void testGetServiceRequestByService() {
+        List<ServiceRequest> serviceRequestList = serviceRequestService.getServiceRequestByServices(dummyService(VALID_SERVICE_PRICE));
+        assertNotNull(serviceRequestList);
+        for (ServiceRequest ser : serviceRequestList) {
+            assertNotNull(ser);
+            assertEquals(VALID_ID, ser.getId());
+            assertEquals(true, ser.getIsAssigned());
+            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE).get(0), ser.getService());
+        }
+    }
+
+    @Test
+    public void testGetAllServiceRequest() {
+        List<ServiceRequest> serviceRequestList = serviceRequestService.getAllServiceRequest();
+        assertNotNull(serviceRequestList);
+        assertTrue(serviceRequestList.size() > 0);
     }
 
     @Test

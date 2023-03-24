@@ -35,7 +35,7 @@ public class ServiceRequestService {
 
     // method to find a service request by service
     @Transactional
-    public List<ServiceRequest> getPaymentServiceByServices(Service services) {
+    public List<ServiceRequest> getServiceRequestByServices(Service services) {
         return serviceRequestRepository.findServiceRequestByService(services);
     }
 
