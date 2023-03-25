@@ -56,7 +56,7 @@ public class MonthlyCustomerService {
      public MonthlyCustomer getMonthlyCustomerByEmail(String email){
         MonthlyCustomer customer = monthlyCustomerRepository.findMonthlyCustomerByEmail(email);
         if(customer == null) {
-            throw new CustomException("Invalid monthly customer email.", HttpStatus.BAD_REQUEST);
+            throw new CustomException("Invalid monthly customer email! ", HttpStatus.BAD_REQUEST);
         }
         return customer;
      }

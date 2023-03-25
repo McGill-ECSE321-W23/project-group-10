@@ -3,9 +3,8 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
@@ -200,10 +199,17 @@ public class TestManagerService {
     }
 
     @Test
-    public void testGetManagerInalidEmail() {
-        Manager ma = service.getManagerByEmail(INVALID__EMAIL);
+    public void testGetManagerInvalidEmail() {
+        String errMsg="";
+        Manager ma=null;
+        try{
+           ma = service.getManagerByEmail(INVALID__EMAIL);
+        }catch(Exception e){
+            errMsg=e.getMessage();
+        }
         assertNull(ma);
-    }
+        assertEquals("Invalid manager email! ", errMsg);
+    } 
 
     @Test
     public void testGetManagerValidName() {
