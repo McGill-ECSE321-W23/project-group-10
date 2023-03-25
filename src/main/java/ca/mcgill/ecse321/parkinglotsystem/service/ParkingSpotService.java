@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotTypeRepository;
+import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
+import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
@@ -24,6 +26,8 @@ public class ParkingSpotService {
     ParkingSpotRepository parkingSpotRepository;
     @Autowired
     ParkingSpotTypeRepository parkingSpotTypeRepository;
+    @Autowired
+    ReservationRepository reservationRepository;
 
     /**
      * method to a create parking spot
@@ -47,7 +51,7 @@ public class ParkingSpotService {
         ParkingSpotType parkingSpotType  = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
         // check if parking spot type exist
         if (parkingSpotType == null) {
-	        throw new CustomException("No such parking spot type exists! ", HttpStatus.NOT_FOUND);
+	        throw new CustomException("No parking spot type with name " + parkingSpotTypeName + " exists! ", HttpStatus.NOT_FOUND);
 		}
 
         ParkingSpot parkingSpot = new ParkingSpot();   
@@ -102,6 +106,13 @@ public class ParkingSpotService {
         if (spot == null) {
 			throw new CustomException("No parking spot with that id was found! ", HttpStatus.NOT_FOUND);
 		}
+        System.err.println(spot.getId());
+        List<Reservation> reservations = reservationRepository.findReservationsByParkingSpot(spot);
+        // DON'T KNOW HOW TO TEST THIS
+        if (reservations.size() > 0) {
+            throw new CustomException("Cannot delete as parking spot has 1 or more reservation! ", HttpStatus.CONFLICT);
+        }
+        
         parkingSpotRepository.delete(spot);
         
         return spot;
