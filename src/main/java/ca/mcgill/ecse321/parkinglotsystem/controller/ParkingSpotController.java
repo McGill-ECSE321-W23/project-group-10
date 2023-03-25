@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -25,7 +26,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
  */
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/parking-spot", "/api/parking-spot/"})
+@RequestMapping("/api/parking-spot")
 public class ParkingSpotController {
 
     @Autowired
@@ -42,7 +43,7 @@ public class ParkingSpotController {
      * method to send request to get all parking spot Dtos
      * @return List<ParkingSpotDto> 
      */
-    @GetMapping(value = {"/", ""})
+    @GetMapping(value = {"","/"})
     public List<ParkingSpotDto> getAllParkingSpotDtos(){
        return parkingSpotService.getAllParkingSpots().stream().map(
         pSpot -> HelperMethods.convertParkingSpotToDto(pSpot)).collect(Collectors.toList());
@@ -54,12 +55,12 @@ public class ParkingSpotController {
      * @param fee
      * @return parking spot type dto
      */
-    @PostMapping(value = {"/{id}/{parkingSpotTypeName}", "/{id}/{parkingSpotTypeName}/"})
-    public ParkingSpotDto createParkingSpotDto(@PathVariable("id") int id, 
-                                            @PathVariable("parkingSpotTypeName") String parkingSpotTypeName){
+    @PostMapping(value = {"/{id}", "/{id}/"})
+    public ParkingSpotDto createParkingSpotDto(
+        @PathVariable int id,               
+        @RequestParam String parkingSpotTypeName){
         ParkingSpot parkingSpot = parkingSpotService.createParkingSpot(id, parkingSpotTypeName);
         return HelperMethods.convertParkingSpotToDto(parkingSpot);                             
-        
     }
 
     /**
@@ -67,10 +68,10 @@ public class ParkingSpotController {
      * @param typeName
      * @return
      */
-    @GetMapping(value = {"/by-type/{typeName}", "/by-type/{typeName}/"})
+    @GetMapping(value = {"/all-by-type/{typeName}", "/all-by-type/{typeName}/"})
     public List<ParkingSpotDto> getParkingSpotDtoByType(@PathVariable("typeName") String typeName) {
         return parkingSpotService.getParkingSpotByType(typeName).stream().map(
-            spots -> HelperMethods.convertParkingSpotToDto(spots)).collect(Collectors.toList());        
+            spots -> HelperMethods.convertParkingSpotToDto(spots)).collect(Collectors.toList());
     }
 
     /**
@@ -78,7 +79,7 @@ public class ParkingSpotController {
      * @param id
      * @return parking spot dto
      */
-    @GetMapping(value = {"/by-id/{id}", "/by-id/{id}/"})
+    @GetMapping(value = {"/{id}", "/{id}/"})
     public ParkingSpotDto getParkingSpotDtoById(@PathVariable("id") int id) {
         ParkingSpot parkingSpot = parkingSpotService.getParkingSpotById(id);
         return HelperMethods.convertParkingSpotToDto(parkingSpot);
@@ -101,8 +102,8 @@ public class ParkingSpotController {
      * @param typeName
      * @return parking spot type dto
      */
-    @PutMapping(value ={"/{id}/{typeName}", "/{id}/{typeName}/"})
-    public ParkingSpotDto updateParkingSpotDto(@PathVariable("id") int id, @PathVariable("typeName") String typeName) {
+    @PutMapping(value ={"/{id}", "/{id}/"})
+    public ParkingSpotDto updateParkingSpotDto(@PathVariable("id") int id, @RequestParam("typeName") String typeName) {
         ParkingSpot parkingSpot = parkingSpotService.updateParkingSpot(id, typeName);
         return HelperMethods.convertParkingSpotToDto(parkingSpot);
 
