@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +91,9 @@ public class SubWithoutAccountService extends ReservationService {
 	 */
 	@Transactional
 	public List<SubWithoutAccount> getSubWithoutAccountsByParkingSpot(int parkingSpotId) {
-		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
+        ParkingSpot spot = parkingSpotService.getParkingSpotById(parkingSpotId);
+		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByParkingSpot(spot);
+        Collections.sort(subWithoutAccounts, Comparator.comparing(SubWithoutAccount::getDate));
 		return subWithoutAccounts;
 	}
 

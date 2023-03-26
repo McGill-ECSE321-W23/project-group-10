@@ -142,26 +142,47 @@ public class TestSingleReservationService {
                 return null;
             }
         });
-    
-        lenient().when(parkingSpotService.getParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(ParkingSpot_ID)) {
-                ParkingSpotType type = new ParkingSpotType();
-                type.setFee(0.50);
-                type.setName("regular");
-                ParkingSpot parkingSpot = new ParkingSpot();
-                parkingSpot.setId(ParkingSpot_ID);
-                parkingSpot.setType(type);
-                return parkingSpot;
+
+        lenient().when(singleReservationRepository.findSingleReservationsByParkingSpot(any(ParkingSpot.class))).
+        thenAnswer((InvocationOnMock invocation) -> {
+            ParkingSpot spot = invocation.getArgument(0);
+            if (spot.getId() == ParkingSpot_ID) {
+                SingleReservation singleReservation =  new SingleReservation();
+                singleReservation.setId(RESERVATION_ID);
+                singleReservation.setDate(date1);
+                singleReservation.setLicenseNumber(license_number1);
+                singleReservation.setParkingTime(parking_time);
+                singleReservation.setParkingSpot(spot);
+                List<SingleReservation> singleReservations = new ArrayList<SingleReservation>();
+                singleReservations.add(singleReservation);
+                return singleReservations;
             } 
-            else if (invocation.getArgument(0).equals(ParkingSpot_ID2)) {
-                ParkingSpot parkingSpot = new ParkingSpot();
-                parkingSpot.setId(ParkingSpot_ID2);
-                return parkingSpot;
+        else if (spot.getId() == ParkingSpot_ID2) {
+                SingleReservation singleReservation =  new SingleReservation();
+                singleReservation.setId(RESERVATION_ID2);
+                singleReservation.setDate(date2);
+                singleReservation.setLicenseNumber(license_number2);
+                singleReservation.setParkingTime(parking_time2);
+                singleReservation.setParkingSpot(spot);
+                List<SingleReservation> singleReservations = new ArrayList<SingleReservation>();
+                singleReservations.add(singleReservation);
+                return singleReservations;
             }
             else {
                 return null;
             }
         });
+    
+        lenient().when(parkingSpotService.getParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
+            ParkingSpotType type = new ParkingSpotType();
+            type.setFee(0.50);
+            type.setName("regular");
+            ParkingSpot parkingSpot = new ParkingSpot();
+            parkingSpot.setId(invocation.getArgument(0));
+            parkingSpot.setType(type);
+            return parkingSpot;
+        
+    });
 
     
         lenient().when(singleReservationService.getSingleReservationsByLicenseNumber(anyString())).thenAnswer( (InvocationOnMock invocation) -> { 
@@ -427,7 +448,12 @@ public class TestSingleReservationService {
         assertNotNull(singleReservations);
         assertEquals(singleReservations.get(0).getId(), RESERVATION_ID);
     }
-    
+    @Test
+    public void testGetSubWithoutAccountsByParkingSpot() {
+        List<SingleReservation> singleReservations = singleReservationService.getSingleReservationsByParkingSpot(ParkingSpot_ID);
+        assertNotNull(singleReservations);
+        assertEquals(singleReservations.get(0).getId(), RESERVATION_ID);
+    }
     @Test
     public void testGetAllSingleReservations() {
         List<SingleReservation> singleReservations = singleReservationService.getAllSingleReservations();

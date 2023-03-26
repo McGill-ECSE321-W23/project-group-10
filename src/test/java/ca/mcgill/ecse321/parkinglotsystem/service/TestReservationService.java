@@ -37,6 +37,7 @@ import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
+import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotService;
 import ca.mcgill.ecse321.parkinglotsystem.service.ReservationService;
 
@@ -45,10 +46,6 @@ public class TestReservationService {
     
 @Mock
 private ReservationRepository reservationRepository;
-@Mock
-private ParkingSpotRepository parkingSpotRepository;
-@Mock
-private ParkingSpotTypeRepository parkingSpotTypeRepository;
 @Mock
 private ParkingSpotService parkingSpotService;
 
@@ -76,12 +73,14 @@ public void setMockOutput() {
             Reservation reservation = (Reservation) new SingleReservation();
             reservation.setId(RESERVATION_ID);
             reservation.setDate(date1);
+            reservation.setParkingSpot(parkingSpotService.getParkingSpotById(ParkingSpot_ID));
             return reservation;
         } 
         else if (invocation.getArgument(0).equals(RESERVATION_ID2)) {
             Reservation reservation = (Reservation) new SingleReservation();
             reservation.setId(RESERVATION_ID2);
             reservation.setDate(date2);
+            reservation.setParkingSpot(parkingSpotService.getParkingSpotById(ParkingSpot_ID2));
             return reservation;
         }
         else {
@@ -90,12 +89,14 @@ public void setMockOutput() {
     });
 
     lenient().when(reservationRepository.findAll()).thenAnswer( (InvocationOnMock invocation) -> {
-        Reservation reservation1 = (Reservation) new SingleReservation();
+        Reservation reservation1 =  (Reservation) new SingleReservation();
         reservation1.setId(RESERVATION_ID);
         reservation1.setDate(date1);
+        reservation1.setParkingSpot(parkingSpotService.getParkingSpotById(ParkingSpot_ID));
         Reservation reservation2 = (Reservation) new SingleReservation();
         reservation2.setId(RESERVATION_ID2);
         reservation2.setDate(date2);
+        reservation2.setParkingSpot(parkingSpotService.getParkingSpotById(ParkingSpot_ID2));
         List<Reservation> reservations = new ArrayList<Reservation>();
         reservations.add(reservation1);
         reservations.add(reservation2);
@@ -107,6 +108,7 @@ public void setMockOutput() {
             Reservation reservation = (Reservation) new SingleReservation();
             reservation.setId(RESERVATION_ID);
             reservation.setDate(date1);
+            reservation.setParkingSpot(parkingSpotService.getParkingSpotById(ParkingSpot_ID));
             List<Reservation> reservations = new ArrayList<Reservation>();
             reservations.add(reservation);
             return reservations;
@@ -115,7 +117,7 @@ public void setMockOutput() {
             Reservation reservation = (Reservation) new SingleReservation();
             reservation.setId(RESERVATION_ID2);
             reservation.setDate(date2);
-            
+            reservation.setParkingSpot(parkingSpotService.getParkingSpotById(ParkingSpot_ID2));
             List<Reservation> reservations = new ArrayList<Reservation>();
             reservations.add(reservation);
             return reservations;
@@ -125,84 +127,50 @@ public void setMockOutput() {
         }
     });
 
-    lenient().when(reservationRepository.findReservationsByParkingSpot(any(ParkingSpot.class))).thenAnswer((InvocationOnMock invocation) -> {
-        if (invocation.getArgument(0).equals(parkingSpotService.getParkingSpotById(ParkingSpot_ID))) {
-            Reservation reservation = (Reservation) new SingleReservation();
-            ParkingSpot spot = new ParkingSpot();
-            spot.setId(ParkingSpot_ID);
-            reservation.setId(RESERVATION_ID);
-            reservation.setDate(date1);
-            reservation.setParkingSpot(spot);
-            List<Reservation> reservations = new ArrayList<Reservation>();
-            reservations.add(reservation);
+    lenient().when(reservationRepository.findReservationsByParkingSpot(any(ParkingSpot.class))).
+        thenAnswer((InvocationOnMock invocation) -> {
+            List<Reservation> reservations = new ArrayList<>();
+            ParkingSpot spot = invocation.getArgument(0);
+            if(spot.getId() == ParkingSpot_ID) {
+                Reservation reservation = (Reservation) new SingleReservation();
+                reservation.setId(RESERVATION_ID);
+                reservation.setDate(date1);
+                reservation.setParkingSpot(spot);
+                reservations.add(reservation);
+            }
+            else if(spot.getId() == ParkingSpot_ID2) {
+                Reservation reservation = (Reservation) new SingleReservation();
+                reservation.setId(RESERVATION_ID2);
+                reservation.setDate(date2);
+                reservation.setParkingSpot(spot);
+                reservations.add(reservation);
+            }
             return reservations;
-        } 
-        else if (invocation.getArgument(0).equals(parkingSpotService.getParkingSpotById(ParkingSpot_ID2))) {
-            Reservation reservation = (Reservation) new SingleReservation();
-            ParkingSpot spot = new ParkingSpot();
-            spot.setId(ParkingSpot_ID);
-            reservation.setId(RESERVATION_ID2);
-            reservation.setDate(date2);
-            reservation.setParkingSpot(spot);
-            List<Reservation> reservations = new ArrayList<Reservation>();
-            reservations.add(reservation);
-            return reservations;
-        }
-        else {
-            return null;
-        }
     });
+
+    lenient().when(reservationRepository.save(any(Reservation.class))).thenAnswer((InvocationOnMock invocation) -> {
+        Reservation reservation = invocation.getArgument(0);
+        reservation.setId(RESERVATION_ID);
+        return reservation;
+    });
+    
 
     lenient().when(parkingSpotService.getParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
-        if(invocation.getArgument(0).equals(ParkingSpot_ID)) {
+            ParkingSpotType type = new ParkingSpotType();
+            type.setFee(0.50);
+            type.setName("regular");
             ParkingSpot parkingSpot = new ParkingSpot();
-            parkingSpot.setId(ParkingSpot_ID);
+            parkingSpot.setId(invocation.getArgument(0));
+            parkingSpot.setType(type);
             return parkingSpot;
-        } 
-        else if (invocation.getArgument(0).equals(ParkingSpot_ID2)) {
-            ParkingSpot parkingSpot = new ParkingSpot();
-            parkingSpot.setId(ParkingSpot_ID2);
-            return parkingSpot;
-        }
-        else {
-            return null;
-        }
+        
     });
 
-    lenient().when(reservationRepository.findReservationsByParkingSpot(any(ParkingSpot.class))).thenAnswer( (InvocationOnMock invocation) -> { 
-        
-
-        if (invocation.getArgument(0).equals(parkingSpotService.getParkingSpotById(ParkingSpot_ID))) {
-            Reservation reservation1 = (Reservation) new SingleReservation();
-            reservation1.setId(RESERVATION_ID);
-            reservation1.setDate(date1);
-
-            List<Reservation> reservations = new ArrayList<Reservation>();
-            reservations.add(reservation1);
-            return reservations;
-        }
-
-        else if (invocation.getArgument(0).equals(parkingSpotService.getParkingSpotById(ParkingSpot_ID2))){
-            Reservation reservation2 = (Reservation) new SingleReservation();
-            reservation2.setId(RESERVATION_ID2);
-            reservation2.setDate(date2);
-            
-            List<Reservation> reservations = new ArrayList<Reservation>();
-            reservations.add(reservation2);
-            return reservations;
-
-        }
-        else {
-            return null;
-        }
-
-        
-
-    });
+    
     Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
-			return invocation.getArgument(0);
-		};
-		lenient().when(reservationRepository.save(any(Reservation.class))).thenAnswer(returnParameterAsAnswer);
+            return invocation.getArgument(0);
+        };
+        lenient().when(reservationRepository.save(any(Reservation.class))).thenAnswer(returnParameterAsAnswer);
 }
 
 @Test
@@ -266,27 +234,6 @@ public void testCreateReservationWithEmptyDate() {
 
 }
 
-/** 
-@Test
-public void testUpdateReservationSuccessfully() {
-    assertEquals(2 , reservationService.getAllReservations().size());
-
-    
-    Date newDate = Date.valueOf("2023-04-01");
-    int newParkingSpotId = 15;
-    Reservation reservation = null;
-    try {
-        reservation = reservationService.createReservation(RESERVATION_ID, newDate, newParkingSpotId);
-    } catch (IllegalArgumentException e) {
-        fail();
-    }
-    assertNotNull(reservation);
-    assertEquals(RESERVATION_ID, reservation.getId());
-    assertEquals(newDate, reservation.getDate());
-    assertEquals(newParkingSpotId, reservation.getParkingSpot().getId());
-
-}
-*/
 @Test
 public void testDeleteReservationSuccessfully() {
     assertEquals(2, reservationService.getAllReservations().size());

@@ -22,76 +22,10 @@ public class ReservationService {
     @Autowired
     protected ReservationRepository reservationRepository;
     @Autowired
-    protected ParkingSpotRepository parkingSpotRepository;
-    @Autowired
-    protected ParkingSpotTypeRepository parkingSpotTypeRepository;
-    @Autowired
     protected ParkingSpotService parkingSpotService;
-    /**
-     * @author Mike
-     * @param name
-     * @param fee
-     * @return a parkingspottype
-     */
-    @Transactional
-    public ParkingSpotType createParkingSpotType(String name, Double fee){
-        if (name == null || name.length() == 0){
-            throw new IllegalArgumentException("Name cannot be empty");
-        }
-        ParkingSpotType type = new ParkingSpotType();
-        type.setName(name);
-        type.setFee(fee);
-        parkingSpotTypeRepository.save(type);
-        return type;
+    @Autowired
+    protected ParkingSpotTypeService parkingSpotTypeService;
 
-    }
-
-    public ParkingSpotType getParkingSpotTypebyName(String name){
-        ParkingSpotType type = parkingSpotTypeRepository.findParkingSpotTypeByName(name);
-        if (type == null){ 
-            throw new IllegalArgumentException("no type found for name " + name);
-        }
-        return type;
-
-    }
-
-    public List<ParkingSpotType> getAllParkingSpotTypes(){
-        return toList(parkingSpotTypeRepository.findAll());
-
-    }
-
-    /**
-     * @author Mike
-     * @param parkingSpotId
-     * @return a parkingspot
-     */
-    @Transactional
-    public ParkingSpot createParkingSpot(int parkingSpotId, String typeName, Double typeFee){
-        if (parkingSpotId < 0){
-            throw new IllegalArgumentException("Id must be positive");
-        }
-        ParkingSpotType type = createParkingSpotType(typeName, typeFee);
-        ParkingSpot spot = new ParkingSpot();
-        spot.setId(parkingSpotId);
-        spot.setType(type);
-        parkingSpotRepository.save(spot);
-        return spot;
-
-    }
-
-    public ParkingSpot getParkingSpotbyId(int id){
-        ParkingSpot spot = parkingSpotRepository.findParkingSpotById(id);
-        if (spot == null){
-            throw new IllegalArgumentException("parkingSpot not found");
-        }
-        return spot;
-
-    }
-
-    public List<ParkingSpot> getAllParkingSpots(){
-        return toList(parkingSpotRepository.findAll());
-
-    }
     /**
      * Create a Reservation
      * @author Mike Zhang
@@ -171,7 +105,7 @@ public class ReservationService {
 	 */
 	@Transactional
 	public List<Reservation> getReservationsByParkingSpot(int parkingSpotId) {
-		List<Reservation> reservations = reservationRepository.findReservationsByParkingSpot(parkingSpotRepository.findParkingSpotById(parkingSpotId));
+		List<Reservation> reservations = reservationRepository.findReservationsByParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
 		return reservations;
 	}
 
