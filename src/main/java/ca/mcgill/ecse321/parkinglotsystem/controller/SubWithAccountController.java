@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -100,10 +101,20 @@ public class SubWithAccountController {
      */
     @PostMapping(value = {"", "/"})
     public SubWithAccountDto createSubWithAccount(
-        @RequestParam(value = "customer-email") String monthlyCustomerEmail,
-        @RequestParam(value = "parking-spot-id") int parkingSpotId) {
+        @RequestParam String monthlyCustomerEmail,
+        @RequestParam int parkingSpotId) {
         return convertSubWithAccountToDto(
             service.createSubWithAccount(monthlyCustomerEmail, parkingSpotId));
+    }
+
+    /**
+     * Deletes the subscription with the given ID.
+     * 
+     * @param id
+     */
+    @DeleteMapping(value = {"/{id}","/{id}/"})
+    public void deleteSubWithAccount(@PathVariable int id) {
+        service.deleteSubWithAccount(id);
     }
 
 }
