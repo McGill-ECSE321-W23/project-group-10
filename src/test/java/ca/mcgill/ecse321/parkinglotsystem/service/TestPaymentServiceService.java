@@ -255,9 +255,8 @@ public class TestPaymentServiceService {
 
     @Test
     public void testGetPaymentServiceValidServiceRequest() {
-        List<PaymentService> paymentServiceList = service.getPaymentServiceByServiceRequest(dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
-        assertEquals(paymentServiceList.size(),1);
-        assertEquals(SERVICE_REQUEST__ID, paymentServiceList.get(0).getServiceReq().getId());
+        PaymentService pa = service.getPaymentServiceByServiceRequest(dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+        assertEquals(SERVICE_REQUEST__ID, pa.getServiceReq().getId());
     }
 
     @Test

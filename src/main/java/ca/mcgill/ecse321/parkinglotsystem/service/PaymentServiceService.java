@@ -89,8 +89,9 @@ public class PaymentServiceService {
 
     // method to find a payment service by service request
     @Transactional
-    public List<PaymentService> getPaymentServiceByServiceRequest(ServiceRequest serviceReq) {
-        return paymentServiceRepository.findPaymentServiceByServiceReq(serviceReq);
+    public PaymentService getPaymentServiceByServiceRequest(ServiceRequest serviceReq) {
+        List<PaymentService> paymentServiceList = paymentServiceRepository.findPaymentServiceByServiceReq(serviceReq);
+        return paymentServiceList.get(0);
     }
 
     // method to delete a payment service

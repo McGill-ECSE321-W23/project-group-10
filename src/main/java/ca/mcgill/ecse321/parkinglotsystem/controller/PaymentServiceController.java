@@ -138,16 +138,10 @@ public class PaymentServiceController {
      * @throws Exception
      */
     @GetMapping(value = {"/getByServiceRequest/{serviceRequest}", "/getByServiceRequest/{serviceRequest}/"})
-    public List<PaymentServiceDto> getPaymentServiceByServiceRequest(@PathVariable("serviceRequest") ServiceRequest serviceRequest) {
-        List<PaymentServiceDto> seList = new ArrayList<>();
+    public PaymentServiceDto getPaymentServiceByServiceRequest(@PathVariable("serviceRequest") ServiceRequest serviceRequest) {
         try {
-            List<PaymentService> paymentService = paymentServiceService.getPaymentServiceByServiceRequest(serviceRequest);
-            if (paymentService.size() != 0) {
-                for (PaymentService se : paymentService) {
-                    seList.add(convertPaymentServiceToDto(se));
-                }
-            }
-            return seList;
+            PaymentService paymentService = paymentServiceService.getPaymentServiceByServiceRequest(serviceRequest);
+            return convertPaymentServiceToDto(paymentService);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
