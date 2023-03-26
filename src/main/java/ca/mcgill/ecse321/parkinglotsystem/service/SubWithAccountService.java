@@ -195,6 +195,19 @@ public class SubWithAccountService {
     }
 
     /**
+     * Deletes the subscription with the given ID.
+     * 
+     * @param id
+     */
+    public void deleteSubWithAccount(int id) {
+        SubWithAccount sub = subWithAccountRepository.findSubWithAccountById(id);
+        if(sub == null) {
+            throw new CustomException("Invalid reservation ID.", HttpStatus.BAD_REQUEST);
+        }
+        subWithAccountRepository.deleteById(id);
+    }
+
+    /**
      * Checks whether the last day of the subscription is after the current day.
      * 
      * @param sub

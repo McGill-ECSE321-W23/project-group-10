@@ -21,7 +21,7 @@ import ca.mcgill.ecse321.parkinglotsystem.model.Manager;
 import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthenticationServiceTests {
+public class TestAuthenticationService {
 
     @Mock
     private ManagerRepository managerRepository;
