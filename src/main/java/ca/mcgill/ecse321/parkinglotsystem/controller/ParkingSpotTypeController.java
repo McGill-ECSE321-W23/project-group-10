@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 
@@ -22,7 +23,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/parking-spot-type", "/api/parking-spot-type/"})
+@RequestMapping("/api/parking-spot-type")
 public class ParkingSpotTypeController {
     
     @Autowired
@@ -49,12 +50,14 @@ public class ParkingSpotTypeController {
      * @param fee
      * @return parking spot type dto
      */
-    @PostMapping(value = {"/{name}/{fee}", "/{name}/{fee}/"})
-    public ParkingSpotTypeDto createParkingSpotType(@PathVariable("name") String name, @PathVariable("fee") double fee){       
-   
-        ParkingSpotType parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
-        return convertParkingSpotTypeToDto(parkingSpotType);
-
+    @PostMapping(value = {"/{name}", "/{name}/"})
+    public ParkingSpotTypeDto createParkingSpotType(@PathVariable String name, @RequestParam double fee){       
+        try {
+            ParkingSpotType parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
+            return convertParkingSpotTypeToDto(parkingSpotType);
+        }catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -62,7 +65,7 @@ public class ParkingSpotTypeController {
      * @param name
      * @return ParkingSpotTypeDto
      */
-    @GetMapping(value = {"/{name}/", "/{name}"})
+    @GetMapping(value = {"/{name}", "/{name}/"})
     public ParkingSpotTypeDto getParkingSpotTypeByName(@PathVariable("name") String name){
 
         ParkingSpotType parkingSpotType = parkingSpotTypeService.getParkingSpotTypeByName(name);
@@ -89,11 +92,17 @@ public class ParkingSpotTypeController {
      * @param fee
      * @return parking spot type updated
      */
-    @PutMapping(value = {"/{name}/{fee}/","/{name}/{fee}" })
-    public ParkingSpotTypeDto updateParkingSpotTypeFee(@PathVariable("name") String name, @PathVariable("fee") double fee){
-   
-        ParkingSpotType parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee(name, fee);
-        return convertParkingSpotTypeToDto(parkingSpotType);
+    @PutMapping(value = {"/{name}","/{name}/" })
+    public ParkingSpotTypeDto updateParkingSpotTypeFee(
+        @PathVariable String name, 
+        @RequestParam double fee){
+
+        try {
+            ParkingSpotType parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee(name, fee);
+            return convertParkingSpotTypeToDto(parkingSpotType);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**

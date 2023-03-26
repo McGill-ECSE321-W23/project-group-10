@@ -3,14 +3,10 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -237,10 +233,17 @@ public class TestMonthlyCustomerService {
     }
 
     @Test
-    public void testGetMonthlyCustomerInalidEmail() {
-        MonthlyCustomer ma = service.getMonthlyCustomerByEmail(INVALID__EMAIL);
+    public void testGetMonthlyCustomerInvalidEmail() {
+        String errMsg="";
+        MonthlyCustomer ma=null;
+        try{
+           ma = service.getMonthlyCustomerByEmail(INVALID__EMAIL);
+        }catch(Exception e){
+            errMsg=e.getMessage();
+        }
         assertNull(ma);
-    }
+        assertEquals("Invalid monthly customer email! ", errMsg);
+    } 
 
     @Test
     public void testGetMonthlyCustomerValidName() {

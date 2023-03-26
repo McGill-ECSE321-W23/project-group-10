@@ -37,13 +37,13 @@ public class ManagerController {
     ManagerService managerService;
 
 
-    @GetMapping(value={"/all/","/all"})
+    @GetMapping(value={"/",""})
     public List<ManagerDto> getAllManagerDtos(){
         return managerService.getAllManagers().stream().map(ma -> HelperMethods.convertManagerToDto(ma)).collect(Collectors.toList());
     }
 
 
-    @PostMapping(value = {"/create/{email}", "/create/{email}/"})
+    @PostMapping(value = {"/{email}", "/{email}/"})
     public ManagerDto createManagerDto(@PathVariable("email") String email, 
         @RequestParam("name") String name,
         @RequestParam("phone") String phone,
@@ -54,7 +54,7 @@ public class ManagerController {
     }
 
 
-    @GetMapping(value = {"/getByName/{name}", "/getByName/{name}/"})
+    @GetMapping(value = {"/all-by-name/{name}", "/all-by-name/{name}/"})
     public List<ManagerDto> getManagerDtoByName(@PathVariable("name") String name) {
         List<ManagerDto> managerDtos = new ArrayList<ManagerDto>();
         List<Manager> managers = managerService.getManagerByName(name);
@@ -67,7 +67,7 @@ public class ManagerController {
     }
 
 
-    @GetMapping(value = {"/getByPhone/{phone}", "/getByPhone/{phone}/"})
+    @GetMapping(value = {"/all-by-phone/{phone}", "/all-by-phone/{phone}/"})
     public List<ManagerDto> getManagerDtoByPhone(@PathVariable("phone") String phone) {
         List<ManagerDto> managerDtos = new ArrayList<ManagerDto>();
         List<Manager> managers = managerService.getManagerByPhone(phone);
@@ -80,7 +80,7 @@ public class ManagerController {
     }
 
 
-    @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
+    @GetMapping(value = {"/{email}", "/{email}/"})
     public ManagerDto getManagerDtoByEmail(@PathVariable("email") String email) {
         Manager ma = managerService.getManagerByEmail(email);
         if(ma==null){
@@ -90,14 +90,14 @@ public class ManagerController {
     }
 
 
-    @DeleteMapping(value = {"/delete/{email}","/delete/{email}/"})
+    @DeleteMapping(value = {"/{email}","/{email}/"})
     public ManagerDto deleteManagerDtoByEmail(@PathVariable("email") String email) {
         Manager ma = managerService.deleteManagerByEmail(email);
         return HelperMethods.convertManagerToDto(ma);
     }
 
 
-    @PutMapping(value ={"/update/{email}", "/update/{email}"})
+    @PutMapping(value ={"/{email}", "/{email}/"})
     public ManagerDto updateManagerDto(@PathVariable("email") String email, 
         @RequestParam("name") String name,
         @RequestParam("phone") String phone,
