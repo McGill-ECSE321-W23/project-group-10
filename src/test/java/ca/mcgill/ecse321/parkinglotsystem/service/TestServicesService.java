@@ -138,6 +138,21 @@ public class TestServicesService {
     }
 
     @Test
+    public void testDeleteService() {
+        String error = "";
+        try {
+            Service ser = service.deleteServiceByDescription(VALID__DESCRIPTION);
+
+        }catch (Exception e) {
+            // Check that no error occurred
+            error = e.getMessage();
+        }
+        assertEquals("", error);
+        assertNull(servicesRepository.findServiceByDescription(VALID__DESCRIPTION));
+
+    }
+
+    @Test
     public void testUpdateServiceValid() {
         Service ser = service.updateService(VALID__DESCRIPTION, VALID__PRICE_UPDATE);
         assertEquals(ser.getPrice(), VALID__PRICE_UPDATE);
