@@ -49,6 +49,7 @@ public class TestAuthenticationService {
     private static String VALID_MANAGER_TOKEN = "";
     private static String VALID_EMPLOYEE_TOKEN = "";
     private static String VALID_CUSTOMER_TOKEN = "";
+    private static String VALID_NONEXISTENT_TOKEN = "";
     private static final String INVALID_TOKEN = "2:234";
     private static final String EXPIRED_TOKEN = "1:234";
 
@@ -57,6 +58,7 @@ public class TestAuthenticationService {
         VALID_MANAGER_TOKEN = System.currentTimeMillis() + 3600000 + ":123";
         VALID_EMPLOYEE_TOKEN = System.currentTimeMillis() + 3600000 + ":456";
         VALID_CUSTOMER_TOKEN = System.currentTimeMillis() + 3600000 + ":789";
+        VALID_NONEXISTENT_TOKEN = System.currentTimeMillis() + 3600000 + ":012";
 
         lenient().when(managerRepository.findManagerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(VALID_MANAGER_EMAIL)) {
@@ -151,7 +153,7 @@ public class TestAuthenticationService {
     }
 
     @Test
-    public void testLoginNonExistingPerson() {
+    public void testLoginNonExistentPerson() {
         String message = "";
         try {
             service.loginEmployee(new LoginDto(INVALID_EMAIL, VALID_PASSWORD));
@@ -175,6 +177,11 @@ public class TestAuthenticationService {
     @Test
     public void testLogoutCustomer() {
         service.logout(VALID_CUSTOMER_TOKEN);
+    }
+
+    @Test
+    public void testLogoutNonExistentPerson() {
+        service.logout(VALID_NONEXISTENT_TOKEN);
     }
 
     @Test
@@ -203,7 +210,7 @@ public class TestAuthenticationService {
     }
 
     @Test
-    public void testAuthenticateNonExistingManager() {
+    public void testAuthenticateNonExistentManager1() {
         String message = "";
         try {
             service.authenticateManager(INVALID_TOKEN);
@@ -214,7 +221,18 @@ public class TestAuthenticationService {
     }
 
     @Test
-    public void testAuthenticateNonExistingEmployee() {
+    public void testAuthenticateNonExistentManager2() {
+        String errMsg = "";
+        try {
+            service.authenticateManager(VALID_NONEXISTENT_TOKEN);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("You must be logged in as a Manager", errMsg);
+    }
+
+    @Test
+    public void testAuthenticateNonExistentEmployee1() {
         String message = "";
         try {
             service.authenticateEmployee(INVALID_TOKEN);
@@ -225,10 +243,32 @@ public class TestAuthenticationService {
     }
 
     @Test
-    public void testAuthenticateNonExistingCustomer() {
+    public void testAuthenticateNonExistentEmployee2() {
+        String message = "";
+        try {
+            service.authenticateEmployee(VALID_NONEXISTENT_TOKEN);
+        } catch(Exception e) {
+            message = e.getMessage();
+        }
+        assertEquals("You must be logged in as an Employee or Manager", message);
+    }
+
+    @Test
+    public void testAuthenticateNonExistentCustomer1() {
         String message = "";
         try {
             service.authenticateMonthlyCustomer(INVALID_TOKEN);
+        } catch(Exception e) {
+            message = e.getMessage();
+        }
+        assertEquals("You must be logged in as a Monthly Customer or Manager", message);
+    }
+
+    @Test
+    public void testAuthenticateNonExistentCustomer2() {
+        String message = "";
+        try {
+            service.authenticateMonthlyCustomer(VALID_NONEXISTENT_TOKEN);
         } catch(Exception e) {
             message = e.getMessage();
         }
