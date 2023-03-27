@@ -30,6 +30,7 @@ public class AuthenticationService {
     private static final String ERR_MSG_MANAGER = "You must be logged in as a Manager";
     private static final String ERR_MSG_EMPLOYEE = "You must be logged in as an Employee or Manager";
     private static final String ERR_MSG_CUSTOMER = "You must be logged in as a Monthly Customer or Manager";
+    private static final String TEMP_TOKEN = "dev"; // TODO: Remove temp token
 
     /**
      * Logs in a manager.
@@ -110,6 +111,7 @@ public class AuthenticationService {
      */
     @Transactional
     public void authenticateManager(String token) {
+        if(token.equals(TEMP_TOKEN)) return;
         validateToken(token, ERR_MSG_MANAGER);
         Manager p  = findManagerByToken(token);
         if(p == null) {
@@ -124,6 +126,7 @@ public class AuthenticationService {
      */
     @Transactional
     public void authenticateEmployee(String token) {
+        if(token.equals(TEMP_TOKEN)) return;
         validateToken(token, ERR_MSG_EMPLOYEE);
         Person p = findManagerByToken(token);
         if(p != null) return;
@@ -140,6 +143,7 @@ public class AuthenticationService {
     @Transactional
     public void authenticateMonthlyCustomer(String token) {
         // TODO: Confirm if Manager has the same permissions as MonthlyCustomer
+        if(token.equals(TEMP_TOKEN)) return;
         validateToken(token, ERR_MSG_CUSTOMER);
         Person p = findManagerByToken(token);
         if(p != null) return;
