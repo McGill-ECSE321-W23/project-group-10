@@ -17,7 +17,7 @@ import static ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/service_request", "/api/service_request/"})
+@RequestMapping("/api/service_request")
 public class ServiceRequestController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class ServiceRequestController {
      * @return List<ServiceRequestDto>
      * @throws Exception
      */
-    @GetMapping(value = {"/all", "/all/"})
+    @GetMapping(value = {"", "/"})
     public List<ServiceRequestDto> getAllServiceRequest() throws Exception {
         List<ServiceRequestDto> sList = new ArrayList<>();
         for (ServiceRequest serviceRequest : serviceRequestService.getAllServiceRequest()) {
@@ -45,7 +45,7 @@ public class ServiceRequestController {
      * @param id
      * @return ServiceRequestDto
      */
-    @GetMapping(value = {"/getById/{id}", "/getById/{id}/"})
+    @GetMapping(value = {"/{id}", "/{id}/"})
     public ServiceRequestDto getServiceRequestById(@PathVariable("id") int id) {
         try {
             ServiceRequest serviceRequest = serviceRequestService.getServiceRequestById(id);
@@ -61,7 +61,7 @@ public class ServiceRequestController {
      * @return List<ServiceRequestDto>
      * @throws Exception
      */
-    @GetMapping(value = {"/getByIsAssigned/{isAssigned}", "/getByIsAssigned/{isAssigned}/"})
+    @GetMapping(value = {"/all-by-is-assigned/{isAssigned}", "/all-by-is-assigned/{isAssigned}/"})
     public List<ServiceRequestDto> getServiceRequestByIsAssigned(@PathVariable("isAssigned") boolean isAssigned) {
         List<ServiceRequestDto> seList = new ArrayList<>();
         try {
@@ -83,8 +83,9 @@ public class ServiceRequestController {
      * @return List<ServiceRequestDto>
      * @throws Exception
      */
-    @GetMapping(value = {"/getByServices/{service}", "/getByServices/{service}/"})
+    @GetMapping(value = {"/all-by-service/{service}", "/all-by-service/{service}/"})
     public List<ServiceRequestDto> getServiceRequestsByService(@PathVariable("service") Service service) {
+        // TODO: use IDs as arguments, not model objects
         List<ServiceRequestDto> ServiceRequests = new ArrayList<>();
         try {
             List<ServiceRequest> serviceRequest = serviceRequestService.getServiceRequestByService(service);

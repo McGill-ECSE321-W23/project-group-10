@@ -2,16 +2,19 @@ package ca.mcgill.ecse321.parkinglotsystem.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotsystem.service.SingleReservationService;
+import ca.mcgill.ecse321.parkinglotsystem.service.AuthenticationService;
 import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotService;
 import ca.mcgill.ecse321.parkinglotsystem.dto.*;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
@@ -26,14 +29,16 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/api/single-reseravtion/")
+@RequestMapping(value = "/api/single-reservation/")
 public class SingleReservationController {
     @Autowired
     private SingleReservationService singleReservationService;
     @Autowired
     private ParkingSpotService ParkingSpotService;
+    @Autowired
+    private AuthenticationService authService;
 
-    @GetMapping(value = {"/all", "/all/"})
+    @GetMapping(value = {"", "/"})
     public List<SingleReservationDto> getAllSingleReservations() {
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
         List<SingleReservation> singleReservations = singleReservationService.getAllSingleReservations();
@@ -71,7 +76,7 @@ public class SingleReservationController {
         return singleReservationDtos;
     }
 
-    @GetMapping(value = { "/by-id/{id}", "/by-id/{id}/"})
+    @GetMapping(value = { "/{id}", "/{id}/"})
     public SingleReservationDto getSingleReservationById(@PathVariable int id){
         
         SingleReservation singleReservation = singleReservationService.getSingleReservationById(id);
@@ -89,8 +94,8 @@ public class SingleReservationController {
         return singleReservationDtos;
     }
 
-    @PutMapping(value = {"/update/{id}/{newDate}/{newLicenseNumber}/{newParkingTime}/{newParkingSpot}", 
-    "/update/{newId}/{newDate}/{newLicenseNumber}/{newParkingTime}/{newParkingSpot}/" })
+    @PutMapping(value = {"/{id}/{newDate}/{newLicenseNumber}/{newParkingTime}/{newParkingSpot}", 
+    "/{newId}/{newDate}/{newLicenseNumber}/{newParkingTime}/{newParkingSpot}/" })
 	public SingleReservationDto updateSingleReservationDto(@PathVariable("id") int id, @PathVariable("newDate") Date newDate, @PathVariable("newLicenseNumber") String newLicenseNumber, 
     @PathVariable("newParkingTime") int newParkingTime, @PathVariable("parkingSpot") int newSpotId) {
         ParkingSpot newSpot = ParkingSpotService.getParkingSpotById(newSpotId);
@@ -98,8 +103,9 @@ public class SingleReservationController {
 		return convertToDto(singleReservation);
 	}
 
-    @PutMapping(value = {"/delete/{id}", "/delete/{id}/"})
-    public SingleReservationDto deleteSingleReservationDto(@PathVariable("id") int id){
+    @DeleteMapping(value = {"/{id}", "/{id}/"})
+    public SingleReservationDto deleteSingleReservationDto(@PathVariable("id") int id, @RequestHeader String token){
+        authService.authenticateManager(token);
         SingleReservation sR = singleReservationService.deleteSingleReservation(id);
         return convertToDto(sR);
     }

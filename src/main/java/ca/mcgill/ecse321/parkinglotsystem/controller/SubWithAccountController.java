@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotsystem.dto.SubWithAccountDto;
+import ca.mcgill.ecse321.parkinglotsystem.service.AuthenticationService;
 import ca.mcgill.ecse321.parkinglotsystem.service.SubWithAccountService;
 import static ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods.convertSubWithAccountToDto;
 
@@ -24,6 +26,9 @@ public class SubWithAccountController {
     
     @Autowired
     private SubWithAccountService service;
+
+    @Autowired
+    private AuthenticationService authService;
 
     /**
      * Gets all subscriptions.
@@ -113,7 +118,8 @@ public class SubWithAccountController {
      * @param id
      */
     @DeleteMapping(value = {"/{id}","/{id}/"})
-    public void deleteSubWithAccount(@PathVariable int id) {
+    public void deleteSubWithAccount(@PathVariable int id, @RequestHeader String token) {
+        authService.authenticateManager(token);
         service.deleteSubWithAccount(id);
     }
 

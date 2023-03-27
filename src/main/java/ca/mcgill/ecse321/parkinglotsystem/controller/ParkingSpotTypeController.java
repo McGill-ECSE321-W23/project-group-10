@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 
 import ca.mcgill.ecse321.parkinglotsystem.dto.ParkingSpotTypeDto;
 import ca.mcgill.ecse321.parkinglotsystem.model.*;
+import ca.mcgill.ecse321.parkinglotsystem.service.AuthenticationService;
 import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotTypeService;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
@@ -28,6 +30,9 @@ public class ParkingSpotTypeController {
     
     @Autowired
     ParkingSpotTypeService parkingSpotTypeService;
+
+    @Autowired
+    AuthenticationService authService;
 
     /**
      * method to get all parking spot type
@@ -51,7 +56,11 @@ public class ParkingSpotTypeController {
      * @return parking spot type dto
      */
     @PostMapping(value = {"/{name}", "/{name}/"})
-    public ParkingSpotTypeDto createParkingSpotType(@PathVariable String name, @RequestParam double fee){       
+    public ParkingSpotTypeDto createParkingSpotType(
+        @PathVariable String name, 
+        @RequestParam double fee,
+        @RequestHeader String token){
+        authService.authenticateManager(token);    
         try {
             ParkingSpotType parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
             return convertParkingSpotTypeToDto(parkingSpotType);
@@ -80,8 +89,8 @@ public class ParkingSpotTypeController {
      * @return parking spot type deleted
      */
     @DeleteMapping(value = {"/{name}", "/{name}/"})
-    public ParkingSpotTypeDto deleteParkingSpotTypeByName(@PathVariable("name") String name) {
-        
+    public ParkingSpotTypeDto deleteParkingSpotTypeByName(@PathVariable String name, @RequestHeader String token) {
+        authService.authenticateManager(token);
         ParkingSpotType parkingSpotType = parkingSpotTypeService.deleteParkingSpotType(name);
         return convertParkingSpotTypeToDto(parkingSpotType);   
     }
@@ -95,8 +104,9 @@ public class ParkingSpotTypeController {
     @PutMapping(value = {"/{name}","/{name}/" })
     public ParkingSpotTypeDto updateParkingSpotTypeFee(
         @PathVariable String name, 
-        @RequestParam double fee){
-
+        @RequestParam double fee,
+        @RequestHeader String token){
+        authService.authenticateManager(token);
         try {
             ParkingSpotType parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee(name, fee);
             return convertParkingSpotTypeToDto(parkingSpotType);

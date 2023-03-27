@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,27 +22,30 @@ import ca.mcgill.ecse321.parkinglotsystem.service.ReservationService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/api/reseravtion/")
+@RequestMapping(value = "/api/reservation")
 public class ReservationController {
     
     @Autowired
     private ReservationService reservationService;
     @Autowired
     private ParkingSpotService parkingSpotService;
+    @Autowired
+    private AuthenticationService authService;
    
 
-@GetMapping(value = { "/all", "/all/" })
-public List<ReservationDto> getAllReservations() {
+@GetMapping(value = { "", "/" })
+public List<ReservationDto> getAllReservations(@RequestHeader String token) {
+    authService.authenticateEmployee(token);
 	return reservationService.getAllReservations().stream().map(r -> convertToDto(r)).collect(Collectors.toList());
 }
 
-@GetMapping(value = { "/by-id/{id}", "/by-id/{id}/"})
+@GetMapping(value = { "/{id}", "/{id}/"})
 public ReservationDto getReservationById(@PathVariable int id){
     Reservation reservation = reservationService.getReservationById(id);
     return convertToDto(reservation);
 }
 
-@GetMapping(value = { "/reservations/{date}", "/reservations/{date}/"})
+@GetMapping(value = { "/all-by-date/{date}", "/all-by-date/{date}/"})
 public List<ReservationDto> getReservationsByDate(@PathVariable Date date){
     List<ReservationDto> reservationDtos = new ArrayList<ReservationDto>();
     List<Reservation> reservations = reservationService.getReservationsByDate(date);
@@ -51,7 +55,7 @@ public List<ReservationDto> getReservationsByDate(@PathVariable Date date){
     return reservationDtos;
 }
 
-@GetMapping(value = { "/reservations/{id}", "/reservations/{id}/"})
+@GetMapping(value = { "/all-by-parking-spot/{id}", "/all-by-parking-spot/{id}/"})
 public List<ReservationDto> getReservationsByParkingSpot(@PathVariable("id") int parkingSpotId){
     List<ReservationDto> reservationDtos = new ArrayList<ReservationDto>();
     ParkingSpot spot = parkingSpotService.getParkingSpotById(parkingSpotId);
@@ -62,7 +66,7 @@ public List<ReservationDto> getReservationsByParkingSpot(@PathVariable("id") int
     return reservationDtos;
 }
 
-@GetMapping(value = { "/reservations", "/reservations/"})
+@PostMapping(value = { "", "/"})
 public ReservationDto createReservation(@RequestParam(name="id") int id, @RequestParam(name ="date") Date date, @RequestParam(name = "parking-spot-id") int parkingSpotId) {
     Reservation reservation = reservationService.createReservation(id, date, parkingSpotId);
     return convertToDto(reservation);

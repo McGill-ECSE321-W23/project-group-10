@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,9 @@ public class ParkingSpotController {
     @Autowired
     ParkingSpotTypeService parkingSpotTypesService;
 
+    @Autowired
+    AuthenticationService authService;
+
 
     /**
      * method to send request to get all parking spot Dtos
@@ -58,7 +62,9 @@ public class ParkingSpotController {
     @PostMapping(value = {"/{id}", "/{id}/"})
     public ParkingSpotDto createParkingSpotDto(
         @PathVariable int id,               
-        @RequestParam String parkingSpotTypeName){
+        @RequestParam String parkingSpotTypeName,
+        @RequestHeader String token){
+        authService.authenticateManager(token);
         ParkingSpot parkingSpot = parkingSpotService.createParkingSpot(id, parkingSpotTypeName);
         return HelperMethods.convertParkingSpotToDto(parkingSpot);                             
     }
@@ -91,7 +97,8 @@ public class ParkingSpotController {
      * @return ParkingSpotDto spot
      */
     @DeleteMapping(value = {"/{id}","/{id}/"})
-    public ParkingSpotDto deleteParkingSpotDtoById(@PathVariable("id") int id) {
+    public ParkingSpotDto deleteParkingSpotDtoById(@PathVariable("id") int id, @RequestHeader String token) {
+        authService.authenticateManager(token);
         ParkingSpot spot = parkingSpotService.deleteParkingSpotBy(id);
         return HelperMethods.convertParkingSpotToDto(spot);
     }
@@ -103,7 +110,11 @@ public class ParkingSpotController {
      * @return parking spot type dto
      */
     @PutMapping(value ={"/{id}", "/{id}/"})
-    public ParkingSpotDto updateParkingSpotDto(@PathVariable("id") int id, @RequestParam("typeName") String typeName) {
+    public ParkingSpotDto updateParkingSpotDto(
+        @PathVariable("id") int id, 
+        @RequestParam("typeName") String typeName,
+        @RequestHeader String token) {
+        authService.authenticateManager(token);
         ParkingSpot parkingSpot = parkingSpotService.updateParkingSpot(id, typeName);
         return HelperMethods.convertParkingSpotToDto(parkingSpot);
 
