@@ -1,8 +1,14 @@
 package ca.mcgill.ecse321.parkinglotsystem.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.EmployeeRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ManagerRepository;
@@ -39,51 +46,89 @@ public class TestAuthenticationService {
     private static final String INVALID_EMAIL = "invalid@email.com";
     private static final String VALID_PASSWORD = "valid";
     private static final String INVALID_PASSWORD = "invalid";
+    private static String VALID_MANAGER_TOKEN = "";
+    private static String VALID_EMPLOYEE_TOKEN = "";
+    private static String VALID_CUSTOMER_TOKEN = "";
+    private static final String INVALID_TOKEN = "2:234";
+    private static final String EXPIRED_TOKEN = "1:234";
 
     @BeforeEach
     public void setMockOutput() {
+        VALID_MANAGER_TOKEN = System.currentTimeMillis() + 3600000 + ":123";
+        VALID_EMPLOYEE_TOKEN = System.currentTimeMillis() + 3600000 + ":456";
+        VALID_CUSTOMER_TOKEN = System.currentTimeMillis() + 3600000 + ":789";
+
         lenient().when(managerRepository.findManagerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(VALID_MANAGER_EMAIL)) {
-                Manager p = new Manager();
-                p.setEmail(VALID_MANAGER_EMAIL);
-                p.setPassword(VALID_PASSWORD);
-                return p;
+                return dummyManager();
             }
             return null;
         });
 
         lenient().when(employeeRepository.findEmployeeByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(VALID_EMPLOYEE_EMAIL)) {
-                Employee p = new Employee();
-                p.setEmail(VALID_EMPLOYEE_EMAIL);
-                p.setPassword(VALID_PASSWORD);
-                return p;
+                return dummyEmployee();
             }
             return null;
         });
 
         lenient().when(customerRepository.findMonthlyCustomerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(VALID_CUSTOMER_EMAIL)) {
-                MonthlyCustomer p = new MonthlyCustomer();
-                p.setEmail(VALID_CUSTOMER_EMAIL);
-                p.setPassword(VALID_PASSWORD);
-                return p;
+                return dummyCustomer();
             }
             return null;
         });
+
+        lenient().when(managerRepository.findManagerByToken(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            List<Manager> list = new ArrayList<>();
+            String token = invocation.getArgument(0);
+            if(token.equals(VALID_MANAGER_TOKEN) || token.equals(EXPIRED_TOKEN)) {
+                list.add(dummyManager());
+            }
+            return list;
+        });
+
+        lenient().when(employeeRepository.findEmployeeByToken(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            List<Employee> list = new ArrayList<>();
+            String token = invocation.getArgument(0);
+            if(token.equals(VALID_EMPLOYEE_TOKEN) || token.equals(EXPIRED_TOKEN)) {
+                list.add(dummyEmployee());
+            }
+            return list;
+        });
+
+        lenient().when(customerRepository.findMonthlyCustomerByToken(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            List<MonthlyCustomer> list = new ArrayList<>();
+            String token = invocation.getArgument(0);
+            if(token.equals(VALID_CUSTOMER_TOKEN) || token.equals(EXPIRED_TOKEN)) {
+                list.add(dummyCustomer());
+            }
+            return list;
+        });
+
+        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
+			return invocation.getArgument(0);
+		};
+
+        lenient().when(managerRepository.save(any(Manager.class))).thenAnswer(returnParameterAsAnswer);
+
+        lenient().when(employeeRepository.save(any(Employee.class))).thenAnswer(returnParameterAsAnswer);
+
+        lenient().when(customerRepository.save(any(MonthlyCustomer.class))).thenAnswer(returnParameterAsAnswer);
     }
 
     @Test
     public void testLoginManager() {
-        String result = service.login(new LoginDto(VALID_MANAGER_EMAIL, VALID_PASSWORD));
-        assertEquals(VALID_MANAGER_EMAIL+",Manager", result);
+        String result = service.loginManager(new LoginDto(VALID_MANAGER_EMAIL, VALID_PASSWORD));
+        assertNotNull(result);
+        assertTrue(!result.isEmpty());
     }
 
     @Test
     public void testLoginManagerInvalidPassword() {
         String message = "";
         try {
-            service.login(new LoginDto(VALID_MANAGER_EMAIL, INVALID_PASSWORD));
+            service.loginManager(new LoginDto(VALID_MANAGER_EMAIL, INVALID_PASSWORD));
         } catch(Exception e) {
             message = e.getMessage();
         }
@@ -93,21 +138,23 @@ public class TestAuthenticationService {
 
     @Test
     public void testLoginEmployee() {
-        String result = service.login(new LoginDto(VALID_EMPLOYEE_EMAIL, VALID_PASSWORD));
-        assertEquals(VALID_EMPLOYEE_EMAIL+",Employee", result);
+        String result = service.loginEmployee(new LoginDto(VALID_EMPLOYEE_EMAIL, VALID_PASSWORD));
+        assertNotNull(result);
+        assertTrue(!result.isEmpty());
     }
 
     @Test
     public void testLoginCustomer() {
-        String result = service.login(new LoginDto(VALID_CUSTOMER_EMAIL, VALID_PASSWORD));
-        assertEquals(VALID_CUSTOMER_EMAIL+",MonthlyCustomer", result);
+        String result = service.loginMonthlyCustomer(new LoginDto(VALID_CUSTOMER_EMAIL, VALID_PASSWORD));
+        assertNotNull(result);
+        assertTrue(!result.isEmpty());
     }
 
     @Test
     public void testLoginNonExistingPerson() {
         String message = "";
         try {
-            service.login(new LoginDto(INVALID_EMAIL, VALID_PASSWORD));
+            service.loginEmployee(new LoginDto(INVALID_EMAIL, VALID_PASSWORD));
         } catch(Exception e) {
             message = e.getMessage();
         }
@@ -116,41 +163,50 @@ public class TestAuthenticationService {
     }
 
     @Test
-    public void testLogout() {
-        String result = service.logout(VALID_EMPLOYEE_EMAIL);
-        assertEquals("Successful logout", result);
+    public void testLogoutManager() {
+        service.logout(VALID_MANAGER_TOKEN);
+    }
+
+    @Test
+    public void testLogoutEmployee() {
+        service.logout(VALID_EMPLOYEE_TOKEN);
+    }
+
+    @Test
+    public void testLogoutCustomer() {
+        service.logout(VALID_CUSTOMER_TOKEN);
     }
 
     @Test
     public void testAuthenticateManager() {
-        service.authenticateManager(VALID_MANAGER_EMAIL);
+        service.authenticateManager(VALID_MANAGER_TOKEN);
     }
 
     @Test
     public void testAuthenticateEmployee1() {
-        service.authenticateEmployee(VALID_EMPLOYEE_EMAIL);
+        service.authenticateEmployee(VALID_EMPLOYEE_TOKEN);
     }
 
     @Test
     public void testAuthenticateEmployee2() {
-        service.authenticateEmployee(VALID_MANAGER_EMAIL);
+        service.authenticateEmployee(VALID_MANAGER_TOKEN);
     }
 
     @Test
     public void testAuthenticateCustomer1() {
-        service.authenticateMonthlyCustomer(VALID_CUSTOMER_EMAIL);
+        service.authenticateMonthlyCustomer(VALID_CUSTOMER_TOKEN);
     }
 
     @Test
     public void testAuthenticateCustomer2() {
-        service.authenticateMonthlyCustomer(VALID_MANAGER_EMAIL);
+        service.authenticateMonthlyCustomer(VALID_MANAGER_TOKEN);
     }
 
     @Test
     public void testAuthenticateNonExistingManager() {
         String message = "";
         try {
-            service.authenticateManager(INVALID_EMAIL);
+            service.authenticateManager(INVALID_TOKEN);
         } catch(Exception e) {
             message = e.getMessage();
         }
@@ -161,7 +217,7 @@ public class TestAuthenticationService {
     public void testAuthenticateNonExistingEmployee() {
         String message = "";
         try {
-            service.authenticateEmployee(INVALID_EMAIL);
+            service.authenticateEmployee(INVALID_TOKEN);
         } catch(Exception e) {
             message = e.getMessage();
         }
@@ -172,11 +228,43 @@ public class TestAuthenticationService {
     public void testAuthenticateNonExistingCustomer() {
         String message = "";
         try {
-            service.authenticateMonthlyCustomer(INVALID_EMAIL);
+            service.authenticateMonthlyCustomer(INVALID_TOKEN);
         } catch(Exception e) {
             message = e.getMessage();
         }
         assertEquals("You must be logged in as a Monthly Customer or Manager", message);
+    }
+
+    @Test
+    public void testAuthenticateManagerExpiredToken() {
+        String message = "";
+        try {
+            service.authenticateManager(EXPIRED_TOKEN);
+        } catch(Exception e) {
+            message = e.getMessage();
+        }
+        assertEquals("You must be logged in as a Manager", message);
+    }
+
+    private Manager dummyManager() {
+        Manager p = new Manager();
+        p.setEmail(VALID_MANAGER_EMAIL);
+        p.setPassword(VALID_PASSWORD);
+        return p;
+    }
+
+    private Employee dummyEmployee() {
+        Employee p = new Employee();
+        p.setEmail(VALID_EMPLOYEE_EMAIL);
+        p.setPassword(VALID_PASSWORD);
+        return p;
+    }
+
+    private MonthlyCustomer dummyCustomer() {
+        MonthlyCustomer p = new MonthlyCustomer();
+        p.setEmail(VALID_CUSTOMER_EMAIL);
+        p.setPassword(VALID_PASSWORD);
+        return p;
     }
     
 }

@@ -20,25 +20,46 @@ public class AuthenticationController {
     private AuthenticationService service;
 
     /**
-     * Validates the credentials to login the person.
+     * Logs in the manager.
      * 
      * @param credentials
-     * @return the email of the person and the person type, separated by a comma.
+     * @return the authentication token
      */
-    @PostMapping(value = {"/login","/login/"})
-    public String login(@RequestBody LoginDto credentials) {
-        return service.login(credentials);
+    @PostMapping(value = {"/login-manager","/login-manager/"})
+    public String loginManager(@RequestBody LoginDto credentials) {
+        return service.loginManager(credentials);
     }
 
     /**
-     * Logout the person.
+     * Logs in the employee.
      * 
-     * @param token the email of the person
-     * @return the result message
+     * @param credentials
+     * @return the authentication token
+     */
+    @PostMapping(value = {"/login-employee","/login-employee/"})
+    public String loginEmployee(@RequestBody LoginDto credentials) {
+        return service.loginEmployee(credentials);
+    }
+
+    /**
+     * Logs in the monthly customer.
+     * 
+     * @param credentials
+     * @return the authentication token
+     */
+    @PostMapping(value = {"/login-customer","/login-customer/"})
+    public String loginMonthlyCustomer(@RequestBody LoginDto credentials) {
+        return service.loginMonthlyCustomer(credentials);
+    }
+
+    /**
+     * Logs out the person.
+     * 
+     * @param token the authentication token
      */
     @PostMapping(value = {"/logout","/logout/"})
-    public String logout(@RequestHeader String token) {
-        return service.logout(token);
+    public void logout(@RequestHeader String token) {
+        service.logout(token);;
     }
 
 }
