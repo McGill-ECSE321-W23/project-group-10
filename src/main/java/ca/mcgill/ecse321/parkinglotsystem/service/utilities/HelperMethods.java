@@ -205,7 +205,6 @@ public class HelperMethods {
         managerDto.setEmail(manager.getEmail());
         managerDto.setName(manager.getName());
         managerDto.setPhone(manager.getPhone());
-        managerDto.setPassword(manager.getPassword());
         return managerDto;
     }
 
@@ -223,7 +222,6 @@ public class HelperMethods {
         employeeDto.setEmail(employee.getEmail());
         employeeDto.setName(employee.getName());
         employeeDto.setPhone(employee.getPhone());
-        employeeDto.setPassword(employee.getPassword());
         return employeeDto;
     }
 
@@ -242,7 +240,6 @@ public class HelperMethods {
         mcDto.setEmail(mc.getEmail());
         mcDto.setName(mc.getName());
         mcDto.setPhone(mc.getPhone());
-        mcDto.setPassword(mc.getPassword());
         mcDto.setLicenseNumber(mc.getLicenseNumber());
         return mcDto;
     }
