@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotsystem.dto.ParkingSpotTypeDto;
@@ -63,12 +64,13 @@ public class PaymentServiceController {
      * @param serviceRequest
      * @return PaymentServiceDto
      */
-    @PostMapping(value = {"/{id}/{amount}/{dateTime}/{serviceRequest}", "/{id}/{amount}/{dateTime}/{serviceRequest}/"})
+    @PostMapping(value = {"/{id}", "/{id}/"})
     public PaymentServiceDto createPaymentService(
         @PathVariable("id") int id, 
-        @PathVariable("amount") double amount, 
-        @PathVariable("dateTime") Timestamp dateTime, 
-        @PathVariable("serviceRequest") ServiceRequest serviceRequest) {
+        @RequestParam("amount") double amount, 
+        @RequestParam("dateTime") Timestamp dateTime, 
+        @RequestParam("serviceRequest") ServiceRequest serviceRequest) {
+        // TODO: Remove id parameter (since id is generated automatically)
         try {
             PaymentService paymentService = paymentServiceService.createPaymentService(id, amount, dateTime, serviceRequest);
             return convertPaymentServiceToDto(paymentService);
@@ -192,13 +194,13 @@ public class PaymentServiceController {
      * @param serviceRequest
      * @return service request updated
      */
-    @PutMapping(value = {"/{id}/{amount}/{dateTime}/{serviceRequest}", "/{id}/{amount}/{dateTime}/{serviceRequest}/"})
+    @PutMapping(value = {"/{id}", "/{id}/"})
     public PaymentServiceDto updatePaymentServiceById(
         @PathVariable("id") int id, 
-        @PathVariable("amount") double amount, 
-        @PathVariable("dateTime") Timestamp dateTime, 
-        @PathVariable("serviceRequest") ServiceRequest serviceRequest,
-        @RequestHeader String token) {
+        @RequestParam("amount") double amount, 
+        @RequestParam("dateTime") Timestamp dateTime, 
+        @RequestParam("serviceRequest") ServiceRequest serviceRequest,
+        @RequestParam String token) {
         authService.authenticateManager(token);
         try {
             PaymentService paymentService = paymentServiceService.updatePaymentService(id, dateTime, amount, serviceRequest);

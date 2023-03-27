@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.parkinglotsystem.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,15 +92,18 @@ public class SubWithoutAccountController {
         return subWithoutAccountDtos;
     }
 
-    @PutMapping(value = {"/{id}/{newDate}/{newLicenseNumber}/{newParkingTime}/{newParkingSpot}", 
-    "/{newId}/{newDate}/{newLicenseNumber}/{newParkingTime}/{newParkingSpot}/" })
-	public SubWithoutAccountDto updateSubWithoutAccountDto(@PathVariable("id") int id, @PathVariable("newDate") Date newDate, @PathVariable("newLicenseNumber") String newLicenseNumber, 
-    @PathVariable("newParkingTime") int newParkingTime, @PathVariable("newSpotId") int newSpotId) {
+    @PutMapping(value = { "/{id}", "/{id}/" })
+	public SubWithoutAccountDto updateSubWithoutAccountDto(
+        @PathVariable("id") int id, 
+        @RequestParam Date newDate, 
+        @RequestParam String newLicenseNumber, 
+        @RequestParam int newParkingTime, 
+        @RequestParam int newSpotId) {
 		SubWithoutAccount subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(id, newDate, newLicenseNumber, newParkingTime, newSpotId);
 		return convertToDto(subWithoutAccount);
 	}
 
-    @PutMapping(value = {"/{id}", "/delete/{id}/"})
+    @DeleteMapping(value = {"/{id}", "/{id}/"})
     public SubWithoutAccountDto deleteSubWithoutAccountDto(@PathVariable("id") int id, @RequestHeader String token){
         authService.authenticateManager(token);
         SubWithoutAccount sR = subWithoutAccountService.deleteSubWithoutAccount(id);

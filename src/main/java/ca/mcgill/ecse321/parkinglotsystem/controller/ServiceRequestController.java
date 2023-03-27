@@ -17,7 +17,7 @@ import static ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/service_request")
+@RequestMapping("/api/service-request")
 public class ServiceRequestController {
 
     @Autowired

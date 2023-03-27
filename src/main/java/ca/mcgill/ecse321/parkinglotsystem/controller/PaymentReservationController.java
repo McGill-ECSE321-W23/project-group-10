@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotsystem.dto.PaymentReservationDto;
@@ -46,11 +47,11 @@ public class PaymentReservationController {
     }
 
 
-    @PostMapping(value = {"/{dateTime}/{amount}/{reservationId}", "/{dateTime}/{amount}/{reservationId}/"})
+    @PostMapping(value = {"", "/"})
     public PaymentReservationDto createPaymentReservationDto(
-        @PathVariable("dateTime") Timestamp timestamp, 
-        @PathVariable("amount") double amount, 
-        @PathVariable("reservationId") int reservationId) {
+        @RequestParam("dateTime") Timestamp timestamp, 
+        @RequestParam("amount") double amount, 
+        @RequestParam("reservationId") int reservationId) {
         // String time = "2018-09-01 09:01:15"; //change this
         PaymentReservation paymentReservation = paymentReservationService.createPaymentReservation(timestamp, amount, reservationId); // change reservation
         return HelperMethods.convertPaymentReservationToDto(paymentReservation);
@@ -66,12 +67,12 @@ public class PaymentReservationController {
         
     }
 
-    @PutMapping(value = {"/{paymentReservationId}/{dateTime}/{amount}/{reservationId}", "/{dateTime}/{amount}/{reservationId}/"})
+    @PutMapping(value = {"/{paymentReservationId}", "/{paymentReservationId}/"})
     public PaymentReservationDto updatePayemPaymentReservationDto(
         @PathVariable("paymentReservationId") int paymentReservationId ,
-        @PathVariable("dateTime") Timestamp timestamp, 
-        @PathVariable("amount") double amount, 
-        @PathVariable("reservationId") int reservationId,
+        @RequestParam("dateTime") Timestamp timestamp, 
+        @RequestParam("amount") double amount, 
+        @RequestParam("reservationId") int reservationId,
         @RequestHeader String token) {
         authService.authenticateManager(token);
         PaymentReservation paymentReservation = paymentReservationService.updatePaymentReservation(paymentReservationId, timestamp, amount, reservationId);

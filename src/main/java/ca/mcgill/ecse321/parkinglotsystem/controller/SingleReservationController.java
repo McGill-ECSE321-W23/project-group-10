@@ -94,10 +94,13 @@ public class SingleReservationController {
         return singleReservationDtos;
     }
 
-    @PutMapping(value = {"/{id}/{newDate}/{newLicenseNumber}/{newParkingTime}/{newParkingSpot}", 
-    "/{newId}/{newDate}/{newLicenseNumber}/{newParkingTime}/{newParkingSpot}/" })
-	public SingleReservationDto updateSingleReservationDto(@PathVariable("id") int id, @PathVariable("newDate") Date newDate, @PathVariable("newLicenseNumber") String newLicenseNumber, 
-    @PathVariable("newParkingTime") int newParkingTime, @PathVariable("parkingSpot") int newSpotId) {
+    @PutMapping(value = { "/{id}", "/{id}/" })
+	public SingleReservationDto updateSingleReservationDto(
+        @PathVariable("id") int id, 
+        @RequestParam Date newDate, 
+        @RequestParam String newLicenseNumber, 
+        @RequestParam int newParkingTime, 
+        @RequestParam int newSpotId) {
         ParkingSpot newSpot = ParkingSpotService.getParkingSpotById(newSpotId);
 		SingleReservation singleReservation = singleReservationService.updateSingleReservation(id, newDate, newLicenseNumber, newParkingTime, newSpot);
 		return convertToDto(singleReservation);

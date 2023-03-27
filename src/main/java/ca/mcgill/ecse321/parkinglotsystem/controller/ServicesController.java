@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotsystem.model.*;
@@ -54,10 +55,10 @@ public class ServicesController {
      * @param price
      * @return ServicesDto
      */
-    @PostMapping(value = {"/{description}/{price}", "/{description}/{price}/"})
+    @PostMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto createServices(
         @PathVariable("description") String description, 
-        @PathVariable("price") int price,
+        @RequestParam int price,
         @RequestHeader String token) {
         authService.authenticateManager(token);
         try {
@@ -133,10 +134,10 @@ public class ServicesController {
      * @param price
      * @return service updated
      */
-    @PutMapping(value = {"/{description}/{price}/", "/{description}/{price}"})
+    @PutMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto updateServicesByDescription(
         @PathVariable("description") String description, 
-        @PathVariable("price") int price,
+        @RequestParam int price,
         @RequestHeader String token) {
         authService.authenticateManager(token);
         try {

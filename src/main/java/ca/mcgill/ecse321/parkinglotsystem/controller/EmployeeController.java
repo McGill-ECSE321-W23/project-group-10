@@ -25,7 +25,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/employee", "/api/employee/"})
+@RequestMapping("/api/employee")
 
 public class EmployeeController {
 
