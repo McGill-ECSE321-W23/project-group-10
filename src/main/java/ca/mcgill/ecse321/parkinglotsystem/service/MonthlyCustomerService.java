@@ -54,7 +54,11 @@ public class MonthlyCustomerService {
 
      @Transactional
      public MonthlyCustomer getMonthlyCustomerByEmail(String email){
-        return monthlyCustomerRepository.findMonthlyCustomerByEmail(email);
+        MonthlyCustomer customer = monthlyCustomerRepository.findMonthlyCustomerByEmail(email);
+        if(customer == null) {
+            throw new CustomException("Invalid monthly customer email! ", HttpStatus.BAD_REQUEST);
+        }
+        return customer;
      }
 
 
@@ -68,13 +72,6 @@ public class MonthlyCustomerService {
      public List<MonthlyCustomer> getMonthlyCustomerByPhone(String phone){
         return monthlyCustomerRepository.findMonthlyCustomerByPhone(phone);
      }
-
-
-     @Transactional
-     public List<MonthlyCustomer> getMonthlyCustomerByPassword(String password){
-        return monthlyCustomerRepository.findMonthlyCustomerByPassword(password);
-     }
-
 
      @Transactional
      public List<MonthlyCustomer> getMonthlyCustomerByLicenseNumber(String licenseNumber){

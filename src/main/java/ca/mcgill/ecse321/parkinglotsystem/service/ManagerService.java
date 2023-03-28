@@ -52,9 +52,14 @@ public class ManagerService {
      }
 
 
+
      @Transactional
      public Manager getManagerByEmail(String email){
-        return managerRepository.findManagerByEmail(email);
+        Manager ma = managerRepository.findManagerByEmail(email);
+        if(ma == null) {
+            throw new CustomException("Invalid manager email! ", HttpStatus.BAD_REQUEST);
+        }
+        return ma;
      }
 
 
@@ -69,13 +74,7 @@ public class ManagerService {
         return managerRepository.findManagerByPhone(phone);
      }
 
-
-     @Transactional
-     public List<Manager> getManagerByPassword(String password){
-        return managerRepository.findManagerByPassword(password);
-     }
-
-
+     
      @Transactional
      public List<Manager> getAllManagers(){
         Iterable<Manager> mIterable=managerRepository.findAll();

@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.parkinglotsystem.dto;
 public class MonthlyCustomerDto {
     private String email;
     private String name;
-    private String password;
     private String phone;
     private String licenseNumber;
 
@@ -11,11 +10,11 @@ public class MonthlyCustomerDto {
     public MonthlyCustomerDto(){};
 
 
-    public MonthlyCustomerDto(String email,String name,String phone,String password,String licenseNumber){
+    public MonthlyCustomerDto(String email,String name,String phone,String licenseNumber){
         this.email=email;
         this.name=name;
         this.phone=phone;
-        this.password=password;
+        this.licenseNumber = licenseNumber;
     }
 
 
@@ -46,16 +45,6 @@ public class MonthlyCustomerDto {
 
     public void setPhone(String phone){
         this.phone=phone;
-    }
-
-
-    public String getPassword(){
-        return password;
-    }
-
-
-    public void setPassword(String password){
-        this.password=password;
     }
 
 

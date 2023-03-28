@@ -205,7 +205,6 @@ public class HelperMethods {
         managerDto.setEmail(manager.getEmail());
         managerDto.setName(manager.getName());
         managerDto.setPhone(manager.getPhone());
-        managerDto.setPassword(manager.getPassword());
         return managerDto;
     }
 
@@ -223,7 +222,6 @@ public class HelperMethods {
         employeeDto.setEmail(employee.getEmail());
         employeeDto.setName(employee.getName());
         employeeDto.setPhone(employee.getPhone());
-        employeeDto.setPassword(employee.getPassword());
         return employeeDto;
     }
 
@@ -242,7 +240,6 @@ public class HelperMethods {
         mcDto.setEmail(mc.getEmail());
         mcDto.setName(mc.getName());
         mcDto.setPhone(mc.getPhone());
-        mcDto.setPassword(mc.getPassword());
         mcDto.setLicenseNumber(mc.getLicenseNumber());
         return mcDto;
     }
@@ -257,9 +254,9 @@ public class HelperMethods {
     public static String verifyEmail(String email) {
         String error = "";
         if ((email == null || email.trim().length() == 0)) {
-            error = error + "Email cannot be empty!";
+            error = error + "Email cannot be empty! ";
         } else if (email.indexOf("@") == -1) {
-            error = error + "Email must contain @ !";
+            error = error + "Email must contain @ ! ";
         }
         return error;
     }
@@ -274,7 +271,7 @@ public class HelperMethods {
     public static String verifyName(String name) {
         String error = "";
         if ((name == null || name.trim().length() == 0)) {
-            error = error + "Name cannot be empty!";
+            error = error + "Name cannot be empty! ";
         }
         return error;
     }
@@ -289,10 +286,10 @@ public class HelperMethods {
     public static String verifyPhone(String phone) {
         String error = "";
         if (phone.trim().length() != 10) {
-            error = error + "Phone must have exactlty 10 digits!";
+            error = error + "Phone must have exactlty 10 digits! ";
         }
         if (phone.trim().matches("\\d+") == false && phone.trim().length()>0) {
-            error = error + "Phone cannot have non-number digits!";
+            error = error + "Phone cannot have non-number digits! ";
         }
         return error;
     }
@@ -307,13 +304,13 @@ public class HelperMethods {
     public static String verifyPassword(String password) {
         String error = "";
         if (password.trim().length() < 8) {
-            error = error + "Password cannot be shorter than 8 digits!";
+            error = error + "Password cannot be shorter than 8 digits! ";
         }
         if (password.trim().matches(".*[a-zA-Z].*") == false) {
-            error = error + "Password must contain letter!";
+            error = error + "Password must contain letter! ";
         }
         if (password.trim().matches(".*\\d+.*") == false) {
-            error = error + "Password must contain number!";
+            error = error + "Password must contain number! ";
         }
         return error;
     }
@@ -327,9 +324,8 @@ public class HelperMethods {
     public static String verifyLicenseNumber(String licenseNumber) {
         String error = "";
         if (licenseNumber.trim().length() < 4) {
-            error = error + "MonthlyCustomer license number cannot be shorter than 4 digits!";
+            error = error + "MonthlyCustomer license number cannot be shorter than 4 digits! ";
         }
         return error;
     }
-
 }

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
@@ -19,16 +18,16 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ca.mcgill.ecse321.parkinglotsystem.dao.ManagerRepository;
-import ca.mcgill.ecse321.parkinglotsystem.model.Manager;
+import ca.mcgill.ecse321.parkinglotsystem.dao.EmployeeRepository;
+import ca.mcgill.ecse321.parkinglotsystem.model.Employee;
 
 
 @ExtendWith (MockitoExtension.class)
-public class TestManagerService {
+public class TestEmployeeService {
     @Mock
-    private ManagerRepository repo;
+    private EmployeeRepository repo;
     @InjectMocks
-    private ManagerService service;
+    private EmployeeService service;
 
     private static final String VALID__EMAIL_INACTIVE = "abc@gmail";
     private static final String VALID__EMAIL_ACTIVE = "active_abc@gmail";
@@ -50,14 +49,14 @@ public class TestManagerService {
     @BeforeEach
     public void setMockOutput() {
         lenient().when(repo.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            List<Manager> mas = new ArrayList<>();
+            List<Employee> mas = new ArrayList<>();
             mas.add(dummy(VALID__EMAIL_ACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD));
             return mas;
         });
 
 
-        lenient().when(repo.save(any(Manager.class))).thenAnswer((InvocationOnMock invocation) -> {
-            Manager ma= invocation.getArgument(0);
+        lenient().when(repo.save(any(Employee.class))).thenAnswer((InvocationOnMock invocation) -> {
+            Employee ma= invocation.getArgument(0);
             ma.setEmail(VALID__EMAIL_INACTIVE);
             ma.setName(VALID__NAME);
             ma.setPhone(VALID__PHONE);
@@ -66,25 +65,25 @@ public class TestManagerService {
         });
 
 
-        lenient().when(repo.findManagerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+        lenient().when(repo.findEmployeeByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(VALID__EMAIL_ACTIVE)) {
                 return dummy(VALID__EMAIL_ACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD);
             }
             return null;
         });
 
-        lenient().when(repo.findManagerByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+        lenient().when(repo.findEmployeeByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(VALID__NAME)) {
-                List<Manager> mas=new ArrayList<>();
+                List<Employee> mas=new ArrayList<>();
                 mas.add(dummy(VALID__EMAIL_ACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD));
                 return mas;
             }
             return null;
         });
 
-        lenient().when(repo.findManagerByPhone(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+        lenient().when(repo.findEmployeeByPhone(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(VALID__PHONE)) {
-                List<Manager> mas=new ArrayList<>();
+                List<Employee> mas=new ArrayList<>();
                 mas.add(dummy(VALID__EMAIL_ACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD));
                 return mas;
             }
@@ -97,8 +96,8 @@ public class TestManagerService {
 
 
     @Test
-    public void testCreateManager() {
-        Manager ma = service.createManager(VALID__EMAIL_INACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD);
+    public void testCreateEmployee() {
+        Employee ma = service.createEmployee(VALID__EMAIL_INACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD);
         assertNotNull(ma);
         var name = ma.getName();
         assertNotNull(name);
@@ -112,8 +111,8 @@ public class TestManagerService {
     }
 
     @Test
-    public void testCreateManagerInvalidEmail1() {
-        testCreateManagerFailure(
+    public void testCreateEmployeeInvalidEmail1() {
+        testCreateEmployeeFailure(
             INVALID__EMAIL, 
             VALID__NAME, 
             VALID__PHONE,
@@ -122,8 +121,8 @@ public class TestManagerService {
     }
 
     @Test
-    public void testCreateManagerInvalidEmail2() {
-        testCreateManagerFailure(
+    public void testCreateEmployeeInvalidEmail2() {
+        testCreateEmployeeFailure(
             VALID__EMAIL_ACTIVE, 
             VALID__NAME, 
             VALID__PHONE,
@@ -132,8 +131,8 @@ public class TestManagerService {
     }
 
     @Test
-    public void testCreateManagerInvalidName() {
-        testCreateManagerFailure(
+    public void testCreateEmployeeInvalidName() {
+        testCreateEmployeeFailure(
             VALID__EMAIL_INACTIVE, 
             INVALID__NAME, 
             VALID__PHONE,
@@ -142,8 +141,8 @@ public class TestManagerService {
     }
 
     @Test
-    public void testCreateManagerInvalidPassword1() {
-        testCreateManagerFailure(
+    public void testCreateEmployeeInvalidPassword1() {
+        testCreateEmployeeFailure(
             VALID__EMAIL_INACTIVE, 
             VALID__NAME, 
             VALID__PHONE,
@@ -152,8 +151,8 @@ public class TestManagerService {
     }
 
     @Test
-    public void testCreateManagerInvalidPassword2() {
-        testCreateManagerFailure(
+    public void testCreateEmployeeInvalidPassword2() {
+        testCreateEmployeeFailure(
             VALID__EMAIL_INACTIVE, 
             VALID__NAME, 
             VALID__PHONE,
@@ -162,8 +161,8 @@ public class TestManagerService {
     }
 
     @Test
-    public void testCreateManagerInvalidPassword3() {
-        testCreateManagerFailure(
+    public void testCreateEmployeeInvalidPassword3() {
+        testCreateEmployeeFailure(
             VALID__EMAIL_INACTIVE, 
             VALID__NAME, 
             VALID__PHONE,
@@ -172,8 +171,8 @@ public class TestManagerService {
     }
 
     @Test
-    public void testCreateManagerInvalidPhone1() {
-        testCreateManagerFailure(
+    public void testCreateEmployeeInvalidPhone1() {
+        testCreateEmployeeFailure(
             VALID__EMAIL_INACTIVE, 
             VALID__NAME, 
             INVALID__PHONE1,
@@ -182,8 +181,8 @@ public class TestManagerService {
     }
 
     @Test
-    public void testCreateManagerInvalidPhone2() {
-        testCreateManagerFailure(
+    public void testCreateEmployeeInvalidPhone2() {
+        testCreateEmployeeFailure(
             VALID__EMAIL_INACTIVE, 
             VALID__NAME, 
             INVALID__PHONE2,
@@ -192,59 +191,59 @@ public class TestManagerService {
     }
 
     @Test
-    public void testGetManagerValidEmail() {
-        Manager ma = service.getManagerByEmail(VALID__EMAIL_ACTIVE);
+    public void testGetEmployeeValidEmail() {
+        Employee ma = service.getEmployeeByEmail(VALID__EMAIL_ACTIVE);
         assertNotNull(ma);
         assertEquals(VALID__EMAIL_ACTIVE, ma.getEmail());
     }
 
     @Test
-    public void testGetManagerInvalidEmail() {
+    public void testGetEmployeeInvalidEmail() {
         String errMsg="";
-        Manager ma=null;
+        Employee em=null;
         try{
-           ma = service.getManagerByEmail(INVALID__EMAIL);
+           em = service.getEmployeeByEmail(INVALID__EMAIL);
         }catch(Exception e){
             errMsg=e.getMessage();
         }
-        assertNull(ma);
-        assertEquals("Invalid manager email! ", errMsg);
+        assertNull(em);
+        assertEquals("Invalid employee email! ", errMsg);
     } 
 
     @Test
-    public void testGetManagerValidName() {
-        List<Manager> mas = service.getManagerByName(VALID__NAME);
+    public void testGetEmployeeValidName() {
+        List<Employee> mas = service.getEmployeeByName(VALID__NAME);
         assertEquals(mas.size(),1);
         assertEquals(VALID__NAME, mas.get(0).getName());
     }
 
     @Test
-    public void testGetManagerInvalidName() {
-        List<Manager> mas = service.getManagerByName(NONEXISTING__NAME);
+    public void testGetEmployeeInvalidName() {
+        List<Employee> mas = service.getEmployeeByName(NONEXISTING__NAME);
         assertEquals(mas,null);
     }
 
     @Test
-    public void testGetManagerValidPhone() {
-        List<Manager> mas = service.getManagerByPhone(VALID__PHONE);
+    public void testGetEmployeeValidPhone() {
+        List<Employee> mas = service.getEmployeeByPhone(VALID__PHONE);
         assertEquals(mas.size(),1);
         assertEquals(VALID__PHONE, mas.get(0).getPhone());
     }
 
     @Test
-    public void testGetManagerInvalidPhone() {
-        List<Manager> mas = service.getManagerByPhone(INVALID__PHONE1);
+    public void testGetEmployeeInvalidPhone() {
+        List<Employee> mas = service.getEmployeeByPhone(INVALID__PHONE1);
         assertEquals(mas,null);
     }
 
 
 
 
-    private void testCreateManagerFailure(String email, String name, String phone,String password,String message) {
-        Manager ma = null;
+    private void testCreateEmployeeFailure(String email, String name, String phone,String password,String message) {
+        Employee ma = null;
         String errMsg = "";
         try {
-            ma = service.createManager(email, name,phone,password);
+            ma = service.createEmployee(email, name,phone,password);
         } catch(Exception e) {
             errMsg = e.getMessage();
         }
@@ -252,8 +251,8 @@ public class TestManagerService {
         assertNull(ma);
     }
 
-    private Manager dummy(String email, String name, String phone,String password) {
-        Manager ma = new Manager();
+    private Employee dummy(String email, String name, String phone,String password) {
+        Employee ma = new Employee();
         ma.setEmail(email);
         ma.setName(name);
         ma.setPhone(phone);

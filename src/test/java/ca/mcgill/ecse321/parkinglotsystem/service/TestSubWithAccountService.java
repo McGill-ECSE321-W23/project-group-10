@@ -29,7 +29,7 @@ import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 import ca.mcgill.ecse321.parkinglotsystem.model.SubWithAccount;
 
 @ExtendWith(MockitoExtension.class)
-public class SubWithAccountServiceTests {
+public class TestSubWithAccountService {
 
     @Mock
     private SubWithAccountRepository repository;
@@ -273,6 +273,22 @@ public class SubWithAccountServiceTests {
         SubWithAccount sub = service.updateSubWithAccount(VALID_CUSTOMER_EMAIL_ACTIVE);
         assertNotNull(sub);
         assertEquals(NBR_MONTHS_ACTIVE + 1, sub.getNbrMonths());
+    }
+
+    @Test
+    public void testDeleteSub() {
+        service.deleteSubWithAccount(VALID_ID);
+    }
+
+    @Test
+    public void testDeleteNonExistingSub() {
+        String errMsg = "";
+        try {
+            service.deleteSubWithAccount(INVALID_ID);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("Invalid reservation ID.", errMsg);
     }
 
     private void testCreateSubFailure(String monthlyCustomerEmail, int parkingSpotId, String message) {

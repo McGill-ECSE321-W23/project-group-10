@@ -20,4 +20,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, String> {
     //find employees by password
     List<Employee> findEmployeeByPassword(String password);
 
+    //find employees by token
+    List<Employee> findEmployeeByToken(String token);
+
 }

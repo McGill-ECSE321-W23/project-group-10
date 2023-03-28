@@ -27,11 +27,13 @@ public class MonthlyCustomerRepositoryTests {
         String email = "jonas@outlook.com";
         String phone = "3333";
         String password = "password3";
+        String token = "123";
         MonthlyCustomer jonas = new MonthlyCustomer();
         jonas.setName(name);
         jonas.setEmail(email);
         jonas.setPhone(phone);
         jonas.setPassword(password);
+        jonas.setToken(token);
 
         // Save object
         jonas = monthlyCustomerRepository.save(jonas);
@@ -42,14 +44,17 @@ public class MonthlyCustomerRepositoryTests {
         var objsByName = monthlyCustomerRepository.findMonthlyCustomerByName(name);
         var objsByPass = monthlyCustomerRepository.findMonthlyCustomerByPassword(password);
         var objsByPhone = monthlyCustomerRepository.findMonthlyCustomerByPhone(phone);
+        var objsByToken = monthlyCustomerRepository.findMonthlyCustomerByToken(token);
 
         // Assert that object has correct attributes
         assertNotNull(jonas);
         assertEquals(name, jonas.getName());
         assertEquals(phone, jonas.getPhone());
         assertEquals(password, jonas.getPassword());
+        assertEquals(token, jonas.getToken());
         assertEquals(1, objsByName.size());
         assertEquals(1, objsByPass.size());
         assertEquals(1, objsByPhone.size());
+        assertEquals(1, objsByToken.size());
     }
 }
