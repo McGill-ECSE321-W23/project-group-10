@@ -3,6 +3,9 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +54,11 @@ public class ServicesService {
     // method to find a service by description
     @Transactional
     public Service getServiceByDescription(String description) {
-        return servicesRepository.findServiceByDescription(description);
+        Service service = servicesRepository.findServiceByDescription(description);
+        if(service == null) {
+            throw new CustomException("No service found.", HttpStatus.NOT_FOUND);
+        }
+        return service;
     }
 
     // method to find a service by price

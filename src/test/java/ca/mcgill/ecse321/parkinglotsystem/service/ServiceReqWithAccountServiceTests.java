@@ -105,12 +105,21 @@ public class ServiceReqWithAccountServiceTests {
             srwa.setId(VALID_ID);
             return srwa;
         });
+
+        lenient().when(serviceService.getServiceByPrice(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            int arg = invocation.getArgument(0);
+            List<Service> list = new ArrayList<>();
+            if(arg == VALID_SERVICE_PRICE) {
+                return list.add(dummyService(VALID_SERVICE_PRICE));
+            }
+            return list;
+        });
     }
 
     @Test
     public void testCreateServiceReqWithAccount() {
         ServiceReqWithAccount srwa = service.createServiceReqWithAccount(VALID_CUSTOMER_EMAIL_ASSIGNED,
-                VALID_SERVICE_PRICE);
+                null);
         assertNotNull(srwa);
         assertEquals(VALID_ID, srwa.getId());
         assertEquals(true, srwa.getIsAssigned());

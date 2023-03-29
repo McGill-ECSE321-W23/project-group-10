@@ -25,18 +25,10 @@ public class ServiceReqWithAccountService {
     private ServicesService serviceService;
 
     @Transactional
-    public ServiceReqWithAccount createServiceReqWithAccount(String monthlyCustomerEmail, int price) {
-        boolean flag = true;
-        for (Service aService : serviceService.getServiceByPrice(price)) {
-            if (aService.getPrice() == price) {
-                flag = false;
-            }
-        }
-        if (flag) {
-            throw new CustomException("No service with such price", HttpStatus.BAD_REQUEST);
-        }
+    public ServiceReqWithAccount createServiceReqWithAccount(String monthlyCustomerEmail, String description) {
 
-        Service service = serviceService.getServiceByPrice(price).get(0);
+        Service service = serviceService.getServiceByDescription(description);
+        
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
         ServiceReqWithAccount serviceReqWithAccount = new ServiceReqWithAccount();
         serviceReqWithAccount.setIsAssigned(true);
