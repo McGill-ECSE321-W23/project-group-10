@@ -318,9 +318,8 @@ public class TestPaymentReservationService {
     public void testGetPaymentReservationByDateWithInvalidDate() {
 
         String error = "";
-        List<PaymentReservation> paymentReservations = null;
         try {
-            paymentReservations = paymentReservationService.getPaymentReservationByDateTime(null);
+            paymentReservationService.getPaymentReservationByDateTime(null);
 
         }catch (CustomException e) {
 			// Check that no error occurred
@@ -349,9 +348,8 @@ public class TestPaymentReservationService {
     @Test
     public void testGetPaymentReservationByAmountWithInvalidInput() {
         String error = "";
-        List<PaymentReservation> paymentReservations = null;
         try {
-            paymentReservations = paymentReservationService.getPaymentReservationByAmout(-1);
+            paymentReservationService.getPaymentReservationByAmout(-1);
 
         }catch (CustomException e) {
 			// Check that no error occurred

@@ -149,12 +149,9 @@ public class TestParkingSpotTypeService {
     @Test
     public void testGetAllParkingSpotType() {
         List<ParkingSpotType> parkingSpotTypes = new ArrayList<ParkingSpotType>();
-        String error = "";
         try {
 			parkingSpotTypes = parkingSpotTypeService.getAllParkingSpotTypes();
 		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
 		}
         assertEquals(VALID_PARKING_SPOT_TYPE_1, parkingSpotTypes.get(0).getName()); 
     }

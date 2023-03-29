@@ -31,7 +31,7 @@ public class SubWithoutAccountDto extends ReservationDto {
         return nbrMonths;
     }
 
-    public void setNbrMonths () {
+    public void setNbrMonths (int nbrMonths) {
         this.nbrMonths = nbrMonths;
     }
     

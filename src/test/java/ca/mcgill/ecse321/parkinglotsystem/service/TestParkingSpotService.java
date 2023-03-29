@@ -4,11 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.lenient;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -198,10 +196,9 @@ public class TestParkingSpotService {
 
     @Test
     public void testGetByIdWithWrongId() {
-        ParkingSpot parkingSpot = null;
         String error = "" ;
         try {
-            parkingSpot = parkingSpotService.getParkingSpotById(44);
+            parkingSpotService.getParkingSpotById(44);
         } catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();
@@ -229,10 +226,9 @@ public class TestParkingSpotService {
 
     @Test
     public void testGetByTypeWithWrongName() {
-        List<ParkingSpot> parkingSpots = null;
         String error = "";
         try {
-            parkingSpots = parkingSpotService.getParkingSpotByType("fail");
+            parkingSpotService.getParkingSpotByType("fail");
         } catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();
@@ -272,10 +268,9 @@ public class TestParkingSpotService {
 
 
     private void testCreateParkingSpotFailure(int id, String typeName, String message) {
-        ParkingSpot parkingSpot = new ParkingSpot();
         String error = "";
         try {
-			parkingSpot = parkingSpotService.createParkingSpot(id, typeName);
+			parkingSpotService.createParkingSpot(id, typeName);
 		} catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();
@@ -284,10 +279,9 @@ public class TestParkingSpotService {
     }
 
     private void testDeleteParkingSpotFailure(int id, String message) {
-        ParkingSpot parkingSpot = new ParkingSpot();
         String error = "";
         try {
-            parkingSpot = parkingSpotService.deleteParkingSpotById(id);
+            parkingSpotService.deleteParkingSpotById(id);
         } catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();
@@ -296,10 +290,9 @@ public class TestParkingSpotService {
     }
 
     private void testUpdateParkingSpotFailure(int id, String typeName, String message) {
-        ParkingSpot parkingSpot = new ParkingSpot();
         String error = "";
         try {
-			parkingSpot = parkingSpotService.updateParkingSpot(id, typeName);
+			parkingSpotService.updateParkingSpot(id, typeName);
 		} catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();

@@ -10,7 +10,6 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 @org.springframework.stereotype.Service
 public class ServicesService {

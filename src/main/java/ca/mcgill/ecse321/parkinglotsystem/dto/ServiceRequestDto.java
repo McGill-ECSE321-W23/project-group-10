@@ -28,15 +28,15 @@ public class ServiceRequestDto {
     }
 
     public void setId(int id) {
-        this.id = this.id;
+        this.id = id;
     }
 
     public void setIsAssigned(boolean isAssigned) {
-        this.isAssigned = this.isAssigned;
+        this.isAssigned = isAssigned;
     }
 
     public void setServicesDto(ServiceDto servicesDto) {
-        this.servicesDto = this.servicesDto;
+        this.servicesDto = servicesDto;
     }
 
 }
