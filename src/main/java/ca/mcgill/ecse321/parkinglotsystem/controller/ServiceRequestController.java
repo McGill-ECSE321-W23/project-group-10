@@ -88,7 +88,7 @@ public class ServiceRequestController {
         // TODO: use IDs as arguments, not model objects
         List<ServiceRequestDto> ServiceRequests = new ArrayList<>();
         try {
-            List<ServiceRequest> serviceRequest = serviceRequestService.getServiceRequestByService(service);
+            List<ServiceRequest> serviceRequest = serviceRequestService.getServiceRequestByServices(service);
             if (serviceRequest.size() != 0) {
                 for (ServiceRequest se : serviceRequest) {
                     ServiceRequests.add(convertServiceRequestToDto(se));
