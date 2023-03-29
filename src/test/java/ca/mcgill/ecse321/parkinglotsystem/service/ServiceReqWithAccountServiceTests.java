@@ -25,6 +25,7 @@ import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceReqWithAccountRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithAccount;
 import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 import ca.mcgill.ecse321.parkinglotsystem.model.Service;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 @ExtendWith(MockitoExtension.class)
 public class ServiceReqWithAccountServiceTests {
@@ -125,6 +126,20 @@ public class ServiceReqWithAccountServiceTests {
         assertEquals(VALID_CUSTOMER_EMAIL_ASSIGNED,
                 srwa.getCustomer().getEmail());
         assertEquals(VALID_SERVICE_DESC, srwa.getService().getDescription());
+    }
+
+    @Test
+    public void testCreateServiceReqWithAccountFail() {
+        String error = "";
+        ServiceReqWithAccount srwa = null;
+        try {
+            srwa = service.createServiceReqWithAccount("",
+                VALID_SERVICE_DESC);
+        } catch (CustomException e) {
+			error = e.getMessage();
+		}
+        assertNull(srwa);
+        assertEquals("License Number empty! ", error);
     }
 
     @Test

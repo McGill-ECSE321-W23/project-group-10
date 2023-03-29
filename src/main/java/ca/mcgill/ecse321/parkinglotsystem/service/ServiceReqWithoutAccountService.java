@@ -22,25 +22,18 @@ public class ServiceReqWithoutAccountService {
     private ServicesService serviceService;
 
     @Transactional
-    public ServiceReqWithoutAccount createServiceReqWithoutAccount(String licenseNumber, int price) {
-        boolean flag = true;
-        for (Service aService : serviceService.getServiceByPrice(price)) {
-            if (aService.getPrice() == price) {
-                flag = false;
-            }
-        }
-        if (flag) {
-            throw new CustomException("No service with such price", HttpStatus.BAD_REQUEST);
+    public ServiceReqWithoutAccount createServiceReqWithoutAccount(String licenseNumber, String description) {
+
+        Service service = serviceService.getServiceByDescription(description);
+        if (licenseNumber.equals("")) {
+            throw new CustomException("License Number empty! ", HttpStatus.BAD_REQUEST);
         }
 
-        Service service = serviceService.getServiceByPrice(price).get(0);
         ServiceReqWithoutAccount serviceReqWithoutAccount = new ServiceReqWithoutAccount();
         serviceReqWithoutAccount.setIsAssigned(true);
         serviceReqWithoutAccount.setService(service);
         serviceReqWithoutAccount.setLicenseNumber(licenseNumber);
-        ;
         serviceReqwithoutAccountRepository.save(serviceReqWithoutAccount);
-
         return serviceReqWithoutAccount;
     }
 
@@ -54,6 +47,9 @@ public class ServiceReqWithoutAccountService {
 
     @Transactional
     public List<ServiceReqWithoutAccount> getServiceReqWithoutAccountByIsAssigned(boolean isAssigned) {
+        if (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByIsAssigned(isAssigned).size() <= 0) {
+            throw new CustomException("No serviceRequest with such IsAssigned", HttpStatus.BAD_REQUEST);
+        }
         return serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByIsAssigned(isAssigned);
     }
 
@@ -79,13 +75,17 @@ public class ServiceReqWithoutAccountService {
 
     @Transactional
     public List<ServiceReqWithoutAccount> getAll() {
-        return (List<ServiceReqWithoutAccount>) (ServiceRequest) toList(serviceReqwithoutAccountRepository.findAll());
+        List<ServiceReqWithoutAccount> list = toList(serviceReqwithoutAccountRepository.findAll());
+        return list;
     }
 
     @Transactional
     public ServiceReqWithoutAccount updateIsAssignedById(int id, boolean isAssigned) {
         ServiceReqWithoutAccount serviceReqwithoutAccount = serviceReqwithoutAccountRepository
                 .findServiceReqWithoutAccountById(id);
+        if (serviceReqwithoutAccount == null) {
+            throw new CustomException("The ServiceReqWithoutAccount Id does not exist", HttpStatus.BAD_REQUEST);
+        }
         serviceReqwithoutAccount.setIsAssigned(isAssigned);
         serviceReqwithoutAccountRepository.save(serviceReqwithoutAccount);
         return serviceReqwithoutAccount;
