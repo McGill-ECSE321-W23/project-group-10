@@ -10,9 +10,6 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +22,6 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceReqWithAccountRepository;
-import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRequestRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithAccount;
 import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 import ca.mcgill.ecse321.parkinglotsystem.model.Service;
@@ -47,19 +43,15 @@ public class ServiceReqWithAccountServiceTests {
 
     private static final int VALID_ID = 1;
     private static final int INVALID_ID = 2;
-    private static final int REPEATED_ID = 3;
-    private static final int NOTEXIST_ID = 4;
     private static final String VALID_CUSTOMER_EMAIL_ASSIGNED = "validEmailAssigned";
     private static final String VALID_CUSTOMER_EMAIL_NOTASSIGNED = "validEmailNotAssigned";
-    private static final String INVALID_CUSTOMER_EMAIL = "invalidEmail";
-    private static final int VALID_SERVICE_PRICE = 100;
-    private static final int INVALID_SERVICE_PRICE = 200;
+    private static final String VALID_SERVICE_DESC = "descValid";
 
     @BeforeEach
     public void setMockOutput() {
         lenient().when(repository.findServiceReqWithAccountById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(VALID_ID)) {
-                return dummy(VALID_ID, true, dummyService(VALID_SERVICE_PRICE),
+                return dummy(VALID_ID, true, dummyService(VALID_SERVICE_DESC),
                         dummyCustomer(VALID_CUSTOMER_EMAIL_ASSIGNED));
             }
             return null;
@@ -68,7 +60,11 @@ public class ServiceReqWithAccountServiceTests {
         lenient().when(repository.findServiceReqWithAccountByIsAssigned(anyBoolean()))
                 .thenAnswer((InvocationOnMock invocation) -> {
                     List<ServiceReqWithAccount> srwas = new ArrayList<>();
-                    srwas.add(dummy(VALID_ID, invocation.getArgument(0), dummyService(VALID_SERVICE_PRICE),
+                    boolean arg = invocation.getArgument(0);
+                    if(!arg) {
+                        return srwas;
+                    }
+                    srwas.add(dummy(VALID_ID, invocation.getArgument(0), dummyService(VALID_SERVICE_DESC),
                             dummyCustomer(VALID_CUSTOMER_EMAIL_ASSIGNED)));
                     return srwas;
                 });
@@ -78,9 +74,9 @@ public class ServiceReqWithAccountServiceTests {
                     List<ServiceReqWithAccount> srwas = new ArrayList<>();
                     MonthlyCustomer customer = invocation.getArgument(0);
                     if (customer.getEmail().equals(VALID_CUSTOMER_EMAIL_ASSIGNED)) {
-                        srwas.add(dummy(VALID_ID, true, dummyService(VALID_SERVICE_PRICE), customer));
+                        srwas.add(dummy(VALID_ID, true, dummyService(VALID_SERVICE_DESC), customer));
                     } else if (customer.getEmail().equals(VALID_CUSTOMER_EMAIL_NOTASSIGNED)) {
-                        srwas.add(dummy(VALID_ID, false, dummyService(VALID_SERVICE_PRICE), customer));
+                        srwas.add(dummy(VALID_ID, false, dummyService(VALID_SERVICE_DESC), customer));
                     }
                     return srwas;
                 });
@@ -106,26 +102,29 @@ public class ServiceReqWithAccountServiceTests {
             return srwa;
         });
 
-        lenient().when(serviceService.getServiceByPrice(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            int arg = invocation.getArgument(0);
-            List<Service> list = new ArrayList<>();
-            if(arg == VALID_SERVICE_PRICE) {
-                return list.add(dummyService(VALID_SERVICE_PRICE));
+        lenient().when(serviceService.getServiceByDescription(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            String arg = invocation.getArgument(0);
+            if(arg.equals(VALID_SERVICE_DESC)) {
+                return dummyService(VALID_SERVICE_DESC);
             }
-            return list;
+            return null;
+        });
+
+        lenient().when(monthlyCustomerService.getMonthlyCustomerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            return dummyCustomer(invocation.getArgument(0));
         });
     }
 
     @Test
     public void testCreateServiceReqWithAccount() {
         ServiceReqWithAccount srwa = service.createServiceReqWithAccount(VALID_CUSTOMER_EMAIL_ASSIGNED,
-                null);
+                VALID_SERVICE_DESC);
         assertNotNull(srwa);
         assertEquals(VALID_ID, srwa.getId());
         assertEquals(true, srwa.getIsAssigned());
-        assertEquals(monthlyCustomerService.getMonthlyCustomerByEmail(VALID_CUSTOMER_EMAIL_ASSIGNED),
-                srwa.getCustomer());
-        assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE), srwa.getService());
+        assertEquals(VALID_CUSTOMER_EMAIL_ASSIGNED,
+                srwa.getCustomer().getEmail());
+        assertEquals(VALID_SERVICE_DESC, srwa.getService().getDescription());
     }
 
     @Test
@@ -156,9 +155,7 @@ public class ServiceReqWithAccountServiceTests {
             assertNotNull(srwa);
             assertEquals(VALID_ID, srwa.getId());
             assertEquals(true, srwa.getIsAssigned());
-            assertEquals(monthlyCustomerService.getMonthlyCustomerByEmail(VALID_CUSTOMER_EMAIL_ASSIGNED),
-                    srwa.getCustomer());
-            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE), srwa.getService());
+            assertEquals(VALID_SERVICE_DESC, srwa.getService().getDescription());
         }
     }
 
@@ -183,9 +180,9 @@ public class ServiceReqWithAccountServiceTests {
             assertNotNull(srwa);
             assertEquals(VALID_ID, srwa.getId());
             assertEquals(true, srwa.getIsAssigned());
-            assertEquals(monthlyCustomerService.getMonthlyCustomerByEmail(VALID_CUSTOMER_EMAIL_ASSIGNED),
-                    srwa.getCustomer());
-            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE), srwa.getService());
+            assertEquals(VALID_CUSTOMER_EMAIL_ASSIGNED,
+                    srwa.getCustomer().getEmail());
+            assertEquals(VALID_SERVICE_DESC, srwa.getService().getDescription());
         }
     }
 
@@ -198,9 +195,9 @@ public class ServiceReqWithAccountServiceTests {
             assertNotNull(srwa);
             assertEquals(VALID_ID, srwa.getId());
             assertEquals(false, srwa.getIsAssigned());
-            assertEquals(monthlyCustomerService.getMonthlyCustomerByEmail(VALID_CUSTOMER_EMAIL_NOTASSIGNED),
-                    srwa.getCustomer());
-            assertEquals(serviceService.getServiceByPrice(VALID_SERVICE_PRICE), srwa.getService());
+            assertEquals(VALID_CUSTOMER_EMAIL_NOTASSIGNED,
+                    srwa.getCustomer().getEmail());
+            assertEquals(VALID_SERVICE_DESC, srwa.getService().getDescription());
         }
     }
 
@@ -215,7 +212,7 @@ public class ServiceReqWithAccountServiceTests {
     public void testUpdateIsAssignedById() {
         ServiceReqWithAccount srwa = service.updateIsAssignedById(VALID_ID, false);
         assertNotNull(srwa);
-        assertEquals(INVALID_ID, srwa.getId());
+        assertEquals(VALID_ID, srwa.getId());
         assertEquals(false, srwa.getIsAssigned());
     }
 
@@ -242,10 +239,10 @@ public class ServiceReqWithAccountServiceTests {
         return customer;
     }
 
-    private Service dummyService(int price) {
+    private Service dummyService(String desc) {
         Service service = new Service();
-        service.setPrice(price);
-        service.setDescription("This is a test service");
+        service.setPrice(100);
+        service.setDescription(desc);
         return service;
     }
 

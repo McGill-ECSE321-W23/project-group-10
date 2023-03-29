@@ -61,8 +61,9 @@ public class ServiceReqWithAccountController {
         @RequestParam(value = "price") int price,
         @RequestHeader String token
     ){
+        // TODO: FIX THIS
         authService.authenticateMonthlyCustomer(token);
-        return convertServiceReqWithAccountToDto(service.createServiceReqWithAccount(monthlyCustomerEmail, price));
+        return convertServiceReqWithAccountToDto(service.createServiceReqWithAccount(monthlyCustomerEmail, null));
     }
 
     @PutMapping(value = {"/{id}", "/{id}/"})
