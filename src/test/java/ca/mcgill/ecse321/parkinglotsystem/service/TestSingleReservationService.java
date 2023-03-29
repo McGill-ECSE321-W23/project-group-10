@@ -75,11 +75,13 @@ public class TestSingleReservationService {
     private static final Date date1 = new Date(calendar.getTimeInMillis());
     private static final int RESERVATION_ID2 = 999;
     private static final String license_number1 = "CA1234";
+    private static final String license_number_unused = "CA1232";
     private static final String license_number2 = "QC5555";
     private static final int parking_time = 100;
     private static final int parking_time2 = 30;
     
     private static final int ParkingSpot_ID = 1000;
+    private static final int ParkingSpot_ID_UNUSED = 1001;
     private static final int ParkingSpot_ID2 = 2500;
     
     //private static final String TYPE_NAME = "regular";
@@ -158,6 +160,7 @@ public class TestSingleReservationService {
         lenient().when(singleReservationRepository.findSingleReservationsByParkingSpot(any(ParkingSpot.class))).
         thenAnswer((InvocationOnMock invocation) -> {
             ParkingSpot spot = invocation.getArgument(0);
+            List<SingleReservation> singleReservations = new ArrayList<SingleReservation>();
             if (spot.getId() == ParkingSpot_ID) {
                 SingleReservation singleReservation =  new SingleReservation();
                 singleReservation.setId(RESERVATION_ID);
@@ -165,24 +168,18 @@ public class TestSingleReservationService {
                 singleReservation.setLicenseNumber(license_number1);
                 singleReservation.setParkingTime(parking_time2);
                 singleReservation.setParkingSpot(spot);
-                List<SingleReservation> singleReservations = new ArrayList<SingleReservation>();
                 singleReservations.add(singleReservation);
-                return singleReservations;
             } 
-        else if (spot.getId() == ParkingSpot_ID2) {
+            else if (spot.getId() == ParkingSpot_ID2) {
                 SingleReservation singleReservation =  new SingleReservation();
                 singleReservation.setId(RESERVATION_ID2);
                 singleReservation.setDate(date1);
                 singleReservation.setLicenseNumber(license_number2);
                 singleReservation.setParkingTime(parking_time2);
                 singleReservation.setParkingSpot(spot);
-                List<SingleReservation> singleReservations = new ArrayList<SingleReservation>();
                 singleReservations.add(singleReservation);
-                return singleReservations;
             }
-            else {
-                return null;
-            }
+            return singleReservations;
         });
     
         lenient().when(parkingSpotService.getParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
@@ -198,7 +195,7 @@ public class TestSingleReservationService {
 
     
         lenient().when(singleReservationService.getSingleReservationsByLicenseNumber(anyString())).thenAnswer( (InvocationOnMock invocation) -> { 
-            
+            List<SingleReservation> singleReservations = new ArrayList<SingleReservation>();
     
             if (invocation.getArgument(0).equals(license_number1)) {
                 SingleReservation singleReservation1 =  new SingleReservation();
@@ -206,9 +203,7 @@ public class TestSingleReservationService {
                 singleReservation1.setDate(date1);
                 singleReservation1.setLicenseNumber(license_number1);
                 singleReservation1.setParkingTime(parking_time);
-                List<SingleReservation> singleReservations = new ArrayList<SingleReservation>();
                 singleReservations.add(singleReservation1);
-                return singleReservations;
             }
     
             else if (invocation.getArgument(0).equals(ParkingSpot_ID)){
@@ -217,14 +212,9 @@ public class TestSingleReservationService {
                 singleReservation2.setDate(date1);
                 singleReservation2.setLicenseNumber(license_number2);
                 singleReservation2.setParkingTime(parking_time2);
-                List<SingleReservation> singleReservations = new ArrayList<SingleReservation>();
                 singleReservations.add(singleReservation2);
-                return singleReservations;
-    
             }
-            else {
-                return null;
-            }
+            return singleReservations;
     
             
     
@@ -241,14 +231,14 @@ public class TestSingleReservationService {
         assertEquals(2, singleReservationService.getAllSingleReservations().size());
         SingleReservation singleReservation = null;
         try {
-            singleReservation = singleReservationService.createSingleReservation(license_number1, parking_time, ParkingSpot_ID);
+            singleReservation = singleReservationService.createSingleReservation(license_number_unused, parking_time, ParkingSpot_ID_UNUSED);
         } catch (CustomException e) {
             fail(e.getMessage());
         }
         assertNotNull(singleReservation);
-        assertEquals(license_number1, singleReservation.getLicenseNumber());
+        assertEquals(license_number_unused, singleReservation.getLicenseNumber());
         assertEquals(parking_time, singleReservation.getParkingTime());
-        assertEquals(ParkingSpot_ID, singleReservation.getParkingSpot().getId());
+        assertEquals(ParkingSpot_ID_UNUSED, singleReservation.getParkingSpot().getId());
     
     }
     
