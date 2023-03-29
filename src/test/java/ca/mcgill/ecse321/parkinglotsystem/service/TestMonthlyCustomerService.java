@@ -3,14 +3,10 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -237,10 +233,17 @@ public class TestMonthlyCustomerService {
     }
 
     @Test
-    public void testGetMonthlyCustomerInalidEmail() {
-        MonthlyCustomer ma = service.getMonthlyCustomerByEmail(INVALID__EMAIL);
+    public void testGetMonthlyCustomerInvalidEmail() {
+        String errMsg="";
+        MonthlyCustomer ma=null;
+        try{
+           ma = service.getMonthlyCustomerByEmail(INVALID__EMAIL);
+        }catch(Exception e){
+            errMsg=e.getMessage();
+        }
         assertNull(ma);
-    }
+        assertEquals("Invalid monthly customer email! ", errMsg);
+    } 
 
     @Test
     public void testGetMonthlyCustomerValidName() {
@@ -281,7 +284,49 @@ public class TestMonthlyCustomerService {
         assertEquals(mas,null);
     }
 
+    @Test
+    public void testDeleteMonthlyCustomerInvalidEmail() {
+        String errMsg="";
+        MonthlyCustomer ma=null;
+        try{
+           ma = service.deleteMonthlyCustomerByEmail(INVALID__EMAIL);
+        }catch(Exception e){
+            errMsg=e.getMessage();
+        }
+        assertNull(ma);
+        assertEquals("No monthly customer with that email was found!", errMsg);
+    }
 
+    @Test
+    public void testUpdateMonthlyCustomerValid() {
+        MonthlyCustomer ma = service.updateMonthlyCustomer(VALID__EMAIL_ACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD,VALID_LICENSE_NUMBER);
+        assertNotNull(ma);
+        var name = ma.getName();
+        assertNotNull(name);
+        assertEquals(VALID__NAME, ma.getName());
+        var phone = ma.getPhone();
+        assertNotNull(phone);
+        assertEquals(VALID__PHONE, ma.getPhone());
+        var password = ma.getPassword();
+        assertNotNull(password);
+        assertEquals(VALID__PASSWORD, ma.getPassword());
+        var licenseNumber = ma.getLicenseNumber();
+        assertNotNull(licenseNumber);
+        assertEquals(VALID_LICENSE_NUMBER, ma.getLicenseNumber());
+    }
+
+    @Test
+    public void testCreateMonthlyCustomerInvalidEmail() {
+        String errMsg="";
+        MonthlyCustomer ma=null;
+        try{
+           ma = service.updateMonthlyCustomer(VALID__EMAIL_INACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD,VALID_LICENSE_NUMBER);
+        }catch(Exception e){
+            errMsg=e.getMessage();
+        }
+        assertNull(ma);
+        assertEquals("No monthly customer with that email exists!", errMsg);
+    } 
 
 
 

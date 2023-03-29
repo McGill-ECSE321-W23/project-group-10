@@ -3,9 +3,8 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
@@ -200,10 +199,17 @@ public class TestManagerService {
     }
 
     @Test
-    public void testGetManagerInalidEmail() {
-        Manager ma = service.getManagerByEmail(INVALID__EMAIL);
+    public void testGetManagerInvalidEmail() {
+        String errMsg="";
+        Manager ma=null;
+        try{
+           ma = service.getManagerByEmail(INVALID__EMAIL);
+        }catch(Exception e){
+            errMsg=e.getMessage();
+        }
         assertNull(ma);
-    }
+        assertEquals("Invalid manager email! ", errMsg);
+    } 
 
     @Test
     public void testGetManagerValidName() {
@@ -231,6 +237,47 @@ public class TestManagerService {
         assertEquals(mas,null);
     }
 
+    
+    @Test
+    public void testDeleteManagerInvalidEmail() {
+        String errMsg="";
+        Manager ma=null;
+        try{
+           ma = service.deleteManagerByEmail(INVALID__EMAIL);
+        }catch(Exception e){
+            errMsg=e.getMessage();
+        }
+        assertNull(ma);
+        assertEquals("No manager with that email was found!", errMsg);
+    }
+
+    @Test
+    public void testUpdateManagerValid() {
+        Manager ma = service.updateManager(VALID__EMAIL_ACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD);
+        assertNotNull(ma);
+        var name = ma.getName();
+        assertNotNull(name);
+        assertEquals(VALID__NAME, ma.getName());
+        var phone = ma.getPhone();
+        assertNotNull(phone);
+        assertEquals(VALID__PHONE, ma.getPhone());
+        var password = ma.getPassword();
+        assertNotNull(password);
+        assertEquals(VALID__PASSWORD, ma.getPassword());
+    }
+
+    @Test
+    public void testCreateManagerInvalidEmail() {
+        String errMsg="";
+        Manager ma=null;
+        try{
+           ma = service.updateManager(VALID__EMAIL_INACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD);
+        }catch(Exception e){
+            errMsg=e.getMessage();
+        }
+        assertNull(ma);
+        assertEquals("No manager with that email exists!", errMsg);
+    } 
 
 
 

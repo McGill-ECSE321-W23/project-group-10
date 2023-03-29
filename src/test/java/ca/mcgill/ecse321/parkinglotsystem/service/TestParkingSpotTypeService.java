@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
@@ -38,157 +38,112 @@ public class TestParkingSpotTypeService {
     @InjectMocks
     private ParkingSpotTypeService parkingSpotTypeService;
 
-    private static final String PARKING_SPOT_NAME_STRING = "TestSpotType";
-    private static final double PARKING_FEE = 1;
+    // parking spot type instance variables
+    private static final String VALID_PARKING_SPOT_TYPE_1 = "TestSpotType";
+    private static final double VALID_PARKING_SPOT_TYPE_FEE_1 = 10;
+
+    private static final String VALID_PARKING_SPOT_TYPE_2 = "TestSpotType2";
+    private static final double VALID_PARKING_SPOT_TYPE_FEE_2 = 10;
+
+    private static final String INVALID_PARKING_SPOT_TYPE_NAME = "fail";
+
+    // parking spot type instance variable
+    private static final int PARKING_SPOT_ID = 3;
 
     @BeforeEach
 	public void setMockOutput() {
         lenient().when(parkingSpotTypeRepository.findParkingSpotTypeByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-            if (invocation.getArgument(0).equals(PARKING_SPOT_NAME_STRING)) {
-				ParkingSpotType parkingSpotType = new ParkingSpotType();
-                parkingSpotType.setName(PARKING_SPOT_NAME_STRING);
-                parkingSpotType.setFee(1);
-				return parkingSpotType;
-			} else {
+            if (invocation.getArgument(0).equals(VALID_PARKING_SPOT_TYPE_1)) {
+				return dummyParkingSpotType(VALID_PARKING_SPOT_TYPE_1, VALID_PARKING_SPOT_TYPE_FEE_1);
+			} else if (invocation.getArgument(0).equals(VALID_PARKING_SPOT_TYPE_2)) {
+				return dummyParkingSpotType(VALID_PARKING_SPOT_TYPE_2, VALID_PARKING_SPOT_TYPE_FEE_2);
+			}else {
 				return null;
 			}
         });
-        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
-			return invocation.getArgument(0);
-		};
 
         lenient().when(parkingSpotTypeRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<ParkingSpotType> parkingSpotTypes = new ArrayList<ParkingSpotType>();
-            ParkingSpotType parkingSpotType = new ParkingSpotType();
-            parkingSpotType.setName(PARKING_SPOT_NAME_STRING);
-            parkingSpotType.setFee(1);
-            parkingSpotTypes.add(parkingSpotType);
+            parkingSpotTypes.add(dummyParkingSpotType(VALID_PARKING_SPOT_TYPE_1, VALID_PARKING_SPOT_TYPE_FEE_1));
             return parkingSpotTypes;
         });
 
         lenient().when(parkingSpotRepository.findParkingSpotByType(any(ParkingSpotType.class))).thenAnswer((InvocationOnMock invocation) -> {
-
-            // create parking spot type
-            ParkingSpotType parkingSpotType = new ParkingSpotType();
-            parkingSpotType.setName(PARKING_SPOT_NAME_STRING);
-            parkingSpotType.setFee(1);
-
-            // create parking spot
             List<ParkingSpot> parkingSpots = new ArrayList<>();
-            ParkingSpot parkingSpot = new ParkingSpot();
-            parkingSpot.setId(1);
-            parkingSpot.setType(parkingSpotType);
-            parkingSpots.add(parkingSpot);
+            parkingSpots.add(dummyParkingSpot(PARKING_SPOT_ID, dummyParkingSpotType(VALID_PARKING_SPOT_TYPE_1, VALID_PARKING_SPOT_TYPE_FEE_1)));
             return parkingSpots;
         });
+
+        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
+			return invocation.getArgument(0);
+		};
+
         lenient().when(parkingSpotTypeRepository.save(any(ParkingSpotType.class))).thenAnswer(returnParameterAsAnswer);
+
     }
 
 
     @Test
     public void testCreateParkingSpotType() {
-        String name = "TestSpotType";
-        double fee = 1.0;
         ParkingSpotType parkingSpotType = null;
+        String error = "";
         try {
-			parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
+			parkingSpotType = parkingSpotTypeService.createParkingSpotType(VALID_PARKING_SPOT_TYPE_1, VALID_PARKING_SPOT_TYPE_FEE_1);
 		} catch (CustomException e) {
 			// Check that no error occurred
-			fail(e.getMessage());
+			error = e.getMessage();
 		}
+        assertEquals("", error);
         assertNotNull(parkingSpotType);
-        assertEquals(name, parkingSpotType.getName());
-        assertEquals(fee, parkingSpotType.getFee());
+        assertEquals(VALID_PARKING_SPOT_TYPE_1, parkingSpotType.getName());
+        assertEquals(VALID_PARKING_SPOT_TYPE_FEE_1, parkingSpotType.getFee());
     }
 
     @Test
     public void testCreateParkingSpotTypeWithInvalidFee() {
-        String name = "TestSpotType";
-        double fee = -2;
-        String error = "";
-        ParkingSpotType parkingSpotType = null;
-        try {
-			parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        
-        assertEquals(error, "Parking spot type fee cannot be less than or equal to zero! ");
-    }
-
-    @Test
-    public void testCreateParkingSpotTypeWithZeroFee() {
-        String name = "TestSpotType";
-        double fee = 0.0;
-        String error = "";
-        ParkingSpotType parkingSpotType = null;
-        try {
-			parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        
-        assertEquals(error, "Parking spot type fee cannot be less than or equal to zero! ");
+        testCreateParkingSpotTypeFailure(VALID_PARKING_SPOT_TYPE_1, -1, 
+        "Parking spot type fee cannot be less than zero! ");
     }
 
     @Test
     public void testCreateParkingSpotTypeWithInvalidName() {
-        String name = "";
-        double fee = 2;
-        String error = "";
-        ParkingSpotType parkingSpotType = null;
-        try {
-			parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        
-        assertEquals("Parking spot type name cannot be empty! ", error);
+        testCreateParkingSpotTypeFailure("", VALID_PARKING_SPOT_TYPE_FEE_1, 
+        "Parking spot type name cannot be empty! ");
     }
     @Test
     public void testUpdateParkingTypeFee() {
         ParkingSpotType parkingSpotType = null;
         String error = "";
         try {
-			parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee(PARKING_SPOT_NAME_STRING, 2);
+			parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee(VALID_PARKING_SPOT_TYPE_1, VALID_PARKING_SPOT_TYPE_FEE_2);
 		} catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();
 		}
-        assertEquals(2, parkingSpotType.getFee());
-        assertEquals(PARKING_SPOT_NAME_STRING, parkingSpotType.getName());
-        
+
+        assertEquals("", error);
+        assertNotNull(parkingSpotType);
+        assertEquals(VALID_PARKING_SPOT_TYPE_FEE_2, parkingSpotType.getFee());
+        assertEquals(VALID_PARKING_SPOT_TYPE_1, parkingSpotType.getName());    
     }
 
     @Test
-    public void testUpdateParkingTypeFeeWithInvalidName() {
-        String error = "";
-        try {
-			ParkingSpotType parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee("", 2);
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        assertEquals(
-            "Parking spot type name cannot be empty! Could not find a parking spot type by this name to update! ",
-            error );
+    public void testUpdateParkingTypeFeeWithEmptyName() {
+        testUpdateParkingSpotTypeFailure("", VALID_PARKING_SPOT_TYPE_FEE_1, 
+        "Parking spot type name cannot be empty! ");
     }
 
     @Test
     public void testUpdateParkingTypeFeeWithInvalidFee() {
-        String error = "";
-        try {
-			ParkingSpotType parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee("l", -2);
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        assertEquals(
-            "Parking spot type fee cannot be less than zero! Could not find a parking spot type by this name to update! ",
-            error );
+        testUpdateParkingSpotTypeFailure(VALID_PARKING_SPOT_TYPE_1, -1, 
+        "Parking spot type fee cannot be less than zero! ");
+
+    }
+    @Test
+    public void testUpdateParkingTypeFeeWithInvalidName() {
+        testUpdateParkingSpotTypeFailure(INVALID_PARKING_SPOT_TYPE_NAME, VALID_PARKING_SPOT_TYPE_FEE_1, 
+        "Could not find a parking spot type by this name to update! ");
+
     }
 
     @Test
@@ -201,7 +156,7 @@ public class TestParkingSpotTypeService {
 			// Check that no error occurred
 			error = e.getMessage();
 		}
-        assertEquals(PARKING_SPOT_NAME_STRING, parkingSpotTypes.get(0).getName()); 
+        assertEquals(VALID_PARKING_SPOT_TYPE_1, parkingSpotTypes.get(0).getName()); 
     }
 
     @Test
@@ -209,14 +164,15 @@ public class TestParkingSpotTypeService {
         String error = "";
         ParkingSpotType parkingSpotType = null;
         try {
-		    parkingSpotType = parkingSpotTypeService.getParkingSpotTypeByName(PARKING_SPOT_NAME_STRING);
+		    parkingSpotType = parkingSpotTypeService.getParkingSpotTypeByName(VALID_PARKING_SPOT_TYPE_1);
 		} catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();
 		}
-        assertEquals(
-            PARKING_SPOT_NAME_STRING,
-            parkingSpotType.getName() );
+        assertEquals("", error);
+        assertNotNull(parkingSpotType);
+        assertEquals(VALID_PARKING_SPOT_TYPE_1,parkingSpotType.getName() );
+        assertEquals(VALID_PARKING_SPOT_TYPE_FEE_1, parkingSpotType.getFee());
     }
 
     @Test
@@ -229,50 +185,107 @@ public class TestParkingSpotTypeService {
 			// Check that no error occurred
 			error = e.getMessage();
 		}
+        assertNull(parkingSpotType);
         assertEquals(
             "Parking spot type name cannot be empty! ",
             error);
     }
 
+
     @Test
-    public void testDeleteParkingSpot() {
+    public void testDeleteParkingSpotType() {
         String error = "";
         ParkingSpotType parkingSpotType = null;
         try {
-		    parkingSpotType = parkingSpotTypeService.deleteParkingSpotType(PARKING_SPOT_NAME_STRING);
+		    parkingSpotType = parkingSpotTypeService.deleteParkingSpotType(VALID_PARKING_SPOT_TYPE_2);
 		} catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();
 		}
-        assertEquals("This type is assigned to a parking spot ", error);
-        // assertEquals(PARKING_FEE, parkingSpotType.getFee());
+        assertEquals("", error);
+        assertNotNull(parkingSpotType);
+        assertEquals(VALID_PARKING_SPOT_TYPE_2,parkingSpotType.getName() );
+        assertEquals(VALID_PARKING_SPOT_TYPE_FEE_2, parkingSpotType.getFee());
+    }
+
+
+    @Test
+    public void testDeleteParkingSpotTypeWithInvalidDelete() {
+        testDeleteParkingSpotTypeFailure(VALID_PARKING_SPOT_TYPE_1, 
+        "This type is assigned to a parking spot ");
+
+    }
+
+    @Test
+    public void testDeleteParkingSpotWithEmptyName() {
+        testDeleteParkingSpotTypeFailure("", 
+        "a name must be mention to delete parking spot type! ");
+    
     }
 
     @Test
     public void testDeleteParkingSpotWithInvalidName() {
-        String error = "";
+        testDeleteParkingSpotTypeFailure(INVALID_PARKING_SPOT_TYPE_NAME, 
+        "no such parking spot type exist! ");
+    }
+
+
+    private void testCreateParkingSpotTypeFailure(String name, double fee, String message) {
         ParkingSpotType parkingSpotType = null;
+        String error = "";
         try {
-		    parkingSpotType = parkingSpotTypeService.deleteParkingSpotType("");
+			parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
+		} catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}  
+        assertNull(parkingSpotType);
+        assertEquals(message, error);
+    }
+
+    private void testUpdateParkingSpotTypeFailure(String name, double fee, String message) {
+        ParkingSpotType parkingSpotType = null;
+        String error = "";
+        try {
+			parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee(name, fee);
 		} catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();
 		}
-        assertEquals("a name must be mention to delete parking spot type! no such parking spot type exist! ", error);
+        assertNull(parkingSpotType);
+        assertEquals(message, error);
+
+    }
+
+    private void testDeleteParkingSpotTypeFailure(String name, String message) {
+        String error = "";
+        ParkingSpotType parkingSpotType = null;
+        try {
+		    parkingSpotType = parkingSpotTypeService.deleteParkingSpotType(name);
+		} catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertNull(parkingSpotType);
+        assertEquals(message, error);
     
     }
 
-    @Test
-    public void testDeleteParkingSpotWith() {
-        String error = "";
-        ParkingSpotType parkingSpotType = null;
-        try {
-		    parkingSpotType = parkingSpotTypeService.deleteParkingSpotType("");
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        assertEquals("a name must be mention to delete parking spot type! no such parking spot type exist! ", error);
-    
+    // dummy objects //
+
+    private ParkingSpotType dummyParkingSpotType(String Name, double fee){
+        ParkingSpotType parkingSpotType = new ParkingSpotType();
+        parkingSpotType.setFee(fee);
+        parkingSpotType.setName(Name);
+        return parkingSpotType;
     }
+
+    private ParkingSpot dummyParkingSpot(int id, ParkingSpotType parkingSpotType) {
+        ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpot.setId(id);
+        parkingSpot.setType(parkingSpotType);
+        return parkingSpot;
+    }
+
+
 }

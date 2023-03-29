@@ -29,7 +29,7 @@ import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 import ca.mcgill.ecse321.parkinglotsystem.model.SubWithAccount;
 
 @ExtendWith(MockitoExtension.class)
-public class SubWithAccountServiceTests {
+public class TestSubWithAccountService {
 
     @Mock
     private SubWithAccountRepository repository;
@@ -37,7 +37,7 @@ public class SubWithAccountServiceTests {
     private MonthlyCustomerService monthlyCustomerService;
     @Mock
     private ParkingSpotService parkingSpotService;
-
+    
     @InjectMocks
     private SubWithAccountService service;
 
@@ -54,38 +54,39 @@ public class SubWithAccountServiceTests {
 
     @BeforeEach
     public void setMockOutput() {
-
+        
         lenient().when(repository.findSubWithAccountById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            if (invocation.getArgument(0).equals(VALID_ID)) {
-                return dummy(VALID_ID, 1, dummyCustomer(VALID_CUSTOMER_EMAIL_INACTIVE),
-                        dummyParkingSpot(VALID_SPOT_ID_INACTIVE));
+            if(invocation.getArgument(0).equals(VALID_ID)) {
+                return dummy(VALID_ID, 1, dummyCustomer(VALID_CUSTOMER_EMAIL_INACTIVE), dummyParkingSpot(VALID_SPOT_ID_INACTIVE));
             }
             return null;
         });
 
-        lenient().when(repository.findSubWithAccountByCustomer(any(MonthlyCustomer.class)))
-                .thenAnswer((InvocationOnMock invocation) -> {
-                    List<SubWithAccount> subs = new ArrayList<>();
-                    MonthlyCustomer customer = invocation.getArgument(0);
-                    if (customer.getEmail().equals(VALID_CUSTOMER_EMAIL_INACTIVE)) {
-                        subs.add(dummy(1, 1, customer, dummyParkingSpot(VALID_SPOT_ID_INACTIVE)));
-                    } else if (customer.getEmail().equals(VALID_CUSTOMER_EMAIL_ACTIVE)) {
-                        subs.add(dummy(1, NBR_MONTHS_ACTIVE, customer, dummyParkingSpot(VALID_SPOT_ID_ACTIVE)));
-                    }
-                    return subs;
-                });
+        lenient().when(repository.findSubWithAccountByCustomer(any(MonthlyCustomer.class))).
+            thenAnswer((InvocationOnMock invocation) -> {
+                List<SubWithAccount> subs = new ArrayList<>();
+                MonthlyCustomer customer = invocation.getArgument(0);
+                if(customer.getEmail().equals(VALID_CUSTOMER_EMAIL_INACTIVE)) {
+                    subs.add(dummy(1, 1,customer, dummyParkingSpot(VALID_SPOT_ID_INACTIVE)));
+                }
+                else if(customer.getEmail().equals(VALID_CUSTOMER_EMAIL_ACTIVE)) {
+                    subs.add(dummy(1, NBR_MONTHS_ACTIVE,customer, dummyParkingSpot(VALID_SPOT_ID_ACTIVE)));
+                }
+                return subs;
+        });
 
-        lenient().when(repository.findSubWithAccountByParkingSpot(any(ParkingSpot.class)))
-                .thenAnswer((InvocationOnMock invocation) -> {
-                    List<SubWithAccount> subs = new ArrayList<>();
-                    ParkingSpot spot = invocation.getArgument(0);
-                    if (spot.getId() == VALID_SPOT_ID_INACTIVE) {
-                        subs.add(dummy(1, 1, dummyCustomer(VALID_CUSTOMER_EMAIL_INACTIVE), spot));
-                    } else if (spot.getId() == VALID_SPOT_ID_ACTIVE) {
-                        subs.add(dummy(1, NBR_MONTHS_ACTIVE, dummyCustomer(VALID_CUSTOMER_EMAIL_ACTIVE), spot));
-                    }
-                    return subs;
-                });
+        lenient().when(repository.findSubWithAccountByParkingSpot(any(ParkingSpot.class))).
+            thenAnswer((InvocationOnMock invocation) -> {
+                List<SubWithAccount> subs = new ArrayList<>();
+                ParkingSpot spot = invocation.getArgument(0);
+                if(spot.getId() == VALID_SPOT_ID_INACTIVE) {
+                    subs.add(dummy(1, 1, dummyCustomer(VALID_CUSTOMER_EMAIL_INACTIVE), spot));
+                }
+                else if(spot.getId() == VALID_SPOT_ID_ACTIVE) {
+                    subs.add(dummy(1, NBR_MONTHS_ACTIVE, dummyCustomer(VALID_CUSTOMER_EMAIL_ACTIVE), spot));
+                }
+                return subs;
+        });
 
         lenient().when(repository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<SubWithAccount> subs = new ArrayList<>();
@@ -100,10 +101,10 @@ public class SubWithAccountServiceTests {
             return sub;
         });
 
-        lenient().when(monthlyCustomerService.getMonthlyCustomerByEmail(anyString()))
-                .thenAnswer((InvocationOnMock invocation) -> {
-                    return dummyCustomer(invocation.getArgument(0));
-                });
+        lenient().when(monthlyCustomerService.getMonthlyCustomerByEmail(anyString())).
+            thenAnswer((InvocationOnMock invocation) -> {
+                return dummyCustomer(invocation.getArgument(0));
+        });
 
         lenient().when(parkingSpotService.getParkingSpotById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             return dummyParkingSpot(invocation.getArgument(0));
@@ -125,33 +126,33 @@ public class SubWithAccountServiceTests {
     @Test
     public void testCreateSubInvalidParkingSpot1() {
         testCreateSubFailure(
-                VALID_CUSTOMER_EMAIL_INACTIVE,
-                INVALID_SPOT_ID_1,
-                "The parking spot is not available for monthly customers.");
+            VALID_CUSTOMER_EMAIL_INACTIVE, 
+            INVALID_SPOT_ID_1, 
+            "The parking spot is not available for monthly customers.");
     }
 
     @Test
     public void testCreateSubInvalidParkingSpot2() {
         testCreateSubFailure(
-                VALID_CUSTOMER_EMAIL_INACTIVE,
-                INVALID_SPOT_ID_2,
-                "The parking spot is not available for monthly customers.");
+            VALID_CUSTOMER_EMAIL_INACTIVE, 
+            INVALID_SPOT_ID_2, 
+            "The parking spot is not available for monthly customers.");
     }
 
     @Test
     public void testCreateSubReservedParkingSpot() {
         testCreateSubFailure(
-                VALID_CUSTOMER_EMAIL_INACTIVE,
-                VALID_SPOT_ID_ACTIVE,
-                "The parking spot is currently reserved by another customer.");
+            VALID_CUSTOMER_EMAIL_INACTIVE, 
+            VALID_SPOT_ID_ACTIVE, 
+            "The parking spot is currently reserved by another customer.");
     }
 
     @Test
     public void testCreateSubCustomerWithActiveSubscription() {
         testCreateSubFailure(
-                VALID_CUSTOMER_EMAIL_ACTIVE,
-                VALID_SPOT_ID_INACTIVE,
-                "The monthly customer already has an active subscription.");
+            VALID_CUSTOMER_EMAIL_ACTIVE, 
+            VALID_SPOT_ID_INACTIVE, 
+            "The monthly customer already has an active subscription.");
     }
 
     @Test
@@ -167,7 +168,7 @@ public class SubWithAccountServiceTests {
         String errMsg = "";
         try {
             sub = service.getSubWithAccount(INVALID_ID);
-        } catch (Exception e) {
+        } catch(Exception e) {
             errMsg = e.getMessage();
         }
         assertNull(sub);
@@ -187,7 +188,7 @@ public class SubWithAccountServiceTests {
         String errMsg = "";
         try {
             sub = service.getActiveByCustomer(INVALID_CUSTOMER_EMAIL);
-        } catch (Exception e) {
+        } catch(Exception e) {
             errMsg = e.getMessage();
         }
         assertNull(sub);
@@ -200,7 +201,7 @@ public class SubWithAccountServiceTests {
         String errMsg = "";
         try {
             sub = service.getActiveByCustomer(VALID_CUSTOMER_EMAIL_INACTIVE);
-        } catch (Exception e) {
+        } catch(Exception e) {
             errMsg = e.getMessage();
         }
         assertNull(sub);
@@ -220,7 +221,7 @@ public class SubWithAccountServiceTests {
         String errMsg = "";
         try {
             sub = service.getActiveByParkingSpot(INVALID_SPOT_ID_1);
-        } catch (Exception e) {
+        } catch(Exception e) {
             errMsg = e.getMessage();
         }
         assertNull(sub);
@@ -233,7 +234,7 @@ public class SubWithAccountServiceTests {
         String errMsg = "";
         try {
             sub = service.getActiveByParkingSpot(VALID_SPOT_ID_INACTIVE);
-        } catch (Exception e) {
+        } catch(Exception e) {
             errMsg = e.getMessage();
         }
         assertNull(sub);
@@ -245,7 +246,7 @@ public class SubWithAccountServiceTests {
         List<SubWithAccount> subs = service.getAllByCustomer(VALID_CUSTOMER_EMAIL_INACTIVE);
         assertNotNull(subs);
         assertTrue(subs.size() > 0);
-        for (SubWithAccount sub : subs) {
+        for(SubWithAccount sub : subs) {
             assertEquals(VALID_CUSTOMER_EMAIL_INACTIVE, sub.getCustomer().getEmail());
         }
     }
@@ -255,7 +256,7 @@ public class SubWithAccountServiceTests {
         List<SubWithAccount> subs = service.getAllByParkingSpot(VALID_SPOT_ID_INACTIVE);
         assertNotNull(subs);
         assertTrue(subs.size() > 0);
-        for (SubWithAccount sub : subs) {
+        for(SubWithAccount sub : subs) {
             assertEquals(VALID_SPOT_ID_INACTIVE, sub.getParkingSpot().getId());
         }
     }
@@ -274,12 +275,28 @@ public class SubWithAccountServiceTests {
         assertEquals(NBR_MONTHS_ACTIVE + 1, sub.getNbrMonths());
     }
 
+    @Test
+    public void testDeleteSub() {
+        service.deleteSubWithAccount(VALID_ID);
+    }
+
+    @Test
+    public void testDeleteNonExistingSub() {
+        String errMsg = "";
+        try {
+            service.deleteSubWithAccount(INVALID_ID);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("Invalid reservation ID.", errMsg);
+    }
+
     private void testCreateSubFailure(String monthlyCustomerEmail, int parkingSpotId, String message) {
         SubWithAccount sub = null;
         String errMsg = "";
         try {
             sub = service.createSubWithAccount(monthlyCustomerEmail, parkingSpotId);
-        } catch (Exception e) {
+        } catch(Exception e) {
             errMsg = e.getMessage();
         }
         assertEquals(message, errMsg);

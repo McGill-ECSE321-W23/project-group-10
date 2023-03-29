@@ -22,22 +22,15 @@ public class ServiceReqWithAccountService {
     @Autowired
     private MonthlyCustomerService monthlyCustomerService;
     @Autowired
-    private ServiceRepository serviceRepository;
-
+    private ServicesService serviceService;
 
     @Transactional
-    public ServiceReqWithAccount createServiceReqWithAccount(String monthlyCustomerEmail, int price){
-        boolean flag = true;
-        for (Service aService : serviceRepository.findServiceByPrice(price)){
-            if(aService.getPrice()==price){
-                flag = false;
-            }
-        }
-        if(flag){
-            throw new CustomException("No service with such price", HttpStatus.BAD_REQUEST);
-        }
+    public ServiceReqWithAccount createServiceReqWithAccount(String monthlyCustomerEmail, String description) {
 
-        Service service = serviceRepository.findServiceByPrice(price).get(0);
+        Service service = serviceService.getServiceByDescription(description);
+        if (monthlyCustomerEmail.equals("")) {
+            throw new CustomException("License Number empty! ", HttpStatus.BAD_REQUEST);
+        }
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
         ServiceReqWithAccount serviceReqWithAccount = new ServiceReqWithAccount();
         serviceReqWithAccount.setIsAssigned(true);
@@ -49,43 +42,54 @@ public class ServiceReqWithAccountService {
     }
 
     @Transactional
-    public ServiceReqWithAccount getServiceReqWithAccountById(int id){
-        if (serviceReqWithAccountRepository.findServiceReqWithAccountById(id)==null){
+    public ServiceReqWithAccount getServiceReqWithAccountById(int id) {
+        if (serviceReqWithAccountRepository.findServiceReqWithAccountById(id) == null) {
             throw new CustomException("No serviceRequest Id", HttpStatus.BAD_REQUEST);
         }
         return serviceReqWithAccountRepository.findServiceReqWithAccountById(id);
     }
 
     @Transactional
-    public List<ServiceReqWithAccount> getServiceReqWithAccountByIsAssigned(boolean isAssigned){
+    public List<ServiceReqWithAccount> getServiceReqWithAccountByIsAssigned(boolean isAssigned) {
+        if (serviceReqWithAccountRepository.findServiceReqWithAccountByIsAssigned(isAssigned).size() <= 0) {
+            throw new CustomException("No serviceRequest with such IsAssigned", HttpStatus.BAD_REQUEST);
+        }
         return serviceReqWithAccountRepository.findServiceReqWithAccountByIsAssigned(isAssigned);
     }
 
     // @Transactional
-    // public List<ServiceReqWithAccount> getServiceReqWithAccountByService(Service service){
-    //     if (serviceReqWithAccountRepository.findServiceReqWithAccountByService(service).isEmpty()){
-    //         throw new CustomException("No serviceRequest with such service", HttpStatus.BAD_REQUEST);
-    //     }
-    //     return serviceReqWithAccountRepository.findServiceReqWithAccountByService(service);
+    // public List<ServiceReqWithAccount> getServiceReqWithAccountByService(Service
+    // service){
+    // if
+    // (serviceReqWithAccountRepository.findServiceReqWithAccountByService(service).isEmpty()){
+    // throw new CustomException("No serviceRequest with such service",
+    // HttpStatus.BAD_REQUEST);
     // }
-    
+    // return
+    // serviceReqWithAccountRepository.findServiceReqWithAccountByService(service);
+    // }
+
     @Transactional
-    public List<ServiceReqWithAccount> getServiceReqWithAccountByCustomer(String monthlyCustomerEmail){
+    public List<ServiceReqWithAccount> getServiceReqWithAccountByCustomer(String monthlyCustomerEmail) {
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
-        if (serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer).isEmpty()){
+        if (serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer).isEmpty()) {
             throw new CustomException("No serviceRequest with this customer", HttpStatus.BAD_REQUEST);
         }
         return serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer);
     }
 
     @Transactional
-    public List<ServiceReqWithAccount> getAll(){
-        return (List<ServiceReqWithAccount>)(ServiceRequest)toList(serviceReqWithAccountRepository.findAll());
+    public List<ServiceReqWithAccount> getAll() {
+        List<ServiceReqWithAccount> list = toList(serviceReqWithAccountRepository.findAll());
+        return list;
     }
 
     @Transactional
-    public ServiceReqWithAccount updateIsAssignedById(int id ,boolean isAssigned){
+    public ServiceReqWithAccount updateIsAssignedById(int id, boolean isAssigned) {
         ServiceReqWithAccount serviceReqWithAccount = serviceReqWithAccountRepository.findServiceReqWithAccountById(id);
+        if (serviceReqWithAccount == null) {
+            throw new CustomException("The ServiceReqWithAccount Id does not exist", HttpStatus.BAD_REQUEST);
+        }
         serviceReqWithAccount.setIsAssigned(isAssigned);
         serviceReqWithAccountRepository.save(serviceReqWithAccount);
         return serviceReqWithAccount;

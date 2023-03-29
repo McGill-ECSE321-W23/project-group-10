@@ -25,7 +25,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/employee", "/api/employee/"})
+@RequestMapping("/api/employee")
 
 public class EmployeeController {
 
@@ -37,13 +37,13 @@ public class EmployeeController {
     EmployeeService employeeService;
 
 
-    @GetMapping(value={"/all/","/all"})
+    @GetMapping(value={"/",""})
     public List<EmployeeDto> getAllEmployeeDtos(){
         return employeeService.getAllEmployees().stream().map(ma -> HelperMethods.convertEmployeeToDto(ma)).collect(Collectors.toList());
     }
 
 
-    @PostMapping(value = {"/create/{email}", "/create/{email}/"})
+    @PostMapping(value = {"/{email}", "/{email}/"})
     public EmployeeDto createEmployeeDto(@PathVariable("email") String email, 
         @RequestParam("name") String name,
         @RequestParam("phone") String phone,
@@ -53,7 +53,7 @@ public class EmployeeController {
     }
 
 
-    @GetMapping(value = {"/getByName/{name}", "/getByName/{name}/"})
+    @GetMapping(value = {"/all-by-name/{name}", "/all-by-name/{name}/"})
     public List<EmployeeDto> getEmployeeDtoByName(@PathVariable("name") String name) {
         List<EmployeeDto> employeeDtos = new ArrayList<EmployeeDto>();
         List<Employee> ems = employeeService.getEmployeeByName(name);
@@ -66,7 +66,7 @@ public class EmployeeController {
     }
 
 
-    @GetMapping(value = {"/getByPhone/{phone}", "/getByPhone/{phone}/"})
+    @GetMapping(value = {"/all-by-phone/{phone}", "/all-by-phone/{phone}/"})
     public List<EmployeeDto> getEmployeeDtoByPhone(@PathVariable("phone") String phone) {
         List<EmployeeDto> employeeDtos = new ArrayList<EmployeeDto>();
         List<Employee> ems = employeeService.getEmployeeByPhone(phone);
@@ -79,7 +79,7 @@ public class EmployeeController {
     }
 
 
-    @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
+    @GetMapping(value = {"/{email}", "/{email}/"})
     public EmployeeDto getEmployeeDtoByEmail(@PathVariable("email") String email) {
         Employee em = employeeService.getEmployeeByEmail(email);
         if(em==null){
@@ -89,14 +89,14 @@ public class EmployeeController {
     }
 
 
-    @DeleteMapping(value = {"/delete/{email}","/delete/{email}/"})
+    @DeleteMapping(value = {"/{email}","/{email}/"})
     public EmployeeDto deleteEmployeeDtoByEmail(@PathVariable("email") String email) {
         Employee em = employeeService.deleteEmployeeByEmail(email);
         return HelperMethods.convertEmployeeToDto(em);
     }
 
 
-    @PutMapping(value ={"/update/{email}", "/update/{email}/"})
+    @PutMapping(value ={"/{email}", "/{email}/"})
     public EmployeeDto updateEmployeeDto(@PathVariable("email") String email, 
         @RequestParam("name") String name,
         @RequestParam("phone") String phone,

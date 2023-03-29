@@ -27,11 +27,13 @@ public class ManagerRepositoryTests {
         String email = "walter@outlook.com";
         String phone = "1111";
         String password = "password1";
+        String token = "123";
         Manager walter = new Manager();
         walter.setName(name);
         walter.setEmail(email);
         walter.setPhone(phone);
         walter.setPassword(password);
+        walter.setToken(token);
 
         // Save object
         walter = managerRepository.save(walter);
@@ -42,14 +44,17 @@ public class ManagerRepositoryTests {
         var objsByName = managerRepository.findManagerByName(name);
         var objsByPass = managerRepository.findManagerByPassword(password);
         var objsByPhone = managerRepository.findManagerByPhone(phone);
+        var objsByToken = managerRepository.findManagerByToken(token);
 
         // Assert that object has correct attributes
         assertNotNull(walter);
         assertEquals(name, walter.getName());
         assertEquals(phone, walter.getPhone());
         assertEquals(password, walter.getPassword());
+        assertEquals(token, walter.getToken());
         assertEquals(1, objsByName.size());
         assertEquals(1, objsByPass.size());
         assertEquals(1, objsByPhone.size());
+        assertEquals(1, objsByToken.size());
     }
 }

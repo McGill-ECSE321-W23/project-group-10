@@ -5,13 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotTypeRepository;
+import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
+import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
-
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 /*
  * author Shaun Soobagrah
@@ -23,6 +26,8 @@ public class ParkingSpotService {
     ParkingSpotRepository parkingSpotRepository;
     @Autowired
     ParkingSpotTypeRepository parkingSpotTypeRepository;
+    @Autowired
+    ReservationRepository reservationRepository;
 
     /**
      * method to a create parking spot
@@ -31,45 +36,29 @@ public class ParkingSpotService {
      * @return
      */
     @Transactional
-    public ParkingSpot createParkingSpot(int id, ParkingSpotType parkingSpotType){
+    public ParkingSpot createParkingSpot(int id, String parkingSpotTypeName){
 
         // Input validation
         String error = "";
 
         // we need to start id at 1
         error += checkId(id);
-
-        error += checkType(parkingSpotType);
-
+        // error += checkType(parkingSpotType);
         if (error.length() > 0) {
-			throw new IllegalArgumentException(error);
-            
+			throw new CustomException(error, HttpStatus.BAD_REQUEST);   
 		}
 
-        // check if id is unique
-        if (parkingSpotRepository.findParkingSpotById(id) != null) {
-            error += "A parking spot id must be unique lol! ";
-        }
-
+        ParkingSpotType parkingSpotType  = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
         // check if parking spot type exist
-        if (parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotType.getName()) == null) {
-            error += "There is no such parking spot type! ";
-        }
-
-        if (error.length() > 0) {
-			throw new IllegalArgumentException(error);
+        if (parkingSpotType == null) {
+	        throw new CustomException("No parking spot type with name " + parkingSpotTypeName + " exists! ", HttpStatus.NOT_FOUND);
 		}
 
-        
-        ParkingSpot parkingSpot = new ParkingSpot();
-        if (error.length() == 0) {
-            
-            parkingSpot.setId(id);
-            parkingSpot.setType(parkingSpotType);
-            parkingSpotRepository.save(parkingSpot);
-        }
-        
-
+        ParkingSpot parkingSpot = new ParkingSpot();   
+        parkingSpot.setId(id);
+        parkingSpot.setType(parkingSpotType);
+        parkingSpotRepository.save(parkingSpot);
+    
         return parkingSpot;
     }
 
@@ -85,6 +74,7 @@ public class ParkingSpotService {
         return HelperMethods.toList(pIterable);
 
     }
+
     /**
      * method to get parking spot by id
      * @param id
@@ -94,19 +84,12 @@ public class ParkingSpotService {
     public ParkingSpot getParkingSpotById(int id) {
 
         // input validation
-        String error = "";
-
         ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotById(id);
 
         // if no parking spot found, throw execption
         if (parkingSpot == null) {
-            error = error + "No parking spot with that id was found! ";
+            throw new CustomException("No parking spot with that id was found! ", HttpStatus.NOT_FOUND);
         }
-
-        if (error.length() > 0) {
-			throw new IllegalArgumentException(error);
-		}
-
         return parkingSpot;
     }
 
@@ -116,24 +99,17 @@ public class ParkingSpotService {
      * @return parking spot
      */
     @Transactional
-    public ParkingSpot deleteParkingSpotBy(int id) {
-
-        // input validation
-        
-        String error = "";
+    public ParkingSpot deleteParkingSpotById(int id) {
         // if no parking spot found, throw execption
         ParkingSpot spot = parkingSpotRepository.findParkingSpotById(id);
         if (spot == null) {
-            error = error + "No parking spot with that id was found! ";
-        }
-        if (error.length() > 0) {
-			throw new IllegalArgumentException(error);
+			throw new CustomException("No parking spot with that id was found! ", HttpStatus.NOT_FOUND);
 		}
-        else {
-       
-            parkingSpotRepository.delete(spot);
-        }
-        
+        List<Reservation> reservations = reservationRepository.findReservationsByParkingSpot(spot);
+        if (reservations.get(0).getParkingSpot().getId() == id ) {
+            throw new CustomException("Cannot delete as parking spot has 1 or more reservation! ", HttpStatus.BAD_REQUEST);
+        }     
+        parkingSpotRepository.delete(spot);   
         return spot;
     }
 
@@ -143,10 +119,12 @@ public class ParkingSpotService {
      * @return list of parking spot
      */
     @Transactional
-    public List<ParkingSpot> getParkingSpotByType(ParkingSpotType parkingSpotType) {
-
+    public List<ParkingSpot> getParkingSpotByType(String parkingSpotTypeName) {
+        ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
+        if (parkingSpotType == null) {
+            throw new CustomException("Cannot find parking spot type by that name! ", HttpStatus.NOT_FOUND);
+        }
         List<ParkingSpot> pList = parkingSpotRepository.findParkingSpotByType(parkingSpotType);
-        if (pList.size() == 0) throw new IllegalArgumentException("List is empty! ");
         return pList;
     }
 
@@ -156,21 +134,20 @@ public class ParkingSpotService {
      * @param parkingSpotType
      * @return ParkingSpot
      */
+
     @Transactional
-    public ParkingSpot updateParkingSpot(int id, ParkingSpotType parkingSpotType) {
-        String error = "";
+    public ParkingSpot updateParkingSpot(int id, String parkingSpotTypeName) {
         //check if spot exists
         ParkingSpot spot = parkingSpotRepository.findParkingSpotById(id);
         if (parkingSpotRepository.findParkingSpotById(id) == null) {
-            error += "no parking spot with that id exists! ";
-        }
-        if (error.length() > 0) {
-			throw new IllegalArgumentException(error);
+			throw new CustomException("no parking spot with that id exists! ", HttpStatus.NOT_FOUND);
 		}
-        else {    
-            spot.setType(parkingSpotType);
-            parkingSpotRepository.save(spot);
+        ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
+        if (parkingSpotType == null) {
+            throw new CustomException("Cannot find parking spot type by that name! ", HttpStatus.NOT_FOUND);
         }
+        spot.setType(parkingSpotType);
+        parkingSpotRepository.save(spot);
         return spot;
     }
 
@@ -190,16 +167,4 @@ public class ParkingSpotService {
         return error;
     }
 
-    /**
-     * check if parking type exist
-     * @param parkingSpotType
-     * @return error
-     */
-    private String checkType(ParkingSpotType parkingSpotType) {
-        String error = "";
-        if (parkingSpotType == null){
-            error = error + "Parking spot type cannot be null!";
-        }
-        return error;
-    }
 }

@@ -51,12 +51,14 @@ public class EmployeeService {
         return employee;
      }
 
-
      @Transactional
      public Employee getEmployeeByEmail(String email){
-        return employeeRepository.findEmployeeByEmail(email);
+        Employee em = employeeRepository.findEmployeeByEmail(email);
+        if(em == null) {
+            throw new CustomException("Invalid employee email! ", HttpStatus.BAD_REQUEST);
+        }
+        return em;
      }
-
 
      @Transactional
      public List<Employee> getEmployeeByName(String name){
