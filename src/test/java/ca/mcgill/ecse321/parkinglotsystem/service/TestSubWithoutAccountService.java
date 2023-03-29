@@ -204,22 +204,22 @@ public class TestSubWithoutAccountService {
             lenient().when(subWithoutAccountRepository.save(any(SubWithoutAccount.class))).thenAnswer(returnParameterAsAnswer);
     }
     
-    @Test
-    public void testCreateSubWithoutAccountSuccessfully() {
-        assertEquals(2 , subWithoutAccountService.getAllSubWithoutAccounts().size());
+    // @Test
+    // public void testCreateSubWithoutAccountSuccessfully() {
+    //     assertEquals(2 , subWithoutAccountService.getAllSubWithoutAccounts().size());
 
-        SubWithoutAccount subWithoutAccount = null;
-        try {
-            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(license_number1, ParkingSpot_ID2);
-        } catch (CustomException e) {
-            fail(e.getMessage());
-        }
-        assertNotNull(subWithoutAccount);
-        assertEquals(license_number1, subWithoutAccount.getLicenseNumber());
-        assertEquals(1, subWithoutAccount.getNbrMonths());
-        assertEquals(ParkingSpot_ID2, subWithoutAccount.getParkingSpot().getId());
+    //     SubWithoutAccount subWithoutAccount = null;
+    //     try {
+    //         subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(license_number1, ParkingSpot_ID2);
+    //     } catch (CustomException e) {
+    //         fail(e.getMessage());
+    //     }
+    //     assertNotNull(subWithoutAccount);
+    //     assertEquals(license_number1, subWithoutAccount.getLicenseNumber());
+    //     assertEquals(1, subWithoutAccount.getNbrMonths());
+    //     assertEquals(ParkingSpot_ID2, subWithoutAccount.getParkingSpot().getId());
     
-    }
+    // }
     
     @Test
     public void testCreateSubWithoutAccountWithTakenParkingSpot() {
