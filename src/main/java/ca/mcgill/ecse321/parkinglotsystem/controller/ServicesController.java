@@ -34,7 +34,7 @@ public class ServicesController {
 
     /**
      * Controller to get all services
-     * @return List of type ServicesDto
+     * @return A List of ServicesDto
      */
     @GetMapping(value = {"", "/"})
     public List<ServiceDto> getAllServices() throws Exception {
@@ -51,7 +51,7 @@ public class ServicesController {
      * @param description the description of the service
      * @param price the price of the service
      * @return A ServicesDto
-     * @throws Exception if to create the service fail
+     * @throws IllegalArgumentException if to create the service fail
      */
     @PostMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto createServices(
@@ -72,7 +72,7 @@ public class ServicesController {
      * Controller to get a service by description
      * @param description the description of the service
      * @return A ServicesDto
-     * @throws Exception if to get the service fail
+     * @throws IllegalArgumentException if to get the service fail
      */
     @GetMapping(value = {"/{description}/", "/{description}"})
     public ServiceDto getServicesByDescription(@PathVariable("description") String description) {
@@ -89,8 +89,8 @@ public class ServicesController {
     /**
      * Controller to get a list of services by price
      * @param price the price of service
-     * @return List of ServicesDto
-     * @throws Exception if to get services fail
+     * @return A List of ServicesDto
+     * @throws IllegalArgumentException if to get services fail
      */
     @GetMapping(value = {"/all-by-price/{price}", "/all-by-price/{price}/"})
     public List<ServiceDto> getServicesByPrice(@PathVariable("price") int price) {
@@ -112,7 +112,7 @@ public class ServicesController {
      * Controller for delete a service
      * @param description the description of the service
      * @return service deleted
-     * @throws Exception if to delete service fail
+     * @throws IllegalArgumentException if to delete service fail
      */
     @DeleteMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto deleteServicesByDescription(@PathVariable("description") String description) {
@@ -130,7 +130,7 @@ public class ServicesController {
      * @param description the description of the service
      * @param price the price of the service
      * @return A serviceDto
-     * @throws Exception if to update the service fail
+     * @throws IllegalArgumentException if to update the service fail
      */
     @PutMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto updateServicesByDescription(
