@@ -49,15 +49,15 @@ public class SubWithoutAccountController {
     }
 
     @PostMapping(value = {"", "/"})
-    public SubWithoutAccountDto createSubWithoutAccount(@RequestParam(name = "id") int id, @RequestParam(name = "date") Date date, @RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "nbrMonths") int nbrMonths, @RequestParam(name = "parkingSpotId") int parkingSpotId){
-        SubWithoutAccount subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(id, date, licenseNumber, nbrMonths, parkingSpotId);
+    public SubWithoutAccountDto createSubWithoutAccount(@RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "parkingSpotId") int parkingSpotId){
+        SubWithoutAccount subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(licenseNumber, parkingSpotId);
         return convertToDto(subWithoutAccount);
     }
 
     @GetMapping(value = { "/all-by-parking-spot/{parkingSpot}", "/all-by-parking-spot/{parkingSpot}/"})
-    public List<SubWithoutAccountDto> getSubWithoutAccountsByParkingSpot(@PathVariable("parkingSpot") ParkingSpot spot){
+    public List<SubWithoutAccountDto> getSubWithoutAccountsByParkingSpot(@PathVariable("parkingSpotId") int parkingSpotId){
         List<SubWithoutAccountDto> subWithoutAccountDtos = new ArrayList<SubWithoutAccountDto>();
-        List<Reservation> reservations = subWithoutAccountService.getReservationsByParkingSpot(spot);
+        List<Reservation> reservations = subWithoutAccountService.getReservationsByParkingSpot(parkingSpotId);
         for (Reservation r : reservations){
            subWithoutAccountDtos.add((SubWithoutAccountDto) convertToDto(r));
         }
@@ -93,13 +93,8 @@ public class SubWithoutAccountController {
     }
 
     @PutMapping(value = { "/{id}", "/{id}/" })
-	public SubWithoutAccountDto updateSubWithoutAccountDto(
-        @PathVariable("id") int id, 
-        @RequestParam Date newDate, 
-        @RequestParam String newLicenseNumber, 
-        @RequestParam int newParkingTime, 
-        @RequestParam int newSpotId) {
-		SubWithoutAccount subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(id, newDate, newLicenseNumber, newParkingTime, newSpotId);
+	public SubWithoutAccountDto updateSubWithoutAccountDto(@RequestParam String newLicenseNumber) {
+		SubWithoutAccount subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(newLicenseNumber);
 		return convertToDto(subWithoutAccount);
 	}
 

@@ -58,8 +58,7 @@ public List<ReservationDto> getReservationsByDate(@PathVariable Date date){
 @GetMapping(value = { "/all-by-parking-spot/{id}", "/all-by-parking-spot/{id}/"})
 public List<ReservationDto> getReservationsByParkingSpot(@PathVariable("id") int parkingSpotId){
     List<ReservationDto> reservationDtos = new ArrayList<ReservationDto>();
-    ParkingSpot spot = parkingSpotService.getParkingSpotById(parkingSpotId);
-    List<Reservation> reservations = reservationService.getReservationsByParkingSpot(spot);
+    List<Reservation> reservations = reservationService.getReservationsByParkingSpot(parkingSpotId);
     for (Reservation r : reservations){
         reservationDtos.add(convertToDto(r));
     }
