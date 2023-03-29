@@ -78,18 +78,12 @@ public class PaymentReservationService {
      }
      @Transactional
      public PaymentReservation updatePaymentReservation(int paymentResId, Timestamp dateTime, double amount, int reservationId ) {
-
         //input validation
-        String error = "";
         if (dateTime == null) {
             throw new CustomException("No date and time entered! ", HttpStatus.BAD_REQUEST);
         }
         if (amount < 0) {
             throw new CustomException("Amount should be greater than 0! ", HttpStatus.BAD_REQUEST);
-        }
-
-        if (error.length() > 0) {
-			
         }
 
         Reservation reservation = reservationRepository.findReservationById(reservationId);
