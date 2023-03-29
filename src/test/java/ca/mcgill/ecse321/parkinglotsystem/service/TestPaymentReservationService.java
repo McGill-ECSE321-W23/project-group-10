@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyDouble;
@@ -60,16 +62,19 @@ public class TestPaymentReservationService {
     // for reservation
     private static final int RESERVATION_ID1 = 1;
     private static final int RESERVATION_ID2 = 2;
+    private static final int INVALID_RESERVATION_ID = 200;
     private static final Date RESERVATION_DATE = Date.valueOf("2023-02-27");
     private static final String LICENSE_NUMBER = "1A1";
     private static final int PARKING_TIME_SINGLE_RESERVATION = 10;
 
     // for Payment reservation
-    private static final int PAYMENT_ID1 =1;
-    private static final int PAYMENT_ID2 =2;
+    private static final int PAYMENT_ID1 = 1;
+    private static final int PAYMENT_ID2 = 2;
+    private static final int INVALID_PAYMENT_ID = -1;
     private static final Timestamp PAYMENT_TIME = Timestamp.valueOf("2018-09-01 09:01:15");
     private static final double PAYMENT_AMOUNT1 = 1.0;
     private static final double PAYMENT_AMOUNT2 = 2.0;
+    private static final double INVALID_PAYMENT_AMOUNT = -1.0;
 
 
     @BeforeEach
@@ -135,10 +140,8 @@ public class TestPaymentReservationService {
     
     @Test
     public void testCreatePaymentReservation() {
-
         // Create a PaymentReservation object
         PaymentReservation paymentReservation = new PaymentReservation();
-
         String error = "";
         try {
 			paymentReservation = paymentReservationService.createPaymentReservation(PAYMENT_TIME, PAYMENT_AMOUNT1, RESERVATION_ID1);
@@ -146,45 +149,28 @@ public class TestPaymentReservationService {
 			// Check that no error occurred
 			error = e.getMessage();
 		}
-
+        assertEquals("", error);
+        assertNotNull(paymentReservation);
         assertEquals(PAYMENT_TIME, paymentReservation.getDateTime());
         assertEquals(PAYMENT_AMOUNT1, paymentReservation.getAmount());
     }
 
     @Test
-    public void testCreatePaymentReservationWithInvalidInput() {
-        Timestamp timestamp = null;
+    public void testCreatePaymentReservationWithInvalidDate() {
+        testCreatePaymentReservationFailure(null, PAYMENT_AMOUNT1, RESERVATION_ID1, 
+        "no date and time entered! ");
+    }
 
-        // Create a PaymentReservation object
-        PaymentReservation paymentReservation = new PaymentReservation();
-
-        String error = "";
-        try {
-			paymentReservation = paymentReservationService.createPaymentReservation(timestamp, -1, RESERVATION_ID1);
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-
-        assertEquals("no date and time entered! amount should be greater than 0! ", error);
-        
+    @Test
+    public void testCreatePaymentReservationWithInvalidFee() {
+        testCreatePaymentReservationFailure(PAYMENT_TIME, INVALID_PAYMENT_AMOUNT, RESERVATION_ID1, 
+        "amount should be greater than 0! ");
     }
 
     @Test
     public void testCreatePaymentReservationWithInvalidReservation() {
-
-        // Create a PaymentReservation object
-        PaymentReservation paymentReservation = new PaymentReservation();
-        int invalidReservationId = 1000;
-        String error = "";
-        try {
-			paymentReservation = paymentReservationService.createPaymentReservation(PAYMENT_TIME, PAYMENT_AMOUNT1, invalidReservationId);
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-
-        assertEquals("Reservation is not found. ", error);
+        testCreatePaymentReservationFailure(PAYMENT_TIME, PAYMENT_AMOUNT1, INVALID_RESERVATION_ID, 
+        "Reservation is not found. ");
     }
 
 
@@ -225,24 +211,18 @@ public class TestPaymentReservationService {
 
     @Test
     public void testDeletePaymentReservationWithInvalidId() {
-        String error = "";
-        PaymentReservation paymentReservation = null;
-        try {
-            paymentReservation = paymentReservationService.deletePaymentReservation(-1);
+        testDeletePaymentReservationFailure(INVALID_PAYMENT_ID, "Invalid payment id! ");
+    }
 
-        }catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        assertEquals("Invalid payment id! No payment with that id exists! ", error);
-
+    @Test
+    public void testDeletePaymentReservationWithFalseId() {
+        testDeletePaymentReservationFailure(4, "No payment with that id exists! ");
     }
 
     @Test
     public void testUpdatePaymentReservation() {
         // Create a PaymentReservation object
         PaymentReservation paymentReservation = new PaymentReservation();
-
         String error = "";
         Timestamp newPaymentTime = Timestamp.valueOf("2023-09-01 09:01:15");
         double newPaymentFee = 80;
@@ -261,61 +241,29 @@ public class TestPaymentReservationService {
 
 
     @Test
+    public void testUpdatePaymentReservationWithInvalidDate() {
+        testUpdatePaymentReservationFailure(PAYMENT_ID1, null, PAYMENT_AMOUNT1, RESERVATION_ID1, 
+        "No date and time entered! ");
+
+    }
+
+    @Test
     public void testUpdatePaymentReservationWithInvalidInput() {
-        // Create a PaymentReservation object
-        PaymentReservation paymentReservation = new PaymentReservation();
-
-        String error = "";
-        Timestamp newPaymentTime = null;
-        double newPaymentFee = -1;
-
-        try {
-			paymentReservation = paymentReservationService.updatePaymentReservation(PAYMENT_ID1, newPaymentTime, newPaymentFee, RESERVATION_ID2);
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        assertEquals("No date and time entered! Amount should be greater than 0! ", error); 
-
+        testUpdatePaymentReservationFailure(PAYMENT_ID1, PAYMENT_TIME, INVALID_PAYMENT_AMOUNT, RESERVATION_ID1, 
+        "Amount should be greater than 0! ");
     }
 
     @Test
     public void testUpdatePaymentReservationWithInvalidReservation() {
-        // Create a PaymentReservation object
-        PaymentReservation paymentReservation = new PaymentReservation();
-
-        String error = "";
-        Timestamp newPaymentTime = Timestamp.valueOf("2023-09-01 09:01:15");
-        double newPaymentFee = 80;
-
-        try {
-			paymentReservation = paymentReservationService.updatePaymentReservation(PAYMENT_ID1, newPaymentTime, newPaymentFee, 100000);
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        assertEquals("Reservation not found. ", error); 
-
+        testUpdatePaymentReservationFailure(PAYMENT_ID1, PAYMENT_TIME, PAYMENT_AMOUNT1, 40, 
+        "Reservation not found. ");
     }
 
     @Test
     public void testUpdatePaymentReservationWithInvalidId() {
-        // Create a PaymentReservation object
-        PaymentReservation paymentReservation = new PaymentReservation();
-
-        String error = "";
-        Timestamp newPaymentTime = Timestamp.valueOf("2023-09-01 09:01:15");
-        double newPaymentFee = 80;
-
-        try {
-			paymentReservation = paymentReservationService.updatePaymentReservation(1022434332, newPaymentTime, newPaymentFee, RESERVATION_ID2);
-		} catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        assertEquals("Payment reservation not found. ", error); 
+        testUpdatePaymentReservationFailure(INVALID_PAYMENT_ID, PAYMENT_TIME, PAYMENT_AMOUNT1, RESERVATION_ID1, 
+        "Payment reservation not found. ");
     }
-
 
     @Test
     public void testGetPaymentReservationByReservation() {
@@ -337,34 +285,15 @@ public class TestPaymentReservationService {
 
     @Test
     public void testGetPaymentReservationByReservationWithWrongId() {
-
-        String error = "";
-        List<PaymentReservation> paymentReservations = null;
-        try {
-            paymentReservations = paymentReservationService.getPaymentReservationByReservation(122323);
-
-        }catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        assertEquals("Reservation not found. ", error);
+        testGetPaymentReservationByReservationFailure(4343, 
+        "Reservation not found. ");
 
     }
 
     @Test
     public void testGetPaymentReservationByReservationWithInvalidId() {
-
-        String error = "";
-        List<PaymentReservation> paymentReservations = null;
-        try {
-            paymentReservations = paymentReservationService.getPaymentReservationByReservation(0);
-
-        }catch (CustomException e) {
-			// Check that no error occurred
-			error = e.getMessage();
-		}
-        assertEquals("reservation id should be greater than 0! ", error);
-
+        testGetPaymentReservationByReservationFailure(-1, 
+        "reservation id should be greater than 0! ");
     }
 
     @Test
@@ -431,6 +360,60 @@ public class TestPaymentReservationService {
         assertEquals("Invalid amount! ", error);
 
     }
+
+
+    private void testCreatePaymentReservationFailure(Timestamp timestamp, double amount, int resId, String message) {
+        PaymentReservation paymentReservation = null;
+        String error = "";
+        try {
+			paymentReservation = paymentReservationService.createPaymentReservation(timestamp, amount, resId);
+		} catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertNull(paymentReservation);
+        assertEquals(message, error);
+    }
+
+    private void testDeletePaymentReservationFailure(int id, String message) {
+        PaymentReservation paymentReservation = null;
+        String error = "";
+        try {
+			paymentReservation = paymentReservationService.deletePaymentReservation(id);
+		} catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertNull(paymentReservation);
+        assertEquals(message, error);
+    }
+
+    private void testUpdatePaymentReservationFailure(int payId, Timestamp newTime, double newFee, int resId, String message) {
+        PaymentReservation paymentReservation = null;
+        String error = "";
+        try {
+			paymentReservation = paymentReservationService.updatePaymentReservation(payId, newTime, newFee, resId);
+		} catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertNull(paymentReservation);
+        assertEquals(message, error);
+    }
+
+    private void testGetPaymentReservationByReservationFailure(int id, String message) {
+        String error = "";
+        List<PaymentReservation> paymentReservations = null;
+        try {
+            paymentReservations = paymentReservationService.getPaymentReservationByReservation(id);
+
+        }catch (CustomException e) {
+			// Check that no error occurred
+			error = e.getMessage();
+		}
+        assertNull(paymentReservations);
+        assertEquals(message, error);
+    }
     
     //  dummy classes //
     private PaymentReservation dummy(int id, Timestamp timestamp, double amount) {
@@ -468,7 +451,5 @@ public class TestPaymentReservationService {
         reservation.setParkingTime(parkingTime);
         return reservation;
     }
-
-
 
 }

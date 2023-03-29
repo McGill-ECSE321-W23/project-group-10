@@ -99,7 +99,7 @@ public class ParkingSpotController {
     @DeleteMapping(value = {"/{id}","/{id}/"})
     public ParkingSpotDto deleteParkingSpotDtoById(@PathVariable("id") int id, @RequestHeader String token) {
         authService.authenticateManager(token);
-        ParkingSpot spot = parkingSpotService.deleteParkingSpotBy(id);
+        ParkingSpot spot = parkingSpotService.deleteParkingSpotById(id);
         return HelperMethods.convertParkingSpotToDto(spot);
     }
 

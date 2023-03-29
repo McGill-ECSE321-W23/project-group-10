@@ -40,18 +40,12 @@ public class PaymentReservationService {
     public PaymentReservation createPaymentReservation(Timestamp dateTime, double amount, int reservationId ) {
         
         //input validation
-        String error = "";
         if (dateTime == null) {
-            error += "no date and time entered! ";
+            throw new CustomException("no date and time entered! ", HttpStatus.BAD_REQUEST);         
         }
         if (amount < 0) {
-            error += "amount should be greater than 0! ";
+            throw new CustomException("amount should be greater than 0! ", HttpStatus.BAD_REQUEST);
         }
-
-        if (error.length() > 0) {
-			throw new CustomException(error, HttpStatus.BAD_REQUEST);
-        }
-
         PaymentReservation paymentReservation = new PaymentReservation();
         Reservation reservation = reservationRepository.findReservationById(reservationId);
         if (reservation == null){
@@ -66,17 +60,15 @@ public class PaymentReservationService {
         
         return paymentReservation;
     }
+
     @Transactional
     public PaymentReservation deletePaymentReservation(int paymentId) {
-        String error ="";
+        String error = "";
         if (paymentId < 1) {
-            error += "Invalid payment id! ";
+            throw new CustomException("Invalid payment id! ", HttpStatus.NOT_FOUND);
         }
         if (paymentReservationRepository.findPaymentReservationById(paymentId) == null){
-            error += "No payment with that id exists! ";
-        }
-        if (error.length() > 0) {
-			throw new CustomException(error, HttpStatus.NOT_FOUND);
+            throw new CustomException("No payment with that id exists! ", HttpStatus.NOT_FOUND);
         }
 
         PaymentReservation paymentReservation = paymentReservationRepository.findPaymentReservationById(paymentId);
@@ -90,14 +82,14 @@ public class PaymentReservationService {
         //input validation
         String error = "";
         if (dateTime == null) {
-            error += "No date and time entered! ";
+            throw new CustomException("No date and time entered! ", HttpStatus.BAD_REQUEST);
         }
         if (amount < 0) {
-            error += "Amount should be greater than 0! ";
+            throw new CustomException("Amount should be greater than 0! ", HttpStatus.BAD_REQUEST);
         }
 
         if (error.length() > 0) {
-			throw new CustomException(error, HttpStatus.BAD_REQUEST);
+			
         }
 
         Reservation reservation = reservationRepository.findReservationById(reservationId);
@@ -118,24 +110,16 @@ public class PaymentReservationService {
 
      @Transactional
      public List<PaymentReservation> getPaymentReservationByReservation(int reservationId) {
-
         //input validation
-        String error = "";
         if (reservationId <= 0) {
-            error += "reservation id should be greater than 0! ";
+            throw new CustomException("reservation id should be greater than 0! ", HttpStatus.BAD_REQUEST);
         }
-
-        if (error.length() > 0) {
-			throw new CustomException(error, HttpStatus.BAD_REQUEST);
-        }
-
         Reservation reservation = reservationRepository.findReservationById(reservationId);
         if (reservation == null){
             throw new CustomException("Reservation not found. ", HttpStatus.NOT_FOUND);
         }
 
         List<PaymentReservation> paymentReservations = paymentReservationRepository.findPaymentReservationByReservation(reservation);
-
         return paymentReservations;
      }
 

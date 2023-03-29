@@ -99,22 +99,17 @@ public class ParkingSpotService {
      * @return parking spot
      */
     @Transactional
-    public ParkingSpot deleteParkingSpotBy(int id) {
-
+    public ParkingSpot deleteParkingSpotById(int id) {
         // if no parking spot found, throw execption
         ParkingSpot spot = parkingSpotRepository.findParkingSpotById(id);
         if (spot == null) {
 			throw new CustomException("No parking spot with that id was found! ", HttpStatus.NOT_FOUND);
 		}
-        System.err.println(spot.getId());
         List<Reservation> reservations = reservationRepository.findReservationsByParkingSpot(spot);
-        // DON'T KNOW HOW TO TEST THIS
-        if (reservations.size() > 0) {
-            throw new CustomException("Cannot delete as parking spot has 1 or more reservation! ", HttpStatus.CONFLICT);
-        }
-        
-        parkingSpotRepository.delete(spot);
-        
+        if (reservations.get(0).getParkingSpot().getId() == id ) {
+            throw new CustomException("Cannot delete as parking spot has 1 or more reservation! ", HttpStatus.BAD_REQUEST);
+        }     
+        parkingSpotRepository.delete(spot);   
         return spot;
     }
 
@@ -125,13 +120,12 @@ public class ParkingSpotService {
      */
     @Transactional
     public List<ParkingSpot> getParkingSpotByType(String parkingSpotTypeName) {
-
         ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
+        if (parkingSpotType == null) {
+            throw new CustomException("Cannot find parking spot type by that name! ", HttpStatus.NOT_FOUND);
+        }
         List<ParkingSpot> pList = parkingSpotRepository.findParkingSpotByType(parkingSpotType);
-        if (pList.size() == 0) throw new CustomException("List is empty! ", HttpStatus.NOT_FOUND);
         return pList;
-
-
     }
 
     /**
