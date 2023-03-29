@@ -235,7 +235,6 @@ public class TestSingleReservationService {
             fail(e.getMessage());
         }
         assertNotNull(singleReservation);
-        assertEquals(newId, singleReservation.getId());
         assertEquals(date1, singleReservation.getDate());
         assertEquals(license_number1, singleReservation.getLicenseNumber());
         assertEquals(parking_time, singleReservation.getParkingTime());
