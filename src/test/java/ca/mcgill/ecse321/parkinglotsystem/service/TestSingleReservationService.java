@@ -66,7 +66,6 @@ public class TestSingleReservationService {
     
     
     private static final int RESERVATION_ID = 100;
-    private static final LocalDateTime dateTime = LocalDateTime.now().minus(60, ChronoUnit.MINUTES);
     private static Calendar calendar = Calendar.getInstance();
     static {
     calendar.setTime(new Date(System.currentTimeMillis()));
@@ -242,7 +241,7 @@ public class TestSingleReservationService {
         assertEquals(2, singleReservationService.getAllSingleReservations().size());
         SingleReservation singleReservation = null;
         try {
-            singleReservation = singleReservationService.createSingleReservation(license_number1, parking_time, ParkingSpot_ID2);
+            singleReservation = singleReservationService.createSingleReservation(license_number1, parking_time, ParkingSpot_ID);
         } catch (CustomException e) {
             fail(e.getMessage());
         }
