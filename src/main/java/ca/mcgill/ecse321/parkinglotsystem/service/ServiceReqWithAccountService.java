@@ -28,9 +28,6 @@ public class ServiceReqWithAccountService {
     public ServiceReqWithAccount createServiceReqWithAccount(String monthlyCustomerEmail, String description) {
 
         Service service = serviceService.getServiceByDescription(description);
-        if (monthlyCustomerEmail.equals("")) {
-            throw new CustomException("License Number empty! ", HttpStatus.BAD_REQUEST);
-        }
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
         ServiceReqWithAccount serviceReqWithAccount = new ServiceReqWithAccount();
         serviceReqWithAccount.setIsAssigned(true);

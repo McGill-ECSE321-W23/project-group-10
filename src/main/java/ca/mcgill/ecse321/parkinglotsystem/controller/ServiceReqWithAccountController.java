@@ -58,12 +58,11 @@ public class ServiceReqWithAccountController {
     @PostMapping(value = {"","/"})
     public ServiceReqWithAccountDto createServiceReqWithAccount(
         @RequestParam(value = "monthlyCustomerEmail") String monthlyCustomerEmail,
-        @RequestParam(value = "price") int price,
+        @RequestParam(value = "description") String description,
         @RequestHeader String token
     ){
-        // TODO: FIX THIS
         authService.authenticateMonthlyCustomer(token);
-        return convertServiceReqWithAccountToDto(service.createServiceReqWithAccount(monthlyCustomerEmail, null));
+        return convertServiceReqWithAccountToDto(service.createServiceReqWithAccount(monthlyCustomerEmail, description));
     }
 
     @PutMapping(value = {"/{id}", "/{id}/"})

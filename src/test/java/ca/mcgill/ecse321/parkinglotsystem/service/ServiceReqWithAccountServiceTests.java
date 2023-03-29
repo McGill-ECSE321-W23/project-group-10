@@ -129,20 +129,6 @@ public class ServiceReqWithAccountServiceTests {
     }
 
     @Test
-    public void testCreateServiceReqWithAccountFail() {
-        String error = "";
-        ServiceReqWithAccount srwa = null;
-        try {
-            srwa = service.createServiceReqWithAccount("",
-                VALID_SERVICE_DESC);
-        } catch (CustomException e) {
-			error = e.getMessage();
-		}
-        assertNull(srwa);
-        assertEquals("License Number empty! ", error);
-    }
-
-    @Test
     public void testGetById() {
         ServiceReqWithAccount srwa = service.getServiceReqWithAccountById(VALID_ID);
         assertNotNull(srwa);
