@@ -11,33 +11,41 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 
 import ca.mcgill.ecse321.parkinglotsystem.dto.ParkingSpotTypeDto;
 import ca.mcgill.ecse321.parkinglotsystem.model.*;
+import ca.mcgill.ecse321.parkinglotsystem.service.AuthenticationService;
 import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotTypeService;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/parking_spot_type", "/api/parking_spot_type/"})
+@RequestMapping("/api/parking-spot-type")
 public class ParkingSpotTypeController {
     
     @Autowired
     ParkingSpotTypeService parkingSpotTypeService;
+
+    @Autowired
+    AuthenticationService authService;
 
     /**
      * method to get all parking spot type
      * @return List<ParkingSpotTypeDto>
      * @throws Exception
      */
-    @GetMapping(value = {"/all", "/all/"})
+    @GetMapping(value = {"", "/"})
     public List<ParkingSpotTypeDto> getAllParkingSpotTypes() throws Exception{
         List<ParkingSpotTypeDto> pList = new ArrayList<ParkingSpotTypeDto>();
         for (ParkingSpotType parkingSpotType: parkingSpotTypeService.getAllParkingSpotTypes()) {
             pList.add(convertParkingSpotTypeToDto(parkingSpotType));
         }
-        if (pList.size() == 0) throw new Exception("There are no parking spot types");
+        if (pList.size() == 0) throw new CustomException("There are no parking spot types! ", HttpStatus.BAD_REQUEST);
         return pList;
     }
 
@@ -47,15 +55,18 @@ public class ParkingSpotTypeController {
      * @param fee
      * @return parking spot type dto
      */
-    @PostMapping(value = {"/create/{name}/{fee}", "/create/{name}/{fee}/"})
-    public ParkingSpotTypeDto createParkingSpotType(@PathVariable("name") String name, @PathVariable("fee") double fee){       
+    @PostMapping(value = {"/{name}", "/{name}/"})
+    public ParkingSpotTypeDto createParkingSpotType(
+        @PathVariable String name, 
+        @RequestParam double fee,
+        @RequestHeader String token){
+        authService.authenticateManager(token);    
         try {
             ParkingSpotType parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
             return convertParkingSpotTypeToDto(parkingSpotType);
         }catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
-
-        }      
+        }
     }
 
     /**
@@ -63,15 +74,12 @@ public class ParkingSpotTypeController {
      * @param name
      * @return ParkingSpotTypeDto
      */
-    @GetMapping(value = {"/get/{name}/", "/get/{name}"})
+    @GetMapping(value = {"/{name}", "/{name}/"})
     public ParkingSpotTypeDto getParkingSpotTypeByName(@PathVariable("name") String name){
-        try {
-            ParkingSpotType parkingSpotType = parkingSpotTypeService.getParkingSpotTypeByName(name);
-            return convertParkingSpotTypeToDto(parkingSpotType);
-        }catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
 
-        }
+        ParkingSpotType parkingSpotType = parkingSpotTypeService.getParkingSpotTypeByName(name);
+        return convertParkingSpotTypeToDto(parkingSpotType);
+
 
     }
 
@@ -80,15 +88,11 @@ public class ParkingSpotTypeController {
      * @param name
      * @return parking spot type deleted
      */
-    @DeleteMapping(value = {"/delete/{name}", "/delete/{name}/"})
-    public ParkingSpotTypeDto deleteParkingSpotTypeByName(@PathVariable("name") String name) {
-        try {
-            ParkingSpotType parkingSpotType = parkingSpotTypeService.deleteParkingSpotType(name);
-            return convertParkingSpotTypeToDto(parkingSpotType);
-        }catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-
-        }       
+    @DeleteMapping(value = {"/{name}", "/{name}/"})
+    public ParkingSpotTypeDto deleteParkingSpotTypeByName(@PathVariable String name, @RequestHeader String token) {
+        authService.authenticateManager(token);
+        ParkingSpotType parkingSpotType = parkingSpotTypeService.deleteParkingSpotType(name);
+        return convertParkingSpotTypeToDto(parkingSpotType);   
     }
 
     /**
@@ -97,8 +101,12 @@ public class ParkingSpotTypeController {
      * @param fee
      * @return parking spot type updated
      */
-    @PutMapping(value = {"/update/{name}/{fee}/","/update/{name}/{fee}" })
-    public ParkingSpotTypeDto updateParkingSpotTypeFee(@PathVariable("name") String name, @PathVariable("fee") double fee){
+    @PutMapping(value = {"/{name}","/{name}/" })
+    public ParkingSpotTypeDto updateParkingSpotTypeFee(
+        @PathVariable String name, 
+        @RequestParam double fee,
+        @RequestHeader String token){
+        authService.authenticateManager(token);
         try {
             ParkingSpotType parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee(name, fee);
             return convertParkingSpotTypeToDto(parkingSpotType);
@@ -115,7 +123,7 @@ public class ParkingSpotTypeController {
     private ParkingSpotTypeDto convertParkingSpotTypeToDto(ParkingSpotType parkingSpotType) {
 
         if (parkingSpotType == null) {
-            throw new IllegalArgumentException("There is no such parking spot type! ");
+            throw new CustomException("There is no such parking spot type! ", HttpStatus.BAD_REQUEST);
         }
         ParkingSpotTypeDto parkingSpotTypeDto = new ParkingSpotTypeDto();
         parkingSpotTypeDto.setName(parkingSpotType.getName());

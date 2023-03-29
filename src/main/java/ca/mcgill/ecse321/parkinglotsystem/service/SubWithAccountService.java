@@ -45,8 +45,14 @@ public class SubWithAccountService {
             throw new CustomException(
                 "The parking spot is not available for monthly customers.", HttpStatus.BAD_REQUEST);
         }
+        ParkingSpot parkingSpot = parkingSpotService.getParkingSpotById(parkingSpotId);
+        for(SubWithAccount sub : subWithAccountRepository.findSubWithAccountByParkingSpot(parkingSpot)) {
+            if (isActive(sub)) {
+                throw new CustomException(
+                    "The parking spot is currently reserved by another customer.", HttpStatus.BAD_REQUEST);
+            }
+        }
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
-        ParkingSpot parkingSpot = parkingSpotService.getParkingSpot(parkingSpotId);
         for(SubWithAccount sub : subWithAccountRepository.findSubWithAccountByCustomer(monthlyCustomer)) {
             if (isActive(sub)) {
                 throw new CustomException(
@@ -150,7 +156,7 @@ public class SubWithAccountService {
     @Transactional
     public List<SubWithAccount> getAllByParkingSpot(int parkingSpotId) {
 
-        ParkingSpot parkingSpot = parkingSpotService.getParkingSpot(parkingSpotId);
+        ParkingSpot parkingSpot = parkingSpotService.getParkingSpotById(parkingSpotId);
         List<SubWithAccount> subs = toList(subWithAccountRepository.findSubWithAccountByParkingSpot(parkingSpot));
         Collections.sort(subs, Comparator.comparing(SubWithAccount::getDate));
 
@@ -186,6 +192,19 @@ public class SubWithAccountService {
         subWithAccountRepository.save(sub);
 
         return sub;
+    }
+
+    /**
+     * Deletes the subscription with the given ID.
+     * 
+     * @param id
+     */
+    public void deleteSubWithAccount(int id) {
+        SubWithAccount sub = subWithAccountRepository.findSubWithAccountById(id);
+        if(sub == null) {
+            throw new CustomException("Invalid reservation ID.", HttpStatus.BAD_REQUEST);
+        }
+        subWithAccountRepository.deleteById(id);
     }
 
     /**

@@ -26,7 +26,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/monthlyCustomer", "/api/monthlyCustomer/"})
+@RequestMapping("/api/monthly-customer")
 
 public class MonthlyCustomerController {
 
@@ -38,14 +38,15 @@ public class MonthlyCustomerController {
     MonthlyCustomerService monthlyCustomerService;
 
 
-    @GetMapping(value={"/all/","/all"})
+    @GetMapping(value={"","/"})
     public List<MonthlyCustomerDto> getAllMonthlyCustomerDtos(){
         return monthlyCustomerService.getAllMonthlyCustomers().stream().map(mc -> HelperMethods.convertMonthlyCustomerToDto(mc)).collect(Collectors.toList());
     }
 
 
-    @PostMapping(value = {"/create/{email}", "/create/{email}/"})
-    public MonthlyCustomerDto createMonthlyCustomerDto(@PathVariable("email") String email, 
+    @PostMapping(value = {"/{email}", "/{email}/"})
+    public MonthlyCustomerDto createMonthlyCustomerDto(
+        @PathVariable("email") String email, 
         @RequestParam("name") String name,
         @RequestParam("phone") String phone,
         @RequestParam("password") String password,
@@ -55,7 +56,7 @@ public class MonthlyCustomerController {
     }
 
 
-    @GetMapping(value = {"/getByName/{name}", "/getByName/{name}/"})
+    @GetMapping(value = {"/all-by-name/{name}", "/all-by-name/{name}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByName(@PathVariable("name") String name) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
         List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByName(name);
@@ -68,7 +69,7 @@ public class MonthlyCustomerController {
     }
 
 
-    @GetMapping(value = {"/getByPhone/{phone}", "/getByPhone/{phone}/"})
+    @GetMapping(value = {"/all-by-phone/{phone}", "/all-by-phone/{phone}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByPhone(@PathVariable("phone") String phone) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
         List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByPhone(phone);
@@ -81,7 +82,7 @@ public class MonthlyCustomerController {
     }
 
     
-    @GetMapping(value = {"/getByLicenseNumber/{licenseNumber}", "/getByLicenseNumber/{licenseNumber}/"})
+    @GetMapping(value = {"/all-by-license-number/{licenseNumber}", "/all-by-license-number/{licenseNumber}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByLicenseNumber(@PathVariable("licenseNumber") String licenseNumber) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
         List<MonthlyCustomer> mcs = monthlyCustomerService.getMonthlyCustomerByLicenseNumber(licenseNumber);
@@ -94,7 +95,7 @@ public class MonthlyCustomerController {
     }
 
 
-    @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
+    @GetMapping(value = {"/{email}", "/{email}/"})
     public MonthlyCustomerDto getMonthlyCustomerDtoByEmail(@PathVariable("email") String email) {
         MonthlyCustomer mc = monthlyCustomerService.getMonthlyCustomerByEmail(email);
         if(mc==null){
@@ -104,15 +105,16 @@ public class MonthlyCustomerController {
     }
 
 
-    @DeleteMapping(value = {"/delete/{email}","/delete/{email}/"})
+    @DeleteMapping(value = {"/{email}","/{email}/"})
     public MonthlyCustomerDto deleteMonthlyCustomerDtoByEmail(@PathVariable("email") String email) {
         MonthlyCustomer mc = monthlyCustomerService.deleteMonthlyCustomerByEmail(email);
         return HelperMethods.convertMonthlyCustomerToDto(mc);
     }
 
 
-    @PutMapping(value ={"/update/{email}", "/update/{email}/"})
-    public MonthlyCustomerDto updateMonthlyCustomerDto(@PathVariable("email") String email, 
+    @PutMapping(value ={"/{email}", "/{email}/"})
+    public MonthlyCustomerDto updateMonthlyCustomerDto(
+        @PathVariable("email") String email, 
         @RequestParam("name") String name,
         @RequestParam("phone") String phone,
         @RequestParam("password") String password,

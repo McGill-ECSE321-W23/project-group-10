@@ -31,6 +31,14 @@ public class ManagerService {
         String error="";
         error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
             +HelperMethods.verifyPassword(password);
+
+        List<Manager> existing=getAllManagers();
+        for(int i=0;i<existing.size();i++){
+            if(existing.get(i).getEmail().trim().equals(email.trim())){
+                error=error+"Cannot have the same email as an existing account! ";
+            }
+        }
+
         if(error.length()>0){
             throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }
@@ -44,9 +52,14 @@ public class ManagerService {
      }
 
 
+
      @Transactional
      public Manager getManagerByEmail(String email){
-        return managerRepository.findManagerByEmail(email);
+        Manager ma = managerRepository.findManagerByEmail(email);
+        if(ma == null) {
+            throw new CustomException("Invalid manager email! ", HttpStatus.BAD_REQUEST);
+        }
+        return ma;
      }
 
 
@@ -61,13 +74,7 @@ public class ManagerService {
         return managerRepository.findManagerByPhone(phone);
      }
 
-
-     @Transactional
-     public List<Manager> getManagerByPassword(String password){
-        return managerRepository.findManagerByPassword(password);
-     }
-
-
+     
      @Transactional
      public List<Manager> getAllManagers(){
         Iterable<Manager> mIterable=managerRepository.findAll();

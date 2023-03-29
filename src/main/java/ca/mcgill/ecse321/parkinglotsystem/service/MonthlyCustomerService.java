@@ -32,6 +32,12 @@ public class MonthlyCustomerService {
         String error="";
         error=error+HelperMethods.verifyEmail(email)+HelperMethods.verifyName(name)+HelperMethods.verifyPhone(phone)
             +HelperMethods.verifyPassword(password)+HelperMethods.verifyLicenseNumber(licenseNumber);
+        List<MonthlyCustomer> existing=getAllMonthlyCustomers();
+        for(int i=0;i<existing.size();i++){
+            if(existing.get(i).getEmail().trim().equals(email.trim())){
+                error=error+"Cannot have the same email as an existing account! ";
+            }
+        }
         if(error.length()>0){
             throw new CustomException(error,HttpStatus.BAD_REQUEST);
         }
@@ -48,7 +54,11 @@ public class MonthlyCustomerService {
 
      @Transactional
      public MonthlyCustomer getMonthlyCustomerByEmail(String email){
-        return monthlyCustomerRepository.findMonthlyCustomerByEmail(email);
+        MonthlyCustomer customer = monthlyCustomerRepository.findMonthlyCustomerByEmail(email);
+        if(customer == null) {
+            throw new CustomException("Invalid monthly customer email! ", HttpStatus.BAD_REQUEST);
+        }
+        return customer;
      }
 
 
@@ -62,13 +72,6 @@ public class MonthlyCustomerService {
      public List<MonthlyCustomer> getMonthlyCustomerByPhone(String phone){
         return monthlyCustomerRepository.findMonthlyCustomerByPhone(phone);
      }
-
-
-     @Transactional
-     public List<MonthlyCustomer> getMonthlyCustomerByPassword(String password){
-        return monthlyCustomerRepository.findMonthlyCustomerByPassword(password);
-     }
-
 
      @Transactional
      public List<MonthlyCustomer> getMonthlyCustomerByLicenseNumber(String licenseNumber){
