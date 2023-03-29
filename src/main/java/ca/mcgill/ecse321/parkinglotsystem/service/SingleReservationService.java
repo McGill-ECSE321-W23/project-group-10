@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
@@ -139,9 +140,6 @@ public class SingleReservationService extends ReservationService {
             throw new CustomException("ParkingTime cannot be negative", HttpStatus.BAD_REQUEST);
         }
         SingleReservation singleReservation = getActiveByLicenseNumber(licenseNumber);
-        if (singleReservation == null) {
-            throw new CustomException("Single reservation not found", HttpStatus.BAD_REQUEST);
-        }
         singleReservation.setParkingTime(singleReservation.getParkingTime() + parkingTime);
         singleReservationRepository.save(singleReservation);
         return singleReservation;
@@ -230,10 +228,10 @@ public class SingleReservationService extends ReservationService {
     }
 
     private boolean isActive(SingleReservation single) {
+        Date date = Date.valueOf(LocalDate.now());
 
-        Date date = new Date((new java.util.Date()).getTime());
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(System.currentTimeMillis()));
+        calendar.setTime(single.getDate());
         calendar.add(Calendar.MINUTE, single.getParkingTime());
         Date lastDate = new Date(calendar.getTimeInMillis());        
         return lastDate.after(date);

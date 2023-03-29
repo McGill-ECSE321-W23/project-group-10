@@ -328,7 +328,7 @@ public class TestSingleReservationService {
             error = e.getMessage();
         }
         assertNull(singleReservation);
-        assertEquals("Single reservation not found", error);
+        assertEquals("There is no active subscription with this License number", error);
     
     }
     
