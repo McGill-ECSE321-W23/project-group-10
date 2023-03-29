@@ -33,46 +33,77 @@ public class ServiceReqWithAccountController {
     @Autowired
     private AuthenticationService authService;
 
-    @GetMapping(value = {"","/"})
-    public List<ServiceReqWithAccountDto> getAll(){
+    /**
+     * Gets all ServiceReqWithAccount.
+     * 
+     * @return the list of ServiceReqWithAccount as DTOs
+     */
+    @GetMapping(value = { "", "/" })
+    public List<ServiceReqWithAccountDto> getAll() {
         return service.getAll().stream().map(s -> convertServiceReqWithAccountToDto(s)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = {"/{id}","/{id}/"})
-    public ServiceReqWithAccountDto getServiceReqWithAccountById(@PathVariable("id") int id){
+    /**
+     * Gets ServiceReqWithAccount with such ID.
+     * 
+     * @return a ServiceReqWithAccount as DTOs
+     */
+    @GetMapping(value = { "/{id}", "/{id}/" })
+    public ServiceReqWithAccountDto getServiceReqWithAccountById(@PathVariable("id") int id) {
         return convertServiceReqWithAccountToDto(service.getServiceReqWithAccountById(id));
     }
 
-    @GetMapping(value = {"/all-by-is-assigned/{isAssigned}","/all-by-is-assigned/{isAssigned}/"})
-    public List<ServiceReqWithAccountDto> getServiceReqWithAccountByIsAssigned(@PathVariable("isAssigned") boolean isAssigned){
+    /**
+     * Gets all ServiceReqWithAccount with such isAssigned.
+     * 
+     * @return the list of ServiceReqWithAccount as DTOs
+     */
+    @GetMapping(value = { "/all-by-is-assigned/{isAssigned}", "/all-by-is-assigned/{isAssigned}/" })
+    public List<ServiceReqWithAccountDto> getServiceReqWithAccountByIsAssigned(
+            @PathVariable("isAssigned") boolean isAssigned) {
         return service.getServiceReqWithAccountByIsAssigned(isAssigned).stream()
-        .map(s -> convertServiceReqWithAccountToDto(s)).collect(Collectors.toList());
+                .map(s -> convertServiceReqWithAccountToDto(s)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = {"/all-by-customer/{monthlyCustomerEmail}","/all-by-customer/{monthlyCustomerEmail}/"})
-    public List<ServiceReqWithAccountDto> getServiceReqWithAccountByCustomer(@PathVariable("monthlyCustomerEmail") String monthlyCustomerEmail){
+    /**
+     * Gets ServiceReqWithAccount with such Email.
+     * 
+     * @return a ServiceReqWithAccount as DTOs
+     */
+    @GetMapping(value = { "/all-by-customer/{monthlyCustomerEmail}", "/all-by-customer/{monthlyCustomerEmail}/" })
+    public List<ServiceReqWithAccountDto> getServiceReqWithAccountByCustomer(
+            @PathVariable("monthlyCustomerEmail") String monthlyCustomerEmail) {
         return service.getServiceReqWithAccountByCustomer(monthlyCustomerEmail).stream()
-        .map(s -> convertServiceReqWithAccountToDto(s)).collect(Collectors.toList());
+                .map(s -> convertServiceReqWithAccountToDto(s)).collect(Collectors.toList());
     }
 
-    @PostMapping(value = {"","/"})
+    /**
+     * Create a ServiceReqWithAccount.
+     * 
+     * @return a ServiceReqWithAccount as DTOs
+     */
+    @PostMapping(value = { "", "/" })
     public ServiceReqWithAccountDto createServiceReqWithAccount(
-        @RequestParam(value = "monthlyCustomerEmail") String monthlyCustomerEmail,
-        @RequestParam(value = "description") String description,
-        @RequestHeader String token
-    ){
+            @RequestParam(value = "monthlyCustomerEmail") String monthlyCustomerEmail,
+            @RequestParam(value = "description") String description,
+            @RequestHeader String token) {
         authService.authenticateMonthlyCustomer(token);
-        return convertServiceReqWithAccountToDto(service.createServiceReqWithAccount(monthlyCustomerEmail, description));
+        return convertServiceReqWithAccountToDto(
+                service.createServiceReqWithAccount(monthlyCustomerEmail, description));
     }
 
-    @PutMapping(value = {"/{id}", "/{id}/"})
+    /**
+     * Update a ServiceReqWithAccount with such ID.
+     * 
+     * @return a ServiceReqWithAccount as DTOs
+     */
+    @PutMapping(value = { "/{id}", "/{id}/" })
     public ServiceReqWithAccountDto updateIsAssignedById(
-        @PathVariable(value = "id") int id,
-        @RequestParam(value = "isAssigned") boolean isAssigned,
-        @RequestHeader String token
-    ){
+            @PathVariable(value = "id") int id,
+            @RequestParam(value = "isAssigned") boolean isAssigned,
+            @RequestHeader String token) {
         authService.authenticateEmployee(token);
         return convertServiceReqWithAccountToDto(service.updateIsAssignedById(id, isAssigned));
     }
-    
+
 }
