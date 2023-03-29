@@ -16,6 +16,10 @@ import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
+
+/**
+ * author Shaun Soobagrah
+ */
 @Service
 public class ParkingSpotTypeService {
     
@@ -25,7 +29,10 @@ public class ParkingSpotTypeService {
     @Autowired
     ParkingSpotRepository parkingSpotRepository;
 
-    // method to create parking spot type objects
+    /**
+     * Controller method to get all parking spots.
+     * @return a list of parking spots DTO
+     */
     @Transactional
     public ParkingSpotType createParkingSpotType(String name, double fee){
         // input validation

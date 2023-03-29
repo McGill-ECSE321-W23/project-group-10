@@ -64,7 +64,7 @@ public class PaymentServiceController {
      * @param serviceRequest
      * @return PaymentServiceDto
      */
-    @PostMapping(value = {"/{id}", "/{id}/"})
+    @PostMapping(value = {"/", "/{id}/"})
     public PaymentServiceDto createPaymentService(
         @PathVariable("id") int id, 
         @RequestParam("amount") double amount, 

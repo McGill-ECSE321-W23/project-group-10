@@ -19,12 +19,12 @@ public class EmployeeService {
     EmployeeRepository employeeRepository;
 
     /**
-     * method to a create employee
+     * method to create an Employee
      * @param email
      * @param name
      * @param phone
      * @param password
-     * @return newly created Employee or null
+     * @return newly created Employee or exception
      */
     @Transactional
      public Employee createEmployee(String email,String name,String phone,String password){
@@ -51,6 +51,11 @@ public class EmployeeService {
         return employee;
      }
 
+    /**
+     * method to get an Employee by email
+     * @param email
+     * @return Employee or exception
+     */
      @Transactional
      public Employee getEmployeeByEmail(String email){
         Employee em = employeeRepository.findEmployeeByEmail(email);
@@ -60,24 +65,41 @@ public class EmployeeService {
         return em;
      }
 
+    /**
+     * method to get Employees by name
+     * @param name
+     * @return List<Employee> or null
+     */
      @Transactional
      public List<Employee> getEmployeeByName(String name){
         return employeeRepository.findEmployeeByName(name);
      }
 
-
+    /**
+     * method to get Employees by name
+     * @param name
+     * @return List<Employee> or null
+     */
      @Transactional
      public List<Employee> getEmployeeByPhone(String phone){
         return employeeRepository.findEmployeeByPhone(phone);
      }
 
+    /**
+     * method to get all Employees
+     * @return List<Employee> or null
+     */
      @Transactional
      public List<Employee> getAllEmployees(){
         Iterable<Employee> mIterable=employeeRepository.findAll();
         return HelperMethods.toList(mIterable);
      }
 
-
+    /**
+     * method to delete an Employee
+     * @param email
+     * @return newly deleted Employee or exception
+     */
      @Transactional
      public Employee deleteEmployeeByEmail(String email){
         String error="";
@@ -93,6 +115,15 @@ public class EmployeeService {
         }
      }
 
+
+    /**
+     * method to update an Employee
+     * @param email
+     * @param name
+     * @param phone
+     * @param password
+     * @return newly updated Employee or exception
+     */
      @Transactional
      public Employee updateEmployee(String email,String name,String phone,String password){
         String error="";

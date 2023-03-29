@@ -31,8 +31,7 @@ public class SubWithAccountController {
     private AuthenticationService authService;
 
     /**
-     * Gets all subscriptions.
-     * 
+     * Controller method to get all subscriptions.
      * @return the list of subscriptions as DTOs
      */
     @GetMapping(value = {"", "/"})
@@ -42,8 +41,7 @@ public class SubWithAccountController {
     }
 
     /**
-     * Gets all subscription with given monthly customer.
-     * 
+     * Controller method to get all subscription with given monthly customer.
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the list of subscriptions as DTOs
      */
@@ -54,8 +52,7 @@ public class SubWithAccountController {
     }
 
     /**
-     * Gets all subscriptions with the given parking spot.
-     * 
+     * Controller method to get all subscriptions with the given parking spot.
      * @param parkingSpotId the ID of the parking spot
      * @return the list of subscriptions as DTOs
      */
@@ -66,7 +63,7 @@ public class SubWithAccountController {
     }
 
     /**
-     * Gets a subscription with the given ID.
+     * Controller method to get a subscription with the given ID.
      * @param id the ID of the subscription.
      * @return a subscription as DTO
      */
@@ -76,8 +73,7 @@ public class SubWithAccountController {
     }
 
     /**
-     * Gets the active subscription of the given monthly customer.
-     * 
+     * Controller method to get the active subscription of the given monthly customer.
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the active subscription as DTO
      */
@@ -87,8 +83,7 @@ public class SubWithAccountController {
     }
 
     /**
-     * Gets the active subscription of the given parking spot.
-     * 
+     * Controller method to get the active subscription of the given parking spot.
      * @param parkingSpotId the ID of the parking spot
      * @return the active subscription as DTO
      */
@@ -98,8 +93,7 @@ public class SubWithAccountController {
     }
     
     /**
-     * Creates a subscription with the given monthly customer and parking spot.
-     * 
+     * Controller method to get a subscription with the given monthly customer and parking spot.
      * @param monthlyCustomerEmail the email of the monthly customer for whom to create the subscription
      * @param parkingSpotId the id of the parking spot to reserve
      * @return the new subscription as DTO
@@ -113,8 +107,7 @@ public class SubWithAccountController {
     }
 
     /**
-     * Deletes the subscription with the given ID.
-     * 
+     * Controller method to delete the subscription with the given ID.
      * @param id
      */
     @DeleteMapping(value = {"/{id}","/{id}/"})

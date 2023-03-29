@@ -219,7 +219,7 @@ public class TestSubWithoutAccountService {
         assertEquals(1, subWithoutAccount.getNbrMonths());
         assertEquals(ParkingSpot_ID_UNUSED, subWithoutAccount.getParkingSpot().getId());
     
-    }
+    // }
     
     @Test
     public void testCreateSubWithoutAccountWithTakenParkingSpot() {
