@@ -25,7 +25,6 @@ import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceReqWithAccountRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithAccount;
 import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 import ca.mcgill.ecse321.parkinglotsystem.model.Service;
-import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 @ExtendWith(MockitoExtension.class)
 public class ServiceReqWithAccountServiceTests {

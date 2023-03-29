@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.parkinglotsystem.dto;
 
-import ca.mcgill.ecse321.parkinglotsystem.model.PaymentService;
-
 public class PaymentServiceDto {
 
     private ServiceRequestDto serviceRequestDto;

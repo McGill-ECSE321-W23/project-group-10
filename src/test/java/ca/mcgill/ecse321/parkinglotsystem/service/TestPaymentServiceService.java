@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.lenient;
 
@@ -12,10 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.PaymentServiceRepository;
-import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRequestRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.*;
-import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,7 +40,6 @@ public class TestPaymentServiceService {
     private static final double VALID__AMOUNT = 100.5;
     private static final double VALID__AMOUNT_UPDATE = 200.6;
     private static final double INVALID__AMOUNT = -100.5;
-    private static final double INVALID__AMOUNT_UPDATE = 200.6;
     //creation 1648094400
     private static final Timestamp VALID__DATETIME = new Timestamp(1650000000);
     private static final Timestamp VALID__DATETIME__UPDATE = new Timestamp(1651000000);
@@ -278,7 +274,7 @@ public class TestPaymentServiceService {
     public void testUpdatePaymentServiceInvalid1() {
         String error = "";
         try {
-            PaymentService pa = service.updatePaymentService(VALID__ID, INVALID_PAST__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(VALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+            service.updatePaymentService(VALID__ID, INVALID_PAST__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(VALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
         }catch (Exception e){
             error = e.getMessage();
         }
@@ -289,7 +285,7 @@ public class TestPaymentServiceService {
     public void testUpdatePaymentServiceInvalid2() {
         String error = "";
         try {
-            PaymentService pa = service.updatePaymentService(VALID__ID, INVALID_FUTURE__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(VALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+            service.updatePaymentService(VALID__ID, INVALID_FUTURE__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(VALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
         }catch (Exception e){
             error = e.getMessage();
         }
@@ -300,7 +296,7 @@ public class TestPaymentServiceService {
     public void testUpdatePaymentServiceInvalid3() {
         String error = "";
         try {
-            PaymentService pa = service.updatePaymentService(VALID__ID, VALID__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(INVALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+            service.updatePaymentService(VALID__ID, VALID__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(INVALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
         }catch (Exception e){
             error = e.getMessage();
         }

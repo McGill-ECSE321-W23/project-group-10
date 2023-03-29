@@ -10,9 +10,6 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,13 +48,8 @@ public class ServiceReqWithoutAccountServiceTests {
 
     private static final int VALID_ID = 1;
     private static final int INVALID_ID = 2;
-    private static final int REPEATED_ID = 3;
-    private static final int NOTEXIST_ID = 4;
     private static final String VALID_LICENSE_ASSIGNED = "validEmailAssigned";
     private static final String VALID_LICENSE_NOTASSIGNED = "validEmailNotAssigned";
-    private static final String INVALID_LICENSE = "invalidEmail";
-    private static final int VALID_SERVICE_PRICE = 100;
-    private static final int INVALID_SERVICE_PRICE = 200;
 
     private static final String VALID_SERVICE_DESC = "Test description";
 

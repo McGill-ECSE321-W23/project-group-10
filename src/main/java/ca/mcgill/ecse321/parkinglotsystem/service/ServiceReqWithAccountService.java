@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceReqWithAccountRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithAccount;
-import ca.mcgill.ecse321.parkinglotsystem.model.ServiceRequest;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import static ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods.toList;
 import ca.mcgill.ecse321.parkinglotsystem.model.Service;
