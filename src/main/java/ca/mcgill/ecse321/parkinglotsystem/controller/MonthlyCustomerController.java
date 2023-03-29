@@ -37,13 +37,24 @@ public class MonthlyCustomerController {
     @Autowired
     MonthlyCustomerService monthlyCustomerService;
 
-
+    /**
+     * method to get all MonthlyCustomerDtos
+     * @return List<MonthlyCustomerDto> or null
+     */
     @GetMapping(value={"","/"})
     public List<MonthlyCustomerDto> getAllMonthlyCustomerDtos(){
         return monthlyCustomerService.getAllMonthlyCustomers().stream().map(mc -> HelperMethods.convertMonthlyCustomerToDto(mc)).collect(Collectors.toList());
     }
 
-
+    /**
+     * method to create a MonthlyCustomerDto
+     * @param email
+     * @param name
+     * @param phone
+     * @param password
+     * @param licenseNumber
+     * @return newly created MonthlyCustomerDto or exception
+     */
     @PostMapping(value = {"/{email}", "/{email}/"})
     public MonthlyCustomerDto createMonthlyCustomerDto(
         @PathVariable("email") String email, 
@@ -55,7 +66,11 @@ public class MonthlyCustomerController {
         return HelperMethods.convertMonthlyCustomerToDto(mc);                                
     }
 
-
+    /**
+     * method to get MonthlyCustomerDtos by name
+     * @param name
+     * @return List<MonthlyCustomerDto> or null
+     */
     @GetMapping(value = {"/all-by-name/{name}", "/all-by-name/{name}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByName(@PathVariable("name") String name) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
@@ -68,7 +83,11 @@ public class MonthlyCustomerController {
         return monthlyCustomerDtos; 
     }
 
-
+    /**
+     * method to get MonthlyCustomerDtos by phone
+     * @param phone
+     * @return List<MonthlyCustomerDto> or null
+     */
     @GetMapping(value = {"/all-by-phone/{phone}", "/all-by-phone/{phone}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByPhone(@PathVariable("phone") String phone) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
@@ -81,7 +100,11 @@ public class MonthlyCustomerController {
         return monthlyCustomerDtos; 
     }
 
-    
+    /**
+     * method to get MonthlyCustomerDtos by licenseNumber
+     * @param licenseNumber
+     * @return List<MonthlyCustomerDto> or null
+     */
     @GetMapping(value = {"/all-by-license-number/{licenseNumber}", "/all-by-license-number/{licenseNumber}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByLicenseNumber(@PathVariable("licenseNumber") String licenseNumber) {
         List<MonthlyCustomerDto> monthlyCustomerDtos = new ArrayList<MonthlyCustomerDto>();
@@ -94,7 +117,11 @@ public class MonthlyCustomerController {
         return monthlyCustomerDtos;
     }
 
-
+    /**
+     * method to get a MonthlyCustomerDto by email
+     * @param email
+     * @return a MonthlyCustomerDto or exception
+     */
     @GetMapping(value = {"/{email}", "/{email}/"})
     public MonthlyCustomerDto getMonthlyCustomerDtoByEmail(@PathVariable("email") String email) {
         MonthlyCustomer mc = monthlyCustomerService.getMonthlyCustomerByEmail(email);
@@ -104,14 +131,26 @@ public class MonthlyCustomerController {
         return HelperMethods.convertMonthlyCustomerToDto(mc);
     }
 
-
+    /**
+     * method to delete a MonthlyCustomerDto
+     * @param email
+     * @return newly deleted MonthlyCustomerDto or exception
+     */
     @DeleteMapping(value = {"/{email}","/{email}/"})
     public MonthlyCustomerDto deleteMonthlyCustomerDtoByEmail(@PathVariable("email") String email) {
         MonthlyCustomer mc = monthlyCustomerService.deleteMonthlyCustomerByEmail(email);
         return HelperMethods.convertMonthlyCustomerToDto(mc);
     }
 
-
+    /**
+     * method to update a MonthlyCustomerDto
+     * @param email
+     * @param name
+     * @param phone
+     * @param password
+     * @param licenseNumber
+     * @return newly updated MonthlyCustomerDto or exception
+     */
     @PutMapping(value ={"/{email}", "/{email}/"})
     public MonthlyCustomerDto updateMonthlyCustomerDto(
         @PathVariable("email") String email, 
