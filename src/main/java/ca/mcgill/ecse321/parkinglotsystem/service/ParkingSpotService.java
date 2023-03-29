@@ -57,8 +57,7 @@ public class ParkingSpotService {
         ParkingSpot parkingSpot = new ParkingSpot();   
         parkingSpot.setId(id);
         parkingSpot.setType(parkingSpotType);
-        parkingSpotRepository.save(parkingSpot);
-    
+        parkingSpotRepository.save(parkingSpot); 
         return parkingSpot;
     }
 
