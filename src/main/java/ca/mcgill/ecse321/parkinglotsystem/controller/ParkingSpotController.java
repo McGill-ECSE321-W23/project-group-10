@@ -111,7 +111,7 @@ public class ParkingSpotController {
      */
     @PutMapping(value ={"/{id}", "/{id}/"})
     public ParkingSpotDto updateParkingSpotDto(
-        @PathVariable("id") int id, 
+        @PathVariable("id") int id,
         @RequestParam("typeName") String typeName,
         @RequestHeader String token) {
         authService.authenticateManager(token);

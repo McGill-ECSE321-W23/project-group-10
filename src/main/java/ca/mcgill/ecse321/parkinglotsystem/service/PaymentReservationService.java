@@ -63,7 +63,6 @@ public class PaymentReservationService {
 
     @Transactional
     public PaymentReservation deletePaymentReservation(int paymentId) {
-        String error = "";
         if (paymentId < 1) {
             throw new CustomException("Invalid payment id! ", HttpStatus.NOT_FOUND);
         }
@@ -73,9 +72,9 @@ public class PaymentReservationService {
 
         PaymentReservation paymentReservation = paymentReservationRepository.findPaymentReservationById(paymentId);
         paymentReservationRepository.delete(paymentReservation);
-        return paymentReservation;
-        
+        return paymentReservation;    
      }
+     
      @Transactional
      public PaymentReservation updatePaymentReservation(int paymentResId, Timestamp dateTime, double amount, int reservationId ) {
         //input validation
