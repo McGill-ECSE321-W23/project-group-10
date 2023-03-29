@@ -56,3 +56,4 @@ The parking lot is managed by its owner, who gets their own user account. The lo
 
 ***
 ## Link for sprint 2
+<a href="https://github.com/McGill-ECSE321-W23/project-group-10/wiki/Sprint-2:-Project-Report">Sprint 2: Project Report</a>
