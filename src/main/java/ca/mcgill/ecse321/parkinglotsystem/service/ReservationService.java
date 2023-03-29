@@ -35,6 +35,7 @@ public class ReservationService {
      */
     @Transactional
     public Reservation createReservation(int reservationId, Date date, int parkingSpotId) {
+        // TODO: remove id validation and parameter
         if (reservationId < 0){
             throw new IllegalArgumentException("ReservationId cannot be negative.");
         }
@@ -141,6 +142,7 @@ public class ReservationService {
 		reservationRepository.deleteAll();
 		return toList(reservations);
 	}
+
 
     /**
 	 * helper method that converts iterable to list

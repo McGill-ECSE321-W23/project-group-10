@@ -30,16 +30,12 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotRepository;
-import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotTypeRepository;
-import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
-import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotService;
-import ca.mcgill.ecse321.parkinglotsystem.service.ReservationService;
+
 
 @ExtendWith(MockitoExtension.class)
 public class TestReservationService {
