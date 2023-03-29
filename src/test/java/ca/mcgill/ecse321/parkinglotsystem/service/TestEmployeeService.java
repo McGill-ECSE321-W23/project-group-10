@@ -236,6 +236,47 @@ public class TestEmployeeService {
         assertEquals(mas,null);
     }
 
+    @Test
+    public void testDeleteEmployeeInvalidEmail() {
+        String errMsg="";
+        Employee ma=null;
+        try{
+           ma = service.deleteEmployeeByEmail(INVALID__EMAIL);
+        }catch(Exception e){
+            errMsg=e.getMessage();
+        }
+        assertNull(ma);
+        assertEquals("No employee with that email was found!", errMsg);
+    }
+
+    @Test
+    public void testUpdateEmployeeValid() {
+        Employee ma = service.updateEmployee(VALID__EMAIL_ACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD);
+        assertNotNull(ma);
+        var name = ma.getName();
+        assertNotNull(name);
+        assertEquals(VALID__NAME, ma.getName());
+        var phone = ma.getPhone();
+        assertNotNull(phone);
+        assertEquals(VALID__PHONE, ma.getPhone());
+        var password = ma.getPassword();
+        assertNotNull(password);
+        assertEquals(VALID__PASSWORD, ma.getPassword());
+    }
+
+    @Test
+    public void testCreateEmployeeInvalidEmail() {
+        String errMsg="";
+        Employee ma=null;
+        try{
+           ma = service.updateEmployee(VALID__EMAIL_INACTIVE, VALID__NAME, VALID__PHONE, VALID__PASSWORD);
+        }catch(Exception e){
+            errMsg=e.getMessage();
+        }
+        assertNull(ma);
+        assertEquals("No employee with that email exists!", errMsg);
+    } 
+
 
 
 
