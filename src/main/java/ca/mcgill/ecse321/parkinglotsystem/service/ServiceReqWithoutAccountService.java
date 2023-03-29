@@ -19,6 +19,14 @@ public class ServiceReqWithoutAccountService {
     @Autowired
     private ServicesService serviceService;
 
+    /**
+     * Creates a ServiceReqWithoutAccount with the given licenseNumber and
+     * description.
+     * 
+     * @param licenseNumber
+     * @param description   description of the service
+     * @return the new ServiceReqWithoutAccount
+     */
     @Transactional
     public ServiceReqWithoutAccount createServiceReqWithoutAccount(String licenseNumber, String description) {
 
@@ -35,6 +43,12 @@ public class ServiceReqWithoutAccountService {
         return serviceReqWithoutAccount;
     }
 
+    /**
+     * Gets a serviceReqWithoutAccount with the given ID.
+     * 
+     * @param id the ID of the serviceReqWithoutAccount
+     * @return a serviceReqWithoutAccount
+     */
     @Transactional
     public ServiceReqWithoutAccount getServiceReqWithoutAccountById(int id) {
         if (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountById(id) == null) {
@@ -43,6 +57,13 @@ public class ServiceReqWithoutAccountService {
         return serviceReqwithoutAccountRepository.findServiceReqWithoutAccountById(id);
     }
 
+    /**
+     * Gets the assigned ServiceReqWithoutAccount.
+     * 
+     * @param isAssigned
+     * @return the assigned ServiceReqWithoutAccount. Throws a CustomException if no
+     *         assigned ServiceReqWithoutAccount is found.
+     */
     @Transactional
     public List<ServiceReqWithoutAccount> getServiceReqWithoutAccountByIsAssigned(boolean isAssigned) {
         if (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByIsAssigned(isAssigned).size() <= 0) {
@@ -51,18 +72,13 @@ public class ServiceReqWithoutAccountService {
         return serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByIsAssigned(isAssigned);
     }
 
-    // @Transactional
-    // public List<ServiceReqWithoutAccount>
-    // getServiceReqwithoutAccountByService(Service service){
-    // if
-    // (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByService(service).isEmpty()){
-    // throw new CustomException("No serviceRequest with such service",
-    // HttpStatus.BAD_REQUEST);
-    // }
-    // return
-    // serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByService(service);
-    // }
-
+    /**
+     * Gets the ServiceReqWithAccount of the given licenseNumber..
+     * 
+     * @param licenseNumber the license number
+     * @return the ServiceReqWithoutAccount. Throws a CustomException if no
+     *         ServiceReqWithoutAccount is found.
+     */
     @Transactional
     public List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByLicenseNumber(String licenseNumber) {
         if (serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByLicenseNumber(licenseNumber).isEmpty()) {
@@ -71,12 +87,25 @@ public class ServiceReqWithoutAccountService {
         return serviceReqwithoutAccountRepository.findServiceReqWithoutAccountByLicenseNumber(licenseNumber);
     }
 
+    /**
+     * Gets all ServiceReqWithoutAccount.
+     * 
+     * @return the list of ServiceReqWithoutAccount.
+     */
     @Transactional
     public List<ServiceReqWithoutAccount> getAll() {
         List<ServiceReqWithoutAccount> list = toList(serviceReqwithoutAccountRepository.findAll());
         return list;
     }
 
+    /**
+     * Updates the ServiceReqWithoutAccount of the given ID
+     * update isAssigned.
+     * 
+     * @param id
+     * @param isAssigned
+     * @return the updated ServiceReqWithoutAccount
+     */
     @Transactional
     public ServiceReqWithoutAccount updateIsAssignedById(int id, boolean isAssigned) {
         ServiceReqWithoutAccount serviceReqwithoutAccount = serviceReqwithoutAccountRepository
