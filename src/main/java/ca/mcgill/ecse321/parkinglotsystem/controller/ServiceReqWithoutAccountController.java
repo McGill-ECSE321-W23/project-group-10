@@ -58,9 +58,10 @@ public class ServiceReqWithoutAccountController {
     @PostMapping(value = {"","/"})
     public ServiceReqWithoutAccountDto createServiceReqWithoutAccount(
         @RequestParam(value = "licenseNumber") String licenseNumber,
-        @RequestParam(value = "price") int price
+        @RequestParam(value = "description") String description,
+        @RequestHeader String token
     ){
-        return convertServiceReqWithoutAccountToDto(service.createServiceReqWithoutAccount(licenseNumber, price));
+        return convertServiceReqWithoutAccountToDto(service.createServiceReqWithoutAccount(licenseNumber, description));
     }
 
     @PutMapping(value = {"/{id}", "/{id}/"})
