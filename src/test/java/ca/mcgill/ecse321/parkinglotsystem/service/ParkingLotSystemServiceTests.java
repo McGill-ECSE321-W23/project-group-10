@@ -83,18 +83,10 @@ public class ParkingLotSystemServiceTests {
                     return 1;
                 });
 
-        lenient().when(repository.findParkingLotSystemByOpenTime(any(Time.class)))
+        lenient().when(repository.countParkingLotSystemByOpenTime(any(Time.class)))
                 .thenAnswer((InvocationOnMock invocation) -> {
-                    if (invocation.getArgument(0).equals(NOTEXIST_OP_TIME)) {
-                        return -1;
-                    }
-                    return 1;
-                });
-
-        lenient().when(repository.findParkingLotSystemByCloseTime(any(Time.class)))
-                .thenAnswer((InvocationOnMock invocation) -> {
-                    List<ParkingLotSystem> plses = new ArrayList<>();
-                    if (invocation.getArgument(0).equals(NOTEXIST_CL_TIME)) {
+                    if (invocation.getArgument(0).equals(INVALID_OP_TIME) || 
+                        invocation.getArgument(0).equals(INVALID_CL_TIME)) {
                         return -1;
                     }
                     return 1;
@@ -108,24 +100,21 @@ public class ParkingLotSystemServiceTests {
         });
 
         lenient().when(repository.save(any(ParkingLotSystem.class))).thenAnswer((InvocationOnMock invocation) -> {
-            ParkingLotSystem sub = invocation.getArgument(0);
-            sub.setId(VALID_ID);
-            return sub;
+            return invocation.getArgument(0);
         });
     }
 
     @Test
     public void testCreateParking() {
-        ParkingLotSystem pls = service.createParkingLotSystem(VALID_ID, VALID_OP_TIME, VALID_CL_TIME);
+        ParkingLotSystem pls = service.createParkingLotSystem(NOTEXIST_ID, VALID_OP_TIME, VALID_CL_TIME);
         assertNotNull(pls);
-        assertEquals(VALID_ID, pls.getId());
+        assertEquals(NOTEXIST_ID, pls.getId());
         assertEquals(VALID_OP_TIME, pls.getOpenTime());
         assertEquals(VALID_CL_TIME, pls.getCloseTime());
     }
 
     @Test
     public void testCreateRepeatedParking() {
-        service.createParkingLotSystem(REPEATED_ID, VALID_OP_TIME, VALID_CL_TIME);
         ParkingLotSystem pls = null;
         String errMsg = "";
         try {
@@ -149,7 +138,7 @@ public class ParkingLotSystemServiceTests {
         ParkingLotSystem pls = null;
         String errMsg = "";
         try {
-            pls = service.getById(INVALID_ID);
+            pls = service.getById(NOTEXIST_ID);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -218,7 +207,7 @@ public class ParkingLotSystemServiceTests {
     public void testUpdatePark() {
         ParkingLotSystem pls = service.updateParkingLotSystem(VALID_ID, INVALID_OP_TIME, INVALID_CL_TIME);
         assertNotNull(pls);
-        assertEquals(INVALID_ID, pls.getId());
+        assertEquals(VALID_ID, pls.getId());
         assertEquals(INVALID_OP_TIME, pls.getOpenTime());
         assertEquals(INVALID_CL_TIME, pls.getCloseTime());
     }
