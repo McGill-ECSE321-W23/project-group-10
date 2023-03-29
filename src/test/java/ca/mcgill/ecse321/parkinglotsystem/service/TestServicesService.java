@@ -79,7 +79,6 @@ public class TestServicesService {
         var description = ser.getDescription();
         assertNotNull(description);
         assertEquals(VALID__DESCRIPTION_ACTIVE, ser.getDescription());
-        var price = ser.getPrice();
         assertEquals(VALID__PRICE, ser.getPrice());
     }
 
@@ -108,14 +107,24 @@ public class TestServicesService {
 
     @Test
     public void testGetServiceInValidDescription1() {
-        Service ser = service.getServiceByDescription(INVALID__DESCRIPTION);
-        assertNull(ser);
+        String errMsg = "";
+        try {
+            service.getServiceByDescription(INVALID__DESCRIPTION);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("No service found.", errMsg);
     }
 
     @Test
     public void testGetServiceInValidDescription2() {
-        Service ser = service.getServiceByDescription(NON_EXIST__DESCRIPTION);
-        assertNull(ser);
+        String errMsg = "";
+        try {
+            service.getServiceByDescription(NON_EXIST__DESCRIPTION);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("No service found.", errMsg);
     }
 
     @Test
@@ -141,8 +150,7 @@ public class TestServicesService {
     public void testDeleteService() {
         String error = "";
         try {
-            Service ser = service.deleteServiceByDescription(VALID__DESCRIPTION);
-
+            service.deleteServiceByDescription(VALID__DESCRIPTION);
         }catch (Exception e) {
             // Check that no error occurred
             error = e.getMessage();

@@ -49,7 +49,7 @@ public class ServiceReqWithAccountService {
 
     @Transactional
     public List<ServiceReqWithAccount> getServiceReqWithAccountByIsAssigned(boolean isAssigned) {
-        if (serviceReqWithAccountRepository.findServiceReqWithAccountByIsAssigned(isAssigned) == null) {
+        if (serviceReqWithAccountRepository.findServiceReqWithAccountByIsAssigned(isAssigned).size() <= 0) {
             throw new CustomException("No serviceRequest with such IsAssigned", HttpStatus.BAD_REQUEST);
         }
         return serviceReqWithAccountRepository.findServiceReqWithAccountByIsAssigned(isAssigned);
@@ -78,7 +78,8 @@ public class ServiceReqWithAccountService {
 
     @Transactional
     public List<ServiceReqWithAccount> getAll() {
-        return (List<ServiceReqWithAccount>) (ServiceRequest) toList(serviceReqWithAccountRepository.findAll());
+        List<ServiceReqWithAccount> list = toList(serviceReqWithAccountRepository.findAll());
+        return list;
     }
 
     @Transactional
