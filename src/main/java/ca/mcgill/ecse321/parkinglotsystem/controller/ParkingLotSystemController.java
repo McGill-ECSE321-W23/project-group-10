@@ -35,48 +35,76 @@ public class ParkingLotSystemController {
     @Autowired
     private AuthenticationService authService;
 
-    @GetMapping(value = {"", "/"})
-    public List<ParkingLotSystemDto> getAll(){
+    /**
+     * Gets all ParkingLotSystem.
+     * 
+     * @return the list of ParkingLotSystem as DTOs
+     */
+    @GetMapping(value = { "", "/" })
+    public List<ParkingLotSystemDto> getAll() {
         return service.getAll().stream().map(p -> convertParkingLotSystemToDto(p)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = {"/{id}","/{id}/"})
-    public ParkingLotSystemDto getById(@PathVariable("id") int id){
+    /**
+     * Gets ParkingLotSystem with such ID.
+     * 
+     * @return a ParkingLotSystem as DTOs
+     */
+    @GetMapping(value = { "/{id}", "/{id}/" })
+    public ParkingLotSystemDto getById(@PathVariable("id") int id) {
         return convertParkingLotSystemToDto(service.getById(id));
     }
 
-    @GetMapping(value = {"/all-by-open-time/{openTime}", "/all-by-open-time/{openTime}/"})
-    public List<ParkingLotSystemDto> getAllByOpenTime(@PathVariable("openTime") Time openTime){
-        return service.getAllByOpenTime(openTime).stream().map(s -> convertParkingLotSystemToDto(s)).collect(Collectors.toList());
+    /**
+     * Gets ParkingLotSystem with such openTime.
+     * 
+     * @return a ParkingLotSystem as DTOs
+     */
+    @GetMapping(value = { "/all-by-open-time/{openTime}", "/all-by-open-time/{openTime}/" })
+    public List<ParkingLotSystemDto> getAllByOpenTime(@PathVariable("openTime") Time openTime) {
+        return service.getAllByOpenTime(openTime).stream().map(s -> convertParkingLotSystemToDto(s))
+                .collect(Collectors.toList());
     }
 
-    @GetMapping(value = {"/all-by-close-time/{closeTime}", "/all-by-close-time/{closeTime}/"})
-    public List<ParkingLotSystemDto> getAllByCloseTime(@PathVariable("closeTime") Time closeTime){
-        return service.getAllByCloseTime(closeTime).stream().map(s -> convertParkingLotSystemToDto(s)).collect(Collectors.toList());
+    /**
+     * Gets ParkingLotSystem with such closeTime.
+     * 
+     * @return a ParkingLotSystem as DTOs
+     */
+    @GetMapping(value = { "/all-by-close-time/{closeTime}", "/all-by-close-time/{closeTime}/" })
+    public List<ParkingLotSystemDto> getAllByCloseTime(@PathVariable("closeTime") Time closeTime) {
+        return service.getAllByCloseTime(closeTime).stream().map(s -> convertParkingLotSystemToDto(s))
+                .collect(Collectors.toList());
     }
-    
-    @PostMapping(value = {"{id}", "/{id}"})
+
+    /**
+     * Create ParkingLotSystem with such ID.
+     * 
+     * @return a ParkingLotSystem as DTOs
+     */
+    @PostMapping(value = { "{id}", "/{id}" })
     public ParkingLotSystemDto createParkingLotSystem(
-        @PathVariable(value = "id") int id,
-        @RequestParam(value = "openTime") Time openTime,
-        @RequestParam(value = "closeTime") Time closeTime,
-        @RequestHeader String token
-    ){
+            @PathVariable(value = "id") int id,
+            @RequestParam(value = "openTime") Time openTime,
+            @RequestParam(value = "closeTime") Time closeTime,
+            @RequestHeader String token) {
         authService.authenticateManager(token);
         return convertParkingLotSystemToDto(service.createParkingLotSystem(id, openTime, closeTime));
     }
 
-    @PutMapping(value = {"/{id}", "/{id}/"})
+    /**
+     * Updates ParkingLotSystem with such ID.
+     * 
+     * @return a ParkingLotSystem as DTOs
+     */
+    @PutMapping(value = { "/{id}", "/{id}/" })
     public ParkingLotSystemDto updateParkingLotSystem(
-        @PathVariable(value = "id") int id,
-        @RequestParam(value = "openTime") Time openTime,
-        @RequestParam(value = "closeTime") Time closeTime,
-        @RequestHeader String token
-    ){
+            @PathVariable(value = "id") int id,
+            @RequestParam(value = "openTime") Time openTime,
+            @RequestParam(value = "closeTime") Time closeTime,
+            @RequestHeader String token) {
         authService.authenticateManager(token);
         return convertParkingLotSystemToDto(service.updateParkingLotSystem(id, openTime, closeTime));
     }
-
-
 
 }
