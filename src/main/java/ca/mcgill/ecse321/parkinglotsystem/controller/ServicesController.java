@@ -33,10 +33,8 @@ public class ServicesController {
     private AuthenticationService authService;
 
     /**
-     * method to get all Services
-     *
-     * @return List<ServicesDto>
-     * @throws Exception
+     * Controller to get all services
+     * @return List of type ServicesDto
      */
     @GetMapping(value = {"", "/"})
     public List<ServiceDto> getAllServices() throws Exception {
@@ -49,11 +47,11 @@ public class ServicesController {
     }
 
     /**
-     * create a service
-     *
-     * @param description
-     * @param price
-     * @return ServicesDto
+     * Controller to create a service
+     * @param description the description of the service
+     * @param price the price of the service
+     * @return A ServicesDto
+     * @throws Exception if to create the service fail
      */
     @PostMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto createServices(
@@ -71,10 +69,10 @@ public class ServicesController {
     }
 
     /**
-     * method to get a service by description
-     *
-     * @param description
-     * @return ServicesDto
+     * Controller to get a service by description
+     * @param description the description of the service
+     * @return A ServicesDto
+     * @throws Exception if to get the service fail
      */
     @GetMapping(value = {"/{description}/", "/{description}"})
     public ServiceDto getServicesByDescription(@PathVariable("description") String description) {
@@ -89,10 +87,10 @@ public class ServicesController {
     }
 
     /**
-     * method to get services by price
-     *
-     * @return List<ServicesDto>
-     * @throws Exception
+     * Controller to get a list of services by price
+     * @param price the price of service
+     * @return List of ServicesDto
+     * @throws Exception if to get services fail
      */
     @GetMapping(value = {"/all-by-price/{price}", "/all-by-price/{price}/"})
     public List<ServiceDto> getServicesByPrice(@PathVariable("price") int price) {
@@ -111,10 +109,10 @@ public class ServicesController {
     }
 
     /**
-     * delete a service
-     *
-     * @param description
+     * Controller for delete a service
+     * @param description the description of the service
      * @return service deleted
+     * @throws Exception if to delete service fail
      */
     @DeleteMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto deleteServicesByDescription(@PathVariable("description") String description) {
@@ -128,11 +126,11 @@ public class ServicesController {
     }
 
     /**
-     * update a service
-     *
-     * @param description
-     * @param price
-     * @return service updated
+     * Controller to update a service
+     * @param description the description of the service
+     * @param price the price of the service
+     * @return A serviceDto
+     * @throws Exception if to update the service fail
      */
     @PutMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto updateServicesByDescription(
