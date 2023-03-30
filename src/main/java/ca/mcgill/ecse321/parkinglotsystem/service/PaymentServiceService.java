@@ -106,16 +106,6 @@ public class PaymentServiceService {
             throw new CustomException(error, HttpStatus.NOT_FOUND);
         }
 
-        //we must delete the payment service as a payment service must have a service request
-        if (serviceRequestRepository.findAll() != null) {
-            Iterable<ServiceRequest> serviceRequests = serviceRequestRepository.findAll();
-            for (ServiceRequest p : serviceRequests) {
-                if (p.getId() == id) {
-                    serviceRequestRepository.delete(p);
-                }
-            }
-
-        }
         paymentServiceRepository.delete(paymentService);
 
         return paymentService;
