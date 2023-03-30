@@ -237,7 +237,8 @@ public class TestPaymentServiceService {
 
     @Test
     public void testUpdatePaymentServiceValid() {
-        PaymentService pa = service.updatePaymentService(VALID__ID, VALID__DATETIME__UPDATE, VALID__AMOUNT_UPDATE, dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+        PaymentService pa = service.updatePaymentService(VALID__ID, VALID__DATETIME__UPDATE, VALID__AMOUNT_UPDATE, 
+        SERVICE_REQUEST__ID);
         assertNotNull(pa);
         assertEquals(VALID__AMOUNT_UPDATE, pa.getAmount());
         assertEquals(VALID__DATETIME__UPDATE, pa.getDateTime());
@@ -248,7 +249,8 @@ public class TestPaymentServiceService {
     public void testUpdatePaymentServiceInvalid1() {
         String error = "";
         try {
-            service.updatePaymentService(VALID__ID, INVALID_PAST__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(VALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+            service.updatePaymentService(VALID__ID, INVALID_PAST__DATETIME, VALID__AMOUNT_UPDATE, 
+            SERVICE_REQUEST__ID);
         }catch (Exception e){
             error = e.getMessage();
         }
@@ -259,7 +261,8 @@ public class TestPaymentServiceService {
     public void testUpdatePaymentServiceInvalid2() {
         String error = "";
         try {
-            service.updatePaymentService(VALID__ID, INVALID_FUTURE__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(VALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+            service.updatePaymentService(VALID__ID, INVALID_FUTURE__DATETIME, VALID__AMOUNT_UPDATE, 
+            SERVICE_REQUEST__ID);
         }catch (Exception e){
             error = e.getMessage();
         }
@@ -270,8 +273,8 @@ public class TestPaymentServiceService {
     public void testUpdatePaymentServiceInvalid3() {
         String error = "";
         try {
-            service.updatePaymentService(VALID__ID, VALID__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(
-                INVALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+            service.updatePaymentService(VALID__ID, VALID__DATETIME, VALID__AMOUNT_UPDATE, 
+            INVALID__ID);
         }catch (Exception e){
             error = e.getMessage();
         }

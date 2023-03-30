@@ -74,10 +74,8 @@ public class ServicesController {
      */
     @GetMapping(value = {"/{description}/", "/{description}"})
     public ServiceDto getServicesByDescription(@PathVariable("description") String description) {
-        
         Service services = servicesService.getServiceByDescription(description);
         return convertServiceToDto(services);
-
     }
 
     /**

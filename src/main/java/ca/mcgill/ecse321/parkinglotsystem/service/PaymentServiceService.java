@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.parkinglotsystem.service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.*;
@@ -147,7 +148,7 @@ public class PaymentServiceService {
      * @throws CustomException if to update the payment service fail
      */
     @Transactional
-    public PaymentService updatePaymentService(int id, Timestamp dateTime, double amount, ServiceRequest serviceRequest) {
+    public PaymentService updatePaymentService(int id, Timestamp dateTime, double amount, int serviceRequestId) {
         // Input validation
         Timestamp create_time = new Timestamp(1648094400);
         Timestamp current_time = new Timestamp(System.currentTimeMillis());
@@ -160,9 +161,10 @@ public class PaymentServiceService {
         if (dateTime == null||compare_create < 0||compare_current>0) {
             throw new CustomException("payment service date time is wrong!", HttpStatus.BAD_REQUEST);
         }
-        if (serviceRequestRepository.findServiceRequestById(serviceRequest.getId()) == null) {
+        if (serviceRequestRepository.findServiceRequestById(serviceRequestId) == null) {
             throw new CustomException("payment service does not exist in service request repository!", HttpStatus.NOT_FOUND);
         }
+        ServiceRequest serviceRequest = serviceRequestRepository.findServiceRequestById(serviceRequestId);
         paymentService.setAmount(amount);
         paymentService.setDateTime(dateTime);
         paymentService.setServiceReq(serviceRequest);

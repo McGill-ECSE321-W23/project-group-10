@@ -56,7 +56,7 @@ public class PaymentServiceController {
      * @author Luke
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
-     * @param serviceRequest the associated service request of the payment service
+     * @param serviceRequestId the id of the associated service request of the payment service
      * @return A PaymentServiceDto
      */
     @PostMapping(value = {"/", ""})
@@ -165,7 +165,7 @@ public class PaymentServiceController {
      * @param id the id of the payment service
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
-     * @param serviceRequest the associated service request of the payment service
+     * @param serviceRequestId the id of the associated service request of the payment service
      * @return the updated PaymentServiceDto
      */
     @PutMapping(value = {"/{id}", "/{id}/"})
@@ -173,10 +173,10 @@ public class PaymentServiceController {
         @PathVariable("id") int id, 
         @RequestParam("amount") double amount, 
         @RequestParam("dateTime") Timestamp dateTime, 
-        @RequestParam("serviceRequest") ServiceRequest serviceRequest,
+        @RequestParam("serviceRequest") int serviceRequestId,
         @RequestParam String token) {
         authService.authenticateManager(token);
-        PaymentService paymentService = paymentServiceService.updatePaymentService(id, dateTime, amount, serviceRequest);
+        PaymentService paymentService = paymentServiceService.updatePaymentService(id, dateTime, amount, serviceRequestId);
         return convertPaymentServiceToDto(paymentService);
         
     }

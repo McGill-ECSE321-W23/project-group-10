@@ -77,7 +77,7 @@ public class ServiceRequestController {
      * @param serviceDescription the description of the service
      * @return List<ServiceRequestDto>
      */
-    @GetMapping(value = {"/all-by-service-id/{id}", "/all-by-service-id/{id}/"})
+    @GetMapping(value = {"/all-by-service-description/{serviceDescription}", "/all-by-service-description/{serviceDescription}/"})
     public List<ServiceRequestDto> getServiceRequestsByService(@PathVariable("service") String serviceDescription) {
         List<ServiceRequestDto> ServiceRequests = new ArrayList<>();
         List<ServiceRequest> serviceRequest = serviceRequestService.getServiceRequestByServices(serviceDescription);
