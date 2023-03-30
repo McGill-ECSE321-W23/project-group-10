@@ -20,10 +20,10 @@ public class EmployeeService {
 
     /**
      * method to create an Employee
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
+     * @param email the email of the employee
+     * @param name the name of the employee
+     * @param phone the phone number of the employee
+     * @param password the password of the employee
      * @return newly created Employee or exception
      */
     @Transactional
@@ -53,8 +53,9 @@ public class EmployeeService {
 
     /**
      * method to get an Employee by email
-     * @param email
-     * @return Employee or exception
+     * @param email the email of the employee
+     * @return A Employee
+     * @throws CustomException if to get employee fail
      */
      @Transactional
      public Employee getEmployeeByEmail(String email){
@@ -67,8 +68,8 @@ public class EmployeeService {
 
     /**
      * method to get Employees by name
-     * @param name
-     * @return List<Employee> or null
+     * @param name the name of the employee
+     * @return A List of Employee or null
      */
      @Transactional
      public List<Employee> getEmployeeByName(String name){
@@ -76,9 +77,9 @@ public class EmployeeService {
      }
 
     /**
-     * method to get Employees by name
-     * @param name
-     * @return List<Employee> or null
+     * method to get Employees by phone number
+     * @param phone the phone number of the employee
+     * @return A List of Employee or null
      */
      @Transactional
      public List<Employee> getEmployeeByPhone(String phone){
@@ -87,7 +88,7 @@ public class EmployeeService {
 
     /**
      * method to get all Employees
-     * @return List<Employee> or null
+     * @return A List of Employee or null
      */
      @Transactional
      public List<Employee> getAllEmployees(){
@@ -97,8 +98,9 @@ public class EmployeeService {
 
     /**
      * method to delete an Employee
-     * @param email
-     * @return newly deleted Employee or exception
+     * @param email the email of the employee
+     * @return  deleted Employee
+     * @throws CustomException if to delete the employee fail
      */
      @Transactional
      public Employee deleteEmployeeByEmail(String email){
@@ -118,11 +120,12 @@ public class EmployeeService {
 
     /**
      * method to update an Employee
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
-     * @return newly updated Employee or exception
+     * @param email the email of the employee
+     * @param name the name of the employee
+     * @param phone the phone number of the employee
+     * @param password the password of the employee
+     * @return newly updated Employee
+     * @throws CustomException if to update the employee fail
      */
      @Transactional
      public Employee updateEmployee(String email,String name,String phone,String password){

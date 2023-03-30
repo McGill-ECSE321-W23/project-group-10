@@ -10,11 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotTypeRepository;
-import ca.mcgill.ecse321.parkinglotsystem.dao.PaymentReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
-import ca.mcgill.ecse321.parkinglotsystem.model.PaymentReservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 

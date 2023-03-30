@@ -82,7 +82,7 @@ public class ParkingLotSystemService {
      */
     @Transactional
     public List<ParkingLotSystem> getAllByCloseTime(Time closeTime) {
-        if (!(parkingLotSystemRepository.countParkingLotSystemByOpenTime(closeTime) > 0)) {
+        if (!(parkingLotSystemRepository.countParkingLotSystemByCloseTime(closeTime) > 0)) {
             throw new CustomException("The ParkingLostSystem closeTime does not exist", HttpStatus.BAD_REQUEST);
         }
         List<ParkingLotSystem> systems = parkingLotSystemRepository.findParkingLotSystemByCloseTime(closeTime);

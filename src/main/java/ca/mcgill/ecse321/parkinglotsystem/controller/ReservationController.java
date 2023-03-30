@@ -28,8 +28,6 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
     @Autowired
-    private ParkingSpotService parkingSpotService;
-    @Autowired
     private AuthenticationService authService;
    
 
