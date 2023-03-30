@@ -39,6 +39,7 @@ public class MonthlyCustomerController {
 
     /**
      * Controller method to get all monthly customers
+     * @author Louis
      * @return A List of MonthlyCustomerDto or null
      */
     @GetMapping(value={"","/"})
@@ -48,6 +49,7 @@ public class MonthlyCustomerController {
 
     /**
      * Controller method to create a monthly customer
+     * @author Louis
      * @param email the email of the monthly customer
      * @param name the name of the monthly customer
      * @param phone the phone number of the monthly customer
@@ -68,6 +70,7 @@ public class MonthlyCustomerController {
 
     /**
      * Controller method to get monthly customers by name
+     * @author Louis
      * @param name the name of the monthly customer
      * @return A List of MonthlyCustomerDto or null
      */
@@ -85,6 +88,7 @@ public class MonthlyCustomerController {
 
     /**
      * Controller method to get monthly customers by phone
+     * @author Louis
      * @param phone the phone number of the monthly customer
      * @return A List of MonthlyCustomerDto or null
      */
@@ -102,6 +106,7 @@ public class MonthlyCustomerController {
 
     /**
      * Controller method to get monthly customers by licenseNumber
+     * @author Louis
      * @param licenseNumber the license number of the monthly customer
      * @return A List of MonthlyCustomerDto or null
      */
@@ -119,6 +124,7 @@ public class MonthlyCustomerController {
 
     /**
      * Controller method to get a monthly customer by email
+     * @author Louis
      * @param email the email of the monthly customer
      * @return A MonthlyCustomerDto or exception
      */
@@ -133,6 +139,7 @@ public class MonthlyCustomerController {
 
     /**
      * Controller method to delete a monthly customer
+     * @author Louis
      * @param email the email of the monthly customer
      * @return newly deleted MonthlyCustomerDto or exception
      */
@@ -144,6 +151,7 @@ public class MonthlyCustomerController {
 
     /**
      * Controller method to update a monthly customer
+     * @author Louis
      * @param email the email of the monthly customer
      * @param name the name of the monthly customer
      * @param phone the phone number of the monthly customer

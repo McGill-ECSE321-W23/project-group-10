@@ -24,7 +24,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotTypeService;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 /**
- * author Shaun Soobagrah
+ * @author Shaun Soobagrah
  */
 @CrossOrigin(origins = "*")
 @RestController
@@ -39,6 +39,7 @@ public class ParkingSpotTypeController {
 
     /**
      * Controller method to get all parking spot type.
+     * @author Shaun Soobagrah
      * @return A List of ParkingSpotTypeDto
      */
     @GetMapping(value = {"", "/"})
@@ -52,6 +53,7 @@ public class ParkingSpotTypeController {
 
     /**
      * Controller method to get request to create a parking spot type.
+     * @author Shaun Soobagrah
      * @param name the name of the parking spot type
      * @param fee the fee of the parking spot type
      * @return A ParkingSpotTypeDto
@@ -68,6 +70,7 @@ public class ParkingSpotTypeController {
 
     /**
      * Controller method to get a parking spot type by name.
+     * @author Shaun Soobagrah
      * @param name the name of the parking spot type
      * @return A ParkingSpotTypeDto
      */
@@ -79,6 +82,7 @@ public class ParkingSpotTypeController {
 
     /**
      * Controller method to delete a parking spot type.
+     * @author Shaun Soobagrah
      * @param name the name of the parking spot type
      * @return the deleted ParkingSpotTypeDto
      */
@@ -91,6 +95,7 @@ public class ParkingSpotTypeController {
 
     /**
      * Controller method to Update a parking spot type fee
+     * @author Shaun Soobagrah
      * @param name the name of the parking spot type
      * @param fee the fee of the parking spot type
      * @return the updated ParkingSpotTypeDto
@@ -110,6 +115,7 @@ public class ParkingSpotTypeController {
 
     /**
      * Helper method to convert parking spot type to a DTO.
+     * @author Shaun Soobagrah
      * @param parkingSpotType parking spot type instance
      * @return A parkingSpotTypeDto
      */

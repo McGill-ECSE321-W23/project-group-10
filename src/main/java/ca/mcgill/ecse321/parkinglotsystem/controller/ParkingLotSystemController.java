@@ -36,7 +36,8 @@ public class ParkingLotSystemController {
     private AuthenticationService authService;
 
     /**
-     * Controller method to get all parking lot systems.
+     * Controller method to get all parking lot systems.\
+     * @author Chenxin
      * @return A List of ParkingLotSystemDto
      */
     @GetMapping(value = { "", "/" })
@@ -46,6 +47,7 @@ public class ParkingLotSystemController {
 
     /**
      * Controller method to get a parking lot system with ID.
+     * @author Chenxin
      * @param id the id of the parking lot system
      * @return A ParkingLotSystemDto
      */
@@ -56,6 +58,7 @@ public class ParkingLotSystemController {
 
     /**
      * Controller method to get parking lot systems with openTime.
+     * @author Chenxin
      * @param openTime the open time of the parking lot system
      * @return A List of ParkingLotSystemDto
      */
@@ -67,6 +70,7 @@ public class ParkingLotSystemController {
 
     /**
      * Controller method to get parking lot systems with the closeTime.
+     * @author Chenxin
      * @param closeTime the close time of the parking lot system
      * @return A List of ParkingLotSystemDto
      */
@@ -78,6 +82,7 @@ public class ParkingLotSystemController {
 
     /**
      * Controller method to create a parking lot system.
+     * @author Chenxin
      * @param id the id of the parking lot system
      * @param openTime the open time of the parking lot system
      * @param closeTime the close time of the parking lot system
@@ -95,6 +100,7 @@ public class ParkingLotSystemController {
 
     /**
      * Controller method to update a parking lot system by ID.
+     * @author Chenxin
      * @param id the id of the parking lot system
      * @param openTime the open time of the parking lot system
      * @param closeTime the close time of the parking lot system
