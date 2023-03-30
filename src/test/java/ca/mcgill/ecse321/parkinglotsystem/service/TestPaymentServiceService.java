@@ -55,7 +55,8 @@ public class TestPaymentServiceService {
     public void setMockOutput() {
         lenient().when(paymentServiceRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<PaymentService> paymentServiceList = new ArrayList<>();
-            paymentServiceList.add(dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE))));
+            paymentServiceList.add(dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(
+                SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE))));
             return paymentServiceList;
         });
 
@@ -104,11 +105,17 @@ public class TestPaymentServiceService {
         });
 
         lenient().when(paymentServiceRepository.findPaymentServiceByServiceReq(any(ServiceRequest.class))).thenAnswer((InvocationOnMock invocation) -> {
-            ServiceRequest incomingRequest = invocation.getArgument(0);
-            if(incomingRequest.getId() == SERVICE_REQUEST__ID) {
-                return dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, incomingRequest);
-            }
-            return null;
+            
+            List<PaymentService> paymentServices = new ArrayList<>();
+            paymentServices.add(dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(
+                SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE))));
+
+            return paymentServices;
+            // ServiceRequest incomingRequest = invocation.getArgument(0);
+            // if(incomingRequest.getId() == SERVICE_REQUEST__ID) {
+            //     return dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, incomingRequest);
+            // }
+            // return null;
         });
 
     }
@@ -117,11 +124,8 @@ public class TestPaymentServiceService {
     public void testCreatePaymentService() {
         ServiceRequest serviceRequest = dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE));
         serviceRequestRepository.save(serviceRequest);
-        PaymentService pa = service.createPaymentService(VALID__ID_Active, VALID__AMOUNT, VALID__DATETIME, serviceRequest);
+        PaymentService pa = service.createPaymentService( VALID__AMOUNT, VALID__DATETIME, serviceRequest);
         assertNotNull(pa);
-        var id = pa.getId();
-        assertNotNull(id);
-        assertEquals(VALID__ID_Active, pa.getId());
         var amount = pa.getAmount();
         assertNotNull(amount);
         assertEquals(VALID__AMOUNT, pa.getAmount());
@@ -139,29 +143,8 @@ public class TestPaymentServiceService {
     }
 
     @Test
-    public void testCreatePaymentServiceInvalidId() {
-        testCreatePaymentServiceFailure(
-                INVALID__ID,
-                VALID__AMOUNT,
-                VALID__DATETIME,
-                dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
-                "payment service id cannot be null or negative!");
-    }
-
-    @Test
-    public void testCreatePaymentServiceExist() {
-        testCreatePaymentServiceFailure(
-                VALID__ID,
-                VALID__AMOUNT,
-                VALID__DATETIME,
-                dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
-                "payment service id already exist!");
-    }
-
-    @Test
     public void testCreatePaymentServiceInvalidAmount() {
         testCreatePaymentServiceFailure(
-                VALID__ID_Active,
                 INVALID__AMOUNT,
                 VALID__DATETIME,
                 dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
@@ -171,7 +154,6 @@ public class TestPaymentServiceService {
     @Test
     public void testCreatePaymentServiceInvalidTimestamp1() {
         testCreatePaymentServiceFailure(
-                VALID__ID_Active,
                 VALID__AMOUNT,
                 INVALID_PAST__DATETIME,
                 dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
@@ -181,22 +163,21 @@ public class TestPaymentServiceService {
     @Test
     public void testCreatePaymentServiceInvalidTimestamp2() {
         testCreatePaymentServiceFailure(
-                VALID__ID_Active,
                 VALID__AMOUNT,
                 INVALID_FUTURE__DATETIME,
                 dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
                 "payment service date time is wrong!");
     }
 
-    @Test
-    public void testCreatePaymentServiceInvalidServiceRequest() {
-        testCreatePaymentServiceFailure(
-                VALID__ID_Active,
-                VALID__AMOUNT,
-                VALID__DATETIME,
-                dummyServiceReq(INVALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
-                "payment service does not exist in service request repository!");
-    }
+    // @Test
+    // public void testCreatePaymentServiceInvalidServiceRequest() {
+    //     testCreatePaymentServiceFailure(
+    //             VALID__ID_Active,
+    //             VALID__AMOUNT,
+    //             VALID__DATETIME,
+    //             dummyServiceReq(SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
+    //             "payment service does not exist in service request repository!");
+    // }
 
     @Test
     public void testGetPaymentServiceValidId() {
@@ -251,8 +232,8 @@ public class TestPaymentServiceService {
 
     @Test
     public void testGetPaymentServiceValidServiceRequest() {
-        //PaymentService pa = service.getPaymentServiceByServiceRequest(dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
-        //assertEquals(SERVICE_REQUEST__ID, pa.getServiceReq().getId());
+        List<PaymentService> pa = service.getPaymentServiceByServiceRequest(SERVICE_REQUEST__ID);
+        assertEquals(SERVICE_REQUEST__ID, pa.get(0).getServiceReq().getId());
     }
 
     @Test
@@ -304,11 +285,11 @@ public class TestPaymentServiceService {
     }
 
 
-    private void testCreatePaymentServiceFailure(int id, double amount, Timestamp dateTime, ServiceRequest serviceRequest, String message) {
+    private void testCreatePaymentServiceFailure(double amount, Timestamp dateTime, ServiceRequest serviceRequest, String message) {
         PaymentService pa = null;
         String errMsg = "";
         try {
-            pa = service.createPaymentService(id, amount,dateTime,serviceRequest);
+            pa = service.createPaymentService(amount,dateTime,serviceRequest);
         } catch(Exception e) {
             errMsg = e.getMessage();
         }

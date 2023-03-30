@@ -64,15 +64,13 @@ public class PaymentServiceController {
      * @param serviceRequest
      * @return PaymentServiceDto
      */
-    @PostMapping(value = {"/", "/{id}/"})
+    @PostMapping(value = {"/", ""})
     public PaymentServiceDto createPaymentService(
-        @PathVariable("id") int id, 
         @RequestParam("amount") double amount, 
         @RequestParam("dateTime") Timestamp dateTime, 
         @RequestParam("serviceRequest") ServiceRequest serviceRequest) {
-        // TODO: Remove id parameter (since id is generated automatically)
         try {
-            PaymentService paymentService = paymentServiceService.createPaymentService(id, amount, dateTime, serviceRequest);
+            PaymentService paymentService = paymentServiceService.createPaymentService(amount, dateTime, serviceRequest);
             return convertPaymentServiceToDto(paymentService);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -156,11 +154,10 @@ public class PaymentServiceController {
      * @return List<PaymentServiceDto>
      * @throws Exception
      */
-    @GetMapping(value = {"/all-by-service-request/{serviceRequest}", "/all-by-service-request/{serviceRequest}/"})
-    public PaymentServiceDto getPaymentServiceByServiceRequest(@PathVariable("serviceRequest") ServiceRequest serviceRequest) {
-        // TODO: Use IDs as arguments, not model objects
+    @GetMapping(value = {"/all-by-service-request-id/{serviceRequestId}", "/all-by-service-request-id/{serviceRequestId}/"})
+    public PaymentServiceDto getPaymentServiceByServiceRequest(@PathVariable("serviceRequest") int serviceRequestId) {
         try {
-            PaymentService paymentService = paymentServiceService.getPaymentServiceByServiceRequest(serviceRequest);
+            PaymentService paymentService = paymentServiceService.getPaymentServiceByServiceRequest(serviceRequestId);
             return convertPaymentServiceToDto(paymentService);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
