@@ -6,12 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
-import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +24,7 @@ import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingLotSystemRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingLotSystem;
 
 @ExtendWith(MockitoExtension.class)
-public class ParkingLotSystemServiceTests {
+public class TestParkingLotSystemService {
 
     @Mock
     private ParkingLotSystemRepository repository;
@@ -36,15 +33,12 @@ public class ParkingLotSystemServiceTests {
     private ParkingLotSystemService service;
 
     private static final int VALID_ID = 1;
-    private static final int INVALID_ID = 2;
     private static final int REPEATED_ID = 3;
     private static final int NOTEXIST_ID = 4;
     private static final Time VALID_OP_TIME = Time.valueOf("11:30:00");
     private static final Time INVALID_OP_TIME = Time.valueOf("11:30:30");
-    private static final Time NOTEXIST_OP_TIME = Time.valueOf("11:30:40");
     private static final Time VALID_CL_TIME = Time.valueOf("15:30:00");
     private static final Time INVALID_CL_TIME = Time.valueOf("15:30:30");
-    private static final Time NOTEXIST_CL_TIME = Time.valueOf("15:30:40");
 
     @BeforeEach
     public void setMockOutput() {
@@ -84,6 +78,15 @@ public class ParkingLotSystemServiceTests {
                 });
 
         lenient().when(repository.countParkingLotSystemByOpenTime(any(Time.class)))
+                .thenAnswer((InvocationOnMock invocation) -> {
+                    if (invocation.getArgument(0).equals(INVALID_OP_TIME) || 
+                        invocation.getArgument(0).equals(INVALID_CL_TIME)) {
+                        return -1;
+                    }
+                    return 1;
+                });
+
+        lenient().when(repository.countParkingLotSystemByCloseTime(any(Time.class)))
                 .thenAnswer((InvocationOnMock invocation) -> {
                     if (invocation.getArgument(0).equals(INVALID_OP_TIME) || 
                         invocation.getArgument(0).equals(INVALID_CL_TIME)) {
