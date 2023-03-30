@@ -96,7 +96,6 @@ public class AuthenticationService {
         if(p != null) {
             p.setToken(null);
             customerRepository.save((MonthlyCustomer) p);
-            return;
         }
     }
 
