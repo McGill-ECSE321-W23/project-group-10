@@ -13,16 +13,11 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 import java.sql.Date;
 import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Calendar;
 
-
-import org.hibernate.criterion.LikeExpression;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -34,9 +29,6 @@ import ca.mcgill.ecse321.parkinglotsystem.dao.SingleReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
-import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
-import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotService;
-import ca.mcgill.ecse321.parkinglotsystem.service.SingleReservationService;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 
