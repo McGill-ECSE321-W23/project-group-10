@@ -20,11 +20,12 @@ public class ManagerService {
 
     /**
      * method to create a Manager
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
-     * @return newly created Manager or exception
+     * @param email the email of the manager
+     * @param name the name of the manager
+     * @param phone the phone number of the manager
+     * @param password the password of the manager
+     * @return A Manager
+     * @throws CustomException if to create the manager fail
      */
     @Transactional
      public Manager createManager(String email,String name,String phone,String password){
@@ -54,8 +55,9 @@ public class ManagerService {
 
      /**
      * method to get a Manager by email
-     * @param email
-     * @return Manager or exception
+     * @param email the email of the manager
+     * @return A Manager
+      * @throws CustomException of to get the manager fail
      */
      @Transactional
      public Manager getManagerByEmail(String email){
@@ -68,8 +70,8 @@ public class ManagerService {
 
      /**
      * method to get Managers by name
-     * @param name
-     * @return List<Manager> or null
+     * @param name the name of the manager
+     * @return A List of Manager or null
      */
      @Transactional
      public List<Manager> getManagerByName(String name){
@@ -78,8 +80,8 @@ public class ManagerService {
 
      /**
      * method to get Managers by phone
-     * @param name
-     * @return List<Manager> or null
+     * @param phone the phone number of the manager
+     * @return A List of Manager or null
      */
      @Transactional
      public List<Manager> getManagerByPhone(String phone){
@@ -88,7 +90,7 @@ public class ManagerService {
 
     /**
      * method to get all Managers
-     * @return List<Manager> or null
+     * @return A List of Manager or null
      */
      @Transactional
      public List<Manager> getAllManagers(){
@@ -98,8 +100,9 @@ public class ManagerService {
 
     /**
      * method to delete a Manager
-     * @param email
-     * @return newly deleted Manager or exception
+     * @param email the email of the manager
+     * @return newly deleted Manager
+     * @throws CustomException if to delete the manager fail
      */
      @Transactional
      public Manager deleteManagerByEmail(String email){
@@ -118,11 +121,12 @@ public class ManagerService {
 
      /**
      * method to update a Manager
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
-     * @return newly updated Manager or exception
+     * @param email the email of the manager
+     * @param name the name of the manager
+     * @param phone the phone number of the manager
+     * @param password the password of the manager
+     * @return newly updated Manager
+      * @throws CustomException if to update the manager fail
      */
      @Transactional
      public Manager updateManager(String email,String name,String phone,String password){

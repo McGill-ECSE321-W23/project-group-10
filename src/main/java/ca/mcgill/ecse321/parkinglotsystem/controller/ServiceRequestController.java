@@ -82,12 +82,11 @@ public class ServiceRequestController {
      * @return List<ServiceRequestDto>
      * @throws Exception
      */
-    @GetMapping(value = {"/all-by-service/{service}", "/all-by-service/{service}/"})
-    public List<ServiceRequestDto> getServiceRequestsByService(@PathVariable("service") Service service) {
-        // TODO: use IDs as arguments, not model objects
+    @GetMapping(value = {"/all-by-service-id/{id}", "/all-by-service-id/{id}/"})
+    public List<ServiceRequestDto> getServiceRequestsByService(@PathVariable("service") String serviceDescription) {
         List<ServiceRequestDto> ServiceRequests = new ArrayList<>();
         try {
-            List<ServiceRequest> serviceRequest = serviceRequestService.getServiceRequestByServices(service);
+            List<ServiceRequest> serviceRequest = serviceRequestService.getServiceRequestByServices(serviceDescription);
             if (serviceRequest.size() != 0) {
                 for (ServiceRequest se : serviceRequest) {
                     ServiceRequests.add(convertServiceRequestToDto(se));

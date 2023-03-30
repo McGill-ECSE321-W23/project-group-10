@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.parkinglotsystem.service;
 
+import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRequestRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceRequest;
 import ca.mcgill.ecse321.parkinglotsystem.model.Service;
@@ -13,6 +14,8 @@ import java.util.List;
 public class ServiceRequestService {
     @Autowired
     ServiceRequestRepository serviceRequestRepository;
+    @Autowired
+    ServiceRepository serviceRepository;
 
     // method to find all service requests
     @Transactional
@@ -35,8 +38,8 @@ public class ServiceRequestService {
 
     // method to find a service request by service
     @Transactional
-    public List<ServiceRequest> getServiceRequestByServices(Service services) {
-        return serviceRequestRepository.findServiceRequestByService(services);
+    public List<ServiceRequest> getServiceRequestByServices(String description) {
+        return serviceRequestRepository.findServiceRequestByService(serviceRepository.findServiceByDescription(description));
     }
 
 }
