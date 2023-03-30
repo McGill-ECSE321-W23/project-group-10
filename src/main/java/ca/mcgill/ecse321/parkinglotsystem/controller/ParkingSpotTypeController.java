@@ -94,7 +94,6 @@ public class ParkingSpotTypeController {
      * @param name the name of the parking spot type
      * @param fee the fee of the parking spot type
      * @return the updated ParkingSpotTypeDto
-     * @throws IllegalArgumentException if to update parking spot type fee fail
      */
     @PutMapping(value = {"/{name}","/{name}/" })
     public ParkingSpotTypeDto updateParkingSpotTypeFee(
