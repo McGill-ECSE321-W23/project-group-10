@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.parkinglotsystem.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ca.mcgill.ecse321.parkinglotsystem.dto.PaymentServiceDto;
 import ca.mcgill.ecse321.parkinglotsystem.service.PaymentServiceService;
@@ -147,13 +148,13 @@ public class PaymentServiceController {
      * @throws Exception
      */
     @GetMapping(value = {"/all-by-service-request-id/{serviceRequestId}", "/all-by-service-request-id/{serviceRequestId}/"})
-    public PaymentServiceDto getPaymentServiceByServiceRequest(@PathVariable("serviceRequest") int serviceRequestId) {
-        try {
-            PaymentService paymentService = paymentServiceService.getPaymentServiceByServiceRequest(serviceRequestId);
-            return convertPaymentServiceToDto(paymentService);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
+    public List<PaymentServiceDto> getPaymentServiceByServiceRequest(@PathVariable("serviceRequest") int serviceRequestId) {
+        List<PaymentService> paymentServices = paymentServiceService.getPaymentServiceByServiceRequest(serviceRequestId);
+        List<PaymentServiceDto> paymentServiceDtos = new ArrayList<>();
+        for (PaymentService paymentService: paymentServices) {
+            paymentServiceDtos.add(convertPaymentServiceToDto(paymentService));
         }
+        return paymentServiceDtos;
     }
 
     /**
