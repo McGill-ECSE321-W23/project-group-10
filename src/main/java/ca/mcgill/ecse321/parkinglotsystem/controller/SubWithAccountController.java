@@ -108,7 +108,7 @@ public class SubWithAccountController {
 
     /**
      * Controller method to delete the subscription with the given ID.
-     * @param id
+     * @param id - the id of the subscription
      */
     @DeleteMapping(value = {"/{id}","/{id}/"})
     public void deleteSubWithAccount(@PathVariable int id, @RequestHeader String token) {
