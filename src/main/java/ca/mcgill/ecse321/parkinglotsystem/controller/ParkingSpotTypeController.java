@@ -23,6 +23,9 @@ import ca.mcgill.ecse321.parkinglotsystem.service.AuthenticationService;
 import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotTypeService;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
+/**
+ * author Shaun Soobagrah
+ */
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/parking-spot-type")
@@ -35,9 +38,8 @@ public class ParkingSpotTypeController {
     AuthenticationService authService;
 
     /**
-     * method to get all parking spot type
-     * @return List<ParkingSpotTypeDto>
-     * @throws Exception
+     * Controller method to get all parking spot type.
+     * @return the list of parking spot type DTOs
      */
     @GetMapping(value = {"", "/"})
     public List<ParkingSpotTypeDto> getAllParkingSpotTypes() throws Exception{
@@ -45,15 +47,14 @@ public class ParkingSpotTypeController {
         for (ParkingSpotType parkingSpotType: parkingSpotTypeService.getAllParkingSpotTypes()) {
             pList.add(convertParkingSpotTypeToDto(parkingSpotType));
         }
-        if (pList.size() == 0) throw new CustomException("There are no parking spot types! ", HttpStatus.BAD_REQUEST);
         return pList;
     }
 
     /**
-     * create a parking spot type
-     * @param name
-     * @param fee
-     * @return parking spot type dto
+     * Controller method to get request to create a parking spot type.
+     * @param name  the name of the parking spot type
+     * @param fee   the fee of the parking spot type
+     * @return      the parking spot type DTO
      */
     @PostMapping(value = {"/{name}", "/{name}/"})
     public ParkingSpotTypeDto createParkingSpotType(
@@ -61,32 +62,25 @@ public class ParkingSpotTypeController {
         @RequestParam double fee,
         @RequestHeader String token){
         authService.authenticateManager(token);    
-        try {
-            ParkingSpotType parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
-            return convertParkingSpotTypeToDto(parkingSpotType);
-        }catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+        ParkingSpotType parkingSpotType = parkingSpotTypeService.createParkingSpotType(name, fee);
+        return convertParkingSpotTypeToDto(parkingSpotType);
     }
 
     /**
-     * method to get a parking spot type by name
-     * @param name
-     * @return ParkingSpotTypeDto
+     * Controller method to get a parking spot type by name.
+     * @param name the name of the parking spot type
+     * @return return the parking spot type DTO
      */
     @GetMapping(value = {"/{name}", "/{name}/"})
     public ParkingSpotTypeDto getParkingSpotTypeByName(@PathVariable("name") String name){
-
         ParkingSpotType parkingSpotType = parkingSpotTypeService.getParkingSpotTypeByName(name);
         return convertParkingSpotTypeToDto(parkingSpotType);
-
-
     }
 
     /**
-     * delete a parking spot type
-     * @param name
-     * @return parking spot type deleted
+     * Controller method to delete a parking spot type.
+     * @param name the name of the parking spot type
+     * @return the delete parking spot type DTO
      */
     @DeleteMapping(value = {"/{name}", "/{name}/"})
     public ParkingSpotTypeDto deleteParkingSpotTypeByName(@PathVariable String name, @RequestHeader String token) {
@@ -96,10 +90,10 @@ public class ParkingSpotTypeController {
     }
 
     /**
-     * update a parking spot type fee
-     * @param name
-     * @param fee
-     * @return parking spot type updated
+     * Controller method to Update a parking spot type fee
+     * @param name the name of the parking spot type
+     * @param fee the fee of the parking spot type
+     * @return the updated parking spot type DTO
      */
     @PutMapping(value = {"/{name}","/{name}/" })
     public ParkingSpotTypeDto updateParkingSpotTypeFee(
@@ -116,7 +110,7 @@ public class ParkingSpotTypeController {
     }
 
     /**
-     * Helper method to convert parking spot type to a DTO
+     * Helper method to convert parking spot type to a DTO.
      * @param parking spot type instance
      * @return Dto
      */

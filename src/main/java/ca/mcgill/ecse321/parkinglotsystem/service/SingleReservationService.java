@@ -36,7 +36,6 @@ public class SingleReservationService extends ReservationService {
     @Transactional
     public SingleReservation createSingleReservation(String licenseNumber,
             int parkingTime, int parkingSpotId) {
-                // TODO: remove id validation and parameters
         if ((parkingSpotId >= 2000 && parkingSpotId < 3000)){
             throw new CustomException(
                 "The parking spot is only available for monthly customers.", HttpStatus.BAD_REQUEST);

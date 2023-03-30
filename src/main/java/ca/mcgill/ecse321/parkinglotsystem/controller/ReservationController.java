@@ -64,8 +64,8 @@ public List<ReservationDto> getReservationsByParkingSpot(@PathVariable("id") int
 }
 
 @PostMapping(value = { "", "/"})
-public ReservationDto createReservation(@RequestParam(name="id") int id, @RequestParam(name ="date") Date date, @RequestParam(name = "parking-spot-id") int parkingSpotId) {
-    Reservation reservation = reservationService.createReservation (date, parkingSpotId);
+public ReservationDto createReservation(@RequestParam(name ="date") Date date, @RequestParam(name = "parking-spot-id") int parkingSpotId) {
+    Reservation reservation = reservationService.createReservation(date, parkingSpotId);
     return convertToDto(reservation);
 }
 
