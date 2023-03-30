@@ -19,7 +19,8 @@ public class EmployeeService {
     EmployeeRepository employeeRepository;
 
     /**
-     * Method to create an Employee.
+     * method to create an Employee
+     * @author Louis
      * @param email the email of the employee
      * @param name the name of the employee
      * @param phone the phone number of the employee
@@ -52,7 +53,8 @@ public class EmployeeService {
      }
 
     /**
-     * Method to get an Employee by email.
+     * method to get an Employee by email
+     * @author Louis
      * @param email the email of the employee
      * @return A Employee
      * @throws CustomException if to get employee fail
@@ -67,7 +69,8 @@ public class EmployeeService {
      }
 
     /**
-     * Method to get Employees by name.
+     * method to get Employees by name
+     * @author Louis
      * @param name the name of the employee
      * @return A List of Employee or null
      */
@@ -77,7 +80,8 @@ public class EmployeeService {
      }
 
     /**
-     * Method to get Employees by phone number.
+     * method to get Employees by phone number
+     * @author Louis
      * @param phone the phone number of the employee
      * @return A List of Employee or null
      */
@@ -87,7 +91,8 @@ public class EmployeeService {
      }
 
     /**
-     * Method to get all Employees.
+     * method to get all Employees
+     * @author Louis
      * @return A List of Employee or null
      */
      @Transactional
@@ -97,7 +102,8 @@ public class EmployeeService {
      }
 
     /**
-     * Method to delete an Employee.
+     * method to delete an Employee
+     * @author Louis
      * @param email the email of the employee
      * @return  deleted Employee
      * @throws CustomException if to delete the employee fail
@@ -119,7 +125,8 @@ public class EmployeeService {
 
 
     /**
-     * Method to update an Employee.
+     * method to update an Employee
+     * @author Louis
      * @param email the email of the employee
      * @param name the name of the employee
      * @param phone the phone number of the employee

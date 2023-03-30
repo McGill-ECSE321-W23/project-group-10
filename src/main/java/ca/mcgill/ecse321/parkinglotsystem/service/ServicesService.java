@@ -17,7 +17,8 @@ public class ServicesService {
     ServiceRepository servicesRepository;
 
     /**
-     * Method to create a service.
+     * method to create a service.
+     * @author Luke
      * @param description the description of the service
      * @param price the price of the service
      * @return A Service
@@ -47,7 +48,8 @@ public class ServicesService {
     }
 
     /**
-     * Method to get all services.
+     * method to get all services.
+     * @author Luke
      * @return A List of Service
      */
     @Transactional
@@ -58,7 +60,8 @@ public class ServicesService {
     }
 
     /**
-     * Method to get a service by description.
+     * method to get a service by description.
+     * @author Luke
      * @param description the description of the service
      * @return A Service
      * @throws CustomException if to get the service fail
@@ -73,7 +76,8 @@ public class ServicesService {
     }
 
     /**
-     * Method to get services by price.
+     * method to get services by price.
+     * @author Luke
      * @param price the price of the service
      * @return A List of Service
      * @throws CustomException if to get the service fail
@@ -84,7 +88,8 @@ public class ServicesService {
     }
 
     /**
-     * Method to delete a service by description.
+     * method to delete a service by description.
+     * @author Luke
      * @param description the description of the service
      * @return the deleted Service
      * @throws CustomException if to delete the service fail
@@ -105,7 +110,8 @@ public class ServicesService {
     }
 
     /**
-     * Method to update a service.
+     * method to update a service.
+     * @author Luke
      * @param description the description of the service
      * @param price the price of the service
      * @return the updated Service
