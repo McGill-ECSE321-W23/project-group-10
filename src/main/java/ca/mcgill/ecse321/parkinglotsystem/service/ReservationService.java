@@ -7,7 +7,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotRepository;
+import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotTypeRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
+import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
+import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 
@@ -20,6 +25,8 @@ public class ReservationService {
     protected ParkingSpotService parkingSpotService;
     @Autowired
     protected ParkingSpotTypeService parkingSpotTypeService;
+    @Autowired
+    protected PaymentReservationService paymentReservationService;
 
     /**
      * Create a Reservation
@@ -29,20 +36,12 @@ public class ReservationService {
      * return a reservation created
      */
     @Transactional
-    public Reservation createReservation(int reservationId, Date date, int parkingSpotId) {
-        // TODO: remove id validation and parameter
-        if (reservationId < 0){
-            throw new IllegalArgumentException("ReservationId cannot be negative.");
-        }
-        else if(reservationRepository.findReservationById(reservationId) != null){
-            throw new IllegalArgumentException("ReservationId is in use.");
-        }
-        else if(date == null){
+    public Reservation createReservation(Date date, int parkingSpotId) {
+        if(date == null){
             throw new IllegalArgumentException("date cannot be empty.");
         }
         else {
             Reservation reservation = (Reservation) new SingleReservation();
-            reservation.setId(reservationId); 
             reservation.setDate(date);
             reservation.setParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
             reservationRepository.save(reservation);
@@ -122,7 +121,12 @@ public class ReservationService {
             throw new IllegalArgumentException("ReservationId does not exist.");
         }
 
-        
+        // // find the payment reservation
+        // List<PaymentReservation> paymentReservations = paymentReservationService.getPaymentReservationByReservation(reservationId);
+        // for (PaymentReservation paymentReservation: paymentReservations) {
+        //     paymentReservationService.deletePaymentReservation(paymentReservation.getId());
+        // }
+
         reservationRepository.delete(reservation);
         return reservation;
 

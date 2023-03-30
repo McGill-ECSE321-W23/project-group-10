@@ -35,10 +35,9 @@ public class PaymentServiceController {
     AuthenticationService authService;
 
     /**
-     * method to get all payment services
-     *
-     * @return List<PaymentServiceDto>
-     * @throws Exception
+     * Controller to get all payment services
+     * @return A List of PaymentServiceDto
+     * @throws Exception if to get payment services fail
      */
     @GetMapping(value = {"", "/"})
     public List<PaymentServiceDto> getAllPaymentService(@RequestHeader String token) throws Exception {
@@ -52,15 +51,15 @@ public class PaymentServiceController {
     }
 
     /**
-     * create a payment service
-     *
-     * @param id
-     * @param amount
-     * @param dateTime
-     * @param serviceRequest
-     * @return PaymentServiceDto
+     * Controller to create a payment service
+     * @param id the id of the payment service
+     * @param amount the amount of the payment service
+     * @param dateTime the date time of the payment service
+     * @param serviceRequest the associated service request of the payment service
+     * @return A PaymentServiceDto
+     * @throws IllegalArgumentException if to create payment service fail
      */
-    @PostMapping(value = {"/{id}", "/{id}/"})
+    @PostMapping(value = {"/", "/{id}/"})
     public PaymentServiceDto createPaymentService(
         @PathVariable("id") int id, 
         @RequestParam("amount") double amount, 
@@ -77,10 +76,10 @@ public class PaymentServiceController {
     }
 
     /**
-     * method to get a payment service by id
-     *
-     * @param id
-     * @return PaymentServiceDto
+     * Controller to get a payment service by id
+     * @param id the id of the payment service
+     * @return A PaymentServiceDto
+     * @throws IllegalArgumentException if to get the payment service fail
      */
     @GetMapping(value = {"/{id}", "/{id}/"})
     public PaymentServiceDto getPaymentServiceById(@PathVariable("id") int id, @RequestHeader String token) {
@@ -94,11 +93,10 @@ public class PaymentServiceController {
     }
 
     /**
-     * method to get payment services by amount
-     *
-     * @param amount
-     * @return List<PaymentServiceDto>
-     * @throws Exception
+     * Controller to get payment services by amount
+     * @param amount the amount of the payment service
+     * @return A List of PaymentServiceDto
+     * @throws IllegalArgumentException if to get payment services fail
      */
     @GetMapping(value = {"/all-by-amount/{amount}", "/all-by-amount/{amount}/"})
     public List<PaymentServiceDto> getPaymentServiceByAmount(
@@ -120,11 +118,10 @@ public class PaymentServiceController {
     }
 
     /**
-     * method to get payment services by date time
-     *
-     * @param dateTime
-     * @return List<PaymentServiceDto>
-     * @throws Exception
+     * Controller to get payment services by date time
+     * @param dateTime the date time of the payment service
+     * @return A List PaymentServiceDto
+     * @throws IllegalArgumentException if to get payment services fail
      */
     @GetMapping(value = {"/all-by-datetime/{dateTime}", "/all-by-datetime/{dateTime}/"})
     public List<PaymentServiceDto> getPaymentServiceByDateTime(
@@ -146,8 +143,7 @@ public class PaymentServiceController {
     }
 
     /**
-     * method to get payment services by service request
-     *
+     * Controller to get payment services by service request
      * @param serviceRequest
      * @return List<PaymentServiceDto>
      * @throws Exception
@@ -164,10 +160,10 @@ public class PaymentServiceController {
     }
 
     /**
-     * delete a service request
-     *
-     * @param id
-     * @return service request deleted
+     * Controller to delete a payment service by id
+     * @param id the id of the payment service
+     * @return payment service deleted
+     * @throws IllegalArgumentException if to delete the payment service fail
      */
     @DeleteMapping(value = {"/{id}", "/{id}/"})
     public PaymentServiceDto deletePaymentServiceById(@PathVariable("id") Integer id, @RequestHeader String token) {
@@ -182,13 +178,13 @@ public class PaymentServiceController {
     }
 
     /**
-     * update a service request
-     *
-     * @param id
-     * @param amount
-     * @param dateTime
-     * @param serviceRequest
-     * @return service request updated
+     * Controller to update a payment service
+     * @param id the id of the payment service
+     * @param amount the amount of the payment service
+     * @param dateTime the date time of the payment service
+     * @param serviceRequest the associated service request of the payment service
+     * @return A PaymentServiceDto
+     * @throws IllegalArgumentException if to update the payment service fail
      */
     @PutMapping(value = {"/{id}", "/{id}/"})
     public PaymentServiceDto updatePaymentServiceById(
