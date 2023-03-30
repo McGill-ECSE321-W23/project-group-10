@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.parkinglotsystem.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.sql.Timestamp;

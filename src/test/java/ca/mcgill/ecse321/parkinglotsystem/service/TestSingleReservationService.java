@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Calendar;
-
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -32,7 +30,6 @@ import ca.mcgill.ecse321.parkinglotsystem.dao.SingleReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
-
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 
