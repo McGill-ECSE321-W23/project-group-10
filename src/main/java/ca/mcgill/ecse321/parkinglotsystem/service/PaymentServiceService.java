@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
@@ -95,13 +96,13 @@ public class PaymentServiceService {
     public PaymentService deletePaymentService(Integer id) {
         // Input validation
         String error = "";
-        String val = id + "";
-        if (val == "" || val.length() == 0) {
-            error = error + "a id must be mention to delete a payment service! ";
+        if (id == 0) {
+            throw new CustomException("a id must be mention to delete a payment service! ", HttpStatus.BAD_REQUEST);
         }
         PaymentService paymentService = paymentServiceRepository.findPaymentServiceById(id);
 
         if (paymentService == null) {
+
             error = error + "no such payment service exist! ";
         }
 
@@ -117,6 +118,9 @@ public class PaymentServiceService {
                     serviceRequestRepository.delete(p);
                 }
             }
+
+
+            throw new CustomException("no such payment service exist! ", HttpStatus.NOT_FOUND);
 
         }
         paymentServiceRepository.delete(paymentService);

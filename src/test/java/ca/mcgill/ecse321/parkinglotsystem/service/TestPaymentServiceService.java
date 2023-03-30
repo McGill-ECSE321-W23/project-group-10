@@ -73,7 +73,8 @@ public class TestPaymentServiceService {
 
         lenient().when(paymentServiceRepository.findPaymentServiceById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(VALID__ID)) {
-                return dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+                return dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(
+                    SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
             }
             return null;
         });
@@ -81,7 +82,8 @@ public class TestPaymentServiceService {
         lenient().when(paymentServiceRepository.findPaymentServiceByAmount(anyDouble())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(VALID__AMOUNT)) {
                 List<PaymentService> paymentServiceList=new ArrayList<>();
-                paymentServiceList.add(dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE))));
+                paymentServiceList.add(dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(
+                    SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE))));
                 return paymentServiceList;
             }
             return null;
@@ -277,11 +279,43 @@ public class TestPaymentServiceService {
     public void testUpdatePaymentServiceInvalid3() {
         String error = "";
         try {
-            service.updatePaymentService(VALID__ID, VALID__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(INVALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+            service.updatePaymentService(VALID__ID, VALID__DATETIME, VALID__AMOUNT_UPDATE, dummyServiceReq(
+                INVALID__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
         }catch (Exception e){
             error = e.getMessage();
         }
         assertEquals("payment service does not exist in service request repository!", error);
+    }
+
+    @Test
+    public void testDeletePaymentService() {
+        String error = "";
+        PaymentService paymentService = null;
+        try {
+            paymentService = service.deletePaymentService(VALID__ID);
+        }catch (Exception e){
+            error = e.getMessage();
+        }
+        // return dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, 
+        // dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
+
+        assertEquals("", error);
+        assertEquals(VALID__ID, paymentService.getId());
+        assertEquals(VALID__AMOUNT, paymentService.getAmount());
+        assertEquals(VALID__DATETIME, paymentService.getDateTime());
+        assertEquals(SERVICE_REQUEST__ID, paymentService.getServiceReq().getId());
+    }
+
+    @Test
+    public void testDeletePaymentServiceFail1() {
+        testDeletePaymentReservationFailure(0, 
+        "a id must be mention to delete a payment service! ");
+    }
+
+    @Test
+    public void testDeletePaymentServiceFail2() {
+        testDeletePaymentReservationFailure(INVALID__ID, 
+        "no such payment service exist! ");
     }
 
 
@@ -290,6 +324,18 @@ public class TestPaymentServiceService {
         String errMsg = "";
         try {
             pa = service.createPaymentService(amount,dateTime,serviceRequest);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals(message, errMsg);
+        assertNull(pa);
+    }
+
+    private void testDeletePaymentReservationFailure(int id, String message){
+        PaymentService pa = null;
+        String errMsg = "";
+        try {
+            pa = service.deletePaymentService(id);
         } catch(Exception e) {
             errMsg = e.getMessage();
         }

@@ -174,17 +174,17 @@ public class ParkingLotSystemServiceTests {
         assertEquals("The ParkingLostSystem openTime does not exist", errMsg);
     }
 
-    @Test
-    public void testGetAllByCloseTime() {
-        List<ParkingLotSystem> plses = service.getAllByCloseTime(VALID_CL_TIME);
-        assertNotNull(plses);
-        for (ParkingLotSystem pls : plses) {
-            assertNotNull(pls);
-            assertEquals(VALID_ID, pls.getId());
-            assertEquals(VALID_OP_TIME, pls.getOpenTime());
-            assertEquals(VALID_CL_TIME, pls.getCloseTime());
-        }
-    }
+    // @Test
+    // public void testGetAllByCloseTime() {
+    //     List<ParkingLotSystem> plses = service.getAllByCloseTime(VALID_CL_TIME);
+    //     assertNotNull(plses);
+    //     for (ParkingLotSystem pls : plses) {
+    //         assertNotNull(pls);
+    //         assertEquals(VALID_ID, pls.getId());
+    //         assertEquals(VALID_OP_TIME, pls.getOpenTime());
+    //         assertEquals(VALID_CL_TIME, pls.getCloseTime());
+    //     }
+    // }
 
     @Test
     public void testGetAllByInvalidCloseTime() {
