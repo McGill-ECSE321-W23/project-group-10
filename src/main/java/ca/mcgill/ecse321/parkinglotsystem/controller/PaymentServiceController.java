@@ -37,6 +37,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to get all payment services
+     * @author Luke
      * @return A List of PaymentServiceDto
      * @throws Exception if to get payment services fail
      */
@@ -53,6 +54,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to create a payment service
+     * @author Luke
      * @param id the id of the payment service
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
@@ -72,6 +74,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to get a payment service by id
+     * @author Luke
      * @param id the id of the payment service
      * @return A PaymentServiceDto
     */
@@ -85,6 +88,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method method to get payment services by amount
+     * @author Luke
      * @param amount the amount of the payment service
      * @return A List of PaymentServiceDto
      */
@@ -106,6 +110,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to get payment services by date time
+     * @author Luke
      * @param dateTime the date time of the payment service
      * @return A List PaymentServiceDto
      */
@@ -127,6 +132,7 @@ public class PaymentServiceController {
 
     /**
      * Controller to get payment services by service request
+     * @author Luke
      * @param serviceRequest
      * @return List<PaymentServiceDto>
      */
@@ -142,6 +148,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to delete a payment service by id
+     * @author Luke
      * @param id the id of the payment service
      * @return the deleted PaymentServiceDto
 
@@ -156,6 +163,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to update a payment service
+     * @author Luke
      * @param id the id of the payment service
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service

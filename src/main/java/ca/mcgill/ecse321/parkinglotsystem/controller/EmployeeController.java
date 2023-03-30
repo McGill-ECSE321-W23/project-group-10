@@ -38,6 +38,7 @@ public class EmployeeController {
 
     /**
      * Controller method to get all employees
+     * @author Louis
      * @return A List of EmployeeDto or null
      */
     @GetMapping(value={"/",""})
@@ -47,6 +48,7 @@ public class EmployeeController {
 
     /**
      * Controller method to create an employee
+     * @author Louis
      * @param email the email of the employee
      * @param name the name of the employee
      * @param phone the phone number of the employee
@@ -64,6 +66,7 @@ public class EmployeeController {
 
     /**
      * Controller method to get employees by name
+     * @author Louis
      * @param name the name of the employee
      * @return A List of EmployeeDto or null
      */
@@ -81,6 +84,7 @@ public class EmployeeController {
 
     /**
      * Controller method to get employees by phone
+     * @author Louis
      * @param phone the phone number of the employee
      * @return A List of EmployeeDto or null
      */
@@ -98,6 +102,7 @@ public class EmployeeController {
 
     /**
      * Controller method to get an employee by email
+     * @author Louis
      * @param email the email of the employee
      * @return a EmployeeDto or exception
      */
@@ -112,6 +117,7 @@ public class EmployeeController {
 
     /**
      * Controller method to delete an employee
+     * @author Louis
      * @param email the email of the employee
      * @return newly deleted EmployeeDto or exception
      */
@@ -123,6 +129,7 @@ public class EmployeeController {
 
      /**
      * Controller method to update an employee
+     * @author Louis
      * @param email the email of the employee
      * @param name the name of the employee
      * @param phone the phone number of the employee
