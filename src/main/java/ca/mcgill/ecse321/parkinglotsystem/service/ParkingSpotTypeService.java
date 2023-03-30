@@ -31,6 +31,7 @@ public class ParkingSpotTypeService {
 
     /**
      * Method to create a parking spot type.
+     * @author Shaun Soobagrah
      * @param name the name of the parking spot type
      * @param fee the cost of the parking spot type
      * @return A ParkingSpotType
@@ -55,6 +56,7 @@ public class ParkingSpotTypeService {
 
     /**
      * Method to get all parking spot types.
+     * @author Shaun Soobagrah
      * @return A List of ParkingSpotType
      */
     @Transactional
@@ -65,6 +67,7 @@ public class ParkingSpotTypeService {
 
     /**
      * Method to delete a parking spot type.
+     * @author Shaun Soobagrah
      * @param name the name of the parking spot type
      * @return the deleted ParkingSpotType
      * @throws CustomException if to delete the parking spot type fail
@@ -93,6 +96,7 @@ public class ParkingSpotTypeService {
 
     /**
      * Method to update a parking spot type.
+     * @author Shaun Soobagrah
      * @param name the name of the parking spot type
      * @param fee the cost of the parking spot type
      * @return the updated ParkingSpotType
@@ -120,6 +124,7 @@ public class ParkingSpotTypeService {
 
     /**
      * Method to get a parking spot type by name.
+     * @author Shaun Soobagrah
      * @param name the name of the parking spot type
      * @return A ParkingSpotType
      * @throws CustomException if to get the parking spot type fail
