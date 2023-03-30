@@ -20,6 +20,7 @@ public class ManagerService {
 
     /**
      * method to create a Manager
+     * @author Louis
      * @param email the email of the manager
      * @param name the name of the manager
      * @param phone the phone number of the manager
@@ -55,6 +56,7 @@ public class ManagerService {
 
      /**
      * method to get a Manager by email
+     * @author Louis
      * @param email the email of the manager
      * @return A Manager
       * @throws CustomException of to get the manager fail
@@ -70,6 +72,7 @@ public class ManagerService {
 
      /**
      * method to get Managers by name
+     * @author Louis
      * @param name the name of the manager
      * @return A List of Manager or null
      */
@@ -80,6 +83,7 @@ public class ManagerService {
 
      /**
      * method to get Managers by phone
+     * @author Louis
      * @param phone the phone number of the manager
      * @return A List of Manager or null
      */
@@ -90,6 +94,7 @@ public class ManagerService {
 
     /**
      * method to get all Managers
+     * @author Louis
      * @return A List of Manager or null
      */
      @Transactional
@@ -100,6 +105,7 @@ public class ManagerService {
 
     /**
      * method to delete a Manager
+     * @author Louis
      * @param email the email of the manager
      * @return newly deleted Manager
      * @throws CustomException if to delete the manager fail
@@ -121,6 +127,7 @@ public class ManagerService {
 
      /**
      * method to update a Manager
+     * @author Louis
      * @param email the email of the manager
      * @param name the name of the manager
      * @param phone the phone number of the manager

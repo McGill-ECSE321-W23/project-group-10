@@ -29,6 +29,7 @@ public class SubWithAccountService {
 
     /**
      * Service method to create a subscription with an account with the given monthly customer and parking spot.
+     * @author Marco
      * @param monthlyCustomerEmail the email of the monthly customer for whom to create the subscription
      * @param parkingSpotId the id of the parking spot to reserve
      * @return the new subscription
@@ -71,6 +72,7 @@ public class SubWithAccountService {
 
     /**
      * Service method to get a subscription with the given ID.
+     * @author Marco
      * @param id the id of the subscription
      * @return a subscription
      */
@@ -87,6 +89,7 @@ public class SubWithAccountService {
 
     /**
      * Service method to get the active subscription of the given monthly customer.
+     * @author Marco
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the active subscription. Throws a CustomException if no active subscription is found.
      */
@@ -107,6 +110,7 @@ public class SubWithAccountService {
 
     /**
      * Service method to get the active subscription of the given parking spot.
+     * @author Marco
      * @param parkingSpotId the ID of the parking spot
      * @return the active subscription. Throws a CustomException if no active subscription is found.
      */
@@ -127,6 +131,7 @@ public class SubWithAccountService {
 
     /**
      * Service method to get all subscriptions of the given monthly customer.
+     * @author Marco
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the list of subscriptions sorted by date (ascending).
      */
@@ -142,6 +147,7 @@ public class SubWithAccountService {
 
     /**
      * Service method to get all subscriptions of the given parking spot.
+     * @author Marco
      * @param parkingSpotId the ID of the parking spot
      * @return the list of subscriptions sorted by date (ascending).
      */
@@ -156,7 +162,8 @@ public class SubWithAccountService {
     }
 
     /**
-     * Service method to get all subcriptions.
+     * Service method to get all subscriptions.
+     * @author Marco
      * @return the list of subscriptions sorted by date (ascending).
      */
     @Transactional
@@ -171,6 +178,7 @@ public class SubWithAccountService {
     /**
      * Service method to update the active subscription of the given monthly customer
      * by incrementing the number of months by one.
+     * @author Marco
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the updated subscription
      */
@@ -186,6 +194,7 @@ public class SubWithAccountService {
 
     /**
      * Service method to delete the subscription with the given ID.
+     * @author Marco
      * @param id the id of the subscription with an account
      * @throws CustomException if to delete the subscription with an account fail
      */
@@ -199,6 +208,7 @@ public class SubWithAccountService {
 
     /**
      * Checks whether the last day of the subscription is after the current day.
+     * @author Marco
      * @param sub SubWithAccount
      * @return true if the subscription is still active.
      */

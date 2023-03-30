@@ -21,6 +21,7 @@ public class ServiceReqWithoutAccountService {
 
     /**
      * Method to create a service request without account.
+     * @author Chenxin
      * @param licenseNumber the license number of service request without account
      * @param description the description of the service request without account
      * @return A ServiceReqWithoutAccount
@@ -44,6 +45,7 @@ public class ServiceReqWithoutAccountService {
 
     /**
      * Method to get a service request without account with id.
+     * @author Chenxin
      * @param id the id of the service request without account
      * @return A serviceReqWithoutAccount
      * @throws CustomException if to get the service request without account fail
@@ -58,6 +60,7 @@ public class ServiceReqWithoutAccountService {
 
     /**
      * Method to get the assigned ServiceReqWithoutAccount.
+     * @author Chenxin
      * @param isAssigned evaluate to true if the service request without account is assigned
      * @return A List of ServiceReqWithoutAccount
      * @throws CustomException if to get the service request without account fail
@@ -72,6 +75,7 @@ public class ServiceReqWithoutAccountService {
 
     /**
      * Method to get service requests without account with license number.
+     * @author Chenxin
      * @param licenseNumber the license number of the service request without account
      * @return A List of ServiceReqWithoutAccount
      * @throws CustomException if to get the service request without account fail
@@ -86,6 +90,7 @@ public class ServiceReqWithoutAccountService {
 
     /**
      * Method to get all service requests without account.
+     * @author Chenxin
      * @return A List of ServiceReqWithoutAccount.
      */
     @Transactional
@@ -96,6 +101,7 @@ public class ServiceReqWithoutAccountService {
 
     /**
      * Method to update a service request without account of the given id
+     * @author Chenxin
      * @param id the id of the service request without account
      * @param isAssigned evaluate to true if the service request without account is assigned
      * @return the updated ServiceReqWithoutAccount

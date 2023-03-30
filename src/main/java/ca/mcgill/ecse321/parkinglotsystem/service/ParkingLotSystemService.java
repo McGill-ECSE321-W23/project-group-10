@@ -24,6 +24,7 @@ public class ParkingLotSystemService {
 
     /**
      * Method to create a parking lot system with the given id, openTime and closeTime.
+     * @author Chenxin
      * @param id the id of the parking lot system
      * @param openTime the open time of the parking lot system
      * @param closTime the close time of the parking lot system
@@ -46,6 +47,7 @@ public class ParkingLotSystemService {
 
     /**
      * Method to get a parking lot system with the given ID.
+     * @author Chenxin
      * @param id the ID of the parking lot system
      * @return A ParkingLotSystem
      * @throws CustomException if to get the parking lot system fail
@@ -60,6 +62,7 @@ public class ParkingLotSystemService {
 
     /**
      * Method to get parking lot systems with the given openTime.
+     * @author Chenxin
      * @param openTime the openTime of the parking lot system
      * @return A List of ParkingLotSystem
      * @throws CustomException if to get parking lot system fail
@@ -75,6 +78,7 @@ public class ParkingLotSystemService {
 
     /**
      * Method to get parking lot systems with the given closeTime.
+     * @author Chenxin
      * @param closeTime the closeTime of the parking lot system
      * @return A List of ParkingLotSystem
      * @throws CustomException if to get the parking lot system fail
@@ -90,6 +94,7 @@ public class ParkingLotSystemService {
 
     /**
      * Method to get all parking lot systems.
+     * @author Chenxin
      * @return A List of ParkingLotSystem.
      */
     @Transactional
@@ -99,6 +104,7 @@ public class ParkingLotSystemService {
 
     /**
      * Method to update the parking lot system.
+     * @author Chenxin
      * @param id the id of the parking lot system
      * @param openTime the open time of the parking lot system
      * @param closeTime the close time of the parking lot system
