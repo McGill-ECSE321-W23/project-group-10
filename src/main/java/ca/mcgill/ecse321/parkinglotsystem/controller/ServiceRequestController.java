@@ -24,10 +24,9 @@ public class ServiceRequestController {
     ServiceRequestService serviceRequestService;
 
     /**
-     * method to get all Service Request
-     *
-     * @return List<ServiceRequestDto>
-     * @throws Exception
+     * Controller to get all Service Requests
+     * @return A List of ServiceRequestDto
+     * @throws Exception if to get service requests fail
      */
     @GetMapping(value = {"", "/"})
     public List<ServiceRequestDto> getAllServiceRequest() throws Exception {
@@ -40,10 +39,10 @@ public class ServiceRequestController {
     }
 
     /**
-     * method to get a service request by id
-     *
-     * @param id
-     * @return ServiceRequestDto
+     * Controller to get a service request by id
+     * @param id the id of the service request
+     * @return A ServiceRequestDto
+     * @throws IllegalArgumentException if to get the service request fail
      */
     @GetMapping(value = {"/{id}", "/{id}/"})
     public ServiceRequestDto getServiceRequestById(@PathVariable("id") int id) {
@@ -56,10 +55,10 @@ public class ServiceRequestController {
     }
 
     /**
-     * method to get service requests by is assigned
-     *
-     * @return List<ServiceRequestDto>
-     * @throws Exception
+     * Controller to get service requests by is assigned
+     * @param isAssigned whether the service request is assigned status
+     * @return A List of ServiceRequestDto
+     * @throws IllegalArgumentException if to get service requests fail
      */
     @GetMapping(value = {"/all-by-is-assigned/{isAssigned}", "/all-by-is-assigned/{isAssigned}/"})
     public List<ServiceRequestDto> getServiceRequestByIsAssigned(@PathVariable("isAssigned") boolean isAssigned) {
@@ -78,8 +77,8 @@ public class ServiceRequestController {
     }
 
     /**
-     * method to get service requests by service
-     *
+     * Controller to get service requests by service
+     * @param
      * @return List<ServiceRequestDto>
      * @throws Exception
      */
