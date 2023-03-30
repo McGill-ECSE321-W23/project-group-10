@@ -24,6 +24,7 @@ public class ServiceReqWithAccountService {
 
     /**
      * Method to create a service request with account.
+     * @author Chenxin
      * @param monthlyCustomerEmail the email of the monthly customer
      * @param description description of the service request with account
      * @return A ServiceReqWithAccount
@@ -45,6 +46,7 @@ public class ServiceReqWithAccountService {
 
     /**
      * Method to get a service request with account with the given id.
+     * @author Chenxin
      * @param id the ID of the service request with account
      * @return A serviceReqWithAccount
      * @throws CustomException if to get the service request with account fail
@@ -59,6 +61,7 @@ public class ServiceReqWithAccountService {
 
     /**
      * Method to get the assigned service requests with account.
+     * @author Chenxin
      * @param isAssigned evaluate to true if the service request with account is assigned
      * @return A List of ServiceReqWithAccount
      * @throws CustomException if to get the service request with account fail
@@ -73,6 +76,7 @@ public class ServiceReqWithAccountService {
 
     /**
      * Method to get service requests with account by customer.
+     * @author Chenxin
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return A List of ServiceReqWithAccount
      * @throws CustomException if to get the service request with account fail
@@ -87,7 +91,8 @@ public class ServiceReqWithAccountService {
     }
 
     /**
-     * Method to get all service requests with account.
+     * Gets all service requests with account.
+     * @author Chenxin
      * @return A List of ServiceReqWithAccount.
      */
     @Transactional
@@ -97,7 +102,8 @@ public class ServiceReqWithAccountService {
     }
 
     /**
-     * Method to update a service request with account of the given id.
+     * Method to update a service request with account of the given id
+     * @author Chenxin
      * @param id the id of the service request with account
      * @param isAssigned evaluate to true if the service request with account is assigned
      * @return the updated ServiceReqWithAccount

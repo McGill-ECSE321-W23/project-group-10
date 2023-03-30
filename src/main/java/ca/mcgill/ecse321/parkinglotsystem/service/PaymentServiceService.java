@@ -22,6 +22,7 @@ public class PaymentServiceService {
 
     /**
      * Method to create a payment service.
+     * @author Luke
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
      * @param serviceRequestId the associated service request id of the payment service
@@ -57,6 +58,7 @@ public class PaymentServiceService {
 
     /**
      * Method to get all payment services.
+     * @author Luke
      * @return A List of PaymentService
      */
     public List<PaymentService> getAllPaymentService() {
@@ -68,6 +70,7 @@ public class PaymentServiceService {
 
     /**
      * Method to get a payment service by id.
+     * @author Luke
      * @param id the id of the payment service
      * @return A PaymentService or null
      */
@@ -78,6 +81,7 @@ public class PaymentServiceService {
 
     /**
      * Method to get payment services by amount.
+     * @author Luke
      * @param amount the amount of the payment service
      * @return A List of PaymentService or null
      */
@@ -88,6 +92,7 @@ public class PaymentServiceService {
 
     /**
      * Method to get payment services by date time.
+     * @author Luke
      * @param DateTime the date time of the payment service
      * @return A List of PaymentService or null
      */
@@ -99,6 +104,7 @@ public class PaymentServiceService {
 
     /**
      * Method to get payment services by service request.
+     * @author Luke
      * @param serviceReqId the id of the associated service request
      * @return A List of PaymentService or null
      */
@@ -111,6 +117,7 @@ public class PaymentServiceService {
 
     /**
      * Method to delete a payment service.
+     * @author Luke
      * @param id the id of the payment service
      * @return the deleted PaymentService
      * @throws CustomException if to delete the payment service fail
@@ -140,6 +147,7 @@ public class PaymentServiceService {
 
     /**
      * Method to update a payment service.
+     * @author Luke
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
      * @param serviceRequest the associated service request of the payment service

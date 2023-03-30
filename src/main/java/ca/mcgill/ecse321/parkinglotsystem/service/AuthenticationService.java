@@ -34,6 +34,7 @@ public class AuthenticationService {
 
     /**
      * Logs in a manager.
+     * @author Marco
      * @param credentials the credential of the manager
      * @return the authentication token
      */
@@ -48,6 +49,7 @@ public class AuthenticationService {
 
     /**
      * Logs in an employee.
+     * @author Marco
      * @param credentials the credential of the employee
      * @return the authentication token
      */
@@ -62,6 +64,7 @@ public class AuthenticationService {
 
     /**
      * Logs in a monthly customer.
+     * @author Marco
      * @param credentials the credential of the monthly customer
      * @return the authentication token
      */
@@ -76,6 +79,7 @@ public class AuthenticationService {
 
     /**
      * Logs out the person.
+     * @author Marco
      * @param token the token of the person
      */
     @Transactional
@@ -101,6 +105,7 @@ public class AuthenticationService {
 
     /**
      * Authenticates a manager.
+     * @author Marco
      * @param token the email of the person
      */
     @Transactional
@@ -115,6 +120,7 @@ public class AuthenticationService {
 
     /**
      * Authenticates an employee.
+     * @author Marco
      * @param token the email of the person
      */
     @Transactional
@@ -130,6 +136,7 @@ public class AuthenticationService {
 
     /**
      * Authenticates a monthly customer.
+     * @author Marco
      * @param token the email of the person
      */
     @Transactional
@@ -146,6 +153,7 @@ public class AuthenticationService {
 
     /**
      * Validates the credentials and generates a token. This method does not save the token in the database.
+     * @author Marco
      * @param p the abstract type person
      * @param credentials the credential of the person
      * @return the authentication token
@@ -163,6 +171,7 @@ public class AuthenticationService {
     /**
      * Validates a token. If the token is invalid, it throws a CustomException with the 
      * given error message.
+     * @author Marco
      * @param token the token of any person
      * @param errorMessage error message wish to generate
      * @throws RuntimeException if time expires
@@ -183,6 +192,7 @@ public class AuthenticationService {
 
     /**
      * Finds a manager by its token.
+     * @author Marco
      * @param token the token of the manager
      * @return the manager if it exists, null otherwise.
      */
@@ -196,6 +206,7 @@ public class AuthenticationService {
 
     /**
      * Finds an employee by its token.
+     * @author Marco
      * @param token the token of the employee
      * @return the employee if it exists, null otherwise.
      */
@@ -209,6 +220,7 @@ public class AuthenticationService {
 
     /**
      * Finds a monthly customer by its token.
+     * @author Marco
      * @param token the token of the monthly customer
      * @return the monthly customer if it exists, null otherwise.
      */
