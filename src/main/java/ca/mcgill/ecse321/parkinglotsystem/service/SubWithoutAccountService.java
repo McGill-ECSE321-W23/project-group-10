@@ -112,6 +112,9 @@ public class SubWithoutAccountService extends ReservationService {
 	@Transactional
 	public List<SubWithoutAccount> getSubWithoutAccountsByLicenseNumber(String licenseNumber) {
 		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByLicenseNumber(licenseNumber);
+        if (subWithoutAccounts == null) {
+            return Collections.emptyList();
+        }
         Collections.sort(subWithoutAccounts, Comparator.comparing(SubWithoutAccount::getDate));
 		return subWithoutAccounts;
 	}
@@ -140,20 +143,6 @@ public class SubWithoutAccountService extends ReservationService {
         return latestSubWithoutAccount;
     }
 
-    @Transactional
-    public SubWithoutAccount getActiveByParkingSpot(int parkingSpotId) {
-
-        List<SubWithoutAccount> subWithoutAccounts = getSubWithoutAccountsByParkingSpot(parkingSpotId);
-        if(subWithoutAccounts.size() <= 0) {
-            throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
-        }
-        SubWithoutAccount latestSubWithoutAccount = subWithoutAccounts.get(subWithoutAccounts.size() - 1);
-        if (!isActive(latestSubWithoutAccount)) {
-            throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
-        }
-
-        return latestSubWithoutAccount;
-    }
 
     @Transactional
     public SubWithoutAccount updateSubWithoutAccount(String licenseNumber){

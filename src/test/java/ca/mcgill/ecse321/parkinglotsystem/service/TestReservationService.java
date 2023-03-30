@@ -166,45 +166,16 @@ public void testCreateReservationSuccessfully() {
 
     Reservation reservation = null;
     try {
-        reservation = reservationService.createReservation(Available_Id, date1, ParkingSpot_ID);
+        reservation = reservationService.createReservation(date1, ParkingSpot_ID);
     } catch (IllegalArgumentException e) {
         fail(e.getMessage());
     }
     assertNotNull(reservation);
-    assertEquals(Available_Id, reservation.getId());
     assertEquals(date1, reservation.getDate());
     assertEquals(ParkingSpot_ID, reservation.getParkingSpot().getId());
 
 }
 
-@Test
-public void testCreateReservationWithNegativeId() {
-    int id = -1;
-    String error = null;
-    Reservation reservation = null;
-    try {
-        reservation = reservationService.createReservation(id, date1, ParkingSpot_ID);
-    } catch (IllegalArgumentException e) {
-        error = e.getMessage();
-    }
-    assertNull(reservation);
-    assertEquals("ReservationId cannot be negative.", error);
-
-}
-
-@Test
-public void testCreateReservationWithExistingId() {
-    String error = null;
-    Reservation reservation = null;
-    try {
-        reservation = reservationService.createReservation(RESERVATION_ID, date1, ParkingSpot_ID);
-    } catch (IllegalArgumentException e) {
-        error = e.getMessage();
-    }
-    assertNull(reservation);
-    assertEquals("ReservationId is in use.", error);
-
-}
 
 @Test
 public void testCreateReservationWithEmptyDate() {
@@ -212,7 +183,7 @@ public void testCreateReservationWithEmptyDate() {
     String error = null;
     Reservation reservation = null;
     try {
-        reservation = reservationService.createReservation(Available_Id, date, ParkingSpot_ID);
+        reservation = reservationService.createReservation(date, ParkingSpot_ID);
     } catch (IllegalArgumentException e) {
         error = e.getMessage();
     }
