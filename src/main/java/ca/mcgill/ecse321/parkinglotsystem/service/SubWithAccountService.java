@@ -28,7 +28,7 @@ public class SubWithAccountService {
     private ParkingSpotService parkingSpotService;
 
     /**
-     * Service method to create a subscription with the given monthly customer and parking spot.
+     * Service method to create a subscription with an account with the given monthly customer and parking spot.
      * @param monthlyCustomerEmail the email of the monthly customer for whom to create the subscription
      * @param parkingSpotId the id of the parking spot to reserve
      * @return the new subscription
@@ -70,8 +70,8 @@ public class SubWithAccountService {
     }
 
     /**
-     * Service method to get a subcription with the given ID.
-     * @param id the ID of the subscription
+     * Service method to get a subscription with the given ID.
+     * @param id the id of the subscription
      * @return a subscription
      */
     @Transactional
@@ -186,7 +186,8 @@ public class SubWithAccountService {
 
     /**
      * Service method to delete the subscription with the given ID.
-     * @param id
+     * @param id the id of the subscription with an account
+     * @throws CustomException if to delete the subscription with an account fail
      */
     public void deleteSubWithAccount(int id) {
         SubWithAccount sub = subWithAccountRepository.findSubWithAccountById(id);
@@ -198,7 +199,7 @@ public class SubWithAccountService {
 
     /**
      * Checks whether the last day of the subscription is after the current day.
-     * @param sub
+     * @param sub SubWithAccount
      * @return true if the subscription is still active.
      */
     private boolean isActive(SubWithAccount sub) {
