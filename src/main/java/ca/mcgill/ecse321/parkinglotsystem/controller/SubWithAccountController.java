@@ -31,8 +31,8 @@ public class SubWithAccountController {
     private AuthenticationService authService;
 
     /**
-     * Controller method to get all subscriptions.
-     * @return the list of subscriptions as DTOs
+     * Controller method to get all subscriptions with account.
+     * @return A List of SubWithAccountDto
      */
     @GetMapping(value = {"", "/"})
     public List<SubWithAccountDto> getAll() {
@@ -41,9 +41,9 @@ public class SubWithAccountController {
     }
 
     /**
-     * Controller method to get all subscription with given monthly customer.
+     * Controller method to get all subscriptions with account with given monthly customer.
      * @param monthlyCustomerEmail the email of the monthly customer
-     * @return the list of subscriptions as DTOs
+     * @return A List of SubWithAccountDto
      */
     @GetMapping(value = {"/all-by-customer/{email}", "/all-by-customer/{email}/"})
     public List<SubWithAccountDto> getAllByCustomer(@PathVariable("email") String monthlyCustomerEmail) {
@@ -52,9 +52,9 @@ public class SubWithAccountController {
     }
 
     /**
-     * Controller method to get all subscriptions with the given parking spot.
+     * Controller method to get all subscriptions with account with the given parking spot.
      * @param parkingSpotId the ID of the parking spot
-     * @return the list of subscriptions as DTOs
+     * @return A List of SubWithAccountDto
      */
     @GetMapping(value = {"/all-by-parking-spot/{id}", "/all-by-parking-spot/{id}/"})
     public List<SubWithAccountDto> getAllByParkingSpot(@PathVariable("id") int parkingSpotId) {
@@ -63,9 +63,9 @@ public class SubWithAccountController {
     }
 
     /**
-     * Controller method to get a subscription with the given ID.
+     * Controller method to get a subscription with account with the given ID.
      * @param id the ID of the subscription.
-     * @return a subscription as DTO
+     * @return a SubWithAccountDto
      */
     @GetMapping(value = {"/{id}", "/{id}/"})
     public SubWithAccountDto getSubWithAccount(@PathVariable("id") int id) {
@@ -73,9 +73,9 @@ public class SubWithAccountController {
     }
 
     /**
-     * Controller method to get the active subscription of the given monthly customer.
+     * Controller method to get the active subscription with account of the given monthly customer.
      * @param monthlyCustomerEmail the email of the monthly customer
-     * @return the active subscription as DTO
+     * @return the SubWithAccountDto
      */
     @GetMapping(value = {"/active-by-customer/{email}", "/active-by-customer/{email}/"})
     public SubWithAccountDto getActiveByCustomer(@PathVariable("email") String monthlyCustomerEmail) {
@@ -83,9 +83,9 @@ public class SubWithAccountController {
     }
 
     /**
-     * Controller method to get the active subscription of the given parking spot.
+     * Controller method to get the active subscription with account of the given parking spot.
      * @param parkingSpotId the ID of the parking spot
-     * @return the active subscription as DTO
+     * @return the active SubWithAccountDto
      */
     @GetMapping(value = {"/active-by-parking-spot/{id}", "/active-by-parking-spot/{id}/"})
     public SubWithAccountDto getActiveByParkingSpot(@PathVariable("id") int parkingSpotId) {
@@ -93,10 +93,10 @@ public class SubWithAccountController {
     }
     
     /**
-     * Controller method to get a subscription with the given monthly customer and parking spot.
+     * Controller method to get a subscription with account with the given monthly customer and parking spot.
      * @param monthlyCustomerEmail the email of the monthly customer for whom to create the subscription
      * @param parkingSpotId the id of the parking spot to reserve
-     * @return the new subscription as DTO
+     * @return A SubWithAccountDto
      */
     @PostMapping(value = {"", "/"})
     public SubWithAccountDto createSubWithAccount(
@@ -107,8 +107,8 @@ public class SubWithAccountController {
     }
 
     /**
-     * Controller method to delete the subscription with the given ID.
-     * @param id
+     * Controller method to delete the subscription with account with the given ID.
+     * @param id the id of the subscription
      */
     @DeleteMapping(value = {"/{id}","/{id}/"})
     public void deleteSubWithAccount(@PathVariable int id, @RequestHeader String token) {

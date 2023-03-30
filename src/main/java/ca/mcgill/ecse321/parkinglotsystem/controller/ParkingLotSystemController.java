@@ -36,9 +36,8 @@ public class ParkingLotSystemController {
     private AuthenticationService authService;
 
     /**
-     * Gets all ParkingLotSystem.
-     * 
-     * @return the list of ParkingLotSystem as DTOs
+     * Controller method to get all parking lot systems.
+     * @return A List of ParkingLotSystemDto
      */
     @GetMapping(value = { "", "/" })
     public List<ParkingLotSystemDto> getAll() {
@@ -46,9 +45,9 @@ public class ParkingLotSystemController {
     }
 
     /**
-     * Gets ParkingLotSystem with such ID.
-     * 
-     * @return a ParkingLotSystem as DTOs
+     * Controller method to get a parking lot system with ID.
+     * @param id the id of the parking lot system
+     * @return A ParkingLotSystemDto
      */
     @GetMapping(value = { "/{id}", "/{id}/" })
     public ParkingLotSystemDto getById(@PathVariable("id") int id) {
@@ -56,9 +55,9 @@ public class ParkingLotSystemController {
     }
 
     /**
-     * Gets ParkingLotSystem with such openTime.
-     * 
-     * @return a ParkingLotSystem as DTOs
+     * Controller method to get parking lot systems with openTime.
+     * @param openTime the open time of the parking lot system
+     * @return A List of ParkingLotSystemDto
      */
     @GetMapping(value = { "/all-by-open-time/{openTime}", "/all-by-open-time/{openTime}/" })
     public List<ParkingLotSystemDto> getAllByOpenTime(@PathVariable("openTime") Time openTime) {
@@ -67,9 +66,9 @@ public class ParkingLotSystemController {
     }
 
     /**
-     * Gets ParkingLotSystem with such closeTime.
-     * 
-     * @return a ParkingLotSystem as DTOs
+     * Controller method to get parking lot systems with the closeTime.
+     * @param closeTime the close time of the parking lot system
+     * @return A List of ParkingLotSystemDto
      */
     @GetMapping(value = { "/all-by-close-time/{closeTime}", "/all-by-close-time/{closeTime}/" })
     public List<ParkingLotSystemDto> getAllByCloseTime(@PathVariable("closeTime") Time closeTime) {
@@ -78,9 +77,11 @@ public class ParkingLotSystemController {
     }
 
     /**
-     * Create ParkingLotSystem with such ID.
-     * 
-     * @return a ParkingLotSystem as DTOs
+     * Controller method to create a parking lot system.
+     * @param id the id of the parking lot system
+     * @param openTime the open time of the parking lot system
+     * @param closeTime the close time of the parking lot system
+     * @return A ParkingLotSystemDto
      */
     @PostMapping(value = { "{id}", "/{id}" })
     public ParkingLotSystemDto createParkingLotSystem(
@@ -93,9 +94,11 @@ public class ParkingLotSystemController {
     }
 
     /**
-     * Updates ParkingLotSystem with such ID.
-     * 
-     * @return a ParkingLotSystem as DTOs
+     * Controller method to update a parking lot system by ID.
+     * @param id the id of the parking lot system
+     * @param openTime the open time of the parking lot system
+     * @param closeTime the close time of the parking lot system
+     * @return A ParkingLotSystemDto
      */
     @PutMapping(value = { "/{id}", "/{id}/" })
     public ParkingLotSystemDto updateParkingLotSystem(

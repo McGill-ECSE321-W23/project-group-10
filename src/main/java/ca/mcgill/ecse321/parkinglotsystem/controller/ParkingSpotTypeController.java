@@ -39,7 +39,7 @@ public class ParkingSpotTypeController {
 
     /**
      * Controller method to get all parking spot type.
-     * @return the list of parking spot type DTOs
+     * @return A List of ParkingSpotTypeDto
      */
     @GetMapping(value = {"", "/"})
     public List<ParkingSpotTypeDto> getAllParkingSpotTypes() throws Exception{
@@ -52,9 +52,9 @@ public class ParkingSpotTypeController {
 
     /**
      * Controller method to get request to create a parking spot type.
-     * @param name  the name of the parking spot type
-     * @param fee   the fee of the parking spot type
-     * @return      the parking spot type DTO
+     * @param name the name of the parking spot type
+     * @param fee the fee of the parking spot type
+     * @return A ParkingSpotTypeDto
      */
     @PostMapping(value = {"/{name}", "/{name}/"})
     public ParkingSpotTypeDto createParkingSpotType(
@@ -69,7 +69,7 @@ public class ParkingSpotTypeController {
     /**
      * Controller method to get a parking spot type by name.
      * @param name the name of the parking spot type
-     * @return return the parking spot type DTO
+     * @return A ParkingSpotTypeDto
      */
     @GetMapping(value = {"/{name}", "/{name}/"})
     public ParkingSpotTypeDto getParkingSpotTypeByName(@PathVariable("name") String name){
@@ -80,7 +80,7 @@ public class ParkingSpotTypeController {
     /**
      * Controller method to delete a parking spot type.
      * @param name the name of the parking spot type
-     * @return the delete parking spot type DTO
+     * @return the deleted ParkingSpotTypeDto
      */
     @DeleteMapping(value = {"/{name}", "/{name}/"})
     public ParkingSpotTypeDto deleteParkingSpotTypeByName(@PathVariable String name, @RequestHeader String token) {
@@ -93,7 +93,8 @@ public class ParkingSpotTypeController {
      * Controller method to Update a parking spot type fee
      * @param name the name of the parking spot type
      * @param fee the fee of the parking spot type
-     * @return the updated parking spot type DTO
+     * @return the updated ParkingSpotTypeDto
+     * @throws IllegalArgumentException if to update parking spot type fee fail
      */
     @PutMapping(value = {"/{name}","/{name}/" })
     public ParkingSpotTypeDto updateParkingSpotTypeFee(
@@ -111,8 +112,8 @@ public class ParkingSpotTypeController {
 
     /**
      * Helper method to convert parking spot type to a DTO.
-     * @param parking spot type instance
-     * @return Dto
+     * @param parkingSpotType parking spot type instance
+     * @return A parkingSpotTypeDto
      */
     private ParkingSpotTypeDto convertParkingSpotTypeToDto(ParkingSpotType parkingSpotType) {
 

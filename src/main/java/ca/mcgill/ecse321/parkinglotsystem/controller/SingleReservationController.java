@@ -35,6 +35,10 @@ public class SingleReservationController {
     @Autowired
     private AuthenticationService authService;
 
+    /**
+    * get a list of all the existing singleReservations 
+    * @return a list of all the existing singleReservations
+    */
     @GetMapping(value = {"", "/"})
     public List<SingleReservationDto> getAllSingleReservations() {
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
@@ -46,13 +50,23 @@ public class SingleReservationController {
 
     }
 
+    /**
+    * create a new singleReservation object
+    * @param licenseNumber - the licenseNumber to be linked to the singleReservation
+    * @param parkingTime - the length of the singleReservation in minutes
+    * @return the singleReservation created as Dto
+    */
     @PostMapping(value = {"", "/" })
     public SingleReservationDto createSingleReservation(@RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "parkingTime") int parkingTime, @RequestParam(name = "parkingSpotId") int parkingSpotId){
         SingleReservation singleReservation = singleReservationService.createSingleReservation(licenseNumber, parkingTime, parkingSpotId);
         return convertToDto(singleReservation);
     }
 
-   
+    /**
+    * get a list of singleReservation with the given parkingSpotId
+    * @param parkingSpotId - id of a parkingSpot 
+    * @return a list of singleReservation associated with the parkingSpot as Dtos
+    */
     @GetMapping(value = { "/all-by-parking-spot", "/all-by-parking-spot/"})
     public List<SingleReservationDto> getSingleReservationsByParkingSpot(@PathVariable int parkingSpotId){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
@@ -63,6 +77,11 @@ public class SingleReservationController {
         return singleReservationDtos;
     }
 
+    /**
+    * get a list of singleReservation with the given date
+    * @param date - date object
+    * @return a list of singleReservation associated with the date as Dtos
+    */
     @GetMapping(value = { "/all-by-date/{date}", "/all-by-date/{date}/"})
     public List<SingleReservationDto> getSingleReservationsByDate(@PathVariable Date date){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
@@ -73,6 +92,11 @@ public class SingleReservationController {
         return singleReservationDtos;
     }
 
+    /**
+    * get the singlereservation by its id
+    * @param id - id of a singleReservation 
+    * @return the singleReservation found with the id as Dto
+    */
     @GetMapping(value = { "/{id}", "/{id}/"})
     public SingleReservationDto getSingleReservationById(@PathVariable int id){
         
@@ -81,6 +105,11 @@ public class SingleReservationController {
         return convertToDto(singleReservation);
     }
 
+    /**
+    * get a list of singleReservation with the given licenseNumber
+    * @param licenseNumber - licenseNumber of a singleReservation
+    * @return a list of singleReservation associated with the licenseNumber as Dtos
+    */
     @GetMapping(value = { "/all-by-license-number/{licenseNumber}", "/all-by-license-number/{licenseNumber}/"})
     public List<SingleReservationDto> getSingleReservationsByLicenseNumber(@PathVariable String licenseNumber){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
@@ -91,6 +120,12 @@ public class SingleReservationController {
         return singleReservationDtos;
     }
 
+    /**
+    * update a singleReservation
+    * @param licenseNumber - licenseNumber of a singleReservation
+    * @param newParkingTime - length of the singleReservation that one wishes to extend
+    * @return the updated singleReservation with the licenseNumber
+    */
     @PutMapping(value = { "/{id}", "/{id}/" })
 	public SingleReservationDto updateSingleReservationDto( 
         @RequestParam String LicenseNumber, 
@@ -99,6 +134,12 @@ public class SingleReservationController {
 		return convertToDto(singleReservation);
 	}
 
+    /**
+    * delete a singlereservation object
+    * @param id - id of a singleReservation to be deleted
+    * @param token - a token to authenticate the user who should be a manager
+    * @return the deleted singleReservation as Dto
+    */
     @DeleteMapping(value = {"/{id}", "/{id}/"})
     public SingleReservationDto deleteSingleReservationDto(@PathVariable("id") int id, @RequestHeader String token){
         authService.authenticateManager(token);
@@ -106,6 +147,11 @@ public class SingleReservationController {
         return convertToDto(sR);
     }
 
+    /**
+    * calculate the fee for a singlereservation
+    * @param startTime - licenseNumber of a singleReservation
+    * @return a list of singleReservation associated with the licenseNumber as Dtos
+    */
     @GetMapping(value = {"/calculate-fee", "/calculate-fee/"})
     public Double calculateFee(@RequestParam(name = "startTime") Time startTime, @RequestParam(name = "singleReservationId") int singleReservationId){
         return singleReservationService.calculateFee(startTime, singleReservationId);
