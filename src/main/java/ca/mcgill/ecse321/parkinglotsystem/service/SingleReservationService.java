@@ -193,7 +193,8 @@ public class SingleReservationService extends ReservationService {
 
     /**
      * Delete all the reservations
-     * @return the deleted List of Reservation
+     * @author Mike
+     * @return the list of all the single reservation deleted
      */
     @Transactional
     public List<SingleReservation> deleteAllSingleReservations() {
@@ -203,6 +204,11 @@ public class SingleReservationService extends ReservationService {
     }
 
 
+    /**
+     * get current active reservation from licenseNumber
+     * @author Mike
+     * @return the active singleReservation found with licenseNumber
+     */
     @Transactional
     public SingleReservation getActiveByLicenseNumber(String licenseNumber) {
 
@@ -220,8 +226,10 @@ public class SingleReservationService extends ReservationService {
 
     
     /**
+     * calculate the fee of a singleReservation
      * @author Mike
-     * @param time
+     * @param startTime - the start time of the singleReservation
+     * @param singleReservationId - the id of the singleReservation
      * @return fee
      */
     @Transactional
@@ -237,6 +245,12 @@ public class SingleReservationService extends ReservationService {
         return fee;
     }
 
+    /**
+     * check if the singleReservation is active
+     * @author Mike
+     * @param single - the singleReservation to be checked
+     * @return if the singleReservation is active
+     */
     private boolean isActive(SingleReservation single) {
         Date date = Date.valueOf(LocalDate.now());
 
@@ -249,10 +263,10 @@ public class SingleReservationService extends ReservationService {
 
     /**
      * helper method that converts iterable to list
-     * 
+     * @author Mike
      * @param <T>
      * @param iterable
-     * @return
+     * @return a list
      */
     private <T> List<T> toList(Iterable<T> iterable) {
         List<T> resultList = new ArrayList<T>();

@@ -36,7 +36,8 @@ public class SingleReservationController {
     private AuthenticationService authService;
 
     /**
-    * get a list of all the existing singleReservations 
+    * get a list of all the existing singleReservations
+    * @author Mike 
     * @return a list of all the existing singleReservations
     */
     @GetMapping(value = {"", "/"})
@@ -52,6 +53,7 @@ public class SingleReservationController {
 
     /**
     * create a new singleReservation object
+    * @author Mike 
     * @param licenseNumber - the licenseNumber to be linked to the singleReservation
     * @param parkingTime - the length of the singleReservation in minutes
     * @return the singleReservation created as Dto
@@ -64,6 +66,7 @@ public class SingleReservationController {
 
     /**
     * get a list of singleReservation with the given parkingSpotId
+    * @author Mike 
     * @param parkingSpotId - id of a parkingSpot 
     * @return a list of singleReservation associated with the parkingSpot as Dtos
     */
@@ -79,6 +82,7 @@ public class SingleReservationController {
 
     /**
     * get a list of singleReservation with the given date
+    * @author Mike 
     * @param date - date object
     * @return a list of singleReservation associated with the date as Dtos
     */
@@ -94,6 +98,7 @@ public class SingleReservationController {
 
     /**
     * get the singlereservation by its id
+    * @author Mike 
     * @param id - id of a singleReservation 
     * @return the singleReservation found with the id as Dto
     */
@@ -107,6 +112,7 @@ public class SingleReservationController {
 
     /**
     * get a list of singleReservation with the given licenseNumber
+    * @author Mike 
     * @param licenseNumber - licenseNumber of a singleReservation
     * @return a list of singleReservation associated with the licenseNumber as Dtos
     */
@@ -122,6 +128,7 @@ public class SingleReservationController {
 
     /**
     * update a singleReservation
+    * @author Mike 
     * @param LicenseNumber - licenseNumber of a singleReservation
     * @param newParkingTime - length of the singleReservation that one wishes to extend
     * @return the updated singleReservation with the licenseNumber
@@ -136,6 +143,7 @@ public class SingleReservationController {
 
     /**
     * delete a singlereservation object
+    * @author Mike 
     * @param id - id of a singleReservation to be deleted
     * @param token - a token to authenticate the user who should be a manager
     * @return the deleted singleReservation as Dto
@@ -149,6 +157,7 @@ public class SingleReservationController {
 
     /**
     * calculate the fee for a singlereservation
+    * @author Mike 
     * @param startTime - licenseNumber of a singleReservation
     * @return a list of singleReservation associated with the licenseNumber as Dtos
     */

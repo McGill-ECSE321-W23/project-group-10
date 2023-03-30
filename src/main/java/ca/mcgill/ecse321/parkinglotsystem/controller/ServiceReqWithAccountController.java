@@ -35,6 +35,7 @@ public class ServiceReqWithAccountController {
 
     /**
      * Controller method to get all service requests with account.
+     * @author Chenxin
      * @return A List of ServiceReqWithAccountDto
      */
     @GetMapping(value = { "", "/" })
@@ -44,6 +45,7 @@ public class ServiceReqWithAccountController {
 
     /**
      * Controller method to get service request with account with such ID.
+     * @author Chenxin
      * @param id the id of the service request with account
      * @return A ServiceReqWithAccountDto
      */
@@ -54,6 +56,7 @@ public class ServiceReqWithAccountController {
 
     /**
      * Controller method to get service requests with account by whether is assigned.
+     * @author Chenxin
      * @param isAssigned whether the service request with account is assigned status
      * @return A List of ServiceReqWithAccountDto
      */
@@ -66,6 +69,7 @@ public class ServiceReqWithAccountController {
 
     /**
      * Controller method to get service requests with account by email.
+     * @author Chenxin
      * @param monthlyCustomerEmail the monthly customer email of the service request with account
      * @return A List of ServiceReqWithAccountDto
      */
@@ -78,6 +82,7 @@ public class ServiceReqWithAccountController {
 
     /**
      * Controller method to create a service request with account.
+     * @author Chenxin
      * @param description the description of the service request with account
      * @param monthlyCustomerEmail the monthly customer email of the service request with account
      * @return A ServiceReqWithAccountDto
@@ -94,6 +99,7 @@ public class ServiceReqWithAccountController {
 
     /**
      * Controller method to update a service request with account with such ID.
+     * @author Chenxin
      * @param id the id of the service request with account
      * @param isAssigned whether the service request with account is assigned status
      * @return the updated ServiceReqWithAccountDto

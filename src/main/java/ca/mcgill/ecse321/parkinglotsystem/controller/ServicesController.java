@@ -34,6 +34,7 @@ public class ServicesController {
 
     /**
      * Controller method to get all services
+     * @author Luke
      * @return A List of ServicesDto
      */
     @GetMapping(value = {"", "/"})
@@ -48,6 +49,7 @@ public class ServicesController {
 
     /**
      * Controller method to create a service
+     * @author Luke
      * @param description the description of the service
      * @param price the price of the service
      * @return A ServicesDto
@@ -66,6 +68,7 @@ public class ServicesController {
 
     /**
      * Controller method to get a service by description
+     * @author Luke
      * @param description the description of the service
      * @return A ServicesDto
      */
@@ -79,6 +82,7 @@ public class ServicesController {
 
     /**
      * Controller method to get a list of services by price
+     * @author Luke
      * @param price the price of service
      * @return A List of ServicesDto
      */
@@ -98,6 +102,7 @@ public class ServicesController {
 
     /**
      * Controller method for delete a service
+     * @author Luke
      * @param description the description of the service
      * @return the deleted ServiceDto
      */
@@ -111,6 +116,7 @@ public class ServicesController {
 
     /**
      * Controller method to update a service
+     * @author Luke
      * @param description the description of the service
      * @param price the price of the service
      * @return the updated serviceDto

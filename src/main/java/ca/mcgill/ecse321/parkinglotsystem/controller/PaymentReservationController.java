@@ -25,7 +25,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 
 
 /**
- * author Shaun Soobagrah
+ * @author Shaun Soobagrah
  */
 @CrossOrigin(origins = "*")
 @RestController
@@ -40,6 +40,7 @@ public class PaymentReservationController {
 
     /**
      * Controller method to get all payment reservations.
+     * @author Shaun Soobagrah
      * @return A List of PaymentReservationDto
      */
     @GetMapping(value = {"", "/"})
@@ -51,6 +52,7 @@ public class PaymentReservationController {
 
     /**
      * Controller method to create a payment reservation.
+     * @author Shaun Soobagrah
      * @param timestamp the date time of the payment reservation
      * @param amount the amount of the payment reservation
      * @param reservationId the reservation id of the payment reservation
@@ -67,6 +69,7 @@ public class PaymentReservationController {
     }
     /**
      * Controller method to delete a payment reservation.
+     * @author Shaun Soobagrah
      * @param paymentReservationId the reservation id of the payment reservation
      * @return the deleted PaymentReservationDto
      */
@@ -82,6 +85,7 @@ public class PaymentReservationController {
 
     /**
      * Controller method to update a payment reservation
+     * @author Shaun Soobagrah
      * @param paymentReservationId the payment reservation id of the payment reservation
      * @param timestamp the date time of the payment reservation
      * @param amount the amount of the payment reservation
@@ -102,6 +106,7 @@ public class PaymentReservationController {
 
     /**
      * Controller method to get all payment reservations
+     * @author Shaun Soobagrah
      * @param reservationId the reservation id of the payment reservation
      * @return A List of PaymentReservationDto
      */
@@ -114,6 +119,7 @@ public class PaymentReservationController {
 
     /**
      * Controller method to get payment reservations by date
+     * @author Shaun Soobagrah
      * @param timestamp the date time of the payment reservation
      * @return A List of PaymentReservationDto
      */
@@ -126,6 +132,7 @@ public class PaymentReservationController {
     
     /**
      * Controller method to get payment reservations by amount
+     * @author Shaun Soobagrah
      * @param amount the amount of the payment reservation
      * @return A List of PaymentReservationDto
      */
