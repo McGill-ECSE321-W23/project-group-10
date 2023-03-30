@@ -26,11 +26,12 @@ public class SubWithoutAccountService extends ReservationService {
     @Autowired
     private ParkingSpotService parkingSpotService;
     /**
-     * Create a Reservation
+     * Method to create a subscription without an account.
      * @author Mike Zhang
-     * @params reservationId
-     * @params date
-     * return a reservation created
+     * @param parkingSpotId the parking spot id of the subscription without an account
+     * @param licenseNumber the license number of the subscription without an account
+     * @return A SubWithoutAccount
+     * @throws CustomException if to create the subscription without an account fail
      */
     @Transactional
     public SubWithoutAccount createSubWithoutAccount(String licenseNumber, int parkingSpotId) {
@@ -68,6 +69,14 @@ public class SubWithoutAccountService extends ReservationService {
             return subWithoutAccount;
         
     }
+
+    /**
+     * Method to get a subscription without an account by id.
+     * @author Mike Zhang
+     * @param reservationId the reservation id of the subscription without an account
+     * @return A SubWithoutAccount
+     * @throws CustomException if to get the subscription without an account fail
+     */
     @Transactional
     public SubWithoutAccount getSubWithoutAccountById(int reservationId){
         SubWithoutAccount subWithoutAccount = subWithoutAccountRepository.findSubWithoutAccountById(reservationId);
@@ -76,13 +85,14 @@ public class SubWithoutAccountService extends ReservationService {
         }
         return subWithoutAccount;
     }
-	
-/**
-	 * Find reservations by date
-	 * @author Mike Zhang
-	 * @param date
-	 * @return a list of reservations
-	 */
+
+    /**
+     * Method to get subscriptions without an account by date.
+     * @author Mike Zhang
+     * @param date the date of the subscription without an account
+     * @return A List of SubWithoutAccount
+     * @throws CustomException if to get the subscription without an account fail
+     */
 	@Transactional
 	public List<SubWithoutAccount> getSubWithoutAccountsByDate(Date date) {
 		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByDate(date);
@@ -90,11 +100,12 @@ public class SubWithoutAccountService extends ReservationService {
 	}
 
     /**
-	 * Find reservations by parkingSpot
-	 * @author Mike Zhang
-	 * @param parkingSpot
-	 * @return a list of reservations
-	 */
+     * Method to get subscriptions without an account by parking spot.
+     * @author Mike Zhang
+     * @param parkingSpotId the parking spot id of the subscription without an account
+     * @return A List of SubWithoutAccount
+     * @throws CustomException if to get the subscription without an account fail
+     */
 	@Transactional
 	public List<SubWithoutAccount> getSubWithoutAccountsByParkingSpot(int parkingSpotId) {
         ParkingSpot spot = parkingSpotService.getParkingSpotById(parkingSpotId);
@@ -104,11 +115,12 @@ public class SubWithoutAccountService extends ReservationService {
 	}
 
     /**
-	 * Find reservations by licenseNumber
-	 * @author Mike Zhang
-	 * @param parkingSpot
-	 * @return a list of reservations
-	 */
+     * Method to get subscriptions without an account by license number.
+     * @author Mike Zhang
+     * @param licenseNumber the license number of the subscription without an account
+     * @return A List of SubWithoutAccount
+     * @throws CustomException if to get the subscription without an account fail
+     */
 	@Transactional
 	public List<SubWithoutAccount> getSubWithoutAccountsByLicenseNumber(String licenseNumber) {
 		List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountRepository.findSubWithoutAccountsByLicenseNumber(licenseNumber);
@@ -118,11 +130,13 @@ public class SubWithoutAccountService extends ReservationService {
         Collections.sort(subWithoutAccounts, Comparator.comparing(SubWithoutAccount::getDate));
 		return subWithoutAccounts;
 	}
+
     /**
-	 * Find all reservations
-	 * @author Mike
-	 * @return List of all accounts
-	 */
+     * Method to get all subscriptions without an account.
+     * @author Mike Zhang
+     * @return A List of SubWithoutAccount
+     * @throws CustomException if to get the subscription without an account fail
+     */
 	@Transactional
 	public List<SubWithoutAccount> getAllSubWithoutAccounts() {
 		return toList(subWithoutAccountRepository.findAll());
@@ -143,7 +157,13 @@ public class SubWithoutAccountService extends ReservationService {
         return latestSubWithoutAccount;
     }
 
-
+    /**
+     * Method to update a subscription without an account by license number
+     * @author Mike Zhang
+     * @param licenseNumber the license number of the subscription without an account
+     * @return the updated SubWithoutAccount
+     * @throws CustomException if to update the subscription without an account fail
+     */
     @Transactional
     public SubWithoutAccount updateSubWithoutAccount(String licenseNumber){
         if(licenseNumber == null || licenseNumber.length() == 0){
@@ -162,13 +182,14 @@ public class SubWithoutAccountService extends ReservationService {
         
 
     }
-    /**
-     * Delete a reservation
-     * @author Mike
-     * @param reservationId
-     * @return reservation deleted
-     */
 
+    /**
+     * Method to delete a subscription without an account by reservation id
+     * @author Mike Zhang
+     * @param reservationId the reservation id of the subscription without an account
+     * @return the deleted SubWithoutAccount
+     * @throws CustomException if to delete the subscription without an account fail
+     */
      public SubWithoutAccount deleteSubWithoutAccount(int reservationId){
         if (reservationId < 0){
             throw new CustomException("ReservationId cannot be negative.", HttpStatus.BAD_REQUEST);
@@ -184,8 +205,8 @@ public class SubWithoutAccountService extends ReservationService {
     }
 
     /**
-	 * Delete all the reservations
-	 * @return
+	 * Delete all subscriptions without an account
+	 * @return A List of SubWithoutAccount
 	 */
 	@Transactional
 	public List<SubWithoutAccount> deleteAllSubWithoutAccounts() {
@@ -196,21 +217,19 @@ public class SubWithoutAccountService extends ReservationService {
 
     /**
      * Checks whether the last day of the subscription is after the current day.
-     * 
-     * @param sub
+     * @param subWithoutAccount the input subscription without an account
      * @return true if the subscription is still active.
      */
     private boolean isActive(SubWithoutAccount subWithoutAccount) {
-
         Date date = Date.valueOf(LocalDate.now());
         Date lastSubDate = Date.valueOf(subWithoutAccount.getDate().toLocalDate().plusMonths(subWithoutAccount.getNbrMonths()).minusDays(1));
         return lastSubDate.after(date);
     }
     /**
-	 * helper method that converts iterable to list
-	 * @param <T>
-	 * @param iterable
-	 * @return
+	 * Helper method that converts iterable to list
+	 * @param <T> input
+	 * @param iterable iterable
+	 * @return A List
 	 */
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();

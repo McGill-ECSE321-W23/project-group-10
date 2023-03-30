@@ -168,7 +168,7 @@ public void testCreateReservationSuccessfully() {
     Reservation reservation = null;
     try {
         reservation = reservationService.createReservation(date1, ParkingSpot_ID);
-    } catch (CustomException e) {
+    } catch (Exception e) {
         fail(e.getMessage());
     }
     assertNotNull(reservation);
@@ -185,7 +185,7 @@ public void testCreateReservationWithEmptyDate() {
     Reservation reservation = null;
     try {
         reservation = reservationService.createReservation(date, ParkingSpot_ID);
-    } catch (CustomException e) {
+    } catch (Exception e) {
         error = e.getMessage();
     }
     assertNull(reservation);
@@ -200,7 +200,7 @@ public void testDeleteReservationSuccessfully() {
     Reservation reservation = null; 
     try {
         reservation = reservationService.deleteReservation(RESERVATION_ID);
-    } catch (CustomException e) {
+    } catch (Exception e) {
         fail();
     }
     Reservation savedReservation = reservationService.getReservationById(RESERVATION_ID);
@@ -218,7 +218,7 @@ public void testDeleteReservationWithNoExistingId() {
     Reservation reservation = null; 
     try {
         reservation = reservationService.deleteReservation(id);
-    } catch (CustomException e) {
+    } catch (Exception e) {
         error = e.getMessage();
     }
     assertNull(reservation);
@@ -235,7 +235,7 @@ public void testDeleteReservationWithInvalidId() {
     Reservation reservation = null; 
     try {
         reservation = reservationService.deleteReservation(id);
-    } catch (CustomException e) {
+    } catch (Exception e) {
         error = e.getMessage();
     }
     assertNull(reservation);

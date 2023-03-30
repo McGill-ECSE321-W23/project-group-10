@@ -26,12 +26,13 @@ public class SingleReservationService extends ReservationService {
     @Autowired
     private ParkingSpotService parkingSpotService;
     /**
-     * Create a SingleReservation
-     * 
+     * Method to create a single reservation.
      * @author Mike Zhang
-     * @params reservationId
-     * @params date
-     *         return a reservation created
+     * @param licenseNumber the license number of the single reservation
+     * @param parkingTime the parking time of the single reservation
+     * @param parkingSpotId the parking spot id of the single reservation
+     * @return A SingleReservation
+     * @throws CustomException if to create the single reservation fail
      */
     @Transactional
     public SingleReservation createSingleReservation(String licenseNumber,
@@ -73,11 +74,11 @@ public class SingleReservationService extends ReservationService {
     }
 
     /**
-     * find singlereservation by id
-     * 
+     * Method to get a single reservation by id.
      * @author Mike Zhang
-     * @params reservationId
-     *         return the Singlereservations found
+     * @param reservationId the reservation id of the single reservation
+     * @return A SingleReservation
+     * @throws CustomException if to get the single reservation fail
      */
     @Transactional
     public SingleReservation getSingleReservationById(int reservationId) {
@@ -89,11 +90,11 @@ public class SingleReservationService extends ReservationService {
    }
 
     /**
-     * Find singlereservations by date
-     * 
+     * Method to get single reservations by date.
      * @author Mike Zhang
-     * @param date
-     * @return a list of reservations
+     * @param date the reservation date of the single reservation
+     * @return A List of SingleReservation
+     * @throws CustomException if to get the single reservation fail
      */
     @Transactional
     public List<SingleReservation> getSingleReservationsByDate(Date date) {
@@ -101,6 +102,13 @@ public class SingleReservationService extends ReservationService {
         return singleReservations;
     }
 
+    /**
+     * Method to get single reservations by license number.
+     * @author Mike Zhang
+     * @param licenseNumber the license number of the single reservation
+     * @return A List of SingleReservation
+     * @throws CustomException if to get the single reservation fail
+     */
     @Transactional
     public List<SingleReservation> getSingleReservationsByLicenseNumber(String licenseNumber) {
         List<SingleReservation> singleReservations = singleReservationRepository
@@ -108,23 +116,38 @@ public class SingleReservationService extends ReservationService {
         return singleReservations;
     }
 
+    /**
+     * Method to get single reservations by parking spot id.
+     * @author Mike Zhang
+     * @param parkingSpotId the parking spot id of the single reservation
+     * @return A List of SingleReservation
+     * @throws CustomException if to get the single reservation fail
+     */
     @Transactional
     public List<SingleReservation> getSingleReservationsByParkingSpot(int parkingSpotId) {
         List<SingleReservation> singleReservations = singleReservationRepository
                 .findSingleReservationsByParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
         return singleReservations;
     }
+
     /**
-     * Find all reservations
-     * 
-     * @author Mike
-     * @return List of all accounts
+     * Method to get all single reservations.
+     * @author Mike Zhang
+     * @return A List of SingleReservation
      */
     @Transactional
     public List<SingleReservation> getAllSingleReservations() {
         return toList(singleReservationRepository.findAll());
     }
 
+    /**
+     * Method to update a single reservation.
+     * @author Mike Zhang
+     * @param licenseNumber the license number of the single reservation
+     * @param parkingTime the parking time of the single reservation
+     * @return the updated SingleReservation
+     * @throws CustomException if to update the single reservation fail
+     */
     @Transactional
     public SingleReservation updateSingleReservation (String licenseNumber, int parkingTime) {
         if(licenseNumber == null || licenseNumber.length() == 0){
@@ -146,11 +169,11 @@ public class SingleReservationService extends ReservationService {
     }
 
     /**
-     * Delete a reservation
-     * 
-     * @author Mike
-     * @param reservationId
-     * @return reservation deleted
+     * Method to delete a single reservation.
+     * @author Mike Zhang
+     * @param reservationId the reservation id of the single reservation
+     * @return the deleted SingleReservation
+     * @throws CustomException if to delete the single reservation fail
      */
     @Transactional
     public SingleReservation deleteSingleReservation(int reservationId) {
@@ -179,6 +202,7 @@ public class SingleReservationService extends ReservationService {
         singleReservationRepository.deleteAll();
         return toList(singleReservations);
     }
+
 
     /**
      * get current active reservation from licenseNumber

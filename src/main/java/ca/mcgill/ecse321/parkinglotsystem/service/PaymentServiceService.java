@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
-
-import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 
 @Service
@@ -108,19 +106,6 @@ public class PaymentServiceService {
             throw new CustomException(error, HttpStatus.NOT_FOUND);
         }
 
-        //we must delete the payment service as a payment service must have a service request
-        if (serviceRequestRepository.findAll() != null) {
-            Iterable<ServiceRequest> serviceRequests = serviceRequestRepository.findAll();
-            for (ServiceRequest p : serviceRequests) {
-                if (p.getId() == id) {
-                    serviceRequestRepository.delete(p);
-                }
-            }
-
-
-            throw new CustomException("no such payment service exist! ", HttpStatus.NOT_FOUND);
-
-        }
         paymentServiceRepository.delete(paymentService);
 
         return paymentService;
