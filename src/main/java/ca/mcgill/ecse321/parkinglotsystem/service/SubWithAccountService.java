@@ -156,7 +156,7 @@ public class SubWithAccountService {
     }
 
     /**
-     * Service method to get all subcriptions.
+     * Service method to get all subscriptions.
      * @return the list of subscriptions sorted by date (ascending).
      */
     @Transactional
@@ -169,7 +169,7 @@ public class SubWithAccountService {
     }
 
     /**
-     * Service method to update the active subscription of the given monthly customer
+     * Service method to update the active subscription of the given monthly customer.
      * by incrementing the number of months by one.
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the updated subscription

@@ -16,10 +16,6 @@ import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
-
-/**
- * author Shaun Soobagrah
- */
 @Service
 public class ParkingSpotTypeService {
     

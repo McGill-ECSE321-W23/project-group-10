@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRequestRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceRequest;
-import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,7 @@ public class ServiceRequestService {
     ServicesService serviceRepository;
 
     /**
-     * method to get all service requests.
+     * Method to get all service requests.
      * @return A List of ServiceRequest
      */
     @Transactional
@@ -27,7 +26,7 @@ public class ServiceRequestService {
     }
 
     /**
-     * method to get a service request by id.
+     * Method to get a service request by id.
      * @param id the id of the service request
      * @return A ServiceRequest
      */
@@ -37,7 +36,7 @@ public class ServiceRequestService {
     }
 
     /**
-     * method to get service requests by isAssigned.
+     * Method to get service requests by isAssigned.
      * @param isAssigned whether the service request is assigned
      * @return A List of ServiceRequest
      */
@@ -47,7 +46,7 @@ public class ServiceRequestService {
     }
 
     /**
-     * method to get service requests by service description.
+     * Method to get service requests by service description.
      * @param description the description of the service
      * @return A List of ServiceRequest
      */

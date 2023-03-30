@@ -158,7 +158,7 @@ public class SubWithoutAccountService extends ReservationService {
     }
 
     /**
-     * Method to update a subscription without an account by license number
+     * Method to update a subscription without an account by license number.
      * @author Mike Zhang
      * @param licenseNumber the license number of the subscription without an account
      * @return the updated SubWithoutAccount
@@ -184,7 +184,7 @@ public class SubWithoutAccountService extends ReservationService {
     }
 
     /**
-     * Method to delete a subscription without an account by reservation id
+     * Method to delete a subscription without an account by reservation id.
      * @author Mike Zhang
      * @param reservationId the reservation id of the subscription without an account
      * @return the deleted SubWithoutAccount
@@ -205,7 +205,7 @@ public class SubWithoutAccountService extends ReservationService {
     }
 
     /**
-	 * Delete all subscriptions without an account
+	 * Delete all subscriptions without an account.
 	 * @return A List of SubWithoutAccount
 	 */
 	@Transactional
@@ -226,7 +226,7 @@ public class SubWithoutAccountService extends ReservationService {
         return lastSubDate.after(date);
     }
     /**
-	 * Helper method that converts iterable to list
+	 * Helper method that converts iterable to list.
 	 * @param <T> input
 	 * @param iterable iterable
 	 * @return A List

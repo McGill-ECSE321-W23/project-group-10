@@ -19,7 +19,7 @@ public class EmployeeService {
     EmployeeRepository employeeRepository;
 
     /**
-     * method to create an Employee
+     * Method to create an Employee.
      * @param email the email of the employee
      * @param name the name of the employee
      * @param phone the phone number of the employee
@@ -52,7 +52,7 @@ public class EmployeeService {
      }
 
     /**
-     * method to get an Employee by email
+     * Method to get an Employee by email.
      * @param email the email of the employee
      * @return A Employee
      * @throws CustomException if to get employee fail
@@ -67,7 +67,7 @@ public class EmployeeService {
      }
 
     /**
-     * method to get Employees by name
+     * Method to get Employees by name.
      * @param name the name of the employee
      * @return A List of Employee or null
      */
@@ -77,7 +77,7 @@ public class EmployeeService {
      }
 
     /**
-     * method to get Employees by phone number
+     * Method to get Employees by phone number.
      * @param phone the phone number of the employee
      * @return A List of Employee or null
      */
@@ -87,7 +87,7 @@ public class EmployeeService {
      }
 
     /**
-     * method to get all Employees
+     * Method to get all Employees.
      * @return A List of Employee or null
      */
      @Transactional
@@ -97,7 +97,7 @@ public class EmployeeService {
      }
 
     /**
-     * method to delete an Employee
+     * Method to delete an Employee.
      * @param email the email of the employee
      * @return  deleted Employee
      * @throws CustomException if to delete the employee fail
@@ -119,7 +119,7 @@ public class EmployeeService {
 
 
     /**
-     * method to update an Employee
+     * Method to update an Employee.
      * @param email the email of the employee
      * @param name the name of the employee
      * @param phone the phone number of the employee

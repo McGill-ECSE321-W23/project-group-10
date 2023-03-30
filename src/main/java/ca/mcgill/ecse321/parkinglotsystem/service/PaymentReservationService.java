@@ -15,9 +15,6 @@ import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
-/*
- * author Shaun Soobagrah
- */
 @Service
 public class PaymentReservationService {
 

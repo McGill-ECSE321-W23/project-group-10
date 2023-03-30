@@ -27,7 +27,7 @@ public class ReservationService {
     protected PaymentReservationService paymentReservationService;
 
     /**
-     * Method to create a reservation
+     * Method to create a reservation.
      * @author Mike Zhang
      * @param parkingSpotId the parking spot id of the reservation
      * @param date the date of the reservation
@@ -50,7 +50,7 @@ public class ReservationService {
     }
 
     /**
-     * Method to get a reservation by id
+     * Method to get a reservation by id.
      * @author Mike Zhang
      * @param reservationId the reservation id of the reservation
      * @return A Reservation
@@ -67,7 +67,7 @@ public class ReservationService {
     }
 
     /**
-	 * Method to get reservations by date
+	 * Method to get reservations by date.
      * @author Mike Zhang
 	 * @param date the date of the reservation
 	 * @return A List of Reservation
@@ -83,7 +83,7 @@ public class ReservationService {
 	}
 
     /**
-	 * Method to get all reservations
+	 * Method to get all reservations.
      * @author Mike Zhang
 	 * @return A List of Reservation
 	 */
@@ -94,7 +94,7 @@ public class ReservationService {
 	}
 
     /**
-	 * Method to get reservations by parking spot
+	 * Method to get reservations by parking spot.
      * @author Mike Zhang
 	 * @param parkingSpotId the parking spot id of the reservation
 	 * @return A List of Reservation
@@ -106,7 +106,7 @@ public class ReservationService {
 	}
 
     /**
-     * Method to delete a reservation
+     * Method to delete a reservation.
      * @author Mike Zhang
      * @param reservationId the reservation id of the reservation
      * @return the deleted Reservation
@@ -129,7 +129,7 @@ public class ReservationService {
     }
 
     /**
-	 * Method to delete all reservations
+	 * Method to delete all reservations.
      * @author Mike Zhang
 	 * @return the deleted reservations
 	 */
@@ -142,7 +142,7 @@ public class ReservationService {
 
 
     /**
-	 * Helper method that converts iterable to list
+	 * Helper method that converts iterable to list.
      * @author Mike Zhang
      * @param <T> input
      * @param iterable iterable

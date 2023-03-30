@@ -87,7 +87,7 @@ public class ServiceReqWithAccountService {
     }
 
     /**
-     * Gets all service requests with account.
+     * Method to get all service requests with account.
      * @return A List of ServiceReqWithAccount.
      */
     @Transactional
@@ -97,7 +97,7 @@ public class ServiceReqWithAccountService {
     }
 
     /**
-     * Method to update a service request with account of the given id
+     * Method to update a service request with account of the given id.
      * @param id the id of the service request with account
      * @param isAssigned evaluate to true if the service request with account is assigned
      * @return the updated ServiceReqWithAccount
