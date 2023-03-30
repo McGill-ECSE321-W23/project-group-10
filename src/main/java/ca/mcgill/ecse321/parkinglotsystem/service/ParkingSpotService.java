@@ -113,7 +113,7 @@ public class ParkingSpotService {
 			throw new CustomException("No parking spot with that id was found! ", HttpStatus.NOT_FOUND);
 		}
         List<Reservation> reservations = reservationRepository.findReservationsByParkingSpot(spot);
-        if (reservations.get(0).getParkingSpot().getId() == id ) {
+        if (!reservations.isEmpty()) {
             throw new CustomException("Cannot delete as parking spot has 1 or more reservation! ", HttpStatus.BAD_REQUEST);
         }     
         parkingSpotRepository.delete(spot);   

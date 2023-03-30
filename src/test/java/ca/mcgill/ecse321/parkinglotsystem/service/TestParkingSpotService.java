@@ -91,7 +91,10 @@ public class TestParkingSpotService {
         });
         lenient().when(reservationRepository.findReservationsByParkingSpot(any(ParkingSpot.class))).thenAnswer((InvocationOnMock invocation) -> { 
             List<Reservation> reservations = new ArrayList<>();
-            reservations.add(dummyReservation(1, Date.valueOf("2023-02-27"), VALID_PARKING_SPOT_TYPE_NAME_1, 10, VALID_PARKING_SPOT_ID_2));
+            ParkingSpot arg = invocation.getArgument(0);
+            if(arg.getId() != VALID_PARKING_SPOT_ID_1) {
+                reservations.add(dummyReservation(1, Date.valueOf("2023-02-27"), VALID_PARKING_SPOT_TYPE_NAME_1, 10, VALID_PARKING_SPOT_ID_2));
+            }
             return reservations;
             
         });
