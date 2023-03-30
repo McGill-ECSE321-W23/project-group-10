@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.parkinglotsystem.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ca.mcgill.ecse321.parkinglotsystem.dto.PaymentServiceDto;
 import ca.mcgill.ecse321.parkinglotsystem.service.PaymentServiceService;
@@ -59,14 +60,13 @@ public class PaymentServiceController {
      * @return A PaymentServiceDto
      * @throws IllegalArgumentException if to create payment service fail
      */
-    @PostMapping(value = {"/", "/{id}/"})
+    @PostMapping(value = {"/", ""})
     public PaymentServiceDto createPaymentService(
-        @PathVariable("id") int id, 
         @RequestParam("amount") double amount, 
         @RequestParam("dateTime") Timestamp dateTime, 
         @RequestParam("serviceRequest") ServiceRequest serviceRequest) {
         try {
-            PaymentService paymentService = paymentServiceService.createPaymentService(id, amount, dateTime, serviceRequest);
+            PaymentService paymentService = paymentServiceService.createPaymentService(amount, dateTime, serviceRequest);
             return convertPaymentServiceToDto(paymentService);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -147,15 +147,14 @@ public class PaymentServiceController {
      * @return List<PaymentServiceDto>
      * @throws Exception
      */
-    @GetMapping(value = {"/all-by-service-request/{serviceRequest}", "/all-by-service-request/{serviceRequest}/"})
-    public PaymentServiceDto getPaymentServiceByServiceRequest(@PathVariable("serviceRequest") ServiceRequest serviceRequest) {
-        // TODO: Use IDs as arguments, not model objects
-        try {
-            PaymentService paymentService = paymentServiceService.getPaymentServiceByServiceRequest(serviceRequest);
-            return convertPaymentServiceToDto(paymentService);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
+    @GetMapping(value = {"/all-by-service-request-id/{serviceRequestId}", "/all-by-service-request-id/{serviceRequestId}/"})
+    public List<PaymentServiceDto> getPaymentServiceByServiceRequest(@PathVariable("serviceRequest") int serviceRequestId) {
+        List<PaymentService> paymentServices = paymentServiceService.getPaymentServiceByServiceRequest(serviceRequestId);
+        List<PaymentServiceDto> paymentServiceDtos = new ArrayList<>();
+        for (PaymentService paymentService: paymentServices) {
+            paymentServiceDtos.add(convertPaymentServiceToDto(paymentService));
         }
+        return paymentServiceDtos;
     }
 
     /**

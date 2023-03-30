@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRequestRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceRequest;
-import ca.mcgill.ecse321.parkinglotsystem.model.Service;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +12,8 @@ import java.util.List;
 public class ServiceRequestService {
     @Autowired
     ServiceRequestRepository serviceRequestRepository;
+    @Autowired
+    ServicesService serviceRepository;
 
     // method to find all service requests
     @Transactional
@@ -35,8 +36,8 @@ public class ServiceRequestService {
 
     // method to find a service request by service
     @Transactional
-    public List<ServiceRequest> getServiceRequestByServices(Service services) {
-        return serviceRequestRepository.findServiceRequestByService(services);
+    public List<ServiceRequest> getServiceRequestByServices(String description) {
+        return serviceRequestRepository.findServiceRequestByService(serviceRepository.getServiceByDescription(description));
     }
 
 }
