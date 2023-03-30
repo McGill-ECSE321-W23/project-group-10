@@ -135,7 +135,6 @@ public class PaymentServiceService {
     @Transactional
     public PaymentService updatePaymentService(int id, Timestamp dateTime, double amount, ServiceRequest serviceRequest) {
         // Input validation
-        String val_double_1 = amount + "";
         Timestamp create_time = new Timestamp(1648094400);
         Timestamp current_time = new Timestamp(System.currentTimeMillis());
         int compare_create = dateTime.compareTo(create_time);

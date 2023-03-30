@@ -36,13 +36,23 @@ public class ManagerController {
     @Autowired
     ManagerService managerService;
 
-
+    /**
+     * method to get all ManagerDtos
+     * @return List<ManagerDto> or null
+     */
     @GetMapping(value={"/",""})
     public List<ManagerDto> getAllManagerDtos(){
         return managerService.getAllManagers().stream().map(ma -> HelperMethods.convertManagerToDto(ma)).collect(Collectors.toList());
     }
 
-
+    /**
+     * method to create a ManagerDto
+     * @param email
+     * @param name
+     * @param phone
+     * @param password
+     * @return newly created ManagerDto or exception
+     */
     @PostMapping(value = {"/{email}", "/{email}/"})
     public ManagerDto createManagerDto(@PathVariable("email") String email, 
         @RequestParam("name") String name,
@@ -53,7 +63,11 @@ public class ManagerController {
         return HelperMethods.convertManagerToDto(manager);                                  
     }
 
-
+    /**
+     * method to get ManagerDtos by name
+     * @param name
+     * @return List<ManagerDto> or null
+     */
     @GetMapping(value = {"/all-by-name/{name}", "/all-by-name/{name}/"})
     public List<ManagerDto> getManagerDtoByName(@PathVariable("name") String name) {
         List<ManagerDto> managerDtos = new ArrayList<ManagerDto>();
@@ -66,7 +80,11 @@ public class ManagerController {
         return managerDtos; 
     }
 
-
+    /**
+     * method to get ManagerDtos by phone
+     * @param phone
+     * @return List<ManagerDto> or null
+     */
     @GetMapping(value = {"/all-by-phone/{phone}", "/all-by-phone/{phone}/"})
     public List<ManagerDto> getManagerDtoByPhone(@PathVariable("phone") String phone) {
         List<ManagerDto> managerDtos = new ArrayList<ManagerDto>();
@@ -79,7 +97,11 @@ public class ManagerController {
         return managerDtos;
     }
 
-
+    /**
+     * method to get a ManagerDto by email
+     * @param email
+     * @return a ManagerDto or exception
+     */
     @GetMapping(value = {"/{email}", "/{email}/"})
     public ManagerDto getManagerDtoByEmail(@PathVariable("email") String email) {
         Manager ma = managerService.getManagerByEmail(email);
@@ -89,14 +111,25 @@ public class ManagerController {
         return HelperMethods.convertManagerToDto(ma);
     }
 
-
+    /**
+     * method to delete a ManagerDto
+     * @param email
+     * @return newly deleted ManagerDto or exception
+     */
     @DeleteMapping(value = {"/{email}","/{email}/"})
     public ManagerDto deleteManagerDtoByEmail(@PathVariable("email") String email) {
         Manager ma = managerService.deleteManagerByEmail(email);
         return HelperMethods.convertManagerToDto(ma);
     }
 
-
+     /**
+     * method to update a ManagerDto
+     * @param email
+     * @param name
+     * @param phone
+     * @param password
+     * @return newly updated ManagerDto or exception
+     */
     @PutMapping(value ={"/{email}", "/{email}/"})
     public ManagerDto updateManagerDto(@PathVariable("email") String email, 
         @RequestParam("name") String name,

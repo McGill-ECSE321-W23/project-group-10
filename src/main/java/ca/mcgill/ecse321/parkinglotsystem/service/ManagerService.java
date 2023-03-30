@@ -19,12 +19,13 @@ public class ManagerService {
     ManagerRepository managerRepository;
 
     /**
-     * method to a create manager
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
-     * @return newly created Manager or null
+     * method to create a Manager
+     * @param email the email of the manager
+     * @param name the name of the manager
+     * @param phone the phone number of the manager
+     * @param password the password of the manager
+     * @return A Manager
+     * @throws CustomException if to create the manager fail
      */
     @Transactional
      public Manager createManager(String email,String name,String phone,String password){
@@ -52,7 +53,12 @@ public class ManagerService {
      }
 
 
-
+     /**
+     * method to get a Manager by email
+     * @param email the email of the manager
+     * @return A Manager
+      * @throws CustomException of to get the manager fail
+     */
      @Transactional
      public Manager getManagerByEmail(String email){
         Manager ma = managerRepository.findManagerByEmail(email);
@@ -62,26 +68,42 @@ public class ManagerService {
         return ma;
      }
 
-
+     /**
+     * method to get Managers by name
+     * @param name the name of the manager
+     * @return A List of Manager or null
+     */
      @Transactional
      public List<Manager> getManagerByName(String name){
         return managerRepository.findManagerByName(name);
      }
 
-
+     /**
+     * method to get Managers by phone
+     * @param phone the phone number of the manager
+     * @return A List of Manager or null
+     */
      @Transactional
      public List<Manager> getManagerByPhone(String phone){
         return managerRepository.findManagerByPhone(phone);
      }
 
-     
+    /**
+     * method to get all Managers
+     * @return A List of Manager or null
+     */
      @Transactional
      public List<Manager> getAllManagers(){
         Iterable<Manager> mIterable=managerRepository.findAll();
         return HelperMethods.toList(mIterable);
      }
 
-
+    /**
+     * method to delete a Manager
+     * @param email the email of the manager
+     * @return newly deleted Manager
+     * @throws CustomException if to delete the manager fail
+     */
      @Transactional
      public Manager deleteManagerByEmail(String email){
         String error="";
@@ -97,6 +119,15 @@ public class ManagerService {
         }
      }
 
+     /**
+     * method to update a Manager
+     * @param email the email of the manager
+     * @param name the name of the manager
+     * @param phone the phone number of the manager
+     * @param password the password of the manager
+     * @return newly updated Manager
+      * @throws CustomException if to update the manager fail
+     */
      @Transactional
      public Manager updateManager(String email,String name,String phone,String password){
         String error="";

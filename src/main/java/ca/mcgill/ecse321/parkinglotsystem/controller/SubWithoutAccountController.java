@@ -22,7 +22,6 @@ import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SubWithoutAccount;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +31,6 @@ import java.util.List;
 public class SubWithoutAccountController {
     @Autowired
     private SubWithoutAccountService subWithoutAccountService;
-    @Autowired
-    private ParkingSpotService ParkingSpotService;
     @Autowired
     private AuthenticationService authService;
 

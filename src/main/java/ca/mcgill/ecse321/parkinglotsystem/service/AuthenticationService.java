@@ -34,8 +34,7 @@ public class AuthenticationService {
 
     /**
      * Logs in a manager.
-     * 
-     * @param credentials
+     * @param credentials the credential of the manager
      * @return the authentication token
      */
     @Transactional
@@ -49,8 +48,7 @@ public class AuthenticationService {
 
     /**
      * Logs in an employee.
-     * 
-     * @param credentials
+     * @param credentials the credential of the employee
      * @return the authentication token
      */
     @Transactional
@@ -64,8 +62,7 @@ public class AuthenticationService {
 
     /**
      * Logs in a monthly customer.
-     * 
-     * @param credentials
+     * @param credentials the credential of the monthly customer
      * @return the authentication token
      */
     @Transactional
@@ -79,7 +76,6 @@ public class AuthenticationService {
 
     /**
      * Logs out the person.
-     * 
      * @param token the token of the person
      */
     @Transactional
@@ -100,13 +96,11 @@ public class AuthenticationService {
         if(p != null) {
             p.setToken(null);
             customerRepository.save((MonthlyCustomer) p);
-            return;
         }
     }
 
     /**
      * Authenticates a manager.
-     * 
      * @param token the email of the person
      */
     @Transactional
@@ -121,7 +115,6 @@ public class AuthenticationService {
 
     /**
      * Authenticates an employee.
-     * 
      * @param token the email of the person
      */
     @Transactional
@@ -137,7 +130,6 @@ public class AuthenticationService {
 
     /**
      * Authenticates a monthly customer.
-     * 
      * @param token the email of the person
      */
     @Transactional
@@ -154,9 +146,8 @@ public class AuthenticationService {
 
     /**
      * Validates the credentials and generates a token. This method does not save the token in the database.
-     * 
-     * @param p
-     * @param credentials
+     * @param p the abstract type person
+     * @param credentials the credential of the person
      * @return the authentication token
      */
     private String validateCredentialsAndCreateToken(Person p, LoginDto credentials) {
@@ -172,9 +163,10 @@ public class AuthenticationService {
     /**
      * Validates a token. If the token is invalid, it throws a CustomException with the 
      * given error message.
-     * 
-     * @param token
-     * @param errorMessage
+     * @param token the token of any person
+     * @param errorMessage error message wish to generate
+     * @throws RuntimeException if time expires
+     * @throws CustomException if unauthorized
      */
     private void validateToken(String token, String errorMessage) {
         long expires = 0;
@@ -191,8 +183,7 @@ public class AuthenticationService {
 
     /**
      * Finds a manager by its token.
-     * 
-     * @param token
+     * @param token the token of the manager
      * @return the manager if it exists, null otherwise.
      */
     private Manager findManagerByToken(String token) {
@@ -205,8 +196,7 @@ public class AuthenticationService {
 
     /**
      * Finds an employee by its token.
-     * 
-     * @param token
+     * @param token the token of the employee
      * @return the employee if it exists, null otherwise.
      */
     private Employee findEmployeeByToken(String token) {
@@ -219,8 +209,7 @@ public class AuthenticationService {
 
     /**
      * Finds a monthly customer by its token.
-     * 
-     * @param token
+     * @param token the token of the monthly customer
      * @return the monthly customer if it exists, null otherwise.
      */
     private MonthlyCustomer findMonthlyCustomerByToken(String token) {
