@@ -176,34 +176,6 @@ public void testCreateReservationSuccessfully() {
 
 }
 
-@Test
-public void testCreateReservationWithNegativeId() {
-    int id = -1;
-    String error = null;
-    Reservation reservation = null;
-    try {
-        reservation = reservationService.createReservation(date1, ParkingSpot_ID);
-    } catch (IllegalArgumentException e) {
-        error = e.getMessage();
-    }
-    assertNull(reservation);
-    assertEquals("ReservationId cannot be negative.", error);
-
-}
-
-@Test
-public void testCreateReservationWithExistingId() {
-    String error = null;
-    Reservation reservation = null;
-    try {
-        reservation = reservationService.createReservation(date1, ParkingSpot_ID);
-    } catch (IllegalArgumentException e) {
-        error = e.getMessage();
-    }
-    assertNull(reservation);
-    assertEquals("ReservationId is in use.", error);
-
-}
 
 @Test
 public void testCreateReservationWithEmptyDate() {

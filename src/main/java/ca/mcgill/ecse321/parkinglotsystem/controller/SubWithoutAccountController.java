@@ -32,8 +32,6 @@ public class SubWithoutAccountController {
     @Autowired
     private SubWithoutAccountService subWithoutAccountService;
     @Autowired
-    private ParkingSpotService ParkingSpotService;
-    @Autowired
     private AuthenticationService authService;
 
     @GetMapping(value = {"", "/"})

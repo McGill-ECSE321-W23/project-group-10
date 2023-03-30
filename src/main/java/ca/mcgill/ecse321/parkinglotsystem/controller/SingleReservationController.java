@@ -33,8 +33,6 @@ public class SingleReservationController {
     @Autowired
     private SingleReservationService singleReservationService;
     @Autowired
-    private ParkingSpotService ParkingSpotService;
-    @Autowired
     private AuthenticationService authService;
 
     @GetMapping(value = {"", "/"})

@@ -222,6 +222,21 @@ public class TestSubWithoutAccountService {
     }
     
     @Test
+    public void testCreateSubWithoutAccountWithInvalidParkingId() {
+        
+        String error = null;
+        SubWithoutAccount subWithoutAccount = null;
+        try {
+            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(license_number1, ParkingSpot_ID2);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(subWithoutAccount);
+        assertEquals("The parking spot is not available for monthly customers.", error);
+    
+    }
+
+    @Test
     public void testCreateSubWithoutAccountWithTakenParkingSpot() {
         String error = null;
         SubWithoutAccount subWithoutAccount = null;
@@ -263,6 +278,19 @@ public class TestSubWithoutAccountService {
         assertNull(subWithoutAccount);
         assertEquals("Incorrect licenseNumber format", error);
     
+    }
+
+    @Test
+    public void testCreateSubWithoutAccountWithExistingReservation() {
+        String error = null;
+        SubWithoutAccount subWithoutAccount = null;
+        try {
+            subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(license_number1, ParkingSpot_ID_UNUSED);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(subWithoutAccount);
+        assertEquals("The license number already has an active subscription.", error);
     }
     
     @Test
@@ -330,6 +358,22 @@ public class TestSubWithoutAccountService {
     }
 
     @Test
+    public void testUpdateSubWithoutAccountWithNoActiveSub() {
+        assertEquals(2 , subWithoutAccountService.getAllSubWithoutAccounts().size());
+        String error = null;
+        String licenseNumber = "ABC123";
+        SubWithoutAccount subWithoutAccount = null;
+        try {
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(licenseNumber);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(subWithoutAccount);
+        assertEquals("There is no active subscription with this License number", error);
+    
+    }
+
+    @Test
     public void testDeleteSubWithoutAccountSuccessfully() {
         assertEquals(2, subWithoutAccountService.getAllSubWithoutAccounts().size());
         SubWithoutAccount savedsubWithoutAccount = subWithoutAccountService.getSubWithoutAccountById(RESERVATION_ID);
@@ -384,6 +428,20 @@ public class TestSubWithoutAccountService {
         SubWithoutAccount subWithoutAccount = subWithoutAccountService.getSubWithoutAccountById(RESERVATION_ID);
         assertNotNull(subWithoutAccount);
         assertEquals(RESERVATION_ID, subWithoutAccount.getId());
+    }
+
+    @Test
+    public void testGetSubWithoutAccountByNonExistingId() {
+        String error = null;
+        SubWithoutAccount subWithoutAccount = null;
+        try {
+            subWithoutAccount = subWithoutAccountService.getSubWithoutAccountById(1234455);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        
+        assertNull(subWithoutAccount);
+        assertEquals("SubWithoutAccount not found", error);
     }
     
     @Test

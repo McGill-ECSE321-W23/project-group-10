@@ -13,12 +13,12 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 import java.sql.Date;
 import java.sql.Time;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Calendar;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -226,6 +226,21 @@ public class TestSingleReservationService {
     }
     
     @Test
+    public void testCreateSingleReservationWithInvalidParkingId() {
+        
+        String error = null;
+        SingleReservation singleReservation = null;
+        try {
+            singleReservation = singleReservationService.createSingleReservation(license_number1, parking_time, ParkingSpot_ID2);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(singleReservation);
+        assertEquals("The parking spot is only available for monthly customers.", error);
+    
+    }
+
+    @Test
     public void testCreateSingleReservationWithEmptyLicenseNumber() {
         String licenseNum = null;
         String error = null;
@@ -269,6 +284,34 @@ public class TestSingleReservationService {
         assertEquals("ParkingTime cannot be negative", error);
     
     }
+
+    @Test
+    public void testCreateSingleReservationWithReservedParking() {
+        String error = null;
+        SingleReservation singleReservation = null;
+        try {
+            singleReservation = singleReservationService.createSingleReservation(license_number1, parking_time, ParkingSpot_ID);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(singleReservation);
+        assertEquals("The parking spot is currently reserved by another customer.", error);
+    
+    }
+
+    @Test
+    public void testCreateSingleReservationWithExistingReservation() {
+        String error = null;
+        SingleReservation singleReservation = null;
+        try {
+            singleReservation = singleReservationService.createSingleReservation(license_number1, parking_time, ParkingSpot_ID_UNUSED);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(singleReservation);
+        assertEquals("The license number already has an active subscription.", error);
+    
+    }
     
     @Test
     public void testUpdateSingleReservationSuccessfully() {
@@ -297,6 +340,73 @@ public class TestSingleReservationService {
         SingleReservation singleReservation = null;
         try {
             singleReservation = singleReservationService.updateSingleReservation(licenseNumber, newParkingTime);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(singleReservation);
+        assertEquals("There is no active subscription with this License number", error);
+    
+    }
+
+    @Test
+    public void testUpdateSingleReservationWithEmptyLicense() {
+        assertEquals(2 , singleReservationService.getAllSingleReservations().size());
+        String error = null;
+        int newParkingTime = 75;
+        String licenseNumber = "";
+        SingleReservation singleReservation = null;
+        try {
+            singleReservation = singleReservationService.updateSingleReservation(licenseNumber, newParkingTime);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(singleReservation);
+        assertEquals("licenseNumber cannot be empty", error);
+    
+    }
+
+    @Test
+    public void testUpdateSingleReservationWithIncorrectLicenseFormat() {
+        assertEquals(2 , singleReservationService.getAllSingleReservations().size());
+        String error = null;
+        int newParkingTime = 75;
+        String licenseNumber = "812!()";
+        SingleReservation singleReservation = null;
+        try {
+            singleReservation = singleReservationService.updateSingleReservation(licenseNumber, newParkingTime);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(singleReservation);
+        assertEquals("Incorrect licenseNumber format", error);
+    
+    }
+
+    @Test
+    public void testUpdateSingleReservationWithNegativeParkingTime() {
+        assertEquals(2 , singleReservationService.getAllSingleReservations().size());
+        String error = null;
+        int newParkingTime = -10;
+        
+        SingleReservation singleReservation = null;
+        try {
+            singleReservation = singleReservationService.updateSingleReservation(license_number1, newParkingTime);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(singleReservation);
+        assertEquals("ParkingTime cannot be negative", error);
+    
+    }
+
+    @Test
+    public void testUpdateSingleReservationWithNoActiveSub() {
+        assertEquals(2 , singleReservationService.getAllSingleReservations().size());
+        String error = null;
+        String licenseNumber = "ABC123";
+        SingleReservation singleReservation = null;
+        try {
+            singleReservation = singleReservationService.updateSingleReservation(licenseNumber, parking_time);
         } catch (CustomException e) {
             error = e.getMessage();
         }
@@ -361,6 +471,20 @@ public class TestSingleReservationService {
         assertNotNull(singleReservation);
         assertEquals(RESERVATION_ID, singleReservation.getId());
     }
+
+    @Test
+    public void testGetSingleReservationByNonExistingId() {
+        String error = null;
+        SingleReservation singleReservation = null;
+        try {
+            singleReservation = singleReservationService.getSingleReservationById(1234455);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        
+        assertNull(singleReservation);
+        assertEquals("SingleReservation not found", error);
+    }
     
     @Test
     public void testGetSingleReservationsByDate() {
@@ -397,6 +521,17 @@ public class TestSingleReservationService {
         assertEquals(2, singleReservations.size());
     }
 
+    @Test 
+    public void testGetActiveByLicenseNumber() {
+        SingleReservation singleReservation = singleReservationService.getActiveByLicenseNumber(license_number1);
+        assertNotNull(singleReservation);
+        assertEquals(license_number1, singleReservation.getLicenseNumber());
+        assertEquals(RESERVATION_ID, singleReservation.getId());
+        assertEquals(date1, singleReservation.getDate());
+    }
+
+    
+
     @Test
     public void testCalculateFee() {
         SingleReservation singleReservation = singleReservationService.getSingleReservationById(RESERVATION_ID);
@@ -409,6 +544,18 @@ public class TestSingleReservationService {
         singleReservation.setParkingSpot(spot);
         Double fee = singleReservationService.calculateFee(Time.valueOf("09:30:00"), RESERVATION_ID);
         assertEquals((Time.valueOf(LocalTime.now()).getTime() - Time.valueOf("09:30:00").getTime()) * type.getFee(), fee);
+
+    }
+
+    @Test
+    public void testCalculateFeeWithNoReservationFound() {
+        String error = null;
+        try {
+        Double fee = singleReservationService.calculateFee(Time.valueOf("09:30:00"), 05050);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertEquals("singleReservation not found", error);
 
     }
     }
