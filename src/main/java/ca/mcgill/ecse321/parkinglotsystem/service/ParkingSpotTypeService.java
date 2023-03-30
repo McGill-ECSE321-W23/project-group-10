@@ -83,7 +83,7 @@ public class ParkingSpotTypeService {
         //we must delete the parking spot as a parking spot must have a parking spot type
         List<ParkingSpot> parkingSpots = new ArrayList<ParkingSpot>();
         parkingSpots = parkingSpotRepository.findParkingSpotByType(parkingSpotType);
-        if (parkingSpots.get(0).getType().getName().equals(name)) {
+        if (!parkingSpots.isEmpty()) {
             throw new CustomException("This type is assigned to a parking spot ", HttpStatus.BAD_REQUEST);
         }
 
