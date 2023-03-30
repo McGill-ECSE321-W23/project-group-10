@@ -117,9 +117,6 @@ public class PaymentServiceService {
                 }
             }
 
-
-            throw new CustomException("no such payment service exist! ", HttpStatus.NOT_FOUND);
-
         }
         paymentServiceRepository.delete(paymentService);
 
