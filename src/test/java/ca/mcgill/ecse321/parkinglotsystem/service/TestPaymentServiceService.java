@@ -172,16 +172,6 @@ public class TestPaymentServiceService {
                 "payment service date time is wrong!");
     }
 
-    // @Test
-    // public void testCreatePaymentServiceInvalidServiceRequest() {
-    //     testCreatePaymentServiceFailure(
-    //             VALID__ID_Active,
-    //             VALID__AMOUNT,
-    //             VALID__DATETIME,
-    //             dummyServiceReq(SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
-    //             "payment service does not exist in service request repository!");
-    // }
-
     @Test
     public void testGetPaymentServiceValidId() {
         PaymentService pa = service.getPaymentServiceById(VALID__ID);

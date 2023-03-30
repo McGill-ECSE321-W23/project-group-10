@@ -74,7 +74,7 @@ public class ServiceRequestController {
     /**
      * Controller method to get service requests by service
      * @author Luke
-     * @param
+     * @param serviceDescription the description of the service
      * @return List<ServiceRequestDto>
      */
     @GetMapping(value = {"/all-by-service-id/{id}", "/all-by-service-id/{id}/"})

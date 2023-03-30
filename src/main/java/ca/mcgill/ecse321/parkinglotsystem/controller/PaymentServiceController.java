@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.parkinglotsystem.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import ca.mcgill.ecse321.parkinglotsystem.dto.PaymentServiceDto;
 import ca.mcgill.ecse321.parkinglotsystem.service.PaymentServiceService;
@@ -55,7 +54,6 @@ public class PaymentServiceController {
     /**
      * Controller method to create a payment service
      * @author Luke
-     * @param id the id of the payment service
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
      * @param serviceRequest the associated service request of the payment service
@@ -133,7 +131,7 @@ public class PaymentServiceController {
     /**
      * Controller to get payment services by service request
      * @author Luke
-     * @param serviceRequest
+     * @param serviceRequestId the id of the service request
      * @return List<PaymentServiceDto>
      */
     @GetMapping(value = {"/all-by-service-request-id/{serviceRequestId}", "/all-by-service-request-id/{serviceRequestId}/"})

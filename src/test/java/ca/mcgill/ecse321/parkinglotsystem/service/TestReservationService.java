@@ -24,7 +24,6 @@ import org.mockito.stubbing.Answer;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
-import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 
@@ -45,14 +44,9 @@ private static final int RESERVATION_ID = 100;
 private static final Date date1 = Date.valueOf("2023-03-22");
 private static final int RESERVATION_ID2 = 999;
 private static final Date date2 = Date.valueOf("2023-03-23");
-private static final int Available_Id = 217;
 
 private static final int ParkingSpot_ID = 1;
 private static final int ParkingSpot_ID2 = 2;
-
-//private static final String TYPE_NAME = "regular";
-//private static final String TYPE_NAME2 = "large";
-
 
 @BeforeEach
 public void setMockOutput() {
