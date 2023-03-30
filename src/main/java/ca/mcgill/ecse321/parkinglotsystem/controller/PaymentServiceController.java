@@ -63,9 +63,9 @@ public class PaymentServiceController {
     public PaymentServiceDto createPaymentService(
         @RequestParam("amount") double amount, 
         @RequestParam("dateTime") Timestamp dateTime, 
-        @RequestParam("serviceRequest") ServiceRequest serviceRequest) {
+        @RequestParam("serviceRequest") int serviceRequestId) {
         
-        PaymentService paymentService = paymentServiceService.createPaymentService(amount, dateTime, serviceRequest);
+        PaymentService paymentService = paymentServiceService.createPaymentService(amount, dateTime, serviceRequestId);
         return convertPaymentServiceToDto(paymentService);
         
     }

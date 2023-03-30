@@ -124,9 +124,9 @@ public class TestPaymentServiceService {
 
     @Test
     public void testCreatePaymentService() {
-        ServiceRequest serviceRequest = dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE));
-        serviceRequestRepository.save(serviceRequest);
-        PaymentService pa = service.createPaymentService( VALID__AMOUNT, VALID__DATETIME, serviceRequest);
+        //ServiceRequest serviceRequest = dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE));
+        // serviceRequestRepository.save(serviceRequest);
+        PaymentService pa = service.createPaymentService( VALID__AMOUNT, VALID__DATETIME, SERVICE_REQUEST__ID);
         assertNotNull(pa);
         var amount = pa.getAmount();
         assertNotNull(amount);
@@ -149,7 +149,7 @@ public class TestPaymentServiceService {
         testCreatePaymentServiceFailure(
                 INVALID__AMOUNT,
                 VALID__DATETIME,
-                dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
+                SERVICE_REQUEST__ID,
                 "payment amount cannot be negative!");
     }
 
@@ -158,7 +158,7 @@ public class TestPaymentServiceService {
         testCreatePaymentServiceFailure(
                 VALID__AMOUNT,
                 INVALID_PAST__DATETIME,
-                dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
+                SERVICE_REQUEST__ID,
                 "payment service date time is wrong!");
     }
 
@@ -167,7 +167,7 @@ public class TestPaymentServiceService {
         testCreatePaymentServiceFailure(
                 VALID__AMOUNT,
                 INVALID_FUTURE__DATETIME,
-                dummyServiceReq(SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
+                SERVICE_REQUEST__ID,
                 "payment service date time is wrong!");
     }
 
@@ -319,11 +319,11 @@ public class TestPaymentServiceService {
     }
 
 
-    private void testCreatePaymentServiceFailure(double amount, Timestamp dateTime, ServiceRequest serviceRequest, String message) {
+    private void testCreatePaymentServiceFailure(double amount, Timestamp dateTime, int serviceRequestId, String message) {
         PaymentService pa = null;
         String errMsg = "";
         try {
-            pa = service.createPaymentService(amount,dateTime,serviceRequest);
+            pa = service.createPaymentService(amount,dateTime,serviceRequestId);
         } catch(Exception e) {
             errMsg = e.getMessage();
         }

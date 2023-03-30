@@ -30,7 +30,7 @@ public class PaymentServiceService {
      * @return A PaymentService
      */
     @Transactional
-    public PaymentService createPaymentService(double amount, Timestamp dateTime, ServiceRequest serviceRequest) {
+    public PaymentService createPaymentService(double amount, Timestamp dateTime, int serviceRequestId) {
         // Input validation
         String val_double = amount + "";
         Timestamp create_time = new Timestamp(1648094400);
@@ -43,9 +43,10 @@ public class PaymentServiceService {
         if (dateTime == null||compare_create < 0||compare_current>0) {
             throw new CustomException("payment service date time is wrong!", HttpStatus.BAD_REQUEST);
         }
-        if (serviceRequestRepository.findServiceRequestById(serviceRequest.getId()) == null) {
+        if (serviceRequestRepository.findServiceRequestById(serviceRequestId) == null) {
             throw new CustomException("payment service does not exist in service request repository!", HttpStatus.NOT_FOUND);
         }
+        ServiceRequest serviceRequest = serviceRequestRepository.findServiceRequestById(serviceRequestId);
         PaymentService paymentService = new PaymentService();
         paymentService.setAmount(amount);
         paymentService.setDateTime(dateTime);
