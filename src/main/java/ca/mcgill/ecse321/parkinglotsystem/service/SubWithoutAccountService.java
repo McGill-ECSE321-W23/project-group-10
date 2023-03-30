@@ -206,6 +206,7 @@ public class SubWithoutAccountService extends ReservationService {
 
     /**
 	 * Delete all subscriptions without an account.
+     * @author Mike
 	 * @return A List of SubWithoutAccount
 	 */
 	@Transactional
@@ -217,6 +218,7 @@ public class SubWithoutAccountService extends ReservationService {
 
     /**
      * Checks whether the last day of the subscription is after the current day.
+     * @author Mike
      * @param subWithoutAccount the input subscription without an account
      * @return true if the subscription is still active.
      */

@@ -19,7 +19,8 @@ public class ManagerService {
     ManagerRepository managerRepository;
 
     /**
-     * Method to create a Manager.
+     * method to create a Manager
+     * @author Louis
      * @param email the email of the manager
      * @param name the name of the manager
      * @param phone the phone number of the manager
@@ -54,7 +55,8 @@ public class ManagerService {
 
 
      /**
-     * Method to get a Manager by email.
+     * method to get a Manager by email
+     * @author Louis
      * @param email the email of the manager
      * @return A Manager
       * @throws CustomException of to get the manager fail
@@ -69,7 +71,8 @@ public class ManagerService {
      }
 
      /**
-     * Method to get Managers by name.
+     * method to get Managers by name
+     * @author Louis
      * @param name the name of the manager
      * @return A List of Manager or null
      */
@@ -79,7 +82,8 @@ public class ManagerService {
      }
 
      /**
-     * Method to get Managers by phone.
+     * method to get Managers by phone
+     * @author Louis
      * @param phone the phone number of the manager
      * @return A List of Manager or null
      */
@@ -89,7 +93,8 @@ public class ManagerService {
      }
 
     /**
-     * Method to get all Managers.
+     * method to get all Managers
+     * @author Louis
      * @return A List of Manager or null
      */
      @Transactional
@@ -99,7 +104,8 @@ public class ManagerService {
      }
 
     /**
-     * Method to delete a Manager.
+     * method to delete a Manager
+     * @author Louis
      * @param email the email of the manager
      * @return newly deleted Manager
      * @throws CustomException if to delete the manager fail
@@ -120,7 +126,8 @@ public class ManagerService {
      }
 
      /**
-     * Method to update a Manager.
+     * method to update a Manager
+     * @author Louis
      * @param email the email of the manager
      * @param name the name of the manager
      * @param phone the phone number of the manager

@@ -165,22 +165,44 @@ public class SingleReservationController {
     public Double calculateFee(@RequestParam(name = "startTime") Time startTime, @RequestParam(name = "singleReservationId") int singleReservationId){
         return singleReservationService.calculateFee(startTime, singleReservationId);
     }
-
+    /**
+     * convert a reservation to a Dto
+     * @author Mike
+     * @param reservation
+     * @return a reservation Dto
+     */
     private ReservationDto convertToDto(Reservation reservation) {
 	    ParkingSpotDto pDto = convertToDto(reservation.getParkingSpot());
         return new ReservationDto(reservation.getId(), reservation.getDate(), pDto);
     }
-
+    /**
+     * convert a singleReservation to a Dto
+     * @author Mike
+     * @param singleReservation
+     * @return a singleReservation Dto
+     */
     private SingleReservationDto convertToDto(SingleReservation singleReservation) {
         ParkingSpotDto pDto = convertToDto(singleReservation.getParkingSpot());
         
         return new SingleReservationDto(singleReservation.getId(), singleReservation.getDate(), singleReservation.getLicenseNumber(), singleReservation.getParkingTime(), pDto);
     }
 
+    /**
+     * convert a parkingSpot to a Dto
+     * @author Mike
+     * @param spot - parkingSpot
+     * @return a parkingSpot Dto
+     */
     private ParkingSpotDto convertToDto(ParkingSpot spot){
         return new ParkingSpotDto(spot.getId(), convertToDto(spot.getType()));
     }
     
+    /**
+     * convert a parkingSpot to a Dto
+     * @author Mike
+     * @param type - parkingSpotType
+     * @return a parkingSpotType Dto
+     */
     private ParkingSpotTypeDto convertToDto(ParkingSpotType type){
         return new ParkingSpotTypeDto(type.getName(), type.getFee());
     }

@@ -19,7 +19,8 @@ public class MonthlyCustomerService {
     MonthlyCustomerRepository monthlyCustomerRepository;
 
     /**
-     * Method to create a monthly customer.
+     * method to create a monthly customer
+     * @author Louis
      * @param email the email of the monthly customer
      * @param name the name of the monthly customer
      * @param phone the phone number of hte monthly customer
@@ -53,7 +54,8 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * Method to get a monthly customer by email.
+     * method to get a monthly customer by email
+     * @author Louis
      * @param email the email of the monthly customer
      * @return MonthlyCustomer
      * @throws CustomException if to get monthly customer fail
@@ -68,7 +70,8 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * Method to get monthly customers by name.
+     * method to get monthly customers by name
+     * @author Louis
      * @param name the name of the monthly customer
      * @return A List of MonthlyCustomer or null
      */
@@ -78,7 +81,8 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * Method to get monthly customers by phone.
+     * method to get monthly customers by phone
+     * @author Louis
      * @param phone the phone number of the monthly customer
      * @return A List of MonthlyCustomer or null
      */
@@ -88,7 +92,8 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * Method to get monthly customers by license number.
+     * method to get monthly customers by license number
+     * @author Louis
      * @param licenseNumber the license number of the monthly customer
      * @return A List of MonthlyCustomer or null
      */
@@ -98,7 +103,8 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * Method to get all monthly customers.
+     * method to get all monthly customers
+     * @author Louis
      * @return A List of MonthlyCustomer or null
      */
      @Transactional
@@ -108,7 +114,8 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * Method to delete a monthly customer.
+     * method to delete a monthly customer
+     * @author Louis
      * @param email the email of the monthly customer
      * @return the deleted MonthlyCustomer
      * @throws CustomException if to delete monthly customer fail
@@ -129,7 +136,8 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * Method to update a monthly customer.
+     * method to update a monthly customer
+     * @author Louis
      * @param email the email of the monthly customer
      * @param name the name of the monthly customer
      * @param phone the phone number of the monthly customer
