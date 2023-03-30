@@ -6,9 +6,12 @@ import java.util.List;
 import ca.mcgill.ecse321.parkinglotsystem.dao.*;
 import ca.mcgill.ecse321.parkinglotsystem.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 
 @Service
@@ -35,13 +38,13 @@ public class PaymentServiceService {
         int compare_create = dateTime.compareTo(create_time);
         int compare_current = dateTime.compareTo(current_time);
         if (val_double == null|| amount < 0) {
-            throw new IllegalArgumentException("payment amount cannot be negative!");
+            throw new CustomException("payment amount cannot be negative!", HttpStatus.BAD_REQUEST);
         }
         if (dateTime == null||compare_create < 0||compare_current>0) {
-            throw new IllegalArgumentException("payment service date time is wrong!");
+            throw new CustomException("payment service date time is wrong!", HttpStatus.BAD_REQUEST);
         }
         if (serviceRequestRepository.findServiceRequestById(serviceRequest.getId()) == null) {
-            throw new IllegalArgumentException("payment service does not exist in service request repository!");
+            throw new CustomException("payment service does not exist in service request repository!", HttpStatus.NOT_FOUND);
         }
         PaymentService paymentService = new PaymentService();
         paymentService.setAmount(amount);
@@ -91,18 +94,18 @@ public class PaymentServiceService {
     public PaymentService deletePaymentService(Integer id) {
         // Input validation
         String error = "";
-        String val = id + "";
-        if (val == "" || val.length() == 0) {
-            error = error + "a id must be mention to delete a payment service! ";
+        if (id == 0) {
+            throw new CustomException("a id must be mention to delete a payment service! ", HttpStatus.BAD_REQUEST);
         }
         PaymentService paymentService = paymentServiceRepository.findPaymentServiceById(id);
 
         if (paymentService == null) {
+
             error = error + "no such payment service exist! ";
         }
 
         if (error.length() > 0) {
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error, HttpStatus.NOT_FOUND);
         }
 
         //we must delete the payment service as a payment service must have a service request
@@ -113,6 +116,9 @@ public class PaymentServiceService {
                     serviceRequestRepository.delete(p);
                 }
             }
+
+
+            throw new CustomException("no such payment service exist! ", HttpStatus.NOT_FOUND);
 
         }
         paymentServiceRepository.delete(paymentService);
@@ -130,13 +136,13 @@ public class PaymentServiceService {
         int compare_current = dateTime.compareTo(current_time);
         PaymentService paymentService = paymentServiceRepository.findPaymentServiceById(id);
         if (amount<0) {
-            throw new IllegalArgumentException("payment amount cannot be negative!");
+            throw new CustomException("payment amount cannot be negative!", HttpStatus.BAD_REQUEST);
         }
         if (dateTime == null||compare_create < 0||compare_current>0) {
-            throw new IllegalArgumentException("payment service date time is wrong!");
+            throw new CustomException("payment service date time is wrong!", HttpStatus.BAD_REQUEST);
         }
         if (serviceRequestRepository.findServiceRequestById(serviceRequest.getId()) == null) {
-            throw new IllegalArgumentException("payment service does not exist in service request repository!");
+            throw new CustomException("payment service does not exist in service request repository!", HttpStatus.NOT_FOUND);
         }
         paymentService.setAmount(amount);
         paymentService.setDateTime(dateTime);

@@ -51,7 +51,6 @@ public class ServicesController {
      * @param description the description of the service
      * @param price the price of the service
      * @return A ServicesDto
-     * @throws IllegalArgumentException if to create the service fail
      */
     @PostMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto createServices(
@@ -59,30 +58,22 @@ public class ServicesController {
         @RequestParam int price,
         @RequestHeader String token) {
         authService.authenticateManager(token);
-        try {
-            Service services = servicesService.createService(description, price);
-            return convertServiceToDto(services);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-
-        }
+        
+        Service services = servicesService.createService(description, price);
+        return convertServiceToDto(services);
+    
     }
 
     /**
      * Controller method to get a service by description
      * @param description the description of the service
      * @return A ServicesDto
-     * @throws IllegalArgumentException if to get the service fail
      */
     @GetMapping(value = {"/{description}/", "/{description}"})
     public ServiceDto getServicesByDescription(@PathVariable("description") String description) {
-        try {
-            Service services = servicesService.getServiceByDescription(description);
-            return convertServiceToDto(services);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-
-        }
+        
+        Service services = servicesService.getServiceByDescription(description);
+        return convertServiceToDto(services);
 
     }
 
@@ -90,39 +81,32 @@ public class ServicesController {
      * Controller method to get a list of services by price
      * @param price the price of service
      * @return A List of ServicesDto
-     * @throws IllegalArgumentException if to get services fail
      */
     @GetMapping(value = {"/all-by-price/{price}", "/all-by-price/{price}/"})
     public List<ServiceDto> getServicesByPrice(@PathVariable("price") int price) {
         List<ServiceDto> sList = new ArrayList<>();
-        try {
-            List<Service> services = servicesService.getServiceByPrice(price);
-            if (services.size() != 0) {
-                for (Service se : services) {
-                    sList.add(convertServiceToDto(se));
-                }
+        
+        List<Service> services = servicesService.getServiceByPrice(price);
+        if (services.size() != 0) {
+            for (Service se : services) {
+                sList.add(convertServiceToDto(se));
             }
-            return sList;
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
         }
+        return sList;
+        
     }
 
     /**
      * Controller method for delete a service
      * @param description the description of the service
      * @return the deleted ServiceDto
-     * @throws IllegalArgumentException if to delete service fail
      */
     @DeleteMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto deleteServicesByDescription(@PathVariable("description") String description) {
-        try {
-            Service services = servicesService.deleteServiceByDescription(description);
-            return convertServiceToDto(services);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-
-        }
+        
+        Service services = servicesService.deleteServiceByDescription(description);
+        return convertServiceToDto(services);
+        
     }
 
     /**
@@ -130,7 +114,6 @@ public class ServicesController {
      * @param description the description of the service
      * @param price the price of the service
      * @return the updated serviceDto
-     * @throws IllegalArgumentException if to update the service fail
      */
     @PutMapping(value = {"/{description}", "/{description}/"})
     public ServiceDto updateServicesByDescription(
@@ -138,11 +121,8 @@ public class ServicesController {
         @RequestParam int price,
         @RequestHeader String token) {
         authService.authenticateManager(token);
-        try {
-            Service services = servicesService.updateService(description, price);
-            return convertServiceToDto(services);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+        Service services = servicesService.updateService(description, price);
+        return convertServiceToDto(services);
+    
     }
 }

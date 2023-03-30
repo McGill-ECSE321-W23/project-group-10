@@ -87,7 +87,7 @@ public class TestServicesService {
         testCreateServiceFailure(
                 VALID__DESCRIPTION_ACTIVE,
                 INVALID__PRICE,
-                "price input cannot be empty or less than zero!");
+                "Price input cannot be empty or less than zero!");
     }
 
     @Test
@@ -95,7 +95,12 @@ public class TestServicesService {
         testCreateServiceFailure(
                 INVALID__DESCRIPTION,
                 VALID__PRICE,
-                "service description cannot be empty!");
+                "Service description cannot be empty!");
+    }
+
+    @Test
+    public void testCreateExistingService() {
+        testCreateServiceFailure(VALID__DESCRIPTION, VALID__PRICE, "Service already exists!");
     }
 
     @Test
@@ -161,6 +166,20 @@ public class TestServicesService {
     }
 
     @Test
+    public void testDeleteNonExistentService() {
+        String error = "";
+        try {
+            service.deleteServiceByDescription(VALID__DESCRIPTION_ACTIVE);
+        }catch (Exception e) {
+            // Check that no error occurred
+            error = e.getMessage();
+        }
+        assertEquals("No service with that description was found!", error);
+        //assertNull(servicesRepository.findServiceByDescription(VALID__DESCRIPTION));
+
+    }
+
+    @Test
     public void testUpdateServiceValid() {
         Service ser = service.updateService(VALID__DESCRIPTION, VALID__PRICE_UPDATE);
         assertEquals(ser.getPrice(), VALID__PRICE_UPDATE);
@@ -175,7 +194,19 @@ public class TestServicesService {
         } catch(Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "price input cannot be empty or less than zero!");
+        assertEquals(errMsg, "Price input cannot be empty or less than zero!");
+    }
+
+    @Test
+    public void testUpdateNonExistentService() {
+        String errMsg = "";
+        try {
+            Service ser = service.updateService(VALID__DESCRIPTION_ACTIVE, VALID__PRICE_UPDATE);
+            assertEquals(ser.getPrice(), VALID__PRICE);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals(errMsg, "No service with that description exists!");
     }
 
     private void testCreateServiceFailure(String description, int price, String message) {
