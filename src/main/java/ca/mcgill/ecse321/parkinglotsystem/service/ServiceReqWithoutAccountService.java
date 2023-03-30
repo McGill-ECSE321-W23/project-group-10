@@ -20,12 +20,11 @@ public class ServiceReqWithoutAccountService {
     private ServicesService serviceService;
 
     /**
-     * Creates a ServiceReqWithoutAccount with the given licenseNumber and
-     * description.
-     * 
-     * @param licenseNumber
-     * @param description   description of the service
-     * @return the new ServiceReqWithoutAccount
+     * Method to create a service request without account.
+     * @param licenseNumber the license number of service request without account
+     * @param description the description of the service request without account
+     * @return A ServiceReqWithoutAccount
+     * @throws CustomException if to create the service request without account fail
      */
     @Transactional
     public ServiceReqWithoutAccount createServiceReqWithoutAccount(String licenseNumber, String description) {
@@ -44,10 +43,10 @@ public class ServiceReqWithoutAccountService {
     }
 
     /**
-     * Gets a serviceReqWithoutAccount with the given ID.
-     * 
-     * @param id the ID of the serviceReqWithoutAccount
-     * @return a serviceReqWithoutAccount
+     * Method to get a service request without account with id.
+     * @param id the id of the service request without account
+     * @return A serviceReqWithoutAccount
+     * @throws CustomException if to get the service request without account fail
      */
     @Transactional
     public ServiceReqWithoutAccount getServiceReqWithoutAccountById(int id) {
@@ -58,11 +57,10 @@ public class ServiceReqWithoutAccountService {
     }
 
     /**
-     * Gets the assigned ServiceReqWithoutAccount.
-     * 
-     * @param isAssigned
-     * @return the assigned ServiceReqWithoutAccount. Throws a CustomException if no
-     *         assigned ServiceReqWithoutAccount is found.
+     * Method to get the assigned ServiceReqWithoutAccount.
+     * @param isAssigned evaluate to true if the service request without account is assigned
+     * @return A List of ServiceReqWithoutAccount
+     * @throws CustomException if to get the service request without account fail
      */
     @Transactional
     public List<ServiceReqWithoutAccount> getServiceReqWithoutAccountByIsAssigned(boolean isAssigned) {
@@ -73,11 +71,10 @@ public class ServiceReqWithoutAccountService {
     }
 
     /**
-     * Gets the ServiceReqWithAccount of the given licenseNumber..
-     * 
-     * @param licenseNumber the license number
-     * @return the ServiceReqWithoutAccount. Throws a CustomException if no
-     *         ServiceReqWithoutAccount is found.
+     * Method to get service requests without account with license number.
+     * @param licenseNumber the license number of the service request without account
+     * @return A List of ServiceReqWithoutAccount
+     * @throws CustomException if to get the service request without account fail
      */
     @Transactional
     public List<ServiceReqWithoutAccount> findServiceReqWithoutAccountByLicenseNumber(String licenseNumber) {
@@ -88,9 +85,8 @@ public class ServiceReqWithoutAccountService {
     }
 
     /**
-     * Gets all ServiceReqWithoutAccount.
-     * 
-     * @return the list of ServiceReqWithoutAccount.
+     * Method to get all service requests without account.
+     * @return A List of ServiceReqWithoutAccount.
      */
     @Transactional
     public List<ServiceReqWithoutAccount> getAll() {
@@ -99,12 +95,11 @@ public class ServiceReqWithoutAccountService {
     }
 
     /**
-     * Updates the ServiceReqWithoutAccount of the given ID
-     * update isAssigned.
-     * 
-     * @param id
-     * @param isAssigned
+     * Method to update a service request without account of the given id
+     * @param id the id of the service request without account
+     * @param isAssigned evaluate to true if the service request without account is assigned
      * @return the updated ServiceReqWithoutAccount
+     * @throws CustomException if to update the service request without account fail
      */
     @Transactional
     public ServiceReqWithoutAccount updateIsAssignedById(int id, boolean isAssigned) {

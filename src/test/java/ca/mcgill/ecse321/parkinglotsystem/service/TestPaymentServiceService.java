@@ -72,7 +72,8 @@ public class TestPaymentServiceService {
 
 
         lenient().when(paymentServiceRepository.findPaymentServiceById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(VALID__ID)) {
+            int arg = invocation.getArgument(0);
+            if(arg == VALID__ID) {
                 return dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(
                     SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
             }
@@ -170,16 +171,6 @@ public class TestPaymentServiceService {
                 SERVICE_REQUEST__ID,
                 "payment service date time is wrong!");
     }
-
-    // @Test
-    // public void testCreatePaymentServiceInvalidServiceRequest() {
-    //     testCreatePaymentServiceFailure(
-    //             VALID__ID_Active,
-    //             VALID__AMOUNT,
-    //             VALID__DATETIME,
-    //             dummyServiceReq(SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)),
-    //             "payment service does not exist in service request repository!");
-    // }
 
     @Test
     public void testGetPaymentServiceValidId() {

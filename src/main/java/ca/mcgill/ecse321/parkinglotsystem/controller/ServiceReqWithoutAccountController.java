@@ -35,6 +35,7 @@ public class ServiceReqWithoutAccountController {
 
     /**
      * Controller method to get all service requests without account.
+     * @author Chenxin
      * @return A List of ServiceReqWithoutAccountDto
      */
     @GetMapping(value = { "", "/" })
@@ -44,6 +45,7 @@ public class ServiceReqWithoutAccountController {
 
     /**
      * Controller method to get service request without account with ID.
+     * @author Chenxin
      * @param id the id of the service request without account
      * @return a ServiceReqWithoutAccountDto
      */
@@ -54,6 +56,7 @@ public class ServiceReqWithoutAccountController {
 
     /**
      * Controller method to get service requests without account with isAssigned status.
+     * @author Chenxin
      * @param isAssigned whether the service request without account is assigned status
      * @return A List of ServiceReqWithoutAccountDto
      */
@@ -66,6 +69,7 @@ public class ServiceReqWithoutAccountController {
 
     /**
      * Controller method to get service requests without account with license number.
+     * @author Chenxin
      * @param licenseNumber the license number of the service request without account
      * @return A List of ServiceReqWithoutAccountDto
      */
@@ -78,6 +82,7 @@ public class ServiceReqWithoutAccountController {
 
     /**
      * Controller method to create a service request without account.
+     * @author Chenxin
      * @param licenseNumber the license number of the service request without account
      * @param description the description of the service request without account
      * @return A ServiceReqWithoutAccountDto
@@ -92,6 +97,7 @@ public class ServiceReqWithoutAccountController {
 
     /**
      * Controller method to update a service request without account with ID.
+     * @author Chenxin
      * @param id the id of the service request without account
      * @param isAssigned whether the service request without account is assigned status
      * @return the updated ServiceReqWithoutAccountDto

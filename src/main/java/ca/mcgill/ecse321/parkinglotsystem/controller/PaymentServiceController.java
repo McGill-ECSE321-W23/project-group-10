@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.parkinglotsystem.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import ca.mcgill.ecse321.parkinglotsystem.dto.PaymentServiceDto;
 import ca.mcgill.ecse321.parkinglotsystem.service.PaymentServiceService;
@@ -37,6 +36,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to get all payment services
+     * @author Luke
      * @return A List of PaymentServiceDto
      * @throws Exception if to get payment services fail
      */
@@ -53,7 +53,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to create a payment service
-     * @param id the id of the payment service
+     * @author Luke
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
      * @param serviceRequest the associated service request of the payment service
@@ -72,6 +72,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to get a payment service by id
+     * @author Luke
      * @param id the id of the payment service
      * @return A PaymentServiceDto
     */
@@ -85,6 +86,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method method to get payment services by amount
+     * @author Luke
      * @param amount the amount of the payment service
      * @return A List of PaymentServiceDto
      */
@@ -106,6 +108,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to get payment services by date time
+     * @author Luke
      * @param dateTime the date time of the payment service
      * @return A List PaymentServiceDto
      */
@@ -127,7 +130,8 @@ public class PaymentServiceController {
 
     /**
      * Controller to get payment services by service request
-     * @param serviceRequest
+     * @author Luke
+     * @param serviceRequestId the id of the service request
      * @return List<PaymentServiceDto>
      */
     @GetMapping(value = {"/all-by-service-request-id/{serviceRequestId}", "/all-by-service-request-id/{serviceRequestId}/"})
@@ -142,6 +146,7 @@ public class PaymentServiceController {
 
     /**
      * Controller method to delete a payment service by id
+     * @author Luke
      * @param id the id of the payment service
      * @return the deleted PaymentServiceDto
 
@@ -156,13 +161,12 @@ public class PaymentServiceController {
 
     /**
      * Controller method to update a payment service
+     * @author Luke
      * @param id the id of the payment service
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
      * @param serviceRequest the associated service request of the payment service
      * @return the updated PaymentServiceDto
-     * @throws IllegalArgumentException if to update the payment service fail
-
      */
     @PutMapping(value = {"/{id}", "/{id}/"})
     public PaymentServiceDto updatePaymentServiceById(

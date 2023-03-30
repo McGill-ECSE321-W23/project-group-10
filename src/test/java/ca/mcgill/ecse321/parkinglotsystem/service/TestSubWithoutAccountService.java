@@ -57,10 +57,6 @@ public class TestSubWithoutAccountService {
     private static final int ParkingSpot_ID_UNUSED = 2056;
     private static final int ParkingSpot_ID2 = 1006;
     
-    //private static final String TYPE_NAME = "regular";
-    //private static final String TYPE_NAME2 = "large";
-    
-    
     @BeforeEach
     public void setMockOutput() {
         lenient().when(subWithoutAccountRepository.findSubWithoutAccountById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {

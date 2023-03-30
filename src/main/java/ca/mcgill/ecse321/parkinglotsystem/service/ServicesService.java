@@ -17,24 +17,24 @@ public class ServicesService {
     ServiceRepository servicesRepository;
 
     /**
-     * method to create a service
-     *
-     * @param description
-     * @param price
-     * @return newly created service or null
+     * method to create a service.
+     * @param description the description of the service
+     * @param price the price of the service
+     * @return A Service
+     * @throws CustomException if to create the service fail
      */
     @Transactional
     public Service createService(String description, int price) {
         // Input validation
         String val_int = price + "";
         if (servicesRepository.findServiceByDescription(description)!=null) {
-            throw new CustomException("service already exist!", HttpStatus.BAD_REQUEST);
+            throw new CustomException("Service already exists!", HttpStatus.BAD_REQUEST);
         }
         if (description.equals("")) {
-            throw new CustomException("service description cannot be empty!", HttpStatus.BAD_REQUEST);
+            throw new CustomException("Service description cannot be empty!", HttpStatus.BAD_REQUEST);
         }
         if ((val_int == null || price < 0)) {
-            throw new CustomException("price input cannot be empty or less than zero!", HttpStatus.BAD_REQUEST);
+            throw new CustomException("Price input cannot be empty or less than zero!", HttpStatus.BAD_REQUEST);
 
             
         }
@@ -46,6 +46,10 @@ public class ServicesService {
         return service;
     }
 
+    /**
+     * method to get all services.
+     * @return A List of Service
+     */
     @Transactional
     public List<Service> getAllServices() {
         Iterable<Service> pIterable = servicesRepository.findAll();
@@ -53,7 +57,12 @@ public class ServicesService {
 
     }
 
-    // method to find a service by description
+    /**
+     * method to get a service by description.
+     * @param description the description of the service
+     * @return A Service
+     * @throws CustomException if to get the service fail
+     */
     @Transactional
     public Service getServiceByDescription(String description) {
         Service service = servicesRepository.findServiceByDescription(description);
@@ -63,13 +72,23 @@ public class ServicesService {
         return service;
     }
 
-    // method to find a service by price
+    /**
+     * method to get services by price.
+     * @param price the price of the service
+     * @return A List of Service
+     * @throws CustomException if to get the service fail
+     */
     @Transactional
     public List<Service> getServiceByPrice(int price) {
         return servicesRepository.findServiceByPrice(price);
     }
 
-    //method to delete a service
+    /**
+     * method to delete a service by description.
+     * @param description the description of the service
+     * @return the deleted Service
+     * @throws CustomException if to delete the service fail
+     */
     @Transactional
     public Service deleteServiceByDescription(String description) {
         String error = "";
@@ -85,7 +104,13 @@ public class ServicesService {
         }
     }
 
-    //method to update a service
+    /**
+     * method to update a service.
+     * @param description the description of the service
+     * @param price the price of the service
+     * @return the updated Service
+     * @throws CustomException if to update the service fail
+     */
     @Transactional
     public Service updateService(String description, int price) {
         String error = "";
@@ -99,7 +124,7 @@ public class ServicesService {
         }
         if (price < 0) {
 
-            throw new CustomException("price input cannot be empty or less than zero!", HttpStatus.BAD_REQUEST);
+            throw new CustomException("Price input cannot be empty or less than zero!", HttpStatus.BAD_REQUEST);
 
         }
         services.setPrice(price);

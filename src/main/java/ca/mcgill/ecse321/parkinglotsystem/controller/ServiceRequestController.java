@@ -25,6 +25,7 @@ public class ServiceRequestController {
 
     /**
      * Controller method to get all Service Requests
+     * @author Luke
      * @return A List of ServiceRequestDto
      * @throws Exception if to get service requests fail
      */
@@ -40,6 +41,7 @@ public class ServiceRequestController {
 
     /**
      * Controller method to get a service request by id
+     * @author Luke
      * @param id the id of the service request
      * @return A ServiceRequestDto
      */
@@ -52,6 +54,7 @@ public class ServiceRequestController {
 
     /**
      * Controller method to get service requests by is assigned
+     * @author Luke
      * @param isAssigned whether the service request is assigned status
      * @return A List of ServiceRequestDto
      */
@@ -70,7 +73,8 @@ public class ServiceRequestController {
 
     /**
      * Controller method to get service requests by service
-     * @param
+     * @author Luke
+     * @param serviceDescription the description of the service
      * @return List<ServiceRequestDto>
      */
     @GetMapping(value = {"/all-by-service-id/{id}", "/all-by-service-id/{id}/"})

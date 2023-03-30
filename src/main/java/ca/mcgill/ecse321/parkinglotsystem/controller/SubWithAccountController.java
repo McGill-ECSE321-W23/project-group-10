@@ -32,6 +32,7 @@ public class SubWithAccountController {
 
     /**
      * Controller method to get all subscriptions with account.
+     * @author Marco
      * @return A List of SubWithAccountDto
      */
     @GetMapping(value = {"", "/"})
@@ -42,6 +43,7 @@ public class SubWithAccountController {
 
     /**
      * Controller method to get all subscriptions with account with given monthly customer.
+     * @author Marco
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return A List of SubWithAccountDto
      */
@@ -53,6 +55,7 @@ public class SubWithAccountController {
 
     /**
      * Controller method to get all subscriptions with account with the given parking spot.
+     * @author Marco
      * @param parkingSpotId the ID of the parking spot
      * @return A List of SubWithAccountDto
      */
@@ -64,6 +67,7 @@ public class SubWithAccountController {
 
     /**
      * Controller method to get a subscription with account with the given ID.
+     * @author Marco
      * @param id the ID of the subscription.
      * @return a SubWithAccountDto
      */
@@ -74,6 +78,7 @@ public class SubWithAccountController {
 
     /**
      * Controller method to get the active subscription with account of the given monthly customer.
+     * @author Marco
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the SubWithAccountDto
      */
@@ -84,6 +89,7 @@ public class SubWithAccountController {
 
     /**
      * Controller method to get the active subscription with account of the given parking spot.
+     * @author Marco
      * @param parkingSpotId the ID of the parking spot
      * @return the active SubWithAccountDto
      */
@@ -94,6 +100,7 @@ public class SubWithAccountController {
     
     /**
      * Controller method to get a subscription with account with the given monthly customer and parking spot.
+     * @author Marco
      * @param monthlyCustomerEmail the email of the monthly customer for whom to create the subscription
      * @param parkingSpotId the id of the parking spot to reserve
      * @return A SubWithAccountDto
@@ -108,6 +115,7 @@ public class SubWithAccountController {
 
     /**
      * Controller method to delete the subscription with account with the given ID.
+     * @author Marco
      * @param id the id of the subscription
      */
     @DeleteMapping(value = {"/{id}","/{id}/"})

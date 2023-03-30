@@ -38,6 +38,7 @@ public class ManagerController {
 
     /**
      * Controller method to get all managers
+     * @author Louis
      * @return A List of ManagerDto or null
      */
     @GetMapping(value={"/",""})
@@ -47,6 +48,7 @@ public class ManagerController {
 
     /**
      * Controller method to create a manager
+     * @author Louis
      * @param email the email of the manager
      * @param name the name of the manager
      * @param phone the phone number of the manager
@@ -65,6 +67,7 @@ public class ManagerController {
 
     /**
      * Controller method to get managers by name
+     * @author Louis
      * @param name the name of the manager
      * @return A List of ManagerDto or null
      */
@@ -82,6 +85,7 @@ public class ManagerController {
 
     /**
      * Controller method to get managers by phone
+     * @author Louis
      * @param phone the phone number of the manager
      * @return A List of ManagerDto or null
      */
@@ -99,6 +103,7 @@ public class ManagerController {
 
     /**
      * Controller method to get a manager by email
+     * @author Louis
      * @param email the email of the manager
      * @return A ManagerDto or exception
      */
@@ -113,6 +118,7 @@ public class ManagerController {
 
     /**
      * Controller method to delete a manager
+     * @author Louis
      * @param email the email of the manager
      * @return newly deleted ManagerDto or exception
      */
@@ -124,6 +130,7 @@ public class ManagerController {
 
      /**
      * Controller method to update a manager
+     * @author Louis
      * @param email the email of the manager
      * @param name the name of the manager
      * @param phone the phone number of the manager

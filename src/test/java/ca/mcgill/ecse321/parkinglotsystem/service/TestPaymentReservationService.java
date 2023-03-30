@@ -38,12 +38,6 @@ import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 public class TestPaymentReservationService {
 
     @Mock
-    private ParkingSpotTypeRepository parkingSpotTypeRepository;
-
-    @Mock
-    private ParkingSpotRepository parkingSpotRepository;
-
-    @Mock
     private PaymentReservationRepository paymentReservationRepository;
 
     @Mock

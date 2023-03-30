@@ -23,7 +23,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.*;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
 
 /**
- * author Shaun Soobagrah
+ * @author Shaun Soobagrah
  */
 @CrossOrigin(origins = "*")
 @RestController
@@ -45,6 +45,7 @@ public class ParkingSpotController {
 
     /**
      * Controller method to get all parking spots.
+     * @author Shaun Soobagrah
      * @return A List of ParkingSpotDto
      */
     @GetMapping(value = {"","/"})
@@ -55,6 +56,7 @@ public class ParkingSpotController {
 
     /**
      * Controller method to create a parking spot.
+     * @author Shaun Soobagrah
      * @param id the parking spot id
      * @param parkingSpotTypeName the parking spot type name
      * @return A ParkingSpotDto
@@ -71,6 +73,7 @@ public class ParkingSpotController {
 
     /**
      * Controller method to get a parking spot using its parking spot type.
+     * @author Shaun Soobagrah
      * @param typeName the name of parking spot type
      * @return A list of ParkingSpotDto
      */
@@ -82,6 +85,7 @@ public class ParkingSpotController {
 
     /**
      * Controller Method to get parking spot using the id.
+     * @author Shaun Soobagrah
      * @param id the id of parking spot
      * @return A ParkingSpotDto
      */
@@ -93,6 +97,7 @@ public class ParkingSpotController {
 
     /**
      * Controller method to delete parking spot using id
+     * @author Shaun Soobagrah
      * @param id id of parking spot
      * @return A ParkingSpotDto
      */
@@ -105,6 +110,7 @@ public class ParkingSpotController {
 
     /**
      * Controller method to send request to update parking spot type.
+     * @author Shaun Soobagrah
      * @param id the id of parking spot
      * @param typeName the name of the parking spot type
      * @return A ParkingSpotDto

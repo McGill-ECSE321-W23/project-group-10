@@ -33,6 +33,7 @@ public class ReservationController {
    
 /**
  * find all Reservations 
+ * @author Mike
  * @param token - the token to authenticate the user that have access to the reservations
  * @return List of All Reservations as Dtos
  */
@@ -44,6 +45,7 @@ public List<ReservationDto> getAllReservations(@RequestHeader String token) {
 
 /**
  * find the reservation associated with an Id
+ * @author Mike
  * @param id - the id of the reservation to be found
  * @return a reservation associated with the id as Dtos
  */
@@ -55,6 +57,7 @@ public ReservationDto getReservationById(@PathVariable int id){
 
 /**
  * find a list of reservations with a date
+ * @author Mike
  * @param date - the date of the reservation to be found
  * @return a list of reservations associated with the date as Dtos
  */
@@ -70,6 +73,7 @@ public List<ReservationDto> getReservationsByDate(@PathVariable Date date){
 
 /**
  * find the reservation associated with a parkingSpot
+ * @author Mike
  * @param parkingSpotId - the id of the parkingSpot
  * @return a reservation associated with the parkingSpot as Dtos
  */
@@ -85,6 +89,7 @@ public List<ReservationDto> getReservationsByParkingSpot(@PathVariable("id") int
 
 /**
  * create a instance of the reservation
+ * @author Mike
  * @param date - the date of the reservation
  * @param parkingSpotId the id of the parkingSpot
  * @return the created reservation as Dtos
@@ -97,6 +102,7 @@ public ReservationDto createReservation(@RequestParam(name ="date") Date date, @
 
 /**
  * convert a parkingSpot object into a Dto
+ * @author Mike
  * @param spot - a parkingSpot object
  * @return a ParkingSpot Dto
  */
@@ -105,6 +111,7 @@ private ParkingSpotDto convertToDto(ParkingSpot spot){
 }
 /**
  * convert a parkingSpotType object into a Dto
+ * @author Mike
  * @param type - a parkingSpotType object
  * @return a ParkingSpotType Dto
  */
@@ -114,6 +121,7 @@ private ParkingSpotTypeDto convertToDto(ParkingSpotType type){
 
 /**
  * convert a reservation object into a Dto
+ * @author Mike
  * @param reservation - a reservation object
  * @return a reservation Dto
  */

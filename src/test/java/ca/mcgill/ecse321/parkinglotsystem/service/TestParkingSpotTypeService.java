@@ -70,7 +70,10 @@ public class TestParkingSpotTypeService {
 
         lenient().when(parkingSpotRepository.findParkingSpotByType(any(ParkingSpotType.class))).thenAnswer((InvocationOnMock invocation) -> {
             List<ParkingSpot> parkingSpots = new ArrayList<>();
-            parkingSpots.add(dummyParkingSpot(PARKING_SPOT_ID, dummyParkingSpotType(VALID_PARKING_SPOT_TYPE_1, VALID_PARKING_SPOT_TYPE_FEE_1)));
+            ParkingSpotType arg = invocation.getArgument(0);
+            if(!arg.getName().equals(VALID_PARKING_SPOT_TYPE_2)){
+                parkingSpots.add(dummyParkingSpot(PARKING_SPOT_ID, dummyParkingSpotType(VALID_PARKING_SPOT_TYPE_1, VALID_PARKING_SPOT_TYPE_FEE_1)));
+            }
             return parkingSpots;
         });
 

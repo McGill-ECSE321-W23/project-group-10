@@ -44,14 +44,9 @@ private static final int RESERVATION_ID = 100;
 private static final Date date1 = Date.valueOf("2023-03-22");
 private static final int RESERVATION_ID2 = 999;
 private static final Date date2 = Date.valueOf("2023-03-23");
-private static final int Available_Id = 217;
 
 private static final int ParkingSpot_ID = 1;
 private static final int ParkingSpot_ID2 = 2;
-
-//private static final String TYPE_NAME = "regular";
-//private static final String TYPE_NAME2 = "large";
-
 
 @BeforeEach
 public void setMockOutput() {
@@ -167,7 +162,7 @@ public void testCreateReservationSuccessfully() {
     Reservation reservation = null;
     try {
         reservation = reservationService.createReservation(date1, ParkingSpot_ID);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
         fail(e.getMessage());
     }
     assertNotNull(reservation);
@@ -184,7 +179,7 @@ public void testCreateReservationWithEmptyDate() {
     Reservation reservation = null;
     try {
         reservation = reservationService.createReservation(date, ParkingSpot_ID);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
         error = e.getMessage();
     }
     assertNull(reservation);
@@ -199,7 +194,7 @@ public void testDeleteReservationSuccessfully() {
     Reservation reservation = null; 
     try {
         reservation = reservationService.deleteReservation(RESERVATION_ID);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
         fail();
     }
     Reservation savedReservation = reservationService.getReservationById(RESERVATION_ID);
@@ -217,7 +212,7 @@ public void testDeleteReservationWithNoExistingId() {
     Reservation reservation = null; 
     try {
         reservation = reservationService.deleteReservation(id);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
         error = e.getMessage();
     }
     assertNull(reservation);
@@ -234,7 +229,7 @@ public void testDeleteReservationWithInvalidId() {
     Reservation reservation = null; 
     try {
         reservation = reservationService.deleteReservation(id);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
         error = e.getMessage();
     }
     assertNull(reservation);
