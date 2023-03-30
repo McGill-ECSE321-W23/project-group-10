@@ -44,6 +44,7 @@ public class ServicesService {
         return service;
     }
 
+    @Transactional
     public List<Service> getAllServices() {
         Iterable<Service> pIterable = servicesRepository.findAll();
         return HelperMethods.toList(pIterable);
