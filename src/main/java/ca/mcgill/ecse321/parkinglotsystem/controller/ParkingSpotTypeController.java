@@ -102,13 +102,12 @@ public class ParkingSpotTypeController {
         @RequestParam double fee,
         @RequestHeader String token){
         authService.authenticateManager(token);
-        try {
-            ParkingSpotType parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee(name, fee);
-            return convertParkingSpotTypeToDto(parkingSpotType);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
+        
+        ParkingSpotType parkingSpotType = parkingSpotTypeService.updateParkingSpotTypeFee(name, fee);
+        return convertParkingSpotTypeToDto(parkingSpotType);
+        
         }
-    }
+    
 
     /**
      * Helper method to convert parking spot type to a DTO.

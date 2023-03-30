@@ -23,13 +23,12 @@ public class ParkingLotSystemService {
     private ParkingLotSystemRepository parkingLotSystemRepository;
 
     /**
-     * Creates a ParkingLotSystem with the given id, openTime and
-     * closTime.
-     * 
-     * @param id
-     * @param openTime
-     * @param closTime
-     * @return the new ParkingLotSystem
+     * Method to create a parking lot system with the given id, openTime and closeTime.
+     * @param id the id of the parking lot system
+     * @param openTime the open time of the parking lot system
+     * @param closTime the close time of the parking lot system
+     * @return A ParkingLotSystem
+     * @throws CustomException if to create parking lot system fail
      */
     @Transactional
     public ParkingLotSystem createParkingLotSystem(int id, Time openTime, Time closTime) {
@@ -46,10 +45,10 @@ public class ParkingLotSystemService {
     }
 
     /**
-     * Gets a ParkingLotSystem with the given ID.
-     * 
-     * @param id the ID of the ParkingLotSystem
-     * @return a ParkingLotSystem
+     * Method to get a parking lot system with the given ID.
+     * @param id the ID of the parking lot system
+     * @return A ParkingLotSystem
+     * @throws CustomException if to get the parking lot system fail
      */
     @Transactional
     public ParkingLotSystem getById(int id) {
@@ -60,10 +59,10 @@ public class ParkingLotSystemService {
     }
 
     /**
-     * Gets a ParkingLotSystem with the given openTime.
-     * 
-     * @param id the openTime of the ParkingLotSystem
-     * @return a ParkingLotSystem
+     * Method to get parking lot systems with the given openTime.
+     * @param openTime the openTime of the parking lot system
+     * @return A List of ParkingLotSystem
+     * @throws CustomException if to get parking lot system fail
      */
     @Transactional
     public List<ParkingLotSystem> getAllByOpenTime(Time openTime) {
@@ -75,10 +74,10 @@ public class ParkingLotSystemService {
     }
 
     /**
-     * Gets a ParkingLotSystem with the given closeTime.
-     * 
-     * @param id the closeTime of the ParkingLotSystem
-     * @return a ParkingLotSystem
+     * Method to get parking lot systems with the given closeTime.
+     * @param closeTime the closeTime of the parking lot system
+     * @return A List of ParkingLotSystem
+     * @throws CustomException if to get the parking lot system fail
      */
     @Transactional
     public List<ParkingLotSystem> getAllByCloseTime(Time closeTime) {
@@ -90,9 +89,8 @@ public class ParkingLotSystemService {
     }
 
     /**
-     * Gets all ParkingLotSystem.
-     * 
-     * @return the list of ParkingLotSystem.
+     * Method to get all parking lot systems.
+     * @return A List of ParkingLotSystem.
      */
     @Transactional
     public List<ParkingLotSystem> getAll() {
@@ -100,13 +98,12 @@ public class ParkingLotSystemService {
     }
 
     /**
-     * Updates the ParkingLotSystem of the given ID
-     * update openTime and closeTime.
-     * 
-     * @param id
-     * @param openTime
-     * @param closeTime
+     * Method to update the parking lot system.
+     * @param id the id of the parking lot system
+     * @param openTime the open time of the parking lot system
+     * @param closeTime the close time of the parking lot system
      * @return the updated ParkingLotSystem
+     * @throws CustomException if to update the parking lot system fail
      */
     @Transactional
     public ParkingLotSystem updateParkingLotSystem(int id, Time openTime, Time closeTime) {

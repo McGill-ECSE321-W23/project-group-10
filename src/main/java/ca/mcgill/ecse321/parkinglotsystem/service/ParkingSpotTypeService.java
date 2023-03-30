@@ -30,8 +30,11 @@ public class ParkingSpotTypeService {
     ParkingSpotRepository parkingSpotRepository;
 
     /**
-     * Controller method to get all parking spots.
-     * @return a list of parking spots DTO
+     * Method to create a parking spot type.
+     * @param name the name of the parking spot type
+     * @param fee the cost of the parking spot type
+     * @return A ParkingSpotType
+     * @throws CustomException if to create the parking spot type fail
      */
     @Transactional
     public ParkingSpotType createParkingSpotType(String name, double fee){
@@ -48,16 +51,24 @@ public class ParkingSpotTypeService {
         parkingSpotType.setName(name);
         parkingSpotTypeRepository.save(parkingSpotType);    
         return parkingSpotType;
-    } 
+    }
 
-    // method to get all parking spot type instances
+    /**
+     * Method to get all parking spot types.
+     * @return A List of ParkingSpotType
+     */
     @Transactional
     public List<ParkingSpotType> getAllParkingSpotTypes() {
         Iterable <ParkingSpotType> parkingSTs = parkingSpotTypeRepository.findAll();
         return HelperMethods.toList(parkingSTs) ;
     }
 
-    // method to delete a parking spot type 
+    /**
+     * Method to delete a parking spot type.
+     * @param name the name of the parking spot type
+     * @return the deleted ParkingSpotType
+     * @throws CustomException if to delete the parking spot type fail
+     */
     @Transactional
     public ParkingSpotType deleteParkingSpotType(String name){
         
@@ -80,7 +91,13 @@ public class ParkingSpotTypeService {
         return parkingSpotType;
     }
 
-    // method to update the fee of a parking spot type
+    /**
+     * Method to update a parking spot type.
+     * @param name the name of the parking spot type
+     * @param fee the cost of the parking spot type
+     * @return the updated ParkingSpotType
+     * @throws CustomException if to update the parking spot type fail
+     */
     @Transactional
     public ParkingSpotType updateParkingSpotTypeFee(String name, double fee){
         ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(name);
@@ -100,7 +117,13 @@ public class ParkingSpotTypeService {
         return parkingSpotType;
         
     }
-    // method to get a parking spot type by name
+
+    /**
+     * Method to get a parking spot type by name.
+     * @param name the name of the parking spot type
+     * @return A ParkingSpotType
+     * @throws CustomException if to get the parking spot type fail
+     */
     @Transactional
     public ParkingSpotType getParkingSpotTypeByName(String name) {
         // Input validation

@@ -122,7 +122,7 @@ public class SingleReservationController {
 
     /**
     * update a singleReservation
-    * @param licenseNumber - licenseNumber of a singleReservation
+    * @param LicenseNumber - licenseNumber of a singleReservation
     * @param newParkingTime - length of the singleReservation that one wishes to extend
     * @return the updated singleReservation with the licenseNumber
     */

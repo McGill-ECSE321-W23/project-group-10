@@ -19,13 +19,14 @@ public class MonthlyCustomerService {
     MonthlyCustomerRepository monthlyCustomerRepository;
 
     /**
-     * method to create a MonthlyCustomers
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
-     * @param licenseNumber
-     * @return newly created MonthlyCustomer or exception
+     * method to create a monthly customer
+     * @param email the email of the monthly customer
+     * @param name the name of the monthly customer
+     * @param phone the phone number of hte monthly customer
+     * @param password the password of the monthly customer
+     * @param licenseNumber the license number of the monthly customer
+     * @return newly created MonthlyCustomer
+     * @throws CustomException if to create monthly customer fail
      */
     @Transactional
      public MonthlyCustomer createMonthlyCustomer(String email,String name,String phone,String password,String licenseNumber){
@@ -52,9 +53,10 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * method to get a MonthlyCustomers by email
-     * @param email
-     * @return MonthlyCustomer or exception
+     * method to get a monthly customer by email
+     * @param email the email of the monthly customer
+     * @return MonthlyCustomer
+     * @throws CustomException if to get monthly customer fail
      */
      @Transactional
      public MonthlyCustomer getMonthlyCustomerByEmail(String email){
@@ -66,9 +68,9 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * method to get MonthlyCustomers by name
-     * @param name
-     * @return List<MonthlyCustomer> or null
+     * method to get monthly customers by name
+     * @param name the name of the monthly customer
+     * @return A List of MonthlyCustomer or null
      */
      @Transactional
      public List<MonthlyCustomer> getMonthlyCustomerByName(String name){
@@ -76,9 +78,9 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * method to get MonthlyCustomers by phone
-     * @param phone
-     * @return List<MonthlyCustomer> or null
+     * method to get monthly customers by phone
+     * @param phone the phone number of the monthly customer
+     * @return A List of MonthlyCustomer or null
      */
      @Transactional
      public List<MonthlyCustomer> getMonthlyCustomerByPhone(String phone){
@@ -86,9 +88,9 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * method to get MonthlyCustomers by license number
-     * @param licenseNumber
-     * @return List<MonthlyCustomer> or null
+     * method to get monthly customers by license number
+     * @param licenseNumber the license number of the monthly customer
+     * @return A List of MonthlyCustomer or null
      */
      @Transactional
      public List<MonthlyCustomer> getMonthlyCustomerByLicenseNumber(String licenseNumber){
@@ -96,8 +98,8 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * method to get all MonthlyCustomers
-     * @return List<MonthlyCustomer> or null
+     * method to get all monthly customers
+     * @return A List of MonthlyCustomer or null
      */
      @Transactional
      public List<MonthlyCustomer> getAllMonthlyCustomers(){
@@ -106,9 +108,10 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * method to delete a MonthlyCustomer
-     * @param email
-     * @return newly deleted MonthlyCustomer or exception
+     * method to delete a monthly customer
+     * @param email the email of the monthly customer
+     * @return the deleted MonthlyCustomer
+     * @throws CustomException if to delete monthly customer fail
      */
      @Transactional
      public MonthlyCustomer deleteMonthlyCustomerByEmail(String email){
@@ -126,13 +129,14 @@ public class MonthlyCustomerService {
      }
 
     /**
-     * method to update a MonthlyCustomer
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
-     * @param licenseNumber
-     * @return newly updated MonthlyCustomer or exception
+     * method to update a monthly customer
+     * @param email the email of the monthly customer
+     * @param name the name of the monthly customer
+     * @param phone the phone number of the monthly customer
+     * @param password the password of the monthly customer
+     * @param licenseNumber the license number of the monthly customer
+     * @return the updated MonthlyCustomer
+     * @throws CustomException if to update monthly customer fail
      */
      @Transactional
      public MonthlyCustomer updateMonthlyCustomer(String email,String name,String phone,String password,String licenseNumber){
