@@ -56,7 +56,7 @@ public class PaymentServiceController {
      * @author Luke
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
-     * @param serviceRequestId the id of the associated service request of the payment service
+     * @param serviceRequestId the associated service request id of the payment service
      * @return A PaymentServiceDto
      */
     @PostMapping(value = {"/", ""})
