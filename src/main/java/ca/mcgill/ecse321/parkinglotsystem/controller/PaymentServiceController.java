@@ -161,8 +161,6 @@ public class PaymentServiceController {
      * @param dateTime the date time of the payment service
      * @param serviceRequest the associated service request of the payment service
      * @return the updated PaymentServiceDto
-     * @throws IllegalArgumentException if to update the payment service fail
-
      */
     @PutMapping(value = {"/{id}", "/{id}/"})
     public PaymentServiceDto updatePaymentServiceById(
