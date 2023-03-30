@@ -29,9 +29,13 @@ public class TestServicesService {
     private ServicesService service;
 
     private static final String VALID__DESCRIPTION = "This is an valid description.";
+    private static final String VALID__DESCRIPTION_ACTIVE = "This is an valid description activation.";
     private static final String INVALID__DESCRIPTION = "";
+    private static final String NON_EXIST__DESCRIPTION = "feeling lucky";
 
     private static final int VALID__PRICE = 100;
+    private static final int VALID__PRICE_UPDATE = 80;
+    private static final int INVALID__PRICE_UPDATE = -80;
     private static final int INVALID__PRICE = -50;
 
     @BeforeEach
@@ -45,8 +49,8 @@ public class TestServicesService {
 
         lenient().when(servicesRepository.save(any(Service.class))).thenAnswer((InvocationOnMock invocation) -> {
             Service se = invocation.getArgument(0);
-            se.setDescription(VALID__DESCRIPTION);
-            se.setPrice(VALID__PRICE);
+            //se.setDescription(VALID__DESCRIPTION);
+            //se.setPrice(VALID__PRICE);
             return se;
         });
 
@@ -70,22 +74,20 @@ public class TestServicesService {
 
     @Test
     public void testCreateService() {
-        Service ser = service.createService(VALID__DESCRIPTION, VALID__PRICE);
+        Service ser = service.createService(VALID__DESCRIPTION_ACTIVE, VALID__PRICE);
         assertNotNull(ser);
         var description = ser.getDescription();
         assertNotNull(description);
-        assertEquals(VALID__DESCRIPTION, ser.getDescription());
-        var price = ser.getPrice();
-        assertNotNull(price);
+        assertEquals(VALID__DESCRIPTION_ACTIVE, ser.getDescription());
         assertEquals(VALID__PRICE, ser.getPrice());
     }
 
     @Test
     public void testCreateServiceInvalidPrice() {
         testCreateServiceFailure(
-                VALID__DESCRIPTION,
+                VALID__DESCRIPTION_ACTIVE,
                 INVALID__PRICE,
-                "Price cannot be negative! ");
+                "price input cannot be empty or less than zero!");
     }
 
     @Test
@@ -93,7 +95,7 @@ public class TestServicesService {
         testCreateServiceFailure(
                 INVALID__DESCRIPTION,
                 VALID__PRICE,
-                "Description cannot be empty! ");
+                "service description cannot be empty!");
     }
 
     @Test
@@ -104,9 +106,25 @@ public class TestServicesService {
     }
 
     @Test
-    public void testGetServiceInValidDescription() {
-        Service ser = service.getServiceByDescription(INVALID__DESCRIPTION);
-        assertNull(ser);
+    public void testGetServiceInValidDescription1() {
+        String errMsg = "";
+        try {
+            service.getServiceByDescription(INVALID__DESCRIPTION);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("No service found.", errMsg);
+    }
+
+    @Test
+    public void testGetServiceInValidDescription2() {
+        String errMsg = "";
+        try {
+            service.getServiceByDescription(NON_EXIST__DESCRIPTION);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("No service found.", errMsg);
     }
 
     @Test
@@ -119,7 +137,45 @@ public class TestServicesService {
     @Test
     public void testGetServiceInValidPrice() {
         List<Service> serviceList = service.getServiceByPrice(INVALID__PRICE);
-        assertEquals(serviceList, null);
+        assertNull(serviceList);
+    }
+
+    @Test
+    public void testGetAll() {
+        List<Service> serviceList = service.getAllServices();
+        assertEquals(serviceList.size(), 1);
+    }
+
+    @Test
+    public void testDeleteService() {
+        String error = "";
+        try {
+            service.deleteServiceByDescription(VALID__DESCRIPTION);
+        }catch (Exception e) {
+            // Check that no error occurred
+            error = e.getMessage();
+        }
+        assertEquals("", error);
+        //assertNull(servicesRepository.findServiceByDescription(VALID__DESCRIPTION));
+
+    }
+
+    @Test
+    public void testUpdateServiceValid() {
+        Service ser = service.updateService(VALID__DESCRIPTION, VALID__PRICE_UPDATE);
+        assertEquals(ser.getPrice(), VALID__PRICE_UPDATE);
+    }
+
+    @Test
+    public void testUpdateServiceInvalid() {
+        String errMsg = "";
+        try {
+            Service ser = service.updateService(VALID__DESCRIPTION, INVALID__PRICE_UPDATE);
+            assertEquals(ser.getPrice(), VALID__PRICE);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals(errMsg, "price input cannot be empty or less than zero!");
     }
 
     private void testCreateServiceFailure(String description, int price, String message) {

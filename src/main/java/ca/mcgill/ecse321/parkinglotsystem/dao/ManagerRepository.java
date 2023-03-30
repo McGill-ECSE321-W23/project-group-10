@@ -20,4 +20,7 @@ public interface ManagerRepository extends CrudRepository<Manager, String> {
     //find manager by password
     List<Manager> findManagerByPassword(String password);
 
+    //find manager by token
+    List<Manager> findManagerByToken(String token);
+
 }

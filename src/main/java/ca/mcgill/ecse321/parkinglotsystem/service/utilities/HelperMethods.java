@@ -10,7 +10,6 @@ public class HelperMethods {
 
     /**
      * Converts an Iterable to a List.
-     *
      * @param <T>      Element type
      * @param iterable
      * @return A List containing the elements of the iterable
@@ -25,7 +24,6 @@ public class HelperMethods {
 
     /**
      * Helper method to convert parking spot type to a DTO
-     *
      * @param parkingSpotType
      * @return Dto
      */
@@ -42,7 +40,6 @@ public class HelperMethods {
 
     /**
      * Helper method to convert parking spot type to a DTO
-     *
      * @param parkingSpot
      * @return Dto
      */
@@ -59,9 +56,23 @@ public class HelperMethods {
 
 
     /**
-     * <<<<<<< HEAD
-     * Converts a SubWithAccount object to a DTO.
-     *
+     * Helper method to convert to dto
+     * @param paymentReservation
+     * @return
+     */
+    public static PaymentReservationDto convertPaymentReservationToDto(PaymentReservation paymentReservation) {
+        if (paymentReservation == null) {
+            throw new IllegalArgumentException("There is no such payment reservation to convert! ");
+        }
+        PaymentReservationDto paymentReservationDto = new PaymentReservationDto();
+        paymentReservationDto.setId(paymentReservation.getId());
+        paymentReservationDto.setAmount(paymentReservation.getAmount());
+        paymentReservationDto.setDateTime(paymentReservation.getDateTime());
+        paymentReservationDto.setReservation(paymentReservation.getReservation());
+        return paymentReservationDto;
+    }
+    /** 
+     * Helper method to convert a subscription with account to a DTO.
      * @param subWithAccount
      * @return a DTO representing the SubWithAccount object
      */
@@ -81,7 +92,6 @@ public class HelperMethods {
 
     /**
      * Helper method to convert service to a DTO
-     *
      * @param services
      * @return Dto
      */
@@ -98,7 +108,6 @@ public class HelperMethods {
 
     /**
      * Helper method to convert payment service to a DTO
-     *
      * @param paymentService
      * @return Dto
      */
@@ -115,7 +124,6 @@ public class HelperMethods {
 
     /**
      * Helper method to convert service request to a DTO
-     *
      * @param serviceRequest
      * @return Dto
      */
@@ -178,7 +186,6 @@ public class HelperMethods {
 
     /**
      * Helper method to convert parking spot type to a DTO
-     *
      * @param manager
      * @return Dto
      */
@@ -190,13 +197,11 @@ public class HelperMethods {
         managerDto.setEmail(manager.getEmail());
         managerDto.setName(manager.getName());
         managerDto.setPhone(manager.getPhone());
-        managerDto.setPassword(manager.getPassword());
         return managerDto;
     }
 
     /**
      * Helper method to convert parking spot type to a DTO
-     *
      * @param employee
      * @return Dto
      */
@@ -208,14 +213,12 @@ public class HelperMethods {
         employeeDto.setEmail(employee.getEmail());
         employeeDto.setName(employee.getName());
         employeeDto.setPhone(employee.getPhone());
-        employeeDto.setPassword(employee.getPassword());
         return employeeDto;
     }
 
 
     /**
      * Helper method to convert parking spot type to a DTO
-     *
      * @param mc
      * @return Dto
      */
@@ -227,7 +230,6 @@ public class HelperMethods {
         mcDto.setEmail(mc.getEmail());
         mcDto.setName(mc.getName());
         mcDto.setPhone(mc.getPhone());
-        mcDto.setPassword(mc.getPassword());
         mcDto.setLicenseNumber(mc.getLicenseNumber());
         return mcDto;
     }
@@ -235,7 +237,6 @@ public class HelperMethods {
 
     /**
      * Helper method to verify email
-     *
      * @param email
      * @return error
      */
@@ -252,7 +253,6 @@ public class HelperMethods {
 
     /**
      * Helper method to verify name
-     *
      * @param name
      * @return error
      */
@@ -267,7 +267,6 @@ public class HelperMethods {
 
     /**
      * Helper method to verify phone
-     *
      * @param phone
      * @return error
      */
@@ -285,7 +284,6 @@ public class HelperMethods {
 
     /**
      * Helper method to verify password
-     *
      * @param password
      * @return error
      */
@@ -305,7 +303,6 @@ public class HelperMethods {
 
     /**
      * Helper method to verify licenseNumber
-     *
      * @param licenseNumber
      * @return error
      */

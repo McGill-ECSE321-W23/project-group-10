@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.parkinglotsystem.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,21 +10,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotTypeRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dto.ParkingSpotDto;
-import ca.mcgill.ecse321.parkinglotsystem.dto.ParkingSpotTypeDto;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
-import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
-import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotService;
+import ca.mcgill.ecse321.parkinglotsystem.service.*;
 import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
 
+/**
+ * author Shaun Soobagrah
+ */
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/parking_spot", "/api/parking_spot/"})
+@RequestMapping("/api/parking-spot")
 public class ParkingSpotController {
 
     @Autowired
@@ -34,38 +36,89 @@ public class ParkingSpotController {
     @Autowired
     ParkingSpotTypeRepository parkingSpotTypeRepository;
 
+    @Autowired
+    ParkingSpotTypeService parkingSpotTypesService;
+
+    @Autowired
+    AuthenticationService authService;
+
 
     /**
-     * method to send request to get all parking spot Dtos
-     * @return List<ParkingSpotDto> 
+     * Controller method to get all parking spots.
+     * @return a list of parking spots DTO
      */
-    @GetMapping(value = {"/all/","/all"})
+    @GetMapping(value = {"","/"})
     public List<ParkingSpotDto> getAllParkingSpotDtos(){
        return parkingSpotService.getAllParkingSpots().stream().map(
         pSpot -> HelperMethods.convertParkingSpotToDto(pSpot)).collect(Collectors.toList());
     }
 
     /**
-     * create a parking spot
-     * @param id
-     * @param fee
-     * @return parking spot type dto
+     * Controller method to create a parking spot.
+     * @param id the parking spot id
+     * @param fee the parking spot fee
+     * @return a parking spot DTO
      */
-    @PostMapping(value = {"/create/{id}/{parkingSpotTypeName}", "/create/{id}/{parkingSpotTypeName}/"})
-    public ParkingSpotDto createParkingSpotDto(@PathVariable("id") int id, 
-                                            @PathVariable("parkingSpotTypeName") String parkingSpotTypeName){
-
-        try {
-            ParkingSpotType parkingSpotType = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
-            ParkingSpot parkingSpot = parkingSpotService.createParkingSpot(id, parkingSpotType);
-
-            return HelperMethods.convertParkingSpotToDto(parkingSpot);
-        }catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }                                  
-        
+    @PostMapping(value = {"/{id}", "/{id}/"})
+    public ParkingSpotDto createParkingSpotDto(
+        @PathVariable int id,               
+        @RequestParam String parkingSpotTypeName,
+        @RequestHeader String token){
+        authService.authenticateManager(token);
+        ParkingSpot parkingSpot = parkingSpotService.createParkingSpot(id, parkingSpotTypeName);
+        return HelperMethods.convertParkingSpotToDto(parkingSpot);                             
     }
 
+    /**
+     * Controller method to get a parking spot using its 
+     * parking spot type.
+     * @param typeName the name of parking spot type
+     * @return
+     */
+    @GetMapping(value = {"/all-by-type/{typeName}", "/all-by-type/{typeName}/"})
+    public List<ParkingSpotDto> getParkingSpotDtoByType(@PathVariable("typeName") String typeName) {
+        return parkingSpotService.getParkingSpotByType(typeName).stream().map(
+            spots -> HelperMethods.convertParkingSpotToDto(spots)).collect(Collectors.toList());
+    }
 
+    /**
+     * Method to get parking spot using the id.
+     * @param id the id of parking spot
+     * @return a parking spot DTO
+     */
+    @GetMapping(value = {"/{id}", "/{id}/"})
+    public ParkingSpotDto getParkingSpotDtoById(@PathVariable("id") int id) {
+        ParkingSpot parkingSpot = parkingSpotService.getParkingSpotById(id);
+        return HelperMethods.convertParkingSpotToDto(parkingSpot);
+    }
+
+    /**
+     * Controller method to delete parking spot using id
+     * @param id id of parking spot
+     * @return a DTO of the deleted parking spot
+     */
+    @DeleteMapping(value = {"/{id}","/{id}/"})
+    public ParkingSpotDto deleteParkingSpotDtoById(@PathVariable("id") int id, @RequestHeader String token) {
+        authService.authenticateManager(token);
+        ParkingSpot spot = parkingSpotService.deleteParkingSpotById(id);
+        return HelperMethods.convertParkingSpotToDto(spot);
+    }
+
+    /**
+     * Controller method to send request to update parking spot type.
+     * @param id the id of parking spot
+     * @param typeName the name of the parking spot type
+     * @return a parking spot type DTO
+     */
+    @PutMapping(value ={"/{id}", "/{id}/"})
+    public ParkingSpotDto updateParkingSpotDto(
+        @PathVariable("id") int id,
+        @RequestParam("typeName") String typeName,
+        @RequestHeader String token) {
+        authService.authenticateManager(token);
+        ParkingSpot parkingSpot = parkingSpotService.updateParkingSpot(id, typeName);
+        return HelperMethods.convertParkingSpotToDto(parkingSpot);
+
+    } 
     
 }

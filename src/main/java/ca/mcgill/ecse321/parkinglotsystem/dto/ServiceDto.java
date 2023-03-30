@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.parkinglotsystem.dto;
 
-import java.sql.Date;
-
 public class ServiceDto {
 
     private String description;

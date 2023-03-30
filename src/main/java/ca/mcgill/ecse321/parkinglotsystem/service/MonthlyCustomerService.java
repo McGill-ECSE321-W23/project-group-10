@@ -19,13 +19,13 @@ public class MonthlyCustomerService {
     MonthlyCustomerRepository monthlyCustomerRepository;
 
     /**
-     * method to a create monthly customer
+     * method to create a MonthlyCustomers
      * @param email
      * @param name
      * @param phone
      * @param password
      * @param licenseNumber
-     * @return newly created Monthly Customer or null
+     * @return newly created MonthlyCustomer or exception
      */
     @Transactional
      public MonthlyCustomer createMonthlyCustomer(String email,String name,String phone,String password,String licenseNumber){
@@ -51,37 +51,65 @@ public class MonthlyCustomerService {
         return mc;
      }
 
-
+    /**
+     * method to get a MonthlyCustomers by email
+     * @param email
+     * @return MonthlyCustomer or exception
+     */
      @Transactional
      public MonthlyCustomer getMonthlyCustomerByEmail(String email){
-        return monthlyCustomerRepository.findMonthlyCustomerByEmail(email);
+        MonthlyCustomer customer = monthlyCustomerRepository.findMonthlyCustomerByEmail(email);
+        if(customer == null) {
+            throw new CustomException("Invalid monthly customer email! ", HttpStatus.BAD_REQUEST);
+        }
+        return customer;
      }
 
-
+    /**
+     * method to get MonthlyCustomers by name
+     * @param name
+     * @return List<MonthlyCustomer> or null
+     */
      @Transactional
      public List<MonthlyCustomer> getMonthlyCustomerByName(String name){
         return monthlyCustomerRepository.findMonthlyCustomerByName(name);
      }
 
-
+    /**
+     * method to get MonthlyCustomers by phone
+     * @param phone
+     * @return List<MonthlyCustomer> or null
+     */
      @Transactional
      public List<MonthlyCustomer> getMonthlyCustomerByPhone(String phone){
         return monthlyCustomerRepository.findMonthlyCustomerByPhone(phone);
      }
 
+    /**
+     * method to get MonthlyCustomers by license number
+     * @param licenseNumber
+     * @return List<MonthlyCustomer> or null
+     */
      @Transactional
      public List<MonthlyCustomer> getMonthlyCustomerByLicenseNumber(String licenseNumber){
         return monthlyCustomerRepository.findMonthlyCustomerByLicenseNumber(licenseNumber);
      }
 
-
+    /**
+     * method to get all MonthlyCustomers
+     * @return List<MonthlyCustomer> or null
+     */
      @Transactional
      public List<MonthlyCustomer> getAllMonthlyCustomers(){
         Iterable<MonthlyCustomer> mcIterable=monthlyCustomerRepository.findAll();
         return HelperMethods.toList(mcIterable);
      }
 
-
+    /**
+     * method to delete a MonthlyCustomer
+     * @param email
+     * @return newly deleted MonthlyCustomer or exception
+     */
      @Transactional
      public MonthlyCustomer deleteMonthlyCustomerByEmail(String email){
         String error="";
@@ -97,6 +125,15 @@ public class MonthlyCustomerService {
         }
      }
 
+    /**
+     * method to update a MonthlyCustomer
+     * @param email
+     * @param name
+     * @param phone
+     * @param password
+     * @param licenseNumber
+     * @return newly updated MonthlyCustomer or exception
+     */
      @Transactional
      public MonthlyCustomer updateMonthlyCustomer(String email,String name,String phone,String password,String licenseNumber){
         String error="";

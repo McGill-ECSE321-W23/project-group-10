@@ -2,15 +2,18 @@ package ca.mcgill.ecse321.parkinglotsystem.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotsystem.service.SubWithoutAccountService;
+import ca.mcgill.ecse321.parkinglotsystem.service.AuthenticationService;
 import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotService;
 import ca.mcgill.ecse321.parkinglotsystem.dto.*;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
@@ -31,8 +34,10 @@ public class SubWithoutAccountController {
     private SubWithoutAccountService subWithoutAccountService;
     @Autowired
     private ParkingSpotService ParkingSpotService;
+    @Autowired
+    private AuthenticationService authService;
 
-    @GetMapping(value = {"/all", "/all/"})
+    @GetMapping(value = {"", "/"})
     public List<SubWithoutAccountDto> getAllSubWithoutAccounts() {
         List<SubWithoutAccountDto> subWithoutAccountDtos = new ArrayList<SubWithoutAccountDto>();
         List<SubWithoutAccount> subWithoutAccounts = subWithoutAccountService.getAllSubWithoutAccounts();
@@ -43,16 +48,16 @@ public class SubWithoutAccountController {
 
     }
 
-    @PostMapping(value = {"", "/" })
-    public SubWithoutAccountDto createSubWithoutAccount(@RequestParam(name = "id") int id, @RequestParam(name = "date") Date date, @RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "nbrMonths") int nbrMonths, @RequestParam(name = "parkingSpotId") int parkingSpotId){
-        SubWithoutAccount subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(id, date, licenseNumber, nbrMonths, parkingSpotId);
+    @PostMapping(value = {"", "/"})
+    public SubWithoutAccountDto createSubWithoutAccount(@RequestParam(name = "licenseNumber") String licenseNumber, @RequestParam(name = "parkingSpotId") int parkingSpotId){
+        SubWithoutAccount subWithoutAccount = subWithoutAccountService.createSubWithoutAccount(licenseNumber, parkingSpotId);
         return convertToDto(subWithoutAccount);
     }
 
     @GetMapping(value = { "/all-by-parking-spot/{parkingSpot}", "/all-by-parking-spot/{parkingSpot}/"})
-    public List<SubWithoutAccountDto> getSubWithoutAccountsByParkingSpot(@PathVariable("parkingSpot") ParkingSpot spot){
+    public List<SubWithoutAccountDto> getSubWithoutAccountsByParkingSpot(@PathVariable("parkingSpotId") int parkingSpotId){
         List<SubWithoutAccountDto> subWithoutAccountDtos = new ArrayList<SubWithoutAccountDto>();
-        List<Reservation> reservations = subWithoutAccountService.getReservationsByParkingSpot(spot);
+        List<Reservation> reservations = subWithoutAccountService.getReservationsByParkingSpot(parkingSpotId);
         for (Reservation r : reservations){
            subWithoutAccountDtos.add((SubWithoutAccountDto) convertToDto(r));
         }
@@ -69,7 +74,7 @@ public class SubWithoutAccountController {
         return subWithoutAccountDtos;
     }
 
-    @GetMapping(value = { "/by-id/{id}", "/by-id/{id}/"})
+    @GetMapping(value = { "/{id}", "/{id}/"})
     public SubWithoutAccountDto getSubWithoutAccountById(@PathVariable int id){
         
         SubWithoutAccount subWithoutAccount = subWithoutAccountService.getSubWithoutAccountById(id);
@@ -87,16 +92,15 @@ public class SubWithoutAccountController {
         return subWithoutAccountDtos;
     }
 
-    @PutMapping(value = {"/update/{id}/{newDate}/{newLicenseNumber}/{newParkingTime}/{newParkingSpot}", 
-    "/update/{newId}/{newDate}/{newLicenseNumber}/{newParkingTime}/{newParkingSpot}/" })
-	public SubWithoutAccountDto updateSubWithoutAccountDto(@PathVariable("id") int id, @PathVariable("newDate") Date newDate, @PathVariable("newLicenseNumber") String newLicenseNumber, 
-    @PathVariable("newParkingTime") int newParkingTime, @PathVariable("newSpotId") int newSpotId) {
-		SubWithoutAccount subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(id, newDate, newLicenseNumber, newParkingTime, newSpotId);
+    @PutMapping(value = { "/{id}", "/{id}/" })
+	public SubWithoutAccountDto updateSubWithoutAccountDto(@RequestParam String newLicenseNumber) {
+		SubWithoutAccount subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(newLicenseNumber);
 		return convertToDto(subWithoutAccount);
 	}
 
-    @PutMapping(value = {"/delete/{id}", "/delete/{id}/"})
-    public SubWithoutAccountDto deleteSubWithoutAccountDto(@PathVariable("id") int id){
+    @DeleteMapping(value = {"/{id}", "/{id}/"})
+    public SubWithoutAccountDto deleteSubWithoutAccountDto(@PathVariable("id") int id, @RequestHeader String token){
+        authService.authenticateManager(token);
         SubWithoutAccount sR = subWithoutAccountService.deleteSubWithoutAccount(id);
         return convertToDto(sR);
     }

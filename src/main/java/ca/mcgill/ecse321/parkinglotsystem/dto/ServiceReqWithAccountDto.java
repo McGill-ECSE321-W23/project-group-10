@@ -1,5 +1,4 @@
 package ca.mcgill.ecse321.parkinglotsystem.dto;
-import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 
 
 public class ServiceReqWithAccountDto extends ServiceRequestDto{

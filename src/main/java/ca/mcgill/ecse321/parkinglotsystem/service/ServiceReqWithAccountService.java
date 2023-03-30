@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ServiceReqWithAccountRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.MonthlyCustomer;
 import ca.mcgill.ecse321.parkinglotsystem.model.ServiceReqWithAccount;
-import ca.mcgill.ecse321.parkinglotsystem.model.ServiceRequest;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import static ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods.toList;
 import ca.mcgill.ecse321.parkinglotsystem.model.Service;
@@ -22,22 +20,20 @@ public class ServiceReqWithAccountService {
     @Autowired
     private MonthlyCustomerService monthlyCustomerService;
     @Autowired
-    private ServiceRepository serviceRepository;
+    private ServicesService serviceService;
 
-
+    /**
+     * Creates a ServiceReqWithAccount with the given monthly customer email and
+     * description.
+     * 
+     * @param monthlyCustomerEmail the email of the monthly customer
+     * @param description          description of the service
+     * @return the new ServiceReqWithAccount
+     */
     @Transactional
-    public ServiceReqWithAccount createServiceReqWithAccount(String monthlyCustomerEmail, int price){
-        boolean flag = true;
-        for (Service aService : serviceRepository.findServiceByPrice(price)){
-            if(aService.getPrice()==price){
-                flag = false;
-            }
-        }
-        if(flag){
-            throw new CustomException("No service with such price", HttpStatus.BAD_REQUEST);
-        }
+    public ServiceReqWithAccount createServiceReqWithAccount(String monthlyCustomerEmail, String description) {
 
-        Service service = serviceRepository.findServiceByPrice(price).get(0);
+        Service service = serviceService.getServiceByDescription(description);
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
         ServiceReqWithAccount serviceReqWithAccount = new ServiceReqWithAccount();
         serviceReqWithAccount.setIsAssigned(true);
@@ -48,44 +44,76 @@ public class ServiceReqWithAccountService {
         return serviceReqWithAccount;
     }
 
+    /**
+     * Gets a serviceReqWithAccount with the given ID.
+     * 
+     * @param id the ID of the serviceReqWithAccount
+     * @return a serviceReqWithAccount
+     */
     @Transactional
-    public ServiceReqWithAccount getServiceReqWithAccountById(int id){
-        if (serviceReqWithAccountRepository.findServiceReqWithAccountById(id)==null){
+    public ServiceReqWithAccount getServiceReqWithAccountById(int id) {
+        if (serviceReqWithAccountRepository.findServiceReqWithAccountById(id) == null) {
             throw new CustomException("No serviceRequest Id", HttpStatus.BAD_REQUEST);
         }
         return serviceReqWithAccountRepository.findServiceReqWithAccountById(id);
     }
 
+    /**
+     * Gets the assigned ServiceReqWithAccount.
+     * 
+     * @param isAssigned
+     * @return the assigned ServiceReqWithAccount. Throws a CustomException if no
+     *         assigned ServiceReqWithAccount is found.
+     */
     @Transactional
-    public List<ServiceReqWithAccount> getServiceReqWithAccountByIsAssigned(boolean isAssigned){
+    public List<ServiceReqWithAccount> getServiceReqWithAccountByIsAssigned(boolean isAssigned) {
+        if (serviceReqWithAccountRepository.findServiceReqWithAccountByIsAssigned(isAssigned).size() <= 0) {
+            throw new CustomException("No serviceRequest with such IsAssigned", HttpStatus.BAD_REQUEST);
+        }
         return serviceReqWithAccountRepository.findServiceReqWithAccountByIsAssigned(isAssigned);
     }
 
-    // @Transactional
-    // public List<ServiceReqWithAccount> getServiceReqWithAccountByService(Service service){
-    //     if (serviceReqWithAccountRepository.findServiceReqWithAccountByService(service).isEmpty()){
-    //         throw new CustomException("No serviceRequest with such service", HttpStatus.BAD_REQUEST);
-    //     }
-    //     return serviceReqWithAccountRepository.findServiceReqWithAccountByService(service);
-    // }
-    
+    /**
+     * Gets the ServiceReqWithAccount of the given monthly customer Email.
+     * 
+     * @param monthlyCustomerEmail the email of the monthly customer
+     * @return the assigned ServiceReqWithAccount. Throws a CustomException if no
+     *         ServiceReqWithAccount is found.
+     */
     @Transactional
-    public List<ServiceReqWithAccount> getServiceReqWithAccountByCustomer(String monthlyCustomerEmail){
+    public List<ServiceReqWithAccount> getServiceReqWithAccountByCustomer(String monthlyCustomerEmail) {
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
-        if (serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer).isEmpty()){
+        if (serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer).isEmpty()) {
             throw new CustomException("No serviceRequest with this customer", HttpStatus.BAD_REQUEST);
         }
         return serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer);
     }
 
+    /**
+     * Gets all ServiceReqWithAccount.
+     * 
+     * @return the list of ServiceReqWithAccount.
+     */
     @Transactional
-    public List<ServiceReqWithAccount> getAll(){
-        return (List<ServiceReqWithAccount>)(ServiceRequest)toList(serviceReqWithAccountRepository.findAll());
+    public List<ServiceReqWithAccount> getAll() {
+        List<ServiceReqWithAccount> list = toList(serviceReqWithAccountRepository.findAll());
+        return list;
     }
 
+    /**
+     * Updates the ServiceReqWithAccount of the given ID
+     * update isAssigned.
+     * 
+     * @param id
+     * @param isAssigned
+     * @return the updated ServiceReqWithAccount
+     */
     @Transactional
-    public ServiceReqWithAccount updateIsAssignedById(int id ,boolean isAssigned){
+    public ServiceReqWithAccount updateIsAssignedById(int id, boolean isAssigned) {
         ServiceReqWithAccount serviceReqWithAccount = serviceReqWithAccountRepository.findServiceReqWithAccountById(id);
+        if (serviceReqWithAccount == null) {
+            throw new CustomException("The ServiceReqWithAccount Id does not exist", HttpStatus.BAD_REQUEST);
+        }
         serviceReqWithAccount.setIsAssigned(isAssigned);
         serviceReqWithAccountRepository.save(serviceReqWithAccount);
         return serviceReqWithAccount;

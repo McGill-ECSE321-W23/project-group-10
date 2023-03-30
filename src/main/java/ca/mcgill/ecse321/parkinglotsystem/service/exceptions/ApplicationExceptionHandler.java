@@ -9,7 +9,6 @@ public class ApplicationExceptionHandler {
 
     /**
      * Handles CustomException.
-     * 
      * @param e the exception to be handled
      * @return The response entity with the given message and HTTP status
      */

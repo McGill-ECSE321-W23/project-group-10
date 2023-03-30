@@ -1,8 +1,5 @@
 package ca.mcgill.ecse321.parkinglotsystem.dto;
 
-import java.util.List;
-
-
 public class ParkingSpotDto {
     private int id;
     private ParkingSpotTypeDto type;

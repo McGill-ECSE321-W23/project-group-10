@@ -25,7 +25,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = {"/api/employee", "/api/employee/"})
+@RequestMapping("/api/employee")
 
 public class EmployeeController {
 
@@ -36,14 +36,24 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-
-    @GetMapping(value={"/all/","/all"})
+    /**
+     * method to get all EmployeeDtos
+     * @return List<EmployeeDto> or null
+     */
+    @GetMapping(value={"/",""})
     public List<EmployeeDto> getAllEmployeeDtos(){
         return employeeService.getAllEmployees().stream().map(ma -> HelperMethods.convertEmployeeToDto(ma)).collect(Collectors.toList());
     }
 
-
-    @PostMapping(value = {"/create/{email}", "/create/{email}/"})
+    /**
+     * method to create a EmployeeDto
+     * @param email
+     * @param name
+     * @param phone
+     * @param password
+     * @return newly created EmployeeDto or exception
+     */
+    @PostMapping(value = {"/{email}", "/{email}/"})
     public EmployeeDto createEmployeeDto(@PathVariable("email") String email, 
         @RequestParam("name") String name,
         @RequestParam("phone") String phone,
@@ -52,8 +62,12 @@ public class EmployeeController {
         return HelperMethods.convertEmployeeToDto(em);                                  
     }
 
-
-    @GetMapping(value = {"/getByName/{name}", "/getByName/{name}/"})
+    /**
+     * method to get EmployeeDtos by name
+     * @param name
+     * @return List<EmployeeDto> or null
+     */
+    @GetMapping(value = {"/all-by-name/{name}", "/all-by-name/{name}/"})
     public List<EmployeeDto> getEmployeeDtoByName(@PathVariable("name") String name) {
         List<EmployeeDto> employeeDtos = new ArrayList<EmployeeDto>();
         List<Employee> ems = employeeService.getEmployeeByName(name);
@@ -65,8 +79,12 @@ public class EmployeeController {
         return employeeDtos;
     }
 
-
-    @GetMapping(value = {"/getByPhone/{phone}", "/getByPhone/{phone}/"})
+    /**
+     * method to get EmployeeDtos by phone
+     * @param phone
+     * @return List<EmployeeDto> or null
+     */
+    @GetMapping(value = {"/all-by-phone/{phone}", "/all-by-phone/{phone}/"})
     public List<EmployeeDto> getEmployeeDtoByPhone(@PathVariable("phone") String phone) {
         List<EmployeeDto> employeeDtos = new ArrayList<EmployeeDto>();
         List<Employee> ems = employeeService.getEmployeeByPhone(phone);
@@ -78,8 +96,12 @@ public class EmployeeController {
         return employeeDtos;
     }
 
-
-    @GetMapping(value = {"/getByEmail/{email}", "/getByEmail/{email}/"})
+    /**
+     * method to get a EmployeeDto by email
+     * @param email
+     * @return a EmployeeDto or exception
+     */
+    @GetMapping(value = {"/{email}", "/{email}/"})
     public EmployeeDto getEmployeeDtoByEmail(@PathVariable("email") String email) {
         Employee em = employeeService.getEmployeeByEmail(email);
         if(em==null){
@@ -88,15 +110,26 @@ public class EmployeeController {
         return HelperMethods.convertEmployeeToDto(em); 
     }
 
-
-    @DeleteMapping(value = {"/delete/{email}","/delete/{email}/"})
+    /**
+     * method to delete a EmployeeDto
+     * @param email
+     * @return newly deleted EmployeeDto or exception
+     */
+    @DeleteMapping(value = {"/{email}","/{email}/"})
     public EmployeeDto deleteEmployeeDtoByEmail(@PathVariable("email") String email) {
         Employee em = employeeService.deleteEmployeeByEmail(email);
         return HelperMethods.convertEmployeeToDto(em);
     }
 
-
-    @PutMapping(value ={"/update/{email}", "/update/{email}/"})
+     /**
+     * method to update a EmployeeDto
+     * @param email
+     * @param name
+     * @param phone
+     * @param password
+     * @return newly updated EmployeeDto or exception
+     */
+    @PutMapping(value ={"/{email}", "/{email}/"})
     public EmployeeDto updateEmployeeDto(@PathVariable("email") String email, 
         @RequestParam("name") String name,
         @RequestParam("phone") String phone,

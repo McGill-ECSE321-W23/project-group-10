@@ -27,11 +27,8 @@ public class SubWithAccountService {
     @Autowired
     private ParkingSpotService parkingSpotService;
 
-    // TODO: Check if other service methods (MonthlyCustomer, ParkingSpot) perform input valdidation (IMPORTANT)
-
     /**
-     * Creates a subscription with the given monthly customer and parking spot.
-     * 
+     * Service method to create a subscription with the given monthly customer and parking spot.
      * @param monthlyCustomerEmail the email of the monthly customer for whom to create the subscription
      * @param parkingSpotId the id of the parking spot to reserve
      * @return the new subscription
@@ -73,8 +70,7 @@ public class SubWithAccountService {
     }
 
     /**
-     * Gets a subcription with the given ID.
-     * 
+     * Service method to get a subcription with the given ID.
      * @param id the ID of the subscription
      * @return a subscription
      */
@@ -90,8 +86,7 @@ public class SubWithAccountService {
     }
 
     /**
-     * Gets the active subscription of the given monthly customer.
-     * 
+     * Service method to get the active subscription of the given monthly customer.
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the active subscription. Throws a CustomException if no active subscription is found.
      */
@@ -111,8 +106,7 @@ public class SubWithAccountService {
     }
 
     /**
-     * Gets the active subscription of the given parking spot.
-     * 
+     * Service method to get the active subscription of the given parking spot.
      * @param parkingSpotId the ID of the parking spot
      * @return the active subscription. Throws a CustomException if no active subscription is found.
      */
@@ -132,8 +126,7 @@ public class SubWithAccountService {
     }
 
     /**
-     * Gets all subscriptions of the given monthly customer.
-     * 
+     * Service method to get all subscriptions of the given monthly customer.
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the list of subscriptions sorted by date (ascending).
      */
@@ -148,8 +141,7 @@ public class SubWithAccountService {
     }
 
     /**
-     * Gets all subscriptions of the given parking spot.
-     * 
+     * Service method to get all subscriptions of the given parking spot.
      * @param parkingSpotId the ID of the parking spot
      * @return the list of subscriptions sorted by date (ascending).
      */
@@ -164,8 +156,7 @@ public class SubWithAccountService {
     }
 
     /**
-     * Gets all subcriptions.
-     * 
+     * Service method to get all subcriptions.
      * @return the list of subscriptions sorted by date (ascending).
      */
     @Transactional
@@ -178,9 +169,8 @@ public class SubWithAccountService {
     }
 
     /**
-     * Updates the active subscription of the given monthly customer
+     * Service method to update the active subscription of the given monthly customer
      * by incrementing the number of months by one.
-     * 
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the updated subscription
      */
@@ -195,8 +185,19 @@ public class SubWithAccountService {
     }
 
     /**
+     * Service method to delete the subscription with the given ID.
+     * @param id
+     */
+    public void deleteSubWithAccount(int id) {
+        SubWithAccount sub = subWithAccountRepository.findSubWithAccountById(id);
+        if(sub == null) {
+            throw new CustomException("Invalid reservation ID.", HttpStatus.BAD_REQUEST);
+        }
+        subWithAccountRepository.deleteById(id);
+    }
+
+    /**
      * Checks whether the last day of the subscription is after the current day.
-     * 
      * @param sub
      * @return true if the subscription is still active.
      */
