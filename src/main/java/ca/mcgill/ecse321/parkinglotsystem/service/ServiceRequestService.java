@@ -18,6 +18,7 @@ public class ServiceRequestService {
 
     /**
      * method to get all service requests.
+     * @author Luke
      * @return A List of ServiceRequest
      */
     @Transactional
@@ -28,6 +29,7 @@ public class ServiceRequestService {
 
     /**
      * method to get a service request by id.
+     * @author Luke
      * @param id the id of the service request
      * @return A ServiceRequest
      */
@@ -38,6 +40,7 @@ public class ServiceRequestService {
 
     /**
      * method to get service requests by isAssigned.
+     * @author Luke
      * @param isAssigned whether the service request is assigned
      * @return A List of ServiceRequest
      */
@@ -48,6 +51,7 @@ public class ServiceRequestService {
 
     /**
      * method to get service requests by service description.
+     * @author Luke
      * @param description the description of the service
      * @return A List of ServiceRequest
      */

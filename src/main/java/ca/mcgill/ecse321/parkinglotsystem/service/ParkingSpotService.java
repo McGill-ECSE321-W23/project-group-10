@@ -17,7 +17,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 /*
- * author Shaun Soobagrah
+ * @author Shaun Soobagrah
  */
 @Service
 public class ParkingSpotService {
@@ -30,7 +30,8 @@ public class ParkingSpotService {
     ReservationRepository reservationRepository;
 
     /**
-     * Method to create a parking spot
+     * Method to create a parking spot.
+     * @author Shaun Soobagrah
      * @param id the id of the parking spot
      * @param parkingSpotTypeName the parking spot type of the parking spot
      * @return A ParkingSpot
@@ -64,7 +65,8 @@ public class ParkingSpotService {
 
 
     /**
-     * Method to get all parking spots
+     * Method to get all parking spots.
+     * @author Shaun Soobagrah
      * @return A List of ParkingSpot
      */
     @Transactional
@@ -76,7 +78,8 @@ public class ParkingSpotService {
     }
 
     /**
-     * Method to get the parking spot by id
+     * Method to get the parking spot by id.
+     * @author Shaun Soobagrah
      * @param id the id of the parking spot
      * @return A ParkingSpot
      * @throws CustomException if to get the parking spot fail
@@ -95,7 +98,8 @@ public class ParkingSpotService {
     }
 
     /**
-     * method to delete a parking spot by id
+     * Method to delete a parking spot by id.
+     * @author Shaun Soobagrah
      * @param id the id of the parking spot
      * @return the deleted ParkingSpot
      * @throws CustomException if to delete the parking spot fail
@@ -116,7 +120,8 @@ public class ParkingSpotService {
     }
 
     /**
-     * method to get parking spots by type
+     * Method to get parking spots by type.
+     * @author Shaun Soobagrah
      * @param parkingSpotTypeName the parking spot type of the parking spot
      * @return A List of ParkingSpot
      * @throws CustomException if to get parking spot fail
@@ -132,7 +137,8 @@ public class ParkingSpotService {
     }
 
     /**
-     * Method to update a parking spot
+     * Method to update a parking spot.
+     * @author Shaun Soobagrah
      * @param id the id of the parking spot
      * @param parkingSpotTypeName the parking spot type of the parking spot
      * @return the updated ParkingSpot
@@ -159,7 +165,8 @@ public class ParkingSpotService {
     // Helper method //
 
     /**
-     * Method to check if id is valid
+     * Method to check if id is valid.
+     * @author Shaun Soobagrah
      * @param id the input id
      * @return error message
      */
