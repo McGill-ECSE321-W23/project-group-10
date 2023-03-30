@@ -72,7 +72,8 @@ public class TestPaymentServiceService {
 
 
         lenient().when(paymentServiceRepository.findPaymentServiceById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(VALID__ID)) {
+            int arg = invocation.getArgument(0);
+            if(arg == VALID__ID) {
                 return dummyPaymentService(VALID__ID, VALID__AMOUNT, VALID__DATETIME, dummyServiceReq(
                     SERVICE_REQUEST__ID, SERVICE__IS_ASSIGNED, SERVICE__LICENSE_NUMBER, dummyService(SERVICE__PRICE)));
             }

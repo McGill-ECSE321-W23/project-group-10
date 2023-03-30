@@ -24,6 +24,7 @@ import org.mockito.stubbing.Answer;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 
@@ -167,7 +168,7 @@ public void testCreateReservationSuccessfully() {
     Reservation reservation = null;
     try {
         reservation = reservationService.createReservation(date1, ParkingSpot_ID);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
         fail(e.getMessage());
     }
     assertNotNull(reservation);
@@ -184,7 +185,7 @@ public void testCreateReservationWithEmptyDate() {
     Reservation reservation = null;
     try {
         reservation = reservationService.createReservation(date, ParkingSpot_ID);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
         error = e.getMessage();
     }
     assertNull(reservation);
@@ -199,7 +200,7 @@ public void testDeleteReservationSuccessfully() {
     Reservation reservation = null; 
     try {
         reservation = reservationService.deleteReservation(RESERVATION_ID);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
         fail();
     }
     Reservation savedReservation = reservationService.getReservationById(RESERVATION_ID);
@@ -217,7 +218,7 @@ public void testDeleteReservationWithNoExistingId() {
     Reservation reservation = null; 
     try {
         reservation = reservationService.deleteReservation(id);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
         error = e.getMessage();
     }
     assertNull(reservation);
@@ -234,7 +235,7 @@ public void testDeleteReservationWithInvalidId() {
     Reservation reservation = null; 
     try {
         reservation = reservationService.deleteReservation(id);
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
         error = e.getMessage();
     }
     assertNull(reservation);
