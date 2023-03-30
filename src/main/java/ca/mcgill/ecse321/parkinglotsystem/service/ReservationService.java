@@ -9,11 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotRepository;
-import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotTypeRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
-import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
-import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
@@ -31,11 +27,12 @@ public class ReservationService {
     protected PaymentReservationService paymentReservationService;
 
     /**
-     * Create a Reservation
+     * Method to create a reservation
      * @author Mike Zhang
-     * @params reservationId
-     * @params date
-     * return a reservation created
+     * @param parkingSpotId the parking spot id of the reservation
+     * @param date the date of the reservation
+     * @return A Reservation
+     * @throws CustomException if to create the reservation fail
      */
     @Transactional
     public Reservation createReservation(Date date, int parkingSpotId) {
@@ -53,10 +50,11 @@ public class ReservationService {
     }
 
     /**
-     * find reservation by id
+     * Method to get a reservation by id
      * @author Mike Zhang
-     * @params reservationId
-     * return the reservation found
+     * @param reservationId the reservation id of the reservation
+     * @return A Reservation
+     * @throws CustomException if to get the reservation fail
      */
     @Transactional
     public Reservation getReservationById(int reservationId){
@@ -69,10 +67,11 @@ public class ReservationService {
     }
 
     /**
-	 * Find reservations by date
-	 * @author Mike Zhang
-	 * @param date
-	 * @return a list of reservations
+	 * Method to get reservations by date
+     * @author Mike Zhang
+	 * @param date the date of the reservation
+	 * @return A List of Reservation
+     * @throws CustomException if to get the reservation fail
 	 */
 	@Transactional
 	public List<Reservation> getReservationsByDate(Date date) {
@@ -84,9 +83,9 @@ public class ReservationService {
 	}
 
     /**
-	 * Find all reservations
-	 * @author Mike
-	 * @return List of all accounts
+	 * Method to get all reservations
+     * @author Mike Zhang
+	 * @return A List of Reservation
 	 */
 	@Transactional
 	public List<Reservation> getAllReservations() {
@@ -95,10 +94,10 @@ public class ReservationService {
 	}
 
     /**
-	 * Find reservations by parkingSpot
-	 * @author Mike Zhang
-	 * @param parkingSpot
-	 * @return a list of reservations
+	 * Method to get reservations by parking spot
+     * @author Mike Zhang
+	 * @param parkingSpotId the parking spot id of the reservation
+	 * @return A List of Reservation
 	 */
 	@Transactional
 	public List<Reservation> getReservationsByParkingSpot(int parkingSpotId) {
@@ -107,10 +106,11 @@ public class ReservationService {
 	}
 
     /**
-     * Delete a reservation
-     * @author Mike
-     * @param reservationId
-     * @return reservation deleted
+     * Method to delete a reservation
+     * @author Mike Zhang
+     * @param reservationId the reservation id of the reservation
+     * @return the deleted Reservation
+     * @throws CustomException if to delete reservation fail
      */
 
     public Reservation deleteReservation(int reservationId){
@@ -123,20 +123,15 @@ public class ReservationService {
             throw new CustomException("ReservationId does not exist.", HttpStatus.NOT_FOUND);
         }
 
-        // // find the payment reservation
-        // List<PaymentReservation> paymentReservations = paymentReservationService.getPaymentReservationByReservation(reservationId);
-        // for (PaymentReservation paymentReservation: paymentReservations) {
-        //     paymentReservationService.deletePaymentReservation(paymentReservation.getId());
-        // }
-
         reservationRepository.delete(reservation);
         return reservation;
 
     }
 
     /**
-	 * Delete all the reservations
-	 * @return
+	 * Method to delete all reservations
+     * @author Mike Zhang
+	 * @return the deleted reservations
 	 */
 	@Transactional
 	public List<Reservation> deleteAllReservations() {
@@ -147,10 +142,11 @@ public class ReservationService {
 
 
     /**
-	 * helper method that converts iterable to list
-	 * @param <T>
-	 * @param iterable
-	 * @return
+	 * Helper method that converts iterable to list
+     * @author Mike Zhang
+     * @param <T> input
+     * @param iterable iterable
+	 * @return A List
 	 */
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
