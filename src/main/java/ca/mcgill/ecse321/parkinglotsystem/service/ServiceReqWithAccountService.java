@@ -23,12 +23,11 @@ public class ServiceReqWithAccountService {
     private ServicesService serviceService;
 
     /**
-     * Creates a ServiceReqWithAccount with the given monthly customer email and
-     * description.
-     * 
+     * Method to create a service request with account.
      * @param monthlyCustomerEmail the email of the monthly customer
-     * @param description          description of the service
-     * @return the new ServiceReqWithAccount
+     * @param description description of the service request with account
+     * @return A ServiceReqWithAccount
+     * @throws CustomException if to create the service request with account fail
      */
     @Transactional
     public ServiceReqWithAccount createServiceReqWithAccount(String monthlyCustomerEmail, String description) {
@@ -45,10 +44,10 @@ public class ServiceReqWithAccountService {
     }
 
     /**
-     * Gets a serviceReqWithAccount with the given ID.
-     * 
-     * @param id the ID of the serviceReqWithAccount
-     * @return a serviceReqWithAccount
+     * Method to get a service request with account with the given id.
+     * @param id the ID of the service request with account
+     * @return A serviceReqWithAccount
+     * @throws CustomException if to get the service request with account fail
      */
     @Transactional
     public ServiceReqWithAccount getServiceReqWithAccountById(int id) {
@@ -59,11 +58,10 @@ public class ServiceReqWithAccountService {
     }
 
     /**
-     * Gets the assigned ServiceReqWithAccount.
-     * 
-     * @param isAssigned
-     * @return the assigned ServiceReqWithAccount. Throws a CustomException if no
-     *         assigned ServiceReqWithAccount is found.
+     * Method to get the assigned service requests with account.
+     * @param isAssigned evaluate to true if the service request with account is assigned
+     * @return A List of ServiceReqWithAccount
+     * @throws CustomException if to get the service request with account fail
      */
     @Transactional
     public List<ServiceReqWithAccount> getServiceReqWithAccountByIsAssigned(boolean isAssigned) {
@@ -74,11 +72,10 @@ public class ServiceReqWithAccountService {
     }
 
     /**
-     * Gets the ServiceReqWithAccount of the given monthly customer Email.
-     * 
+     * Method to get service requests with account by customer.
      * @param monthlyCustomerEmail the email of the monthly customer
-     * @return the assigned ServiceReqWithAccount. Throws a CustomException if no
-     *         ServiceReqWithAccount is found.
+     * @return A List of ServiceReqWithAccount
+     * @throws CustomException if to get the service request with account fail
      */
     @Transactional
     public List<ServiceReqWithAccount> getServiceReqWithAccountByCustomer(String monthlyCustomerEmail) {
@@ -90,9 +87,8 @@ public class ServiceReqWithAccountService {
     }
 
     /**
-     * Gets all ServiceReqWithAccount.
-     * 
-     * @return the list of ServiceReqWithAccount.
+     * Gets all service requests with account.
+     * @return A List of ServiceReqWithAccount.
      */
     @Transactional
     public List<ServiceReqWithAccount> getAll() {
@@ -101,12 +97,11 @@ public class ServiceReqWithAccountService {
     }
 
     /**
-     * Updates the ServiceReqWithAccount of the given ID
-     * update isAssigned.
-     * 
-     * @param id
-     * @param isAssigned
+     * Method to update a service request with account of the given id
+     * @param id the id of the service request with account
+     * @param isAssigned evaluate to true if the service request with account is assigned
      * @return the updated ServiceReqWithAccount
+     * @throws CustomException if to update the service request with account fail
      */
     @Transactional
     public ServiceReqWithAccount updateIsAssignedById(int id, boolean isAssigned) {

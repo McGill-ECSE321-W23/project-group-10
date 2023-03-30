@@ -21,11 +21,12 @@ public class PaymentServiceService {
     ServiceRequestRepository serviceRequestRepository;
 
     /**
-     * Method to create a payment service
+     * Method to create a payment service.
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
      * @param serviceRequest the associated service request of the payment service
      * @return A PaymentService
+     * @throws CustomException if to create the payment service fail
      */
     @Transactional
     public PaymentService createPaymentService(double amount, Timestamp dateTime, ServiceRequest serviceRequest) {
@@ -53,6 +54,10 @@ public class PaymentServiceService {
         return paymentService;
     }
 
+    /**
+     * Method to get all payment services.
+     * @return A List of PaymentService
+     */
     public List<PaymentService> getAllPaymentService() {
 
         Iterable<PaymentService> pIterable = paymentServiceRepository.findAll();
@@ -60,26 +65,42 @@ public class PaymentServiceService {
 
     }
 
-    // method to find a payment service by id
+    /**
+     * Method to get a payment service by id.
+     * @param id the id of the payment service
+     * @return A PaymentService or null
+     */
     @Transactional
     public PaymentService getPaymentServiceById(Integer id) {
         return paymentServiceRepository.findPaymentServiceById(id);
     }
 
-    // method to find a payment service by payment amount
+    /**
+     * Method to get payment services by amount.
+     * @param amount the amount of the payment service
+     * @return A List of PaymentService or null
+     */
     @Transactional
     public List<PaymentService> getPaymentServiceByAmount(Double amount) {
         return paymentServiceRepository.findPaymentServiceByAmount(amount);
     }
 
-    // method to find a payment service by date time
+    /**
+     * Method to get payment services by date time.
+     * @param DateTime the date time of the payment service
+     * @return A List of PaymentService or null
+     */
     @Transactional
     public List<PaymentService> getPaymentServiceByDateTime(Timestamp DateTime) {
         return paymentServiceRepository.findPaymentServiceByDateTime(DateTime);
     }
 
 
-    // method to find a payment service by service request
+    /**
+     * Method to get payment services by service request.
+     * @param serviceReqId the id of the associated service request
+     * @return A List of PaymentService or null
+     */
     @Transactional
     public List<PaymentService> getPaymentServiceByServiceRequest(int serviceReqId) {
         List<PaymentService> paymentServiceList = paymentServiceRepository.findPaymentServiceByServiceReq(
@@ -87,7 +108,12 @@ public class PaymentServiceService {
         return paymentServiceList;
     }
 
-    // method to delete a payment service
+    /**
+     * Method to delete a payment service.
+     * @param id the id of the payment service
+     * @return the deleted PaymentService
+     * @throws CustomException if to delete the payment service fail
+     */
     @Transactional
     public PaymentService deletePaymentService(Integer id) {
         // Input validation
@@ -111,7 +137,14 @@ public class PaymentServiceService {
         return paymentService;
     }
 
-    // method to update the payment service
+    /**
+     * Method to update a payment service.
+     * @param amount the amount of the payment service
+     * @param dateTime the date time of the payment service
+     * @param serviceRequest the associated service request of the payment service
+     * @return the updated PaymentService
+     * @throws CustomException if to update the payment service fail
+     */
     @Transactional
     public PaymentService updatePaymentService(int id, Timestamp dateTime, double amount, ServiceRequest serviceRequest) {
         // Input validation
