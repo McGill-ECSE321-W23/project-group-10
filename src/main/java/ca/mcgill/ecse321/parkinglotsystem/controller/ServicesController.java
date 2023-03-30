@@ -33,7 +33,7 @@ public class ServicesController {
     private AuthenticationService authService;
 
     /**
-     * Controller to get all services
+     * Controller method to get all services
      * @return A List of ServicesDto
      */
     @GetMapping(value = {"", "/"})
@@ -47,7 +47,7 @@ public class ServicesController {
     }
 
     /**
-     * Controller to create a service
+     * Controller method to create a service
      * @param description the description of the service
      * @param price the price of the service
      * @return A ServicesDto
@@ -69,7 +69,7 @@ public class ServicesController {
     }
 
     /**
-     * Controller to get a service by description
+     * Controller method to get a service by description
      * @param description the description of the service
      * @return A ServicesDto
      * @throws IllegalArgumentException if to get the service fail
@@ -87,7 +87,7 @@ public class ServicesController {
     }
 
     /**
-     * Controller to get a list of services by price
+     * Controller method to get a list of services by price
      * @param price the price of service
      * @return A List of ServicesDto
      * @throws IllegalArgumentException if to get services fail
@@ -109,9 +109,9 @@ public class ServicesController {
     }
 
     /**
-     * Controller for delete a service
+     * Controller method for delete a service
      * @param description the description of the service
-     * @return service deleted
+     * @return the deleted ServiceDto
      * @throws IllegalArgumentException if to delete service fail
      */
     @DeleteMapping(value = {"/{description}", "/{description}/"})
@@ -126,10 +126,10 @@ public class ServicesController {
     }
 
     /**
-     * Controller to update a service
+     * Controller method to update a service
      * @param description the description of the service
      * @param price the price of the service
-     * @return A serviceDto
+     * @return the updated serviceDto
      * @throws IllegalArgumentException if to update the service fail
      */
     @PutMapping(value = {"/{description}", "/{description}/"})

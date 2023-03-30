@@ -37,8 +37,8 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     /**
-     * method to get all EmployeeDtos
-     * @return List<EmployeeDto> or null
+     * Controller method to get all employees
+     * @return A List of EmployeeDto or null
      */
     @GetMapping(value={"/",""})
     public List<EmployeeDto> getAllEmployeeDtos(){
@@ -46,11 +46,11 @@ public class EmployeeController {
     }
 
     /**
-     * method to create a EmployeeDto
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
+     * Controller method to create an employee
+     * @param email the email of the employee
+     * @param name the name of the employee
+     * @param phone the phone number of the employee
+     * @param password the password of the employee
      * @return newly created EmployeeDto or exception
      */
     @PostMapping(value = {"/{email}", "/{email}/"})
@@ -63,9 +63,9 @@ public class EmployeeController {
     }
 
     /**
-     * method to get EmployeeDtos by name
-     * @param name
-     * @return List<EmployeeDto> or null
+     * Controller method to get employees by name
+     * @param name the name of the employee
+     * @return A List of EmployeeDto or null
      */
     @GetMapping(value = {"/all-by-name/{name}", "/all-by-name/{name}/"})
     public List<EmployeeDto> getEmployeeDtoByName(@PathVariable("name") String name) {
@@ -80,9 +80,9 @@ public class EmployeeController {
     }
 
     /**
-     * method to get EmployeeDtos by phone
-     * @param phone
-     * @return List<EmployeeDto> or null
+     * Controller method to get employees by phone
+     * @param phone the phone number of the employee
+     * @return A List of EmployeeDto or null
      */
     @GetMapping(value = {"/all-by-phone/{phone}", "/all-by-phone/{phone}/"})
     public List<EmployeeDto> getEmployeeDtoByPhone(@PathVariable("phone") String phone) {
@@ -97,8 +97,8 @@ public class EmployeeController {
     }
 
     /**
-     * method to get a EmployeeDto by email
-     * @param email
+     * Controller method to get an employee by email
+     * @param email the email of the employee
      * @return a EmployeeDto or exception
      */
     @GetMapping(value = {"/{email}", "/{email}/"})
@@ -111,8 +111,8 @@ public class EmployeeController {
     }
 
     /**
-     * method to delete a EmployeeDto
-     * @param email
+     * Controller method to delete an employee
+     * @param email the email of the employee
      * @return newly deleted EmployeeDto or exception
      */
     @DeleteMapping(value = {"/{email}","/{email}/"})
@@ -122,11 +122,11 @@ public class EmployeeController {
     }
 
      /**
-     * method to update a EmployeeDto
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
+     * Controller method to update an employee
+     * @param email the email of the employee
+     * @param name the name of the employee
+     * @param phone the phone number of the employee
+     * @param password the password of the employee
      * @return newly updated EmployeeDto or exception
      */
     @PutMapping(value ={"/{email}", "/{email}/"})

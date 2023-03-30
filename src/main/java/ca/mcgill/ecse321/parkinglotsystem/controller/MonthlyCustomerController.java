@@ -38,8 +38,8 @@ public class MonthlyCustomerController {
     MonthlyCustomerService monthlyCustomerService;
 
     /**
-     * method to get all MonthlyCustomerDtos
-     * @return List<MonthlyCustomerDto> or null
+     * Controller method to get all monthly customers
+     * @return A List of MonthlyCustomerDto or null
      */
     @GetMapping(value={"","/"})
     public List<MonthlyCustomerDto> getAllMonthlyCustomerDtos(){
@@ -47,12 +47,12 @@ public class MonthlyCustomerController {
     }
 
     /**
-     * method to create a MonthlyCustomerDto
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
-     * @param licenseNumber
+     * Controller method to create a monthly customer
+     * @param email the email of the monthly customer
+     * @param name the name of the monthly customer
+     * @param phone the phone number of the monthly customer
+     * @param password the password of the monthly customer
+     * @param licenseNumber the license number of the monthly customer
      * @return newly created MonthlyCustomerDto or exception
      */
     @PostMapping(value = {"/{email}", "/{email}/"})
@@ -67,9 +67,9 @@ public class MonthlyCustomerController {
     }
 
     /**
-     * method to get MonthlyCustomerDtos by name
-     * @param name
-     * @return List<MonthlyCustomerDto> or null
+     * Controller method to get monthly customers by name
+     * @param name the name of the monthly customer
+     * @return A List of MonthlyCustomerDto or null
      */
     @GetMapping(value = {"/all-by-name/{name}", "/all-by-name/{name}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByName(@PathVariable("name") String name) {
@@ -84,9 +84,9 @@ public class MonthlyCustomerController {
     }
 
     /**
-     * method to get MonthlyCustomerDtos by phone
-     * @param phone
-     * @return List<MonthlyCustomerDto> or null
+     * Controller method to get monthly customers by phone
+     * @param phone the phone number of the monthly customer
+     * @return A List of MonthlyCustomerDto or null
      */
     @GetMapping(value = {"/all-by-phone/{phone}", "/all-by-phone/{phone}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByPhone(@PathVariable("phone") String phone) {
@@ -101,9 +101,9 @@ public class MonthlyCustomerController {
     }
 
     /**
-     * method to get MonthlyCustomerDtos by licenseNumber
-     * @param licenseNumber
-     * @return List<MonthlyCustomerDto> or null
+     * Controller method to get monthly customers by licenseNumber
+     * @param licenseNumber the license number of the monthly customer
+     * @return A List of MonthlyCustomerDto or null
      */
     @GetMapping(value = {"/all-by-license-number/{licenseNumber}", "/all-by-license-number/{licenseNumber}/"})
     public List<MonthlyCustomerDto> getMonthlyCustomerDtoByLicenseNumber(@PathVariable("licenseNumber") String licenseNumber) {
@@ -118,9 +118,9 @@ public class MonthlyCustomerController {
     }
 
     /**
-     * method to get a MonthlyCustomerDto by email
-     * @param email
-     * @return a MonthlyCustomerDto or exception
+     * Controller method to get a monthly customer by email
+     * @param email the email of the monthly customer
+     * @return A MonthlyCustomerDto or exception
      */
     @GetMapping(value = {"/{email}", "/{email}/"})
     public MonthlyCustomerDto getMonthlyCustomerDtoByEmail(@PathVariable("email") String email) {
@@ -132,8 +132,8 @@ public class MonthlyCustomerController {
     }
 
     /**
-     * method to delete a MonthlyCustomerDto
-     * @param email
+     * Controller method to delete a monthly customer
+     * @param email the email of the monthly customer
      * @return newly deleted MonthlyCustomerDto or exception
      */
     @DeleteMapping(value = {"/{email}","/{email}/"})
@@ -143,12 +143,12 @@ public class MonthlyCustomerController {
     }
 
     /**
-     * method to update a MonthlyCustomerDto
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
-     * @param licenseNumber
+     * Controller method to update a monthly customer
+     * @param email the email of the monthly customer
+     * @param name the name of the monthly customer
+     * @param phone the phone number of the monthly customer
+     * @param password the password of the monthly customer
+     * @param licenseNumber the license number of the monthly customer
      * @return newly updated MonthlyCustomerDto or exception
      */
     @PutMapping(value ={"/{email}", "/{email}/"})

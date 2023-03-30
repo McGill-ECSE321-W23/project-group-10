@@ -45,7 +45,7 @@ public class ParkingSpotController {
 
     /**
      * Controller method to get all parking spots.
-     * @return a list of parking spots DTO
+     * @return A List of ParkingSpotDto
      */
     @GetMapping(value = {"","/"})
     public List<ParkingSpotDto> getAllParkingSpotDtos(){
@@ -56,8 +56,8 @@ public class ParkingSpotController {
     /**
      * Controller method to create a parking spot.
      * @param id the parking spot id
-     * @param fee the parking spot fee
-     * @return a parking spot DTO
+     * @param parkingSpotTypeName the parking spot type name
+     * @return A ParkingSpotDto
      */
     @PostMapping(value = {"/{id}", "/{id}/"})
     public ParkingSpotDto createParkingSpotDto(
@@ -70,21 +70,20 @@ public class ParkingSpotController {
     }
 
     /**
-     * Controller method to get a parking spot using its 
-     * parking spot type.
+     * Controller method to get a parking spot using its parking spot type.
      * @param typeName the name of parking spot type
-     * @return
+     * @return A list of ParkingSpotDto
      */
     @GetMapping(value = {"/all-by-type/{typeName}", "/all-by-type/{typeName}/"})
     public List<ParkingSpotDto> getParkingSpotDtoByType(@PathVariable("typeName") String typeName) {
         return parkingSpotService.getParkingSpotByType(typeName).stream().map(
-            spots -> HelperMethods.convertParkingSpotToDto(spots)).collect(Collectors.toList());
+                HelperMethods::convertParkingSpotToDto).collect(Collectors.toList());
     }
 
     /**
-     * Method to get parking spot using the id.
+     * Controller Method to get parking spot using the id.
      * @param id the id of parking spot
-     * @return a parking spot DTO
+     * @return A ParkingSpotDto
      */
     @GetMapping(value = {"/{id}", "/{id}/"})
     public ParkingSpotDto getParkingSpotDtoById(@PathVariable("id") int id) {
@@ -95,7 +94,7 @@ public class ParkingSpotController {
     /**
      * Controller method to delete parking spot using id
      * @param id id of parking spot
-     * @return a DTO of the deleted parking spot
+     * @return A ParkingSpotDto
      */
     @DeleteMapping(value = {"/{id}","/{id}/"})
     public ParkingSpotDto deleteParkingSpotDtoById(@PathVariable("id") int id, @RequestHeader String token) {
@@ -108,7 +107,7 @@ public class ParkingSpotController {
      * Controller method to send request to update parking spot type.
      * @param id the id of parking spot
      * @param typeName the name of the parking spot type
-     * @return a parking spot type DTO
+     * @return A ParkingSpotDto
      */
     @PutMapping(value ={"/{id}", "/{id}/"})
     public ParkingSpotDto updateParkingSpotDto(

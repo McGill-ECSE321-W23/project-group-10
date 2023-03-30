@@ -35,7 +35,7 @@ public class PaymentServiceController {
     AuthenticationService authService;
 
     /**
-     * Controller to get all payment services
+     * Controller method to get all payment services
      * @return A List of PaymentServiceDto
      * @throws Exception if to get payment services fail
      */
@@ -51,7 +51,7 @@ public class PaymentServiceController {
     }
 
     /**
-     * Controller to create a payment service
+     * Controller method to create a payment service
      * @param id the id of the payment service
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
@@ -65,7 +65,6 @@ public class PaymentServiceController {
         @RequestParam("amount") double amount, 
         @RequestParam("dateTime") Timestamp dateTime, 
         @RequestParam("serviceRequest") ServiceRequest serviceRequest) {
-        // TODO: Remove id parameter (since id is generated automatically)
         try {
             PaymentService paymentService = paymentServiceService.createPaymentService(id, amount, dateTime, serviceRequest);
             return convertPaymentServiceToDto(paymentService);
@@ -76,7 +75,7 @@ public class PaymentServiceController {
     }
 
     /**
-     * Controller to get a payment service by id
+     * Controller method to get a payment service by id
      * @param id the id of the payment service
      * @return A PaymentServiceDto
      * @throws IllegalArgumentException if to get the payment service fail
@@ -93,7 +92,7 @@ public class PaymentServiceController {
     }
 
     /**
-     * Controller to get payment services by amount
+     * Controller method method to get payment services by amount
      * @param amount the amount of the payment service
      * @return A List of PaymentServiceDto
      * @throws IllegalArgumentException if to get payment services fail
@@ -118,7 +117,7 @@ public class PaymentServiceController {
     }
 
     /**
-     * Controller to get payment services by date time
+     * Controller method to get payment services by date time
      * @param dateTime the date time of the payment service
      * @return A List PaymentServiceDto
      * @throws IllegalArgumentException if to get payment services fail
@@ -160,9 +159,9 @@ public class PaymentServiceController {
     }
 
     /**
-     * Controller to delete a payment service by id
+     * Controller method to delete a payment service by id
      * @param id the id of the payment service
-     * @return payment service deleted
+     * @return the deleted PaymentServiceDto
      * @throws IllegalArgumentException if to delete the payment service fail
      */
     @DeleteMapping(value = {"/{id}", "/{id}/"})
@@ -178,12 +177,12 @@ public class PaymentServiceController {
     }
 
     /**
-     * Controller to update a payment service
+     * Controller method to update a payment service
      * @param id the id of the payment service
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
      * @param serviceRequest the associated service request of the payment service
-     * @return A PaymentServiceDto
+     * @return the updated PaymentServiceDto
      * @throws IllegalArgumentException if to update the payment service fail
      */
     @PutMapping(value = {"/{id}", "/{id}/"})

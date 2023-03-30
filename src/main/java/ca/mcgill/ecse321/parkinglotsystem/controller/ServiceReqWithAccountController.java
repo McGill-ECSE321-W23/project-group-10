@@ -34,9 +34,8 @@ public class ServiceReqWithAccountController {
     private AuthenticationService authService;
 
     /**
-     * Gets all ServiceReqWithAccount.
-     * 
-     * @return the list of ServiceReqWithAccount as DTOs
+     * Controller method to get all service requests with account.
+     * @return A List of ServiceReqWithAccountDto
      */
     @GetMapping(value = { "", "/" })
     public List<ServiceReqWithAccountDto> getAll() {
@@ -44,9 +43,9 @@ public class ServiceReqWithAccountController {
     }
 
     /**
-     * Gets ServiceReqWithAccount with such ID.
-     * 
-     * @return a ServiceReqWithAccount as DTOs
+     * Controller method to get service request with account with such ID.
+     * @param id the id of the service request with account
+     * @return A ServiceReqWithAccountDto
      */
     @GetMapping(value = { "/{id}", "/{id}/" })
     public ServiceReqWithAccountDto getServiceReqWithAccountById(@PathVariable("id") int id) {
@@ -54,9 +53,9 @@ public class ServiceReqWithAccountController {
     }
 
     /**
-     * Gets all ServiceReqWithAccount with such isAssigned.
-     * 
-     * @return the list of ServiceReqWithAccount as DTOs
+     * Controller method to get service requests with account by whether is assigned.
+     * @param isAssigned whether the service request with account is assigned status
+     * @return A List of ServiceReqWithAccountDto
      */
     @GetMapping(value = { "/all-by-is-assigned/{isAssigned}", "/all-by-is-assigned/{isAssigned}/" })
     public List<ServiceReqWithAccountDto> getServiceReqWithAccountByIsAssigned(
@@ -66,9 +65,9 @@ public class ServiceReqWithAccountController {
     }
 
     /**
-     * Gets ServiceReqWithAccount with such Email.
-     * 
-     * @return a ServiceReqWithAccount as DTOs
+     * Controller method to get service requests with account by email.
+     * @param monthlyCustomerEmail the monthly customer email of the service request with account
+     * @return A List of ServiceReqWithAccountDto
      */
     @GetMapping(value = { "/all-by-customer/{monthlyCustomerEmail}", "/all-by-customer/{monthlyCustomerEmail}/" })
     public List<ServiceReqWithAccountDto> getServiceReqWithAccountByCustomer(
@@ -78,9 +77,10 @@ public class ServiceReqWithAccountController {
     }
 
     /**
-     * Create a ServiceReqWithAccount.
-     * 
-     * @return a ServiceReqWithAccount as DTOs
+     * Controller method to create a service request with account.
+     * @param description the description of the service request with account
+     * @param monthlyCustomerEmail the monthly customer email of the service request with account
+     * @return A ServiceReqWithAccountDto
      */
     @PostMapping(value = { "", "/" })
     public ServiceReqWithAccountDto createServiceReqWithAccount(
@@ -93,9 +93,10 @@ public class ServiceReqWithAccountController {
     }
 
     /**
-     * Update a ServiceReqWithAccount with such ID.
-     * 
-     * @return a ServiceReqWithAccount as DTOs
+     * Controller method to update a service request with account with such ID.
+     * @param id the id of the service request with account
+     * @param isAssigned whether the service request with account is assigned status
+     * @return the updated ServiceReqWithAccountDto
      */
     @PutMapping(value = { "/{id}", "/{id}/" })
     public ServiceReqWithAccountDto updateIsAssignedById(
