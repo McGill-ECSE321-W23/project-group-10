@@ -30,10 +30,11 @@ public class ParkingSpotService {
     ReservationRepository reservationRepository;
 
     /**
-     * method to a create parking spot
-     * @param id
-     * @param parkingSpotType
-     * @return
+     * Method to create a parking spot
+     * @param id the id of the parking spot
+     * @param parkingSpotTypeName the parking spot type of the parking spot
+     * @return A ParkingSpot
+     * @throws CustomException if to create the parking spot fail
      */
     @Transactional
     public ParkingSpot createParkingSpot(int id, String parkingSpotTypeName){
@@ -63,8 +64,8 @@ public class ParkingSpotService {
 
 
     /**
-     * method to get all parking spots
-     * @return list of parking spot
+     * Method to get all parking spots
+     * @return A List of ParkingSpot
      */
     @Transactional
     public List<ParkingSpot> getAllParkingSpots() {
@@ -75,9 +76,10 @@ public class ParkingSpotService {
     }
 
     /**
-     * method to get parking spot by id
-     * @param id
-     * @return parking spot 
+     * Method to get the parking spot by id
+     * @param id the id of the parking spot
+     * @return A ParkingSpot
+     * @throws CustomException if to get the parking spot fail
      */
     @Transactional
     public ParkingSpot getParkingSpotById(int id) {
@@ -85,7 +87,7 @@ public class ParkingSpotService {
         // input validation
         ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotById(id);
 
-        // if no parking spot found, throw execption
+        // if no parking spot found, throw exception
         if (parkingSpot == null) {
             throw new CustomException("No parking spot with that id was found! ", HttpStatus.NOT_FOUND);
         }
@@ -93,13 +95,14 @@ public class ParkingSpotService {
     }
 
     /**
-     * method to delete a parking spot using its id
-     * @param id
-     * @return parking spot
+     * method to delete a parking spot by id
+     * @param id the id of the parking spot
+     * @return the deleted ParkingSpot
+     * @throws CustomException if to delete the parking spot fail
      */
     @Transactional
     public ParkingSpot deleteParkingSpotById(int id) {
-        // if no parking spot found, throw execption
+        // if no parking spot found, throw exception
         ParkingSpot spot = parkingSpotRepository.findParkingSpotById(id);
         if (spot == null) {
 			throw new CustomException("No parking spot with that id was found! ", HttpStatus.NOT_FOUND);
@@ -114,8 +117,9 @@ public class ParkingSpotService {
 
     /**
      * method to get parking spots by type
-     * @param parkingSpotType
-     * @return list of parking spot
+     * @param parkingSpotTypeName the parking spot type of the parking spot
+     * @return A List of ParkingSpot
+     * @throws CustomException if to get parking spot fail
      */
     @Transactional
     public List<ParkingSpot> getParkingSpotByType(String parkingSpotTypeName) {
@@ -128,10 +132,11 @@ public class ParkingSpotService {
     }
 
     /**
-     * method to update a parking spot type
-     * @param id
-     * @param parkingSpotType
-     * @return ParkingSpot
+     * Method to update a parking spot
+     * @param id the id of the parking spot
+     * @param parkingSpotTypeName the parking spot type of the parking spot
+     * @return the updated ParkingSpot
+     * @throws CustomException if to update the parking spot fail
      */
 
     @Transactional
@@ -154,9 +159,9 @@ public class ParkingSpotService {
     // Helper method //
 
     /**
-     * method to check if id is valid
-     * @param id
-     * @return error
+     * Method to check if id is valid
+     * @param id the input id
+     * @return error message
      */
     private String checkId(int id) {
         String error = "";

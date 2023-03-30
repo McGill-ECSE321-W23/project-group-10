@@ -20,13 +20,11 @@ public class PaymentServiceService {
     ServiceRequestRepository serviceRequestRepository;
 
     /**
-     * method to create a payment service
-     *
-     * @param id
-     * @param amount
-     * @param dateTime
-     * @param serviceRequest
-     * @return
+     * Method to create a payment service
+     * @param amount the amount of the payment service
+     * @param dateTime the date time of the payment service
+     * @param serviceRequest the associated service request of the payment service
+     * @return A PaymentService
      */
     @Transactional
     public PaymentService createPaymentService(double amount, Timestamp dateTime, ServiceRequest serviceRequest) {

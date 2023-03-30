@@ -44,8 +44,8 @@ public List<ReservationDto> getAllReservations(@RequestHeader String token) {
 
 /**
  * find the reservation associated with an Id
- * @param id - the Id of the reservation to be found
- * @return a reservation associated with the Id as Dtos
+ * @param id - the id of the reservation to be found
+ * @return a reservation associated with the id as Dtos
  */
 @GetMapping(value = { "/{id}", "/{id}/"})
 public ReservationDto getReservationById(@PathVariable int id){
@@ -70,7 +70,7 @@ public List<ReservationDto> getReservationsByDate(@PathVariable Date date){
 
 /**
  * find the reservation associated with a parkingSpot
- * @param parkingSpotId - the Id of a parkingSpot
+ * @param parkingSpotId - the id of the parkingSpot
  * @return a reservation associated with the parkingSpot as Dtos
  */
 @GetMapping(value = { "/all-by-parking-spot/{id}", "/all-by-parking-spot/{id}/"})
