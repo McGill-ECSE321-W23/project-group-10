@@ -58,44 +58,35 @@ public class PaymentServiceController {
      * @param dateTime the date time of the payment service
      * @param serviceRequest the associated service request of the payment service
      * @return A PaymentServiceDto
-     * @throws IllegalArgumentException if to create payment service fail
      */
     @PostMapping(value = {"/", ""})
     public PaymentServiceDto createPaymentService(
         @RequestParam("amount") double amount, 
         @RequestParam("dateTime") Timestamp dateTime, 
         @RequestParam("serviceRequest") ServiceRequest serviceRequest) {
-        try {
-            PaymentService paymentService = paymentServiceService.createPaymentService(amount, dateTime, serviceRequest);
-            return convertPaymentServiceToDto(paymentService);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-
-        }
+        
+        PaymentService paymentService = paymentServiceService.createPaymentService(amount, dateTime, serviceRequest);
+        return convertPaymentServiceToDto(paymentService);
+        
     }
 
     /**
      * Controller to get a payment service by id
      * @param id the id of the payment service
      * @return A PaymentServiceDto
-     * @throws IllegalArgumentException if to get the payment service fail
-     */
+    */
     @GetMapping(value = {"/{id}", "/{id}/"})
     public PaymentServiceDto getPaymentServiceById(@PathVariable("id") int id, @RequestHeader String token) {
         authService.authenticateManager(token);
-        try {
-            PaymentService paymentService = paymentServiceService.getPaymentServiceById(id);
-            return convertPaymentServiceToDto(paymentService);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+        PaymentService paymentService = paymentServiceService.getPaymentServiceById(id);
+        return convertPaymentServiceToDto(paymentService);
+        
     }
 
     /**
      * Controller to get payment services by amount
      * @param amount the amount of the payment service
      * @return A List of PaymentServiceDto
-     * @throws IllegalArgumentException if to get payment services fail
      */
     @GetMapping(value = {"/all-by-amount/{amount}", "/all-by-amount/{amount}/"})
     public List<PaymentServiceDto> getPaymentServiceByAmount(
@@ -103,24 +94,20 @@ public class PaymentServiceController {
         @RequestHeader String token) {
         authService.authenticateManager(token);
         List<PaymentServiceDto> amList = new ArrayList<>();
-        try {
-            List<PaymentService> paymentService = paymentServiceService.getPaymentServiceByAmount(amount);
-            if (paymentService.size() != 0) {
-                for (PaymentService pa : paymentService) {
-                    amList.add(convertPaymentServiceToDto(pa));
-                }
+        List<PaymentService> paymentService = paymentServiceService.getPaymentServiceByAmount(amount);
+        if (paymentService.size() != 0) {
+            for (PaymentService pa : paymentService) {
+                amList.add(convertPaymentServiceToDto(pa));
             }
-            return amList;
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
         }
+        return amList;
+        
     }
 
     /**
      * Controller to get payment services by date time
      * @param dateTime the date time of the payment service
      * @return A List PaymentServiceDto
-     * @throws IllegalArgumentException if to get payment services fail
      */
     @GetMapping(value = {"/all-by-datetime/{dateTime}", "/all-by-datetime/{dateTime}/"})
     public List<PaymentServiceDto> getPaymentServiceByDateTime(
@@ -128,24 +115,20 @@ public class PaymentServiceController {
         @RequestHeader String token) {
         authService.authenticateManager(token);
         List<PaymentServiceDto> daList = new ArrayList<>();
-        try {
-            List<PaymentService> paymentService = paymentServiceService.getPaymentServiceByDateTime(dateTime);
-            if (paymentService.size() != 0) {
-                for (PaymentService da : paymentService) {
-                    daList.add(convertPaymentServiceToDto(da));
-                }
+        List<PaymentService> paymentService = paymentServiceService.getPaymentServiceByDateTime(dateTime);
+        if (paymentService.size() != 0) {
+            for (PaymentService da : paymentService) {
+                daList.add(convertPaymentServiceToDto(da));
             }
-            return daList;
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
         }
+        return daList;
+        
     }
 
     /**
      * Controller to get payment services by service request
      * @param serviceRequest
      * @return List<PaymentServiceDto>
-     * @throws Exception
      */
     @GetMapping(value = {"/all-by-service-request-id/{serviceRequestId}", "/all-by-service-request-id/{serviceRequestId}/"})
     public List<PaymentServiceDto> getPaymentServiceByServiceRequest(@PathVariable("serviceRequest") int serviceRequestId) {
@@ -161,18 +144,13 @@ public class PaymentServiceController {
      * Controller to delete a payment service by id
      * @param id the id of the payment service
      * @return payment service deleted
-     * @throws IllegalArgumentException if to delete the payment service fail
      */
     @DeleteMapping(value = {"/{id}", "/{id}/"})
     public PaymentServiceDto deletePaymentServiceById(@PathVariable("id") Integer id, @RequestHeader String token) {
         authService.authenticateManager(token);
-        try {
-            PaymentService paymentService = paymentServiceService.deletePaymentService(id);
-            return convertPaymentServiceToDto(paymentService);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-
-        }
+        PaymentService paymentService = paymentServiceService.deletePaymentService(id);
+        return convertPaymentServiceToDto(paymentService);
+       
     }
 
     /**
@@ -182,7 +160,6 @@ public class PaymentServiceController {
      * @param dateTime the date time of the payment service
      * @param serviceRequest the associated service request of the payment service
      * @return A PaymentServiceDto
-     * @throws IllegalArgumentException if to update the payment service fail
      */
     @PutMapping(value = {"/{id}", "/{id}/"})
     public PaymentServiceDto updatePaymentServiceById(
@@ -192,11 +169,8 @@ public class PaymentServiceController {
         @RequestParam("serviceRequest") ServiceRequest serviceRequest,
         @RequestParam String token) {
         authService.authenticateManager(token);
-        try {
-            PaymentService paymentService = paymentServiceService.updatePaymentService(id, dateTime, amount, serviceRequest);
-            return convertPaymentServiceToDto(paymentService);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+        PaymentService paymentService = paymentServiceService.updatePaymentService(id, dateTime, amount, serviceRequest);
+        return convertPaymentServiceToDto(paymentService);
+        
     }
 }

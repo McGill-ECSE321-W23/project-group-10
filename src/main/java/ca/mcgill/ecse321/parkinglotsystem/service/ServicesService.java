@@ -28,13 +28,13 @@ public class ServicesService {
         // Input validation
         String val_int = price + "";
         if (servicesRepository.findServiceByDescription(description)!=null) {
-            throw new IllegalArgumentException("service already exist!");
+            throw new CustomException("service already exist!", HttpStatus.BAD_REQUEST);
         }
         if (description.equals("")) {
-            throw new IllegalArgumentException("service description cannot be empty!");
+            throw new CustomException("service description cannot be empty!", HttpStatus.BAD_REQUEST);
         }
         if ((val_int == null || price < 0)) {
-            throw new IllegalArgumentException("price input cannot be empty or less than zero!");
+            throw new CustomException("price input cannot be empty or less than zero!", HttpStatus.BAD_REQUEST);
         }
 
         Service service = new Service();
@@ -76,7 +76,7 @@ public class ServicesService {
             error = error + "No service with that description was found!";
         }
         if (error.length() > 0) {
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error, HttpStatus.NOT_FOUND);
         } else {
             servicesRepository.delete(services);
             return services;
@@ -93,10 +93,10 @@ public class ServicesService {
             error = error + "No service with that description exists!";
         }
         if (error.length() > 0) {
-            throw new IllegalArgumentException(error);
+            throw new CustomException(error, HttpStatus.NOT_FOUND);
         }
         if (price < 0) {
-            throw new IllegalArgumentException("price input cannot be empty or less than zero!");
+            throw new CustomException("price input cannot be empty or less than zero!", HttpStatus.BAD_REQUEST);
         }
         services.setPrice(price);
         return services;
