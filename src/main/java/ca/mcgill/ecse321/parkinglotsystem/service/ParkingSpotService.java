@@ -49,6 +49,11 @@ public class ParkingSpotService {
 			throw new CustomException(error, HttpStatus.BAD_REQUEST);   
 		}
 
+        // check if parking spot exists
+        if(parkingSpotRepository.existsById(id)) {
+            throw new CustomException("The parking spot already exists!", HttpStatus.BAD_REQUEST);
+        }
+
         ParkingSpotType parkingSpotType  = parkingSpotTypeRepository.findParkingSpotTypeByName(parkingSpotTypeName);
         // check if parking spot type exist
         if (parkingSpotType == null) {
