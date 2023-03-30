@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;
 import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
+import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 @Service
 public class ReservationService {
@@ -38,7 +40,7 @@ public class ReservationService {
     @Transactional
     public Reservation createReservation(Date date, int parkingSpotId) {
         if(date == null){
-            throw new IllegalArgumentException("date cannot be empty.");
+            throw new CustomException("date cannot be empty.", HttpStatus.BAD_REQUEST);
         }
         else {
             Reservation reservation = (Reservation) new SingleReservation();
@@ -60,7 +62,7 @@ public class ReservationService {
     public Reservation getReservationById(int reservationId){
         Reservation reservation = reservationRepository.findReservationById(reservationId);
         if (reservation == null){
-            throw new IllegalArgumentException("Reservation is not found.");
+            throw new CustomException("Reservation is not found.", HttpStatus.NOT_FOUND);
         }
         
         return reservation;
@@ -76,7 +78,7 @@ public class ReservationService {
 	public List<Reservation> getReservationsByDate(Date date) {
 		List<Reservation> reservations = reservationRepository.findReservationsByDate(date);
         if (reservations == null){
-            throw new IllegalArgumentException("Reservation is not found.");
+            throw new CustomException("Reservation is not found.", HttpStatus.NOT_FOUND);
         }
 		return reservations;
 	}
@@ -113,12 +115,12 @@ public class ReservationService {
 
     public Reservation deleteReservation(int reservationId){
         if (reservationId < 0){
-            throw new IllegalArgumentException("ReservationId cannot be negative.");
+            throw new CustomException("ReservationId cannot be negative.", HttpStatus.BAD_REQUEST);
         }
 
         Reservation reservation = reservationRepository.findReservationById(reservationId);
         if(reservation == null){
-            throw new IllegalArgumentException("ReservationId does not exist.");
+            throw new CustomException("ReservationId does not exist.", HttpStatus.NOT_FOUND);
         }
 
         // // find the payment reservation

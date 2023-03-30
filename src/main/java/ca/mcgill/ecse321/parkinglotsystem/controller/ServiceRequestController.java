@@ -42,59 +42,47 @@ public class ServiceRequestController {
      * Controller method to get a service request by id
      * @param id the id of the service request
      * @return A ServiceRequestDto
-     * @throws IllegalArgumentException if to get the service request fail
      */
     @GetMapping(value = {"/{id}", "/{id}/"})
     public ServiceRequestDto getServiceRequestById(@PathVariable("id") int id) {
-        try {
-            ServiceRequest serviceRequest = serviceRequestService.getServiceRequestById(id);
-            return convertServiceRequestToDto(serviceRequest);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+        ServiceRequest serviceRequest = serviceRequestService.getServiceRequestById(id);
+        return convertServiceRequestToDto(serviceRequest);
+        
     }
 
     /**
      * Controller method to get service requests by is assigned
      * @param isAssigned whether the service request is assigned status
      * @return A List of ServiceRequestDto
-     * @throws IllegalArgumentException if to get service requests fail
      */
     @GetMapping(value = {"/all-by-is-assigned/{isAssigned}", "/all-by-is-assigned/{isAssigned}/"})
     public List<ServiceRequestDto> getServiceRequestByIsAssigned(@PathVariable("isAssigned") boolean isAssigned) {
         List<ServiceRequestDto> seList = new ArrayList<>();
-        try {
-            List<ServiceRequest> serviceRequests = serviceRequestService.getServiceRequestByIsAssigned(isAssigned);
-            if (serviceRequests.size() != 0) {
-                for (ServiceRequest se : serviceRequests) {
-                    seList.add(convertServiceRequestToDto(se));
-                }
+        List<ServiceRequest> serviceRequests = serviceRequestService.getServiceRequestByIsAssigned(isAssigned);
+        if (serviceRequests.size() != 0) {
+            for (ServiceRequest se : serviceRequests) {
+                seList.add(convertServiceRequestToDto(se));
             }
-            return seList;
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
         }
+        return seList;
+        
     }
 
     /**
      * Controller method to get service requests by service
      * @param
      * @return List<ServiceRequestDto>
-     * @throws Exception
      */
     @GetMapping(value = {"/all-by-service-id/{id}", "/all-by-service-id/{id}/"})
     public List<ServiceRequestDto> getServiceRequestsByService(@PathVariable("service") String serviceDescription) {
         List<ServiceRequestDto> ServiceRequests = new ArrayList<>();
-        try {
-            List<ServiceRequest> serviceRequest = serviceRequestService.getServiceRequestByServices(serviceDescription);
-            if (serviceRequest.size() != 0) {
-                for (ServiceRequest se : serviceRequest) {
-                    ServiceRequests.add(convertServiceRequestToDto(se));
-                }
+        List<ServiceRequest> serviceRequest = serviceRequestService.getServiceRequestByServices(serviceDescription);
+        if (serviceRequest.size() != 0) {
+            for (ServiceRequest se : serviceRequest) {
+                ServiceRequests.add(convertServiceRequestToDto(se));
             }
-            return ServiceRequests;
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
         }
+        return ServiceRequests;
+        
     }
 }
