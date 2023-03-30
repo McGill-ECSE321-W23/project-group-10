@@ -24,7 +24,7 @@ public class PaymentServiceService {
      * Method to create a payment service.
      * @param amount the amount of the payment service
      * @param dateTime the date time of the payment service
-     * @param serviceRequest the associated service request of the payment service
+     * @param serviceRequestId the associated service request id of the payment service
      * @return A PaymentService
      * @throws CustomException if to create the payment service fail
      */

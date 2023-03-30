@@ -23,12 +23,24 @@ public class PaymentReservationService {
     @Autowired
     ReservationRepository reservationRepository;
 
+    /**
+     * Method to get all payment reservations.
+     * @return A List of PaymentReservation
+     */
     @Transactional
     public List<PaymentReservation> getAllPaymentReservation() {
         Iterable<PaymentReservation> pIterable = paymentReservationRepository.findAll();
         return HelperMethods.toList(pIterable);
     }
-    
+
+    /**
+     * Method to create a payment reservation.
+     * @param amount the amount of the payment reservation
+     * @param dateTime the date time of the payment reservation
+     * @param reservationId the reservation id of the payment reservation
+     * @return A PaymentReservation
+     * @throws CustomException if to create the payment reservation fail
+     */
     @Transactional
     public PaymentReservation createPaymentReservation(Timestamp dateTime, double amount, int reservationId ) {
         
@@ -54,6 +66,12 @@ public class PaymentReservationService {
         return paymentReservation;
     }
 
+    /**
+     * Method to delete a payment reservation.
+     * @param paymentId the payment id of the payment reservation
+     * @return the deleted PaymentReservation
+     * @throws CustomException if to delete the payment reservation fail
+     */
     @Transactional
     public PaymentReservation deletePaymentReservation(int paymentId) {
         if (paymentId < 1) {
@@ -67,7 +85,16 @@ public class PaymentReservationService {
         paymentReservationRepository.delete(paymentReservation);
         return paymentReservation;    
      }
-     
+
+    /**
+     * Method to update a payment reservation.
+     * @param paymentResId the payment id of the payment reservation
+     * @param amount the amount of the payment reservation
+     * @param dateTime the date time of the payment reservation
+     * @param reservationId the reservation id of the payment reservation
+     * @return the updated PaymentReservation
+     * @throws CustomException if to update the payment reservation fail
+     */
      @Transactional
      public PaymentReservation updatePaymentReservation(int paymentResId, Timestamp dateTime, double amount, int reservationId ) {
         //input validation
@@ -94,6 +121,12 @@ public class PaymentReservationService {
         return paymentReservation;
      }
 
+    /**
+     * Method to get payment reservations by reservation id.
+     * @param reservationId the reservation id of the payment reservation
+     * @return A List of PaymentReservation
+     * @throws CustomException if to get the payment reservation fail
+     */
      @Transactional
      public List<PaymentReservation> getPaymentReservationByReservation(int reservationId) {
         //input validation
@@ -109,6 +142,12 @@ public class PaymentReservationService {
         return paymentReservations;
      }
 
+    /**
+     * Method to get payment reservations by date time.
+     * @param dateTime the date time of the payment reservation
+     * @return A List of PaymentReservation
+     * @throws CustomException if to get the payment reservation fail
+     */
      @Transactional
      public List<PaymentReservation> getPaymentReservationByDateTime(Timestamp dateTime) {
 
@@ -118,7 +157,13 @@ public class PaymentReservationService {
        return paymentReservationRepository.findPaymentReservationByDateTime(dateTime);
 
      }
-     
+
+    /**
+     * Method to get payment reservations by amount.
+     * @param amount the payment amount of the payment reservation
+     * @return A List of PaymentReservation
+     * @throws CustomException if to get the payment reservation fail
+     */
      @Transactional
      public List<PaymentReservation> getPaymentReservationByAmout(double amount ) {
 
