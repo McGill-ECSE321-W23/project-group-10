@@ -38,20 +38,12 @@ public class ReservationService {
      * return a reservation created
      */
     @Transactional
-    public Reservation createReservation(int reservationId, Date date, int parkingSpotId) {
-        // TODO: remove id validation and parameter
-        if (reservationId < 0){
-            throw new IllegalArgumentException("ReservationId cannot be negative.");
-        }
-        else if(reservationRepository.findReservationById(reservationId) != null){
-            throw new IllegalArgumentException("ReservationId is in use.");
-        }
-        else if(date == null){
+    public Reservation createReservation(Date date, int parkingSpotId) {
+        if(date == null){
             throw new IllegalArgumentException("date cannot be empty.");
         }
         else {
             Reservation reservation = (Reservation) new SingleReservation();
-            reservation.setId(reservationId); 
             reservation.setDate(date);
             reservation.setParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
             reservationRepository.save(reservation);
