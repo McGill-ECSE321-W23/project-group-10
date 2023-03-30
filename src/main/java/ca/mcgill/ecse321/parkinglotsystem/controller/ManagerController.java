@@ -37,8 +37,8 @@ public class ManagerController {
     ManagerService managerService;
 
     /**
-     * method to get all ManagerDtos
-     * @return List<ManagerDto> or null
+     * Controller method to get all managers
+     * @return A List of ManagerDto or null
      */
     @GetMapping(value={"/",""})
     public List<ManagerDto> getAllManagerDtos(){
@@ -46,11 +46,11 @@ public class ManagerController {
     }
 
     /**
-     * method to create a ManagerDto
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
+     * Controller method to create a manager
+     * @param email the email of the manager
+     * @param name the name of the manager
+     * @param phone the phone number of the manager
+     * @param password the password of the manager
      * @return newly created ManagerDto or exception
      */
     @PostMapping(value = {"/{email}", "/{email}/"})
@@ -64,9 +64,9 @@ public class ManagerController {
     }
 
     /**
-     * method to get ManagerDtos by name
-     * @param name
-     * @return List<ManagerDto> or null
+     * Controller method to get managers by name
+     * @param name the name of the manager
+     * @return A List of ManagerDto or null
      */
     @GetMapping(value = {"/all-by-name/{name}", "/all-by-name/{name}/"})
     public List<ManagerDto> getManagerDtoByName(@PathVariable("name") String name) {
@@ -81,9 +81,9 @@ public class ManagerController {
     }
 
     /**
-     * method to get ManagerDtos by phone
-     * @param phone
-     * @return List<ManagerDto> or null
+     * Controller method to get managers by phone
+     * @param phone the phone number of the manager
+     * @return A List of ManagerDto or null
      */
     @GetMapping(value = {"/all-by-phone/{phone}", "/all-by-phone/{phone}/"})
     public List<ManagerDto> getManagerDtoByPhone(@PathVariable("phone") String phone) {
@@ -98,9 +98,9 @@ public class ManagerController {
     }
 
     /**
-     * method to get a ManagerDto by email
-     * @param email
-     * @return a ManagerDto or exception
+     * Controller method to get a manager by email
+     * @param email the email of the manager
+     * @return A ManagerDto or exception
      */
     @GetMapping(value = {"/{email}", "/{email}/"})
     public ManagerDto getManagerDtoByEmail(@PathVariable("email") String email) {
@@ -112,8 +112,8 @@ public class ManagerController {
     }
 
     /**
-     * method to delete a ManagerDto
-     * @param email
+     * Controller method to delete a manager
+     * @param email the email of the manager
      * @return newly deleted ManagerDto or exception
      */
     @DeleteMapping(value = {"/{email}","/{email}/"})
@@ -123,11 +123,11 @@ public class ManagerController {
     }
 
      /**
-     * method to update a ManagerDto
-     * @param email
-     * @param name
-     * @param phone
-     * @param password
+     * Controller method to update a manager
+     * @param email the email of the manager
+     * @param name the name of the manager
+     * @param phone the phone number of the manager
+     * @param password the password of the manager
      * @return newly updated ManagerDto or exception
      */
     @PutMapping(value ={"/{email}", "/{email}/"})

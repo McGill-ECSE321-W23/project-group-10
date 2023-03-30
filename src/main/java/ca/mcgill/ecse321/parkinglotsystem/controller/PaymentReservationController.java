@@ -40,7 +40,7 @@ public class PaymentReservationController {
 
     /**
      * Controller method to get all payment reservations.
-     * @return a list of parking spots DTO
+     * @return A List of PaymentReservationDto
      */
     @GetMapping(value = {"", "/"})
     public List<PaymentReservationDto> getAllPaymentReservationDtos(@RequestHeader String token) {
@@ -51,10 +51,10 @@ public class PaymentReservationController {
 
     /**
      * Controller method to create a payment reservation.
-     * @param timestamp 
-     * @param amount
-     * @param reservationId
-     * @return
+     * @param timestamp the date time of the payment reservation
+     * @param amount the amount of the payment reservation
+     * @param reservationId the reservation id of the payment reservation
+     * @return A PaymentReservationDto
      */
     @PostMapping(value = {"", "/"})
     public PaymentReservationDto createPaymentReservationDto(
@@ -66,10 +66,9 @@ public class PaymentReservationController {
 
     }
     /**
-     * 
-     * @param paymentReservationId
-     * @param token
-     * @return
+     * Controller method to delete a payment reservation.
+     * @param paymentReservationId the reservation id of the payment reservation
+     * @return the deleted PaymentReservationDto
      */
     @DeleteMapping(value = {"/{paymentReservationId}/","/{paymentReservationId}" })
     public PaymentReservationDto deletePaymentReservationDto(
@@ -82,13 +81,12 @@ public class PaymentReservationController {
     }
 
     /**
-     * 
-     * @param paymentReservationId
-     * @param timestamp
-     * @param amount
-     * @param reservationId
-     * @param token
-     * @return
+     * Controller method to update a payment reservation
+     * @param paymentReservationId the payment reservation id of the payment reservation
+     * @param timestamp the date time of the payment reservation
+     * @param amount the amount of the payment reservation
+     * @param reservationId the reservation id of the payment reservation
+     * @return the updated PaymentReservationDto
      */
     @PutMapping(value = {"/{paymentReservationId}", "/{paymentReservationId}/"})
     public PaymentReservationDto updatePayemPaymentReservationDto(
@@ -103,9 +101,9 @@ public class PaymentReservationController {
     }
 
     /**
-     * 
-     * @param reservationId
-     * @return
+     * Controller method to get all payment reservations
+     * @param reservationId the reservation id of the payment reservation
+     * @return A List of PaymentReservationDto
      */
     @GetMapping(value = {"/all-by-reservation/{reservationId}", "/all-by-reservation/{reservationId}/"})
     public List<PaymentReservationDto> getAllPaymentReservationDtosByReservationId(
@@ -115,9 +113,9 @@ public class PaymentReservationController {
     }
 
     /**
-     * 
-     * @param timestamp
-     * @return
+     * Controller method to get payment reservations by date
+     * @param timestamp the date time of the payment reservation
+     * @return A List of PaymentReservationDto
      */
     @GetMapping(value = {"/all-by-by-date/{dateTime}", "/all-by-date/{dateTime}/"})
     public List<PaymentReservationDto> getAllPaymentReservationDtosByDate(
@@ -127,9 +125,9 @@ public class PaymentReservationController {
     }
     
     /**
-     * 
-     * @param amount
-     * @return
+     * Controller method to get payment reservations by amount
+     * @param amount the amount of the payment reservation
+     * @return A List of PaymentReservationDto
      */
     @GetMapping(value = {"/all-by-amount/{amount}", "/all-by-amount/{amount}/"})
     public List<PaymentReservationDto> getAllPaymentReservationDtosByAmount(

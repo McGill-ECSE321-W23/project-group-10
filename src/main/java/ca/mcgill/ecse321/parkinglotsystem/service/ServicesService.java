@@ -35,6 +35,8 @@ public class ServicesService {
         }
         if ((val_int == null || price < 0)) {
             throw new CustomException("price input cannot be empty or less than zero!", HttpStatus.BAD_REQUEST);
+
+            
         }
 
         Service service = new Service();
@@ -96,7 +98,9 @@ public class ServicesService {
             throw new CustomException(error, HttpStatus.NOT_FOUND);
         }
         if (price < 0) {
+
             throw new CustomException("price input cannot be empty or less than zero!", HttpStatus.BAD_REQUEST);
+
         }
         services.setPrice(price);
         return services;

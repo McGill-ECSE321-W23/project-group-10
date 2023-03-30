@@ -24,7 +24,7 @@ public class ServiceRequestController {
     ServiceRequestService serviceRequestService;
 
     /**
-     * Controller to get all Service Requests
+     * Controller method to get all Service Requests
      * @return A List of ServiceRequestDto
      * @throws Exception if to get service requests fail
      */
@@ -39,7 +39,7 @@ public class ServiceRequestController {
     }
 
     /**
-     * Controller to get a service request by id
+     * Controller method to get a service request by id
      * @param id the id of the service request
      * @return A ServiceRequestDto
      */
@@ -51,7 +51,7 @@ public class ServiceRequestController {
     }
 
     /**
-     * Controller to get service requests by is assigned
+     * Controller method to get service requests by is assigned
      * @param isAssigned whether the service request is assigned status
      * @return A List of ServiceRequestDto
      */
@@ -69,7 +69,7 @@ public class ServiceRequestController {
     }
 
     /**
-     * Controller to get service requests by service
+     * Controller method to get service requests by service
      * @param
      * @return List<ServiceRequestDto>
      */

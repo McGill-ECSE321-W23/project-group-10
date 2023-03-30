@@ -34,9 +34,8 @@ public class ServiceReqWithoutAccountController {
     private AuthenticationService authService;
 
     /**
-     * Gets all ServiceReqWithoutAccount.
-     * 
-     * @return the list of ServiceReqWithoutAccount as DTOs
+     * Controller method to get all service requests without account.
+     * @return A List of ServiceReqWithoutAccountDto
      */
     @GetMapping(value = { "", "/" })
     public List<ServiceReqWithoutAccountDto> getAll() {
@@ -44,9 +43,9 @@ public class ServiceReqWithoutAccountController {
     }
 
     /**
-     * Gets ServiceReqWithoutAccount with such ID.
-     * 
-     * @return a ServiceReqWithoutAccount as DTOs
+     * Controller method to get service request without account with ID.
+     * @param id the id of the service request without account
+     * @return a ServiceReqWithoutAccountDto
      */
     @GetMapping(value = { "/{id}", "/{id}/" })
     public ServiceReqWithoutAccountDto getServiceReqWithAccountById(@PathVariable("id") int id) {
@@ -54,9 +53,9 @@ public class ServiceReqWithoutAccountController {
     }
 
     /**
-     * Gets all ServiceReqWithoutAccount with such isAssigned.
-     * 
-     * @return the list of ServiceReqWithoutAccount as DTOs
+     * Controller method to get service requests without account with isAssigned status.
+     * @param isAssigned whether the service request without account is assigned status
+     * @return A List of ServiceReqWithoutAccountDto
      */
     @GetMapping(value = { "/all-by-is-assigned/{isAssigned}", "/all-by-is-assigned/{isAssigned}/" })
     public List<ServiceReqWithoutAccountDto> getServiceReqWithoutAccountByIsAssigned(
@@ -66,9 +65,9 @@ public class ServiceReqWithoutAccountController {
     }
 
     /**
-     * Gets ServiceReqWithoutAccount with such licenseNumber.
-     * 
-     * @return a ServiceReqWithoutAccount as DTOs
+     * Controller method to get service requests without account with license number.
+     * @param licenseNumber the license number of the service request without account
+     * @return A List of ServiceReqWithoutAccountDto
      */
     @GetMapping(value = { "/all-by-license-number/{licenseNumber}", "/all-by-license-number/{licenseNumber}/" })
     public List<ServiceReqWithoutAccountDto> getServiceReqWithoutAccountByCustomer(
@@ -78,9 +77,10 @@ public class ServiceReqWithoutAccountController {
     }
 
     /**
-     * Create a ServiceReqWithoutAccount.
-     * 
-     * @return a ServiceReqWithoutAccount as DTOs
+     * Controller method to create a service request without account.
+     * @param licenseNumber the license number of the service request without account
+     * @param description the description of the service request without account
+     * @return A ServiceReqWithoutAccountDto
      */
     @PostMapping(value = { "", "/" })
     public ServiceReqWithoutAccountDto createServiceReqWithoutAccount(
@@ -91,9 +91,10 @@ public class ServiceReqWithoutAccountController {
     }
 
     /**
-     * Update a ServiceReqWithoutAccount with such ID.
-     * 
-     * @return a ServiceReqWithoutAccount as DTOs
+     * Controller method to update a service request without account with ID.
+     * @param id the id of the service request without account
+     * @param isAssigned whether the service request without account is assigned status
+     * @return the updated ServiceReqWithoutAccountDto
      */
     @PutMapping(value = { "/{id}", "/{id}/" })
     public ServiceReqWithoutAccountDto updateIsAssignedById(

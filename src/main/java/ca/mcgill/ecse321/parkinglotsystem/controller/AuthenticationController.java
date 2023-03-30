@@ -21,8 +21,7 @@ public class AuthenticationController {
 
     /**
      * Logs in the manager.
-     * 
-     * @param credentials
+     * @param credentials the credential of the manager
      * @return the authentication token
      */
     @PostMapping(value = {"/login-manager","/login-manager/"})
@@ -32,8 +31,7 @@ public class AuthenticationController {
 
     /**
      * Logs in the employee.
-     * 
-     * @param credentials
+     * @param credentials the credential of the employee
      * @return the authentication token
      */
     @PostMapping(value = {"/login-employee","/login-employee/"})
@@ -43,8 +41,7 @@ public class AuthenticationController {
 
     /**
      * Logs in the monthly customer.
-     * 
-     * @param credentials
+     * @param credentials the credential of the monthly customer
      * @return the authentication token
      */
     @PostMapping(value = {"/login-customer","/login-customer/"})
@@ -54,7 +51,6 @@ public class AuthenticationController {
 
     /**
      * Logs out the person.
-     * 
      * @param token the authentication token
      */
     @PostMapping(value = {"/logout","/logout/"})

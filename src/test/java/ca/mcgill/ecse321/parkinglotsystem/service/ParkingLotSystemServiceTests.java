@@ -86,6 +86,15 @@ public class ParkingLotSystemServiceTests {
                     return 1;
                 });
 
+        lenient().when(repository.countParkingLotSystemByCloseTime(any(Time.class)))
+                .thenAnswer((InvocationOnMock invocation) -> {
+                    if (invocation.getArgument(0).equals(INVALID_OP_TIME) || 
+                        invocation.getArgument(0).equals(INVALID_CL_TIME)) {
+                        return -1;
+                    }
+                    return 1;
+                });
+
         lenient().when(repository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<ParkingLotSystem> subs = new ArrayList<>();
             subs.add(dummy(VALID_ID, VALID_OP_TIME, VALID_CL_TIME));
