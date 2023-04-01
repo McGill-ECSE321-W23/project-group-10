@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotsystem.service.SingleReservationService;
 import ca.mcgill.ecse321.parkinglotsystem.service.AuthenticationService;
-import ca.mcgill.ecse321.parkinglotsystem.service.ParkingSpotService;
 import ca.mcgill.ecse321.parkinglotsystem.dto.*;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpotType;

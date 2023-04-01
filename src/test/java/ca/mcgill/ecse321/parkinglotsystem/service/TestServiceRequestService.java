@@ -38,10 +38,7 @@ public class TestServiceRequestService {
     private ServiceRequestService serviceRequestService;
 
     private static final int VALID_ID = 1;
-    private static final int INVALID_ID = 2;
     private static final String VALID_LICENSE_ASSIGNED = "validEmailAssigned";
-    private static final String VALID_LICENSE_NOTASSIGNED = "validEmailNotAssigned";
-
     private static final String VALID_SERVICE_DESC = "Test description";
 
     @BeforeEach

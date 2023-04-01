@@ -23,8 +23,6 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotRepository;
-import ca.mcgill.ecse321.parkinglotsystem.dao.ParkingSpotTypeRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.PaymentReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
 import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;

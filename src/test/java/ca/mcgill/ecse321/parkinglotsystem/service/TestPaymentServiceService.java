@@ -34,7 +34,6 @@ public class TestPaymentServiceService {
 
     private static final int VALID__ID = 100;
     private static final int INVALID__ID = -100;
-    private static final int VALID__ID_Active = 50;
     private static final int NON_EXIST__ID = 75;
 
     private static final double VALID__AMOUNT = 100.5;
