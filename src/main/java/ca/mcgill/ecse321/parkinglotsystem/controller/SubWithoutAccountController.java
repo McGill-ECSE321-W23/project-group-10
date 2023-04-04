@@ -51,10 +51,10 @@ public class SubWithoutAccountController {
         return convertToDto(subWithoutAccount);
     }
 
-    @GetMapping(value = { "/all-by-parking-spot/{parkingSpot}", "/all-by-parking-spot/{parkingSpot}/"})
+    @GetMapping(value = { "/all-by-parking-spot/{parkingSpotId}", "/all-by-parking-spot/{parkingSpotId}/"})
     public List<SubWithoutAccountDto> getSubWithoutAccountsByParkingSpot(@PathVariable("parkingSpotId") int parkingSpotId){
         List<SubWithoutAccountDto> subWithoutAccountDtos = new ArrayList<SubWithoutAccountDto>();
-        List<Reservation> reservations = subWithoutAccountService.getReservationsByParkingSpot(parkingSpotId);
+        List<SubWithoutAccount> reservations = subWithoutAccountService.getSubWithoutAccountsByParkingSpot(parkingSpotId);
         for (Reservation r : reservations){
            subWithoutAccountDtos.add((SubWithoutAccountDto) convertToDto(r));
         }
@@ -64,7 +64,7 @@ public class SubWithoutAccountController {
     @GetMapping(value = { "/all-by-date/{date}", "/all-by-date/{date}/"})
     public List<SubWithoutAccountDto> getSubWithoutAccountsByDate(@PathVariable Date date){
         List<SubWithoutAccountDto> subWithoutAccountDtos = new ArrayList<SubWithoutAccountDto>();
-        List<Reservation> reservations = subWithoutAccountService.getReservationsByDate(date);
+        List<SubWithoutAccount> reservations = subWithoutAccountService.getSubWithoutAccountsByDate(date);
         for (Reservation r : reservations){
            subWithoutAccountDtos.add((SubWithoutAccountDto) convertToDto(r));
         }
@@ -89,9 +89,9 @@ public class SubWithoutAccountController {
         return subWithoutAccountDtos;
     }
 
-    @PutMapping(value = { "/{id}", "/{id}/" })
-	public SubWithoutAccountDto updateSubWithoutAccountDto(@RequestParam String newLicenseNumber) {
-		SubWithoutAccount subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(newLicenseNumber);
+    @PutMapping(value = { "/{licenseNumber}", "/{licenseNumber}/" })
+	public SubWithoutAccountDto updateSubWithoutAccountDto(@PathVariable String licenseNumber) {
+		SubWithoutAccount subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(licenseNumber);
 		return convertToDto(subWithoutAccount);
 	}
 
