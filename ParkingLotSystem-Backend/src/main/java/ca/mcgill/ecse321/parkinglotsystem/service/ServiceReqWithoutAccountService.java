@@ -36,7 +36,7 @@ public class ServiceReqWithoutAccountService {
         }
 
         ServiceReqWithoutAccount serviceReqWithoutAccount = new ServiceReqWithoutAccount();
-        serviceReqWithoutAccount.setIsAssigned(true);
+        serviceReqWithoutAccount.setIsAssigned(false);
         serviceReqWithoutAccount.setService(service);
         serviceReqWithoutAccount.setLicenseNumber(licenseNumber);
         serviceReqwithoutAccountRepository.save(serviceReqWithoutAccount);

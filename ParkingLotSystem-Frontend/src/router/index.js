@@ -13,7 +13,7 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/admin/services',
+      path: '/admin/service-requests',
       name: "ServicesAdmin",
       component: ServicesAdmin
     }
