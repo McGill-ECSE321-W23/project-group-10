@@ -134,8 +134,8 @@ public class PaymentServiceController {
      * @param serviceRequestId the id of the service request
      * @return List<PaymentServiceDto>
      */
-    @GetMapping(value = {"/all-by-service-request-id/{serviceRequestId}", "/all-by-service-request-id/{serviceRequestId}/"})
-    public List<PaymentServiceDto> getPaymentServiceByServiceRequest(@PathVariable("serviceRequest") int serviceRequestId) {
+    @GetMapping(value = {"/all-by-service-request/{serviceRequestId}", "/all-by-service-request/{serviceRequestId}/"})
+    public List<PaymentServiceDto> getPaymentServiceByServiceRequest(@PathVariable int serviceRequestId) {
         List<PaymentService> paymentServices = paymentServiceService.getPaymentServiceByServiceRequest(serviceRequestId);
         List<PaymentServiceDto> paymentServiceDtos = new ArrayList<>();
         for (PaymentService paymentService: paymentServices) {

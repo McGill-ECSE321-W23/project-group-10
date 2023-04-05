@@ -550,7 +550,7 @@ public class TestSingleReservationService {
     public void testCalculateFeeWithNoReservationFound() {
         String error = null;
         try {
-        Double fee = singleReservationService.calculateFee(Time.valueOf("09:30:00"), 05050);
+            singleReservationService.calculateFee(Time.valueOf("09:30:00"), 05050);
         } catch (CustomException e) {
             error = e.getMessage();
         }

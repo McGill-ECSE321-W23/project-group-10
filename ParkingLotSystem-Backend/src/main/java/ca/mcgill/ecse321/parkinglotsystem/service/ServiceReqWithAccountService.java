@@ -36,7 +36,7 @@ public class ServiceReqWithAccountService {
         Service service = serviceService.getServiceByDescription(description);
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
         ServiceReqWithAccount serviceReqWithAccount = new ServiceReqWithAccount();
-        serviceReqWithAccount.setIsAssigned(true);
+        serviceReqWithAccount.setIsAssigned(false);
         serviceReqWithAccount.setService(service);
         serviceReqWithAccount.setCustomer(monthlyCustomer);
         serviceReqWithAccountRepository.save(serviceReqWithAccount);
