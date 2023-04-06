@@ -282,19 +282,6 @@ public class TestPaymentServiceService {
         "no such payment service exist! ");
     }
 
-
-    private void testCreatePaymentServiceFailure(Timestamp dateTime, int serviceRequestId, String message) {
-        PaymentService pa = null;
-        String errMsg = "";
-        try {
-            pa = service.createPaymentService(serviceRequestId);
-        } catch(Exception e) {
-            errMsg = e.getMessage();
-        }
-        assertEquals(message, errMsg);
-        assertNull(pa);
-    }
-
     private void testDeletePaymentReservationFailure(int id, String message){
         PaymentService pa = null;
         String errMsg = "";
