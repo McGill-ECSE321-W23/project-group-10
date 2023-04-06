@@ -14,17 +14,6 @@ export default {
   name: "services-admin",
   data() {
     return {
-      /* items: [
-        { service: "Service 1", licenseNumber: "13418", paymentDate: "2023-03-05", isAssigned: false },
-        { service: "Service 2", licenseNumber: "13418", paymentDate: "2023-03-05", isAssigned: false },
-        { service: "Service 3", licenseNumber: "13418", paymentDate: "2023-03-05", isAssigned: true },
-        { service: "Service 4", licenseNumber: "13418", paymentDate: "2023-03-05", isAssigned: true },
-        { service: "Service 6", licenseNumber: "13418", paymentDate: "2023-03-05", isAssigned: true },
-        { service: "Service 5", licenseNumber: "13418", paymentDate: "2023-03-05", isAssigned: true },
-        { service: "Service 7", licenseNumber: "13418", paymentDate: "2023-03-05", isAssigned: true },
-        { service: "Service 8", licenseNumber: "13418", paymentDate: "2023-03-05", isAssigned: true },
-        { service: "Service 9", licenseNumber: "13418", paymentDate: "2023-03-05", isAssigned: true },
-      ], */
       serviceRequests: [],
       fields: [
         { key: 'service', label: 'Service', sortDirection: 'desc' },
@@ -82,14 +71,6 @@ export default {
 
     // Set table to normal state
     this.isBusy = false;
-  },
-  mounted() {
-    // Set the initial number of items
-    //this.totalRows = this.serviceRequests.length
-    // Set the row variant to each item
-    /* this.serviceRequests.forEach(item => {
-      item._rowVariant = !item.isAssigned ? 'info':'';
-    }); */
   },
   methods: {
     async assign(serviceReq) {

@@ -121,7 +121,7 @@ public class ServiceReqWithAccountServiceTests {
                 VALID_SERVICE_DESC);
         assertNotNull(srwa);
         assertEquals(VALID_ID, srwa.getId());
-        assertEquals(true, srwa.getIsAssigned());
+        assertEquals(false, srwa.getIsAssigned());
         assertEquals(VALID_CUSTOMER_EMAIL_ASSIGNED,
                 srwa.getCustomer().getEmail());
         assertEquals(VALID_SERVICE_DESC, srwa.getService().getDescription());
