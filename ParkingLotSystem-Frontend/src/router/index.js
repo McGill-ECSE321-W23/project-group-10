@@ -5,6 +5,7 @@ import MonthlyCustomerReservationPage from '@/components/MonthlyCustomerReservat
 import ServicesAdmin from '@/components/ServicesAdmin.vue'
 import CreateParkingSpotType from '@/components/CreateParkingSpotType.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
+import CreateParkingSpot from '@/components/CreateParkingSpot.vue'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/service-requests',
       name: "ServicesCustomer",
       component: ServicesCustomer
+    },
+    {
+      path: '/ps', // admin/parking-spot
+      name: "CreateParkingSpot",
+      component: CreateParkingSpot
     }
   ]
 })

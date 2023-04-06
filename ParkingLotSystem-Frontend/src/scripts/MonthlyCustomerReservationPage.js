@@ -9,58 +9,19 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-
 export default {
+    name: 'monthly-customer-reservation',
     data() {
       return {
           parkingSpots: [],      
       };
     },
-    created() {
-      this.parkingSpots= [ //hardcoded for now
-  
-          {
-              id: 1,
-              parkingSpotStatus: "Available",
-          },
-          {
-              id: 2,
-              parkingSpotStatus: "Available",
-          },
-          {
-              id: 3,
-              parkingSpotStatus: "Reserved",
-          },
-          {
-              id: 4,
-              parkingSpotStatus: "Reserved",
-          },
-          {
-              id: 5,
-              parkingSpotStatus: "Reserved",
-          },
-          {
-              id: 6,
-              parkingSpotStatus: "Reserved",
-          },
-          {
-              id: 7,
-              parkingSpotStatus: "Reserved",
-          },
-          {
-              id: 8,
-              parkingSpotStatus: "Reserved",
-          },
-          {
-              id: 9,
-              parkingSpotStatus: "Reserved",
-          },
-          {
-              id: 10,
-              parkingSpotStatus: "Reserved",
-          },
-  
-      ]
-      
+    async created() {
+        let response = await AXIOS.get(`/api/parking-spot/`);
+        let parkingSpotsWithIdsInRange = response.data.filter(parkingSpot => {
+          return parkingSpot.id >= 0 && parkingSpot.id <= 19;
+        });
+        this.parkingSpots = parkingSpotsWithIdsInRange;
+        // this.parkingSpots = response.data;
     }
   }

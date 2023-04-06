@@ -11,29 +11,29 @@ var AXIOS = axios.create({
 })
 
 export default {
-    name: 'parking-spot-type',
+    name: 'parking-spot',
     data() {
       return {
-        parkingSpotType: {
-            typeName: '',
-            fee: ''
+        parkingSpot: {
+            id: '',
+            type: ''
         }
       }
     },
     methods: {
-        async createParkingSpotType() {
+        async createParkingSpot() {
             try {
-                console.log('Creating Parking Spot Type: ' + this.parkingSpotType.typeName + ' ' + this.parkingSpotType.fee)
+                console.log('Creating Parking Spot: ' + this.parkingSpot.id + ' ' + this.parkingSpot.type)
                 let response = await AXIOS.post(
-                    `/api/parking-spot-type/${this.parkingSpotType.typeName}`, 
+                    `/api/parking-spot/${this.parkingSpot.id}`, 
                     {},
                     {
-                        params: { fee: this.parkingSpotType.fee},
+                        params: { parkingSpotTypeName: this.parkingSpot.type},
                         headers: { token: "dev" } // TODO: Get token from localStorage
                     }
                     )
                     .then(response => {
-                        console.log('Created Parking Spot Type:', response.data);
+                        console.log('Created Parking Spot:', response.data);
                     });
 
                 // this.$router.push('/parking-spot-type')
@@ -42,5 +42,4 @@ export default {
             }
         }
     }
-
-  }
+}

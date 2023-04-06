@@ -9,4 +9,4 @@
     <button v-on:click="createParkingSpotType">Submit</button>
   </div>
 </template>
-<script src =  "@/scripts/CreateParkingSpotType.js"> </script>
+<script src =  "@/scripts/CreateParkingSpot.js"> </script>

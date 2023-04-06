@@ -1,5 +1,5 @@
 <template>
-  <div class="list-container">
+  <div class="monthly-customer-reservation">
     <table>
         <thead>
             <tr>
@@ -10,21 +10,18 @@
         <tbody class = "scrollable-parking-spot-list">
             <tr v-for="parkingSpot in parkingSpots" :key="parkingSpot.id">
                 <td>{{ parkingSpot.id }}</td>
-                <td>{{ parkingSpot.parkingSpotStatus }}</td>
+                <td>{{ parkingSpot.id }}</td>
             </tr>
         </tbody>
     </table>
-    <ul>
-      <li v-for="item in items" :key="item.id">{{ item.name }}</li>
-    </ul>
   </div>
 </template>
 
-<script> src="@/scripts/MonthlyCustomerReservationPage.js"</script>
+<script src="@/scripts/MonthlyCustomerReservationPage.js"> </script>
 
 <style scoped>
 
-.list-container {
+.monthly-customer-reservation{
     width: 300px;
     max-height: 200px;
     overflow:scroll
