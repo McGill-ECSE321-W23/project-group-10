@@ -58,7 +58,7 @@
         </b-table>
 
         <!-- User Interface controls -->
-        <b-row>
+        <b-row class="justify-content-center">
           <b-col sm="2" md="3" class="my-1">
             <b-form-group
               label="Per page"
@@ -90,6 +90,7 @@
             ></b-pagination>
           </b-col>
         </b-row>
+        <b-button variant="light" @click="refresh()">Refresh</b-button>
       </b-container>
     </div>
   </div>
