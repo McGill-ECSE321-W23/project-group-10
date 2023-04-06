@@ -1,64 +1,43 @@
 <template>
-  <div class="dropdown-container">
-    <input type="text" v-model="selectedOption" @click="toggleOptions">
-    <i class="arrow-icon" @click="toggleOptions"></i>
-    <ul v-show="showOptions">
-      <li v-for="(option, index) in options" :key="index" @click="selectOption(option)">{{ option }}</li>
+  <div class="list-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Parking Spot ID</th>
+                <th>Parking Spot Status</th>
+            </tr>
+        </thead>
+        <tbody class = "scrollable-parking-spot-list">
+            <tr v-for="parkingSpot in parkingSpots" :key="parkingSpot.id">
+                <td>{{ parkingSpot.id }}</td>
+                <td>{{ parkingSpot.parkingSpotStatus }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+      <li v-for="item in items" :key="item.id">{{ item.name }}</li>
     </ul>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      selectedOption: '',
-      options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
-      showOptions: false,
-    };
-  },
-  methods: {
-    toggleOptions() {
-      this.showOptions = !this.showOptions;
-    },
-    selectOption(option) {
-      this.selectedOption = option;
-      this.showOptions = false;
-    },
-  },
-};
-</script>
+<script> src="@/scripts/MonthlyCustomerReservationPage.js"</script>
 
-<style>
-.dropdown-container {
-  position: relative;
+<style scoped>
+
+.list-container {
+    width: 300px;
+    max-height: 200px;
+    overflow:scroll
 }
-.arrow-icon {
-  position: absolute;
-  top: 50%;
-  right: 5px;
-  transform: translateY(-50%);
-  pointer-events: none;
+table {
+  border-collapse: collapse;
 }
-ul {
-  max-height: 200px;
-  overflow-y: scroll;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-top: none;
+td,
+th {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
 }
-li {
-  padding: 5px 10px;
-  cursor: pointer;
-}
-li:hover {
-  background-color: #f2f2f2;
-}
+
 </style>
