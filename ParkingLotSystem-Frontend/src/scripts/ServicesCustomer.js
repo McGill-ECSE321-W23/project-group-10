@@ -14,11 +14,124 @@ export default {
   name: "services-customer",
   data() {
     return {
+      services: [],
+      selectedService: null,
+      currServiceReq: null,
+      paidServiceReqs: [],
+      fields: [
+        { key: 'service', label: 'Service', sortDirection: 'desc' },
+        { key: 'paymentDate', label: 'Payment date' }
+      ],
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 10,
+      pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
+      isBusy: false,
       navItems: [
         { text: "Subscription", href: "#"},
-        { text: "Services", href: "#"}
+        { text: "Services", href: "#", active: true}
       ],
-      username: "Marco"
+      username: "Marco", // TODO: Implement authentication
+      userEmail: "test@gmail.com", // TODO: Implement authentication
+      errorMessage: "",
+      showError: false
+    }
+  },
+  created() {
+    this.refresh();
+  },
+  methods: {
+    async createServiceReq() {
+      console.log(`Button pressed: ${this.selectedService}`);
+      try {
+        let response = await AXIOS.post(
+          `/api/service-req-with-account`,
+          {},
+          {
+            params: {
+              monthlyCustomerEmail: this.userEmail,
+              description: this.selectedService
+            },
+            headers: { token: "dev" } // TODO: Get token from localStorage
+          }
+        );
+        this.currServiceReq = response.data;
+      } catch(e) {
+        this.error(e);
+      }
+    },
+    async payServiceReq() {
+      console.log(this.currServiceReq);
+      try {
+        let response = await AXIOS.post(
+          "/api/payment-service",
+          {},
+          {
+            params: {
+              serviceRequest: this.currServiceReq.id
+            },
+            headers: { token: "dev" } // TODO: Get token from localStorage
+          }
+        );
+        this.currServiceReq = response.data;
+      } catch(e) {
+        this.error(e);
+        console.log(e);
+      }
+      this.refresh()
+    },
+    async refresh() {
+      // Set table to busy state and clear data
+      this.isBusy = true;
+      this.currServiceReq = null;
+      this.paidServiceReqs = [];
+
+      try {
+        // Get service requests
+        let response = await AXIOS.get(`/api/service-req-with-account/all-by-customer/${this.userEmail}`);
+        let serviceReqs = response.data;
+
+        // Get current service request and paid service requests
+        for(let i in serviceReqs) {
+          let serviceReq = serviceReqs[i];
+          response = await AXIOS.get(`/api/payment-service/all-by-service-request/${serviceReq.id}`);
+          if(response.data.length) {
+            serviceReq.paymentDate = response.data[0].dateTime.split("T")[0];
+            this.paidServiceReqs.push(serviceReq);
+          }
+          else {
+            this.currServiceReq = serviceReq;
+          }
+        }
+
+        if(this.currServiceReq == null) {
+          // Get services
+          response = await AXIOS.get("/api/service");
+          this.services = response.data.map(service => {
+            return {
+              value: service.description,
+              text: `${service.description}: $${service.price} CAD`
+            }
+          });
+        }
+
+        // Set the initial number of rows in the table
+        this.totalRows = this.paidServiceReqs.length
+      } catch(e) {
+        this.error(e);
+      }
+
+      // Set table to normal state
+      this.isBusy = false;
+    },
+    error(e) {
+      if(e.hasOwnProperty("response")) {
+        this.errorMessage = e.response.data.message;
+      }
+      else {
+        this.errorMessage = e.message;
+      }
+      this.showError = true;
     }
   },
   components: {

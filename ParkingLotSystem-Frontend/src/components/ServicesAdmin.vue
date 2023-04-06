@@ -3,7 +3,7 @@
     <NavBar :navItems="navItems" :username="username"/>
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
-      <h1>Service Requests</h1>
+      <h2>Service Requests</h2>
       <b-container class="mt-3" fluid>
         <!-- Main table element -->
         <b-table
@@ -98,5 +98,7 @@
 <script src="@/scripts/ServicesAdmin.js"></script>
 
 <style>
-
+  h1,h3 {
+    margin-bottom: 30px;
+  }
 </style>

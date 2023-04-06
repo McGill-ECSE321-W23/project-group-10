@@ -25,56 +25,23 @@ export default {
       currentPage: 1,
       perPage: 10,
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
+      isBusy: false,
       navItems: [
         { text: "Dashboard", href: "#"},
         { text: "Settings", href: "#"},
-        { text: "Services", href: "#"},
+        { text: "Services", href: "#", active: true},
         { text: "Reservations", href: "#"}
       ],
-      username: "Marco",
+      username: "Marco", // TODO: Implement authentication
       errorMessage: "",
-      showError: false,
-      isBusy: false
+      showError: false
     }
   },
-  async created() {
-    // Set table to busy state
-    this.isBusy = true;
-
-    try {
-      // Get service requests without account
-      let response = await AXIOS.get("/api/service-req-without-account");
-      this.serviceRequests = response.data;
-
-      // Get service requests with account
-      response = await AXIOS.get("/api/service-req-with-account");
-      let serviceReqsWithAccount = response.data;
-      serviceReqsWithAccount.forEach(serviceReq => {
-        serviceReq.licenseNumber = serviceReq.monthlyCustomerDto.licenseNumber;
-      });
-      this.serviceRequests = [...this.serviceRequests, ...serviceReqsWithAccount];
-
-      // Set row variants and get service payments if applicable
-      for(let i in this.serviceRequests) {
-        let serviceReq = this.serviceRequests[i];
-        serviceReq._rowVariant = !serviceReq.isAssigned ? 'info':'';
-        response = await AXIOS.get(`/api/payment-service/all-by-service-request/${serviceReq.id}`);
-        if(!response.data.length) continue;
-        serviceReq.paymentDate = response.data[0].dateTime.split("T")[0];
-      }
-
-      // Set the initial number of rows in the table
-      this.totalRows = this.serviceRequests.length
-    } catch(e) {
-      this.error(e);
-    }
-
-    // Set table to normal state
-    this.isBusy = false;
+  created() {
+    this.refresh();
   },
   methods: {
     async assign(serviceReq) {
-      console.log("Assign button pressed for: ", serviceReq.id);
       try {
         let serviceReqType = 
           serviceReq.hasOwnProperty("monthlyCustomerDto") ? 
@@ -88,7 +55,7 @@ export default {
             params: { isAssigned: true },
             headers: { token: "dev" } // TODO: Get token from localStorage
           }
-          );
+        );
         serviceReq.isAssigned = response.data.isAssigned;
         serviceReq._rowVariant = !serviceReq.isAssigned ? 'info':'';
       } catch(e) {
@@ -99,8 +66,40 @@ export default {
       let customer = serviceReq.monthlyCustomerDto;
       return `Email: ${customer.email}`;
     },
-    refresh() {
-      this.$refs.servicesTable.refresh();
+    async refresh() {
+      // Set table to busy state
+      this.isBusy = true;
+
+      try {
+        // Get service requests without account
+        let response = await AXIOS.get("/api/service-req-without-account");
+        this.serviceRequests = response.data;
+
+        // Get service requests with account
+        response = await AXIOS.get("/api/service-req-with-account");
+        let serviceReqsWithAccount = response.data;
+        serviceReqsWithAccount.forEach(serviceReq => {
+          serviceReq.licenseNumber = serviceReq.monthlyCustomerDto.licenseNumber;
+        });
+        this.serviceRequests = [...this.serviceRequests, ...serviceReqsWithAccount];
+
+        // Set row variants and get service payments if applicable
+        for(let i in this.serviceRequests) {
+          let serviceReq = this.serviceRequests[i];
+          serviceReq._rowVariant = !serviceReq.isAssigned ? 'info':'';
+          response = await AXIOS.get(`/api/payment-service/all-by-service-request/${serviceReq.id}`);
+          if(!response.data.length) continue;
+          serviceReq.paymentDate = response.data[0].dateTime.split("T")[0];
+        }
+
+        // Set the initial number of rows in the table
+        this.totalRows = this.serviceRequests.length
+      } catch(e) {
+        this.error(e);
+      }
+
+      // Set table to normal state
+      this.isBusy = false;
     },
     error(e) {
       if(e.hasOwnProperty("response")) {
