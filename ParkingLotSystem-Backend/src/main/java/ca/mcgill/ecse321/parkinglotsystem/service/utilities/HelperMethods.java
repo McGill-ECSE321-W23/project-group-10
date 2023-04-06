@@ -118,6 +118,9 @@ public class HelperMethods {
         }
 
         PaymentServiceDto paymentServiceDto = new PaymentServiceDto();
+        paymentServiceDto.setId(paymentService.getId());
+        paymentServiceDto.setAmount(paymentService.getAmount());
+        paymentServiceDto.setDateTime(paymentService.getDateTime());
         paymentServiceDto.setServiceRequestDto(convertServiceRequestToDto(paymentService.getServiceReq()));
         return paymentServiceDto;
     }
