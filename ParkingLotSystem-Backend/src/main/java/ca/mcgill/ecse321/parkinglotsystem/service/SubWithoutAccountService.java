@@ -36,7 +36,7 @@ public class SubWithoutAccountService extends ReservationService {
     @Transactional
     public SubWithoutAccount createSubWithoutAccount(String licenseNumber, int parkingSpotId) {
 
-        if (!(parkingSpotId >= 2000 && parkingSpotId < 3000)){
+        if (!(parkingSpotId >= 2000 && parkingSpotId < 4000)){
             throw new CustomException(
                 "The parking spot is not available for monthly customers.", HttpStatus.BAD_REQUEST);
         }

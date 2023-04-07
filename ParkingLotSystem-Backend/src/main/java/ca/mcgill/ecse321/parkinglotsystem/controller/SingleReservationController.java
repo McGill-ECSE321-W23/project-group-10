@@ -96,6 +96,16 @@ public class SingleReservationController {
     }
 
     /**
+     * get active singleReservation with the given parkingSpot
+     * @param parkingSpotId
+     * @returna active singleReservation associated with the parkngSpot as Dto
+     */
+    @GetMapping(value = { "/active-by-parking-spot/{parkingSpotId}", "/active-by-parking-spot/{parkingSpotId}/"})
+    public SingleReservationDto getActiveByParkingSpot(@PathVariable int parkingSpotId) {
+        return convertToDto(singleReservationService.getActiveByParkingSpot(parkingSpotId));
+    }
+
+    /**
     * get the singlereservation by its id
     * @author Mike 
     * @param id - id of a singleReservation 

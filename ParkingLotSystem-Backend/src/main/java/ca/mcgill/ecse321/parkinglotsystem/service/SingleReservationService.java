@@ -37,7 +37,7 @@ public class SingleReservationService extends ReservationService {
     @Transactional
     public SingleReservation createSingleReservation(String licenseNumber,
             int parkingTime, int parkingSpotId) {
-        if ((parkingSpotId >= 2000 && parkingSpotId < 3000)){
+        if ((parkingSpotId >= 2000 && parkingSpotId < 4000)){
             throw new CustomException(
                 "The parking spot is only available for monthly customers.", HttpStatus.BAD_REQUEST);
         }
@@ -94,7 +94,6 @@ public class SingleReservationService extends ReservationService {
      * @author Mike Zhang
      * @param date the reservation date of the single reservation
      * @return A List of SingleReservation
-     * @throws CustomException if to get the single reservation fail
      */
     @Transactional
     public List<SingleReservation> getSingleReservationsByDate(Date date) {
@@ -107,7 +106,6 @@ public class SingleReservationService extends ReservationService {
      * @author Mike Zhang
      * @param licenseNumber the license number of the single reservation
      * @return A List of SingleReservation
-     * @throws CustomException if to get the single reservation fail
      */
     @Transactional
     public List<SingleReservation> getSingleReservationsByLicenseNumber(String licenseNumber) {
@@ -121,7 +119,6 @@ public class SingleReservationService extends ReservationService {
      * @author Mike Zhang
      * @param parkingSpotId the parking spot id of the single reservation
      * @return A List of SingleReservation
-     * @throws CustomException if to get the single reservation fail
      */
     @Transactional
     public List<SingleReservation> getSingleReservationsByParkingSpot(int parkingSpotId) {
@@ -218,7 +215,26 @@ public class SingleReservationService extends ReservationService {
         }
         SingleReservation latestSingleReservation = singleReservations.get(singleReservations.size() - 1);
         if (!isActive(latestSingleReservation)) {
-            return null;
+            throw new CustomException("There is no active subscription with this License number", HttpStatus.NOT_FOUND);
+        }
+
+        return latestSingleReservation;
+    }
+
+    /**
+     * get current active reservation from parkingSpot
+     * @param parkingpSpotId
+     * @return the active singleRservation found with parkingSpot
+     */
+    @Transactional
+    public SingleReservation getActiveByParkingSpot(int parkingpSpotId) {
+        List<SingleReservation> singleReservations = getSingleReservationsByParkingSpot(parkingpSpotId);
+        if(singleReservations == null || singleReservations.size() <= 0 ) {
+            throw new CustomException("There is no active subscription with this parking spot", HttpStatus.NOT_FOUND);
+        }
+        SingleReservation latestSingleReservation = singleReservations.get(singleReservations.size() - 1);
+        if (!isActive(latestSingleReservation)) {
+            throw new CustomException("There is no active subscription with this parking spot", HttpStatus.NOT_FOUND);
         }
 
         return latestSingleReservation;
