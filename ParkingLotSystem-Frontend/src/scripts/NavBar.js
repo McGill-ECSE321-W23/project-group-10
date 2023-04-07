@@ -18,6 +18,8 @@ export default {
     return {
       allNavItems: [
         { id: "dashboard", text: "Dashboard", href: "#/manager"},
+        { id: "dashboard-employee", text: "Dashboard", href: "#/employee"},
+        { id: "services-employee", text: "Services", href: "#"},
         { id: "settings", text: "Settings", href: "#"},
         { id: "services-admin", text: "Services", href: "#/admin/service-requests"},
         { id: "reservations", text: "Reservations", href: "#"},

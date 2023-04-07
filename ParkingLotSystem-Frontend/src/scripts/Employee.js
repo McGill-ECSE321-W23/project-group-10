@@ -14,16 +14,8 @@ export default {
   name: "employee",
   data() {
     return {
-      navItems: [
-        { text: "Dashboard", href: "#"},
-        { text: "Services", href: "#"},
-        { text: "Reservations", href: "#"}
-      ],
       username: "Weiheng",
       email: "weiheng.xiao@mail.mcgill.ca",
-      phone: "4387228120",
-
-      
       errorMessage: "",
       showError: false,
     }
