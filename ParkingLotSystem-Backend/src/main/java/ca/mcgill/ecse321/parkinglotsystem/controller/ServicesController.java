@@ -43,7 +43,6 @@ public class ServicesController {
         for (Service service : servicesService.getAllServices()) {
             pList.add(convertServiceToDto(service));
         }
-        if (pList.size() == 0) throw new Exception("There are no services");
         return pList;
     }
 

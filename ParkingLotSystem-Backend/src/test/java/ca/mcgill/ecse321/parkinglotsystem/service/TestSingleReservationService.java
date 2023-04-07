@@ -51,7 +51,7 @@ public class TestSingleReservationService {
     private static Calendar calendar = Calendar.getInstance();
     static {
     calendar.setTime(new Date(System.currentTimeMillis()));
-    calendar.add(Calendar.MINUTE, -60);
+    calendar.add(Calendar.MINUTE, -5);
     }
     // Get the updated date and time
     private static final Date date1 = new Date(calendar.getTimeInMillis());

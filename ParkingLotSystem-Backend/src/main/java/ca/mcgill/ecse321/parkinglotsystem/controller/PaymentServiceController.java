@@ -61,11 +61,9 @@ public class PaymentServiceController {
      */
     @PostMapping(value = {"/", ""})
     public PaymentServiceDto createPaymentService(
-        @RequestParam("amount") double amount, 
-        @RequestParam("dateTime") Timestamp dateTime, 
         @RequestParam("serviceRequest") int serviceRequestId) {
         
-        PaymentService paymentService = paymentServiceService.createPaymentService(amount, dateTime, serviceRequestId);
+        PaymentService paymentService = paymentServiceService.createPaymentService(serviceRequestId);
         return convertPaymentServiceToDto(paymentService);
         
     }

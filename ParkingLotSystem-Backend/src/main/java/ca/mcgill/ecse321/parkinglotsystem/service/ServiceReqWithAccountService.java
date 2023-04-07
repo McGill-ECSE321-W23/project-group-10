@@ -79,14 +79,10 @@ public class ServiceReqWithAccountService {
      * @author Chenxin
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return A List of ServiceReqWithAccount
-     * @throws CustomException if to get the service request with account fail
      */
     @Transactional
     public List<ServiceReqWithAccount> getServiceReqWithAccountByCustomer(String monthlyCustomerEmail) {
         MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
-        if (serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer).isEmpty()) {
-            throw new CustomException("No serviceRequest with this customer", HttpStatus.BAD_REQUEST);
-        }
         return serviceReqWithAccountRepository.findServiceReqWithAccountByCustomer(monthlyCustomer);
     }
 
