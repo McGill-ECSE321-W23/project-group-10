@@ -27,10 +27,6 @@ export default {
       perPage: 10,
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
       isBusy: false,
-      navItems: [
-        { text: "Subscription", href: "#"},
-        { text: "Services", href: "#", active: true}
-      ],
       username: "Marco", // TODO: Implement authentication
       userEmail: "test@gmail.com", // TODO: Implement authentication
       errorMessage: "",
