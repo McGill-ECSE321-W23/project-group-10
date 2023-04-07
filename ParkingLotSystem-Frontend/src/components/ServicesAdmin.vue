@@ -1,6 +1,10 @@
 <template>
   <div class="services-admin">
-    <NavBar :navItems="navItems" :username="username"/>
+    <NavBar 
+      :navItems="['dashboard', 'settings', 'services-admin', 'reservations']" 
+      activeNav="services-admin" 
+      :username="username" 
+    />
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
       <h2>Service Requests</h2>
