@@ -26,12 +26,6 @@ export default {
       perPage: 10,
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
       isBusy: false,
-      navItems: [
-        { text: "Dashboard", href: "#"},
-        { text: "Settings", href: "#"},
-        { text: "Services", href: "#", active: true},
-        { text: "Reservations", href: "#"}
-      ],
       username: "Marco", // TODO: Implement authentication
       errorMessage: "",
       showError: false
