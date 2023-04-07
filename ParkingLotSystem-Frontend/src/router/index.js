@@ -25,6 +25,11 @@ export default new Router({
       component: ServicesCustomer
     },
     {
+      path: '/manager',
+      name: "Manager",
+      component: Manager
+    },
+    {
       path: '/employee',
       name: "Employee",
       component: Employee
