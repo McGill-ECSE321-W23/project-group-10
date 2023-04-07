@@ -16,7 +16,8 @@ export default {
     return {
       username: "Marco", // TODO: Implement authentication
       errorMessage: "",
-      showError: false
+      showError: false,
+      progress: 50
     }
   },
   created() {
