@@ -1,14 +1,24 @@
 <template>
     <div class="guest">
-      <NavBar 
-        :navItems="['dashboard-guest', 'reservations-view']" 
-        activeNav="dashboard-guest" 
-        :username="username" 
-      />
+        <NavBar 
+            :navItems="['dashboard-guest', 'reservations-view']" 
+            activeNav="dashboard-guest" 
+            :username="username" 
+        />
         <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
         <div class="content">
             <h2>Welcome, Customer: {{licenseNumber}}</h2>
         </div>
+
+        <template>
+            <div>
+                <label v-for="(option, index) in options" :key="index"  class="margin-right">
+                    <input type="radio" :value="option" v-model="selectedOption">
+                    {{ option }}
+                </label>
+            </div>
+        </template>
+
     </div>
 </template>
 
@@ -35,5 +45,8 @@
     cursor: pointer;
     font-size: 20px;
     font-family: 20px;
+  }
+  .margin-right {
+    margin-right: 20px; /* or any other value */
   }
 </style>

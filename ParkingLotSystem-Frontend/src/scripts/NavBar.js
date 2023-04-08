@@ -20,7 +20,7 @@ export default {
         { id: "dashboard", text: "Dashboard", href: "#/manager/dashboard"},
         { id: "dashboard-employee", text: "Dashboard", href: "#/employee"},
         { id: "dashboard-monthly-customer", text: "Dashboard", href: "#/monthly-customer"},
-        { id: "dashboard-guest", text: "Dashboard", href: "#"},
+        { id: "dashboard-guest", text: "Dashboard", href: "#/guest"},
         { id: "settings", text: "Settings", href: "#"},
         { id: "subscription", text: "Subscription", href: "#"},
         { id: "reservations-view", text: "View Reservations", href: "#"},

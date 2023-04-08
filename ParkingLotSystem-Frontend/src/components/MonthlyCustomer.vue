@@ -2,7 +2,7 @@
     <div class="monthly-customer">
       <NavBar 
         :navItems="['dashboard-monthly-customer', 'services-customer', 'reservations-customer']" 
-        activeNav="dashboard-employee" 
+        activeNav="dashboard-monthly-customer" 
         :username="username" 
       />
         <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>

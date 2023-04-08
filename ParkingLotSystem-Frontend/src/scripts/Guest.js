@@ -18,6 +18,8 @@ export default {
       licenseNumber: "License Number",
       errorMessage: "",
       showError: false,
+      options: ['For Service', 'For Reservation', 'For Subscription'],
+      selectedOption: '',
     }
   },
 
