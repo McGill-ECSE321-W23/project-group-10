@@ -1,6 +1,6 @@
 <template>
   <div class="parking-spot">
-  
+    <NavBar :navItems="navItems" :username="username"/>
     <input type="text" id="id" v-model="parkingSpot.id" placeholder="enter parking id">
     <input type="text" id="type" v-model="parkingSpot.type" placeholder="enter parking type" >
 

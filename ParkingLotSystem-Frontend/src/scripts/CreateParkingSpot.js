@@ -17,7 +17,15 @@ export default {
         parkingSpot: {
             id: '',
             type: ''
-        }
+        },
+        username: "Marco",
+        navItems: [
+            { text: "Dashboard", href: "#"},
+            { text: "Settings", href: "#"},
+            { text: "Services", href: "#"},
+            { text: "Reservations", href: "#"}
+          ],
+
       }
     },
     methods: {
@@ -41,5 +49,6 @@ export default {
                 console.log(error)
             }
         }
-    }
+    },
+    components: {NavBar}
 }
