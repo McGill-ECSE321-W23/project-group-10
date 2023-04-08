@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       allNavItems: [
-        { id: "dashboard", text: "Dashboard", href: "#/manager"},
+        { id: "dashboard", text: "Dashboard", href: "#/manager/dashboard"},
         { id: "dashboard-employee", text: "Dashboard", href: "#/employee"},
         { id: "dashboard-monthly-customer", text: "Dashboard", href: "#/monthly-customer"},
         { id: "dashboard-guest", text: "Dashboard", href: "#"},
