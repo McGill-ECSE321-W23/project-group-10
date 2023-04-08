@@ -1,7 +1,7 @@
 <template>
   <div class="manager">
     <NavBar 
-      :navItems="['dashboard', 'settings', 'services-admin', 'reservations']" 
+      :navItems="['dashboard', 'settings', 'services-admin', 'reservations-admin']" 
       activeNav="dashboard" 
       :username="username" 
     />
