@@ -5,6 +5,7 @@ import ServicesAdmin from '@/components/ServicesAdmin.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
 import Employee from '@/components/Employee.vue'
 import Manager from '@/components/Manager.vue'
+import EditProfileManager from "../scripts/EditProfileManager";
 
 Vue.use(Router)
 
@@ -35,5 +36,20 @@ export default new Router({
       name: "Employee",
       component: Employee
     },
+    {
+      path: '/edit-profile-manager',
+      name: "EditProfileManager",
+      component: EditProfileManager
+    },
+    {
+      path: '/edit-profile-employee',
+      name: "EditProfileEmployee",
+      component: EditProfileEmployee
+    },
+    {
+      path: '/edit-profile-monthly-customer',
+      name: "EditProfileMonthlyCustomer",
+      component: EditProfileMonthlyCustomer
+    }
   ]
 })
