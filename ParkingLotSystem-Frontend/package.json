@@ -13,12 +13,14 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "apexcharts": "^3.37.3",
     "axios": "^1.3.4",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "latest",
     "jquery": "^3.6.4",
     "popper.js": "^1.12.9",
     "vue": "^2.5.2",
+    "vue-apexcharts": "^1.6.2",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
 import NavBar from '@/components/NavBar.vue'
+import VueApexCharts from 'vue-apexcharts'
 import axios from 'axios'
 var config = require('../../config')
 
@@ -14,10 +15,57 @@ export default {
   name: "manager",
   data() {
     return {
+      // General + error variables
       username: "Marco", // TODO: Implement authentication
       errorMessage: "",
       showError: false,
-      progress: 50
+
+      // Service requests table & Revenue table variables
+      serviceRequests: [],
+      serviceReqsFields: [
+        { key: 'service', label: 'Service' },
+        { key: 'licenseNumber', label: 'License number', class: 'text-center' }
+      ],
+      payments: [],
+      paymentsFields: [
+        { key: 'dateTime', label: 'Payment date', sortDirection: 'desc'},
+        { key: 'type', label: 'Type', class: 'text-center'},
+        { key: 'amount', label: 'Amount' }
+      ],
+      currentPage: 1,
+      perPage: 10,
+      isBusy: false,
+
+      // Overall capacity chart variables
+      capacityChartOptions: {
+        labels: ["Reserved spots"],
+        plotOptions: {
+          radialBar: {
+            dataLabels: {
+              value: {
+                formatter: function(val) { return val + "%"; }
+              }
+            }
+          }
+        }
+      },
+      capacityChartSeries: [81],
+
+      // Floor capacity chart variables
+      floorCapacityChartOptions: {
+        plotOptions: {
+          bar: {
+            horizontal: true
+          }
+        },
+        xaxis: {
+          categories: ["Floor 5", "Floor 4", "Floor 3", "Floor 2", "Ground"]
+        }
+      },
+      floorCapacityChartSeries: [{
+        name: 'Reserved spots',
+        data: [30, 40, 45, 50, 49]
+      }],
     }
   },
   created() {
@@ -25,7 +73,71 @@ export default {
   },
   methods: {
     async refresh() {
+      // Set table to busy state
+      this.isBusy = true;
 
+      try {
+
+        // Get reserved parking spots
+        let response = await AXIOS.get("/api/reservation/reserved-parking-spots");
+        let spots = response.data;
+        let nbrSpotsReserved = spots.length;
+        let nbrSpotsG = spots.filter(spot => (spot.id < 2000)).length;
+        let nbrSpots2 = spots.filter(spot => (spot.id >= 2000 && spot.id < 3000)).length;
+        let nbrSpots3 = spots.filter(spot => (spot.id >= 3000 && spot.id < 4000)).length;
+        let nbrSpots4 = spots.filter(spot => (spot.id >= 4000 && spot.id < 5000)).length;
+        let nbrSpots5 = spots.filter(spot => (spot.id >= 5000 && spot.id < 6000)).length;
+        this.floorCapacityChartSeries = [{
+          name: 'Reserved spots',
+          data: [nbrSpots5, nbrSpots4, nbrSpots3, nbrSpots2, nbrSpotsG]
+        }]
+        this.capacityChartSeries = [nbrSpotsReserved];
+        this.capacityChartOptions = {
+          ...this.capacityChartOptions, 
+          plotOptions: {
+            radialBar: {
+              dataLabels: {
+                value: {
+                  formatter: function(val) { return nbrSpotsReserved; }
+                }
+              }
+            }
+        }}
+
+        // Get service requests without account
+        response = await AXIOS.get("/api/service-req-without-account");
+        this.serviceRequests = response.data;
+
+        // Get service requests with account
+        response = await AXIOS.get("/api/service-req-with-account");
+        let serviceReqsWithAccount = response.data;
+        serviceReqsWithAccount.forEach(serviceReq => {
+          serviceReq.licenseNumber = serviceReq.monthlyCustomerDto.licenseNumber;
+        });
+        this.serviceRequests = [...this.serviceRequests, ...serviceReqsWithAccount];
+        this.serviceRequests = this.serviceRequests.filter(serviceReq => !serviceReq.isAssigned);
+
+        // Get reservation payments
+        response = await AXIOS.get("/api/payment-reservation", { headers: { token: "dev" } });
+        let pReservations = response.data;
+        pReservations.forEach(payment => payment.type = "Reservation");
+
+        // Get service payments
+        response = await AXIOS.get("/api/payment-service", { headers: { token: "dev" } });
+        let pServices = response.data;
+        pServices.forEach(payment => payment.type = "Service");
+
+        this.payments = [...pReservations, ...pServices]
+        this.payments.forEach(
+          payment => payment.dateTime = new Date(payment.dateTime).toLocaleString()
+        );
+
+      } catch(e) {
+        this.error(e);
+      }
+
+      // Set table to normal state
+      this.isBusy = false;
     },
     error(e) {
       if(e.hasOwnProperty("response")) {
@@ -37,5 +149,5 @@ export default {
       this.showError = true;
     }
   },
-  components: {NavBar}
+  components: {NavBar, VueApexCharts}
 }
