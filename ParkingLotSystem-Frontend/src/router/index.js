@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import ServicesAdmin from '@/components/ServicesAdmin.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
-import ManagerSettings from '@/components/ManagerSettings.vue'
+import AdminSettings from '@/components/AdminSettings.vue'
 
 Vue.use(Router)
 
@@ -25,9 +25,9 @@ export default new Router({
       component: ServicesCustomer
     },
     {
-      path: '/manager-settings',
-      name: "ManagerSettings",
-      component: ManagerSettings
+      path: '/admin-settings',
+      name: "AdminSettings",
+      component: AdminSettings
     }
   ]
 })

@@ -1,11 +1,11 @@
 <template>
-    <div class="ManagerSettings">
+    <div class="AdminSettings">
         <NavBar :navItems="navItems" :username="username"/>
         <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
         <div class="content">
             <h2>Parking Lot System Setting</h2>
             <p id="msg">
-                Hello Manager, you can edit the settings below.
+                Hello Admin, you can edit the settings below.
             </p>
             <div class="Opening Hours" id="OH">
                 <h3>Opening Hours</h3>
@@ -31,7 +31,7 @@
                 <option value="PM">PM</option>
                 </select>
                 <br>
-                <label for="hour">To : </label>
+                <label for="hour">To :&nbsp; &nbsp; &nbsp; </label>
                 <select name="hour" id="hour">
                 <option value=0>0</option>
                 <option value=1>1</option>
@@ -71,10 +71,10 @@
 
             <h3>Available Services</h3>
             <label for="add a service">Add a service : </label><br>
-            <label for="name of the new service">Name : </label>
+            <label for="name of the new service">Name : &nbsp; </label>
             <input type="text" id ="typeName" name = "typeName"><br>
-            <label for="price of the new service">Price : </label>
-            <input type="number" step=".01" id="serviceFee" name = "serviceFee"><label>in CAD$</label><br>
+            <label for="price of the new service">Price : &nbsp; &nbsp;</label>
+            <input type="number" step=".01" id="serviceFee" name = "serviceFee"><label> &nbsp;in CAD$</label><br>
             <button type="submit" id="addService"> Add</button><br><br>
 
             <label for="delete a service"> Delete a service : </label>
@@ -87,8 +87,7 @@
         </div>
     </div>
 </template>
-<script>
-</script>
+<script src="@/scripts/AdminSetting.js"></script>
 <style>
     h2 {
         text-align: left;
@@ -114,34 +113,44 @@
         border-color: dodgerblue;
         padding: 3px 10px;
         border-radius: 8px;
+        margin-left: 23%;
     }
     
     #setFee:Hover{
         background-color: dodgerblue;
         padding: 3px 10px;
         border-radius: 8px;
+        margin-left: 23%;
     }
 
     #addService{
         border-color: chartreuse;
         padding: 3px 10px;
         border-radius: 8px;
+        margin-left: 23%;
+
     }
     #addService:Hover{
         background-color:chartreuse;
         padding: 3px 10px;
         border-radius: 8px;
+        margin-left: 23%;
+
     }
 
     #deleteService{
         border-color: red;
         padding: 3px 10px;
         border-radius: 8px;
+        margin-left: 22%;
+
     }
     #deleteService:Hover{
         background-color:red;
         padding: 3px 10px;
         border-radius: 8px;
+        margin-left: 22%;
+
     }
 
 </style>
