@@ -1,8 +1,18 @@
 <template>
   <div>
-    <div class="title-bar">
-      <h1>Parking Lot System---Payment</h1>
+
+    <div class="registration">
+        <NavBar 
+            :navItems="[]" 
+            activeNav="payment" 
+            :username="username" 
+        />
     </div>
+    <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
+
+    <!-- <div class="title-bar">
+      <h1>Parking Lot System---Payment</h1>
+    </div> -->
 
     <div class="form-container">
       <form @submit.prevent="pay">
@@ -30,25 +40,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      amount: '',
-      currentDate: new Date().toLocaleDateString(),
-      paymentId: '', // Generate a unique payment ID when the payment is made
-    };
-  },
-  methods: {
-    pay() {
-      // Handle payment logic here
-    },
-    returnToMenu() {
-      // Redirect to the main menu
-    },
-  },
-};
-</script>
+<script src="@/scripts/Payment.js"></script>
 
 <style scoped>
 .title-bar {
