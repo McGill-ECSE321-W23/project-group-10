@@ -244,9 +244,9 @@ public class SingleReservationService {
     }
 
     /**
-     * Service method to check is there is an active subscription with the given parking spot.
+     * Service method to check is there is an active reservation with the given parking spot.
      * @param parkingSpotId the ID of the parking spot
-     * @return true if there is an active subscription with the given parking spot.
+     * @return true if there is an active reservation with the given parking spot.
      */
     @Transactional
     public boolean hasActiveByParkingSpot(int parkingSpotId) {
