@@ -5,6 +5,7 @@ import ServicesAdmin from '@/components/ServicesAdmin.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
 import Employee from '@/components/Employee.vue'
 import Manager from '@/components/Manager.vue'
+import MonthlyCustomer from '@/components/MonthlyCustomer.vue'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/employee',
       name: "Employee",
       component: Employee
+    },
+    {
+      path: '/monthly-customer',
+      name: "MonthlyCustomer",
+      component: MonthlyCustomer
     },
   ]
 })
