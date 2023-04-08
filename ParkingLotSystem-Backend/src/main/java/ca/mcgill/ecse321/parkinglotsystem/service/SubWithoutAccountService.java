@@ -18,7 +18,7 @@ import ca.mcgill.ecse321.parkinglotsystem.model.SubWithoutAccount;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 @Service
-public class SubWithoutAccountService extends ReservationService {
+public class SubWithoutAccountService {
 
     @Autowired
     private SubWithoutAccountRepository subWithoutAccountRepository;
@@ -142,6 +142,11 @@ public class SubWithoutAccountService extends ReservationService {
 		return toList(subWithoutAccountRepository.findAll());
 	}
 
+    /**
+     * Gets active subscription without account by license number.
+     * @param licenseNumber
+     * @return the active subscription
+     */
     @Transactional
     public SubWithoutAccount getActiveByLicenseNumber(String licenseNumber) {
 
@@ -155,6 +160,42 @@ public class SubWithoutAccountService extends ReservationService {
         }
 
         return latestSubWithoutAccount;
+    }
+
+    /**
+     * Gets active subscription without account by parking spot.
+     * @param parkingSpotId
+     * @return the active subscription
+     */
+    @Transactional
+    public SubWithoutAccount getActiveByParkingSpot(int parkingSpotId) {
+
+        List<SubWithoutAccount> subs = getSubWithoutAccountsByParkingSpot(parkingSpotId);
+        if(subs.size() <= 0) {
+            throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
+        }
+        SubWithoutAccount latestSub = subs.get(subs.size() - 1);
+        if (!isActive(latestSub)) {
+            throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
+        }
+
+        return latestSub;
+    }
+
+    /**
+     * Service method to check is there is an active subscription with the given parking spot.
+     * @param parkingSpotId the ID of the parking spot
+     * @return true if there is an active subscription with the given parking spot.
+     */
+    @Transactional
+    public boolean hasActiveByParkingSpot(int parkingSpotId) {
+
+        List<SubWithoutAccount> subs = getSubWithoutAccountsByParkingSpot(parkingSpotId);
+        if(subs.size() <= 0) {
+            return false;
+        }
+        SubWithoutAccount latestSub = subs.get(subs.size() - 1);
+        return isActive(latestSub);
     }
 
     /**
@@ -173,9 +214,6 @@ public class SubWithoutAccountService extends ReservationService {
             throw new CustomException("Incorrect licenseNumber format", HttpStatus.BAD_REQUEST);
         }
         SubWithoutAccount subWithoutAccount = getActiveByLicenseNumber(licenseNumber);
-        if (subWithoutAccount == null) {
-            throw new CustomException("There is no active subscription with this License number", HttpStatus.NOT_FOUND);
-        }
         subWithoutAccount.setNbrMonths(subWithoutAccount.getNbrMonths() + 1);
             subWithoutAccountRepository.save(subWithoutAccount);
             return subWithoutAccount;

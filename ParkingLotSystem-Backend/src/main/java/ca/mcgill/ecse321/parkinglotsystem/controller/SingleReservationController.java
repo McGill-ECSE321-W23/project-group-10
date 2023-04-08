@@ -72,9 +72,9 @@ public class SingleReservationController {
     @GetMapping(value = { "/all-by-parking-spot", "/all-by-parking-spot/"})
     public List<SingleReservationDto> getSingleReservationsByParkingSpot(@PathVariable int parkingSpotId){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
-        List<Reservation> reservations = singleReservationService.getReservationsByParkingSpot(parkingSpotId);
-        for (Reservation r : reservations){
-           singleReservationDtos.add((SingleReservationDto) convertToDto(r));
+        List<SingleReservation> reservations = singleReservationService.getSingleReservationsByParkingSpot(parkingSpotId);
+        for (SingleReservation r : reservations){
+           singleReservationDtos.add(convertToDto(r));
         }
         return singleReservationDtos;
     }
@@ -88,9 +88,9 @@ public class SingleReservationController {
     @GetMapping(value = { "/all-by-date/{date}", "/all-by-date/{date}/"})
     public List<SingleReservationDto> getSingleReservationsByDate(@PathVariable Date date){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
-        List<Reservation> reservations = singleReservationService.getReservationsByDate(date);
-        for (Reservation r : reservations){
-           singleReservationDtos.add((SingleReservationDto) convertToDto(r));
+        List<SingleReservation> reservations = singleReservationService.getSingleReservationsByDate(date);
+        for (SingleReservation r : reservations){
+           singleReservationDtos.add(convertToDto(r));
         }
         return singleReservationDtos;
     }

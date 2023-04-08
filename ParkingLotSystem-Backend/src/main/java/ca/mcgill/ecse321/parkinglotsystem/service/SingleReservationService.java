@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,7 @@ import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 
 
 @Service
-public class SingleReservationService extends ReservationService {
+public class SingleReservationService {
     @Autowired
     private SingleReservationRepository singleReservationRepository;
 
@@ -118,12 +120,13 @@ public class SingleReservationService extends ReservationService {
      * Method to get single reservations by parking spot id.
      * @author Mike Zhang
      * @param parkingSpotId the parking spot id of the single reservation
-     * @return A List of SingleReservation
+     * @return A List of SingleReservation sorted by date (ascending)
      */
     @Transactional
     public List<SingleReservation> getSingleReservationsByParkingSpot(int parkingSpotId) {
         List<SingleReservation> singleReservations = singleReservationRepository
                 .findSingleReservationsByParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
+        Collections.sort(singleReservations, Comparator.comparing(SingleReservation::getDate));
         return singleReservations;
     }
 
@@ -240,6 +243,21 @@ public class SingleReservationService extends ReservationService {
         return latestSingleReservation;
     }
 
+    /**
+     * Service method to check is there is an active subscription with the given parking spot.
+     * @param parkingSpotId the ID of the parking spot
+     * @return true if there is an active subscription with the given parking spot.
+     */
+    @Transactional
+    public boolean hasActiveByParkingSpot(int parkingSpotId) {
+
+        List<SingleReservation> subs = getSingleReservationsByParkingSpot(parkingSpotId);
+        if(subs.size() <= 0) {
+            return false;
+        }
+        SingleReservation latestSub = subs.get(subs.size() - 1);
+        return isActive(latestSub);
+    }
     
     /**
      * calculate the fee of a singleReservation

@@ -47,7 +47,6 @@ public class PaymentServiceController {
         for (PaymentService paymentService : paymentServiceService.getAllPaymentService()) {
             paList.add(convertPaymentServiceToDto(paymentService));
         }
-        if (paList.size() == 0) throw new Exception("There are no payment service");
         return paList;
     }
 

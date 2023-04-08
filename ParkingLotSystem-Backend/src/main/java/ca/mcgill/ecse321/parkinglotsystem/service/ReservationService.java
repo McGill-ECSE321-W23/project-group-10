@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.parkinglotsystem.dao.ReservationRepository;
+import ca.mcgill.ecse321.parkinglotsystem.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotsystem.model.Reservation;
 import ca.mcgill.ecse321.parkinglotsystem.model.SingleReservation;
 import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
@@ -18,13 +19,15 @@ import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 public class ReservationService {
 
     @Autowired
-    protected ReservationRepository reservationRepository;
+    private ReservationRepository reservationRepository;
     @Autowired
-    protected ParkingSpotService parkingSpotService;
+    private ParkingSpotService parkingSpotService;
     @Autowired
-    protected ParkingSpotTypeService parkingSpotTypeService;
+    private SubWithAccountService subWithAccountService;
     @Autowired
-    protected PaymentReservationService paymentReservationService;
+    private SubWithoutAccountService subWithoutAccountService;
+    @Autowired
+    private SingleReservationService singleReservationService;
 
     /**
      * Method to create a reservation
@@ -104,6 +107,39 @@ public class ReservationService {
 		List<Reservation> reservations = reservationRepository.findReservationsByParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
 		return reservations;
 	}
+
+    /**
+     * Method to check whether there is an active reservation by parking spot.
+     * @param parkingSpotId
+     * @return true if there is an active reservation
+     */
+    @Transactional
+    public boolean hasActiveReservationByParkingSpot(int parkingSpotId) {
+        if(subWithAccountService.hasActiveByParkingSpot(parkingSpotId)) {
+            return true;
+        }
+        else if(subWithoutAccountService.hasActiveByParkingSpot(parkingSpotId)) {
+            return true;
+        }
+        else {
+            return singleReservationService.hasActiveByParkingSpot(parkingSpotId);
+        }
+    }
+
+    /**
+     * Method to get all reserved parking spots.
+     * @return A list of ParkingSpot
+     */
+    @Transactional
+    public List<ParkingSpot> getReservedParkingSpots() {
+        List<ParkingSpot> reservedSpots = new ArrayList<>();
+        for(ParkingSpot spot : parkingSpotService.getAllParkingSpots()) {
+            if(hasActiveReservationByParkingSpot(spot.getId())) {
+                reservedSpots.add(spot);
+            }
+        }
+        return reservedSpots;
+    }
 
     /**
      * Method to delete a reservation
