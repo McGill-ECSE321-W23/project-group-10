@@ -32,7 +32,7 @@ export default {
         { text: "Services", href: "#", active: true},
         { text: "Reservations", href: "#"}
       ],
-      username: "Marco", // TODO: Implement authentication
+      username: "Marcooooo", // TODO: Implement authentication
       errorMessage: "",
       showError: false
     }
