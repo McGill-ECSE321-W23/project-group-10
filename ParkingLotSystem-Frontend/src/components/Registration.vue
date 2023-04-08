@@ -1,8 +1,16 @@
 <template>
   <div>
-    <div class="title-bar">
-      <h1>Parking Lot System---Registration</h1>
+    <div class="registration">
+        <NavBar 
+            :navItems="[]" 
+            activeNav="registration" 
+            :username="username" 
+        />
     </div>
+    <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
+    <!-- <div class="title-bar">
+      <h1>Parking Lot System---Registration</h1>
+    </div> -->
 
     <div class="form-container">
       <form @submit.prevent="register">
@@ -40,27 +48,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      name: '',
-      email: '',
-      phone: '',
-      password: '',
-      confirmPassword: '',
-    };
-  },
-  methods: {
-    register() {
-      // Handle registration logic here
-    },
-    returnToLogin() {
-      // Redirect to login page
-    },
-  },
-};
-</script>
+<script src="@/scripts/Registration.js"></script>
+
 
 <style scoped>
 .title-bar {

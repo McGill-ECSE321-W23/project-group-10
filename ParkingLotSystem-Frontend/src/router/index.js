@@ -50,6 +50,7 @@ export default new Router({
       name: "Guest",
       component: Guest
     },
+    {
       path: '/registration',
       name: "Registration",
       component: Registration
