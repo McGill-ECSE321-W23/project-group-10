@@ -6,6 +6,7 @@ import ServicesCustomer from '@/components/ServicesCustomer.vue'
 import Employee from '@/components/Employee.vue'
 import Manager from '@/components/Manager.vue'
 import MonthlyCustomer from '@/components/MonthlyCustomer.vue'
+import Guest from '@/components/Guest.vue'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/monthly-customer',
       name: "MonthlyCustomer",
       component: MonthlyCustomer
+    },
+    {
+      path: '/guest',
+      name: "Guest",
+      component: Guest
     },
   ]
 })
