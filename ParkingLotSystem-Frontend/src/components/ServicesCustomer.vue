@@ -1,6 +1,10 @@
 <template>
   <div class="services-customer">
-    <NavBar :navItems="navItems" :username="username"/>
+    <NavBar 
+      :navItems="['subscription', 'services-customer']" 
+      activeNav="services-customer" 
+      :username="username" 
+    />
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
       <h3>{{ currServiceReq==null?"Request a Service":"Current Service Request" }}</h3>
@@ -85,7 +89,7 @@
             ></b-pagination>
           </b-col>
         </b-row>
-        <b-button variant="light" @click="refresh()">Refresh</b-button>
+        <b-button class="mb-3" variant="light" @click="refresh()">Refresh</b-button>
       </b-container>
     </div>
   </div>

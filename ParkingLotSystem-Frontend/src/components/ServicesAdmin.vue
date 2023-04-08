@@ -1,13 +1,16 @@
 <template>
   <div class="services-admin">
-    <NavBar :navItems="navItems" :username="username"/>
+    <NavBar 
+      :navItems="['dashboard', 'settings', 'services-admin', 'reservations-admin']" 
+      activeNav="services-admin" 
+      :username="username" 
+    />
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
       <h2>Service Requests</h2>
       <b-container class="mt-3" fluid>
         <!-- Main table element -->
         <b-table
-          ref="servicesTable"
           :busy="isBusy"
           :items="serviceRequests"
           :fields="fields"
@@ -90,7 +93,7 @@
             ></b-pagination>
           </b-col>
         </b-row>
-        <b-button variant="light" @click="refresh()">Refresh</b-button>
+        <b-button class="mb-3" variant="light" @click="refresh()">Refresh</b-button>
       </b-container>
     </div>
   </div>

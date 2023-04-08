@@ -16,8 +16,8 @@ export default {
     return {
       serviceRequests: [],
       fields: [
-        { key: 'service', label: 'Service', sortDirection: 'desc' },
-        { key: 'licenseNumber', label: 'License number', class: 'text-center' },
+        { key: 'service', label: 'Service' },
+        { key: 'licenseNumber', label: 'License number' },
         { key: 'paymentDate', label: 'Payment date' },
         { key: 'assignment', label: 'Assignment' }
       ],
@@ -26,13 +26,9 @@ export default {
       perPage: 10,
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
       isBusy: false,
-      navItems: [
-        { text: "Dashboard", href: "#"},
-        { text: "Settings", href: "#"},
-        { text: "Services", href: "#", active: true},
-        { text: "Reservations", href: "#"}
-      ],
-      username: "Marcooooo", // TODO: Implement authentication
+
+      username: "Marco", // TODO: Implement authentication
+      
       errorMessage: "",
       showError: false
     }
@@ -89,7 +85,7 @@ export default {
           serviceReq._rowVariant = !serviceReq.isAssigned ? 'info':'';
           response = await AXIOS.get(`/api/payment-service/all-by-service-request/${serviceReq.id}`);
           if(!response.data.length) continue;
-          serviceReq.paymentDate = response.data[0].dateTime.split("T")[0];
+          serviceReq.paymentDate = new Date(response.data[0].dateTime).toLocaleString();
         }
 
         // Set the initial number of rows in the table
