@@ -27,7 +27,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/api/single-reservation/")
+@RequestMapping(value = "/api/single-reservation")
 public class SingleReservationController {
     @Autowired
     private SingleReservationService singleReservationService;
@@ -72,9 +72,9 @@ public class SingleReservationController {
     @GetMapping(value = { "/all-by-parking-spot", "/all-by-parking-spot/"})
     public List<SingleReservationDto> getSingleReservationsByParkingSpot(@PathVariable int parkingSpotId){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
-        List<Reservation> reservations = singleReservationService.getReservationsByParkingSpot(parkingSpotId);
-        for (Reservation r : reservations){
-           singleReservationDtos.add((SingleReservationDto) convertToDto(r));
+        List<SingleReservation> reservations = singleReservationService.getSingleReservationsByParkingSpot(parkingSpotId);
+        for (SingleReservation r : reservations){
+           singleReservationDtos.add(convertToDto(r));
         }
         return singleReservationDtos;
     }
@@ -88,11 +88,21 @@ public class SingleReservationController {
     @GetMapping(value = { "/all-by-date/{date}", "/all-by-date/{date}/"})
     public List<SingleReservationDto> getSingleReservationsByDate(@PathVariable Date date){
         List<SingleReservationDto> singleReservationDtos = new ArrayList<SingleReservationDto>();
-        List<Reservation> reservations = singleReservationService.getReservationsByDate(date);
-        for (Reservation r : reservations){
-           singleReservationDtos.add((SingleReservationDto) convertToDto(r));
+        List<SingleReservation> reservations = singleReservationService.getSingleReservationsByDate(date);
+        for (SingleReservation r : reservations){
+           singleReservationDtos.add(convertToDto(r));
         }
         return singleReservationDtos;
+    }
+
+    /**
+     * get active singleReservation with the given parkingSpot
+     * @param parkingSpotId
+     * @returna active singleReservation associated with the parkngSpot as Dto
+     */
+    @GetMapping(value = { "/active-by-parking-spot/{parkingSpotId}", "/active-by-parking-spot/{parkingSpotId}/"})
+    public SingleReservationDto getActiveByParkingSpot(@PathVariable int parkingSpotId) {
+        return convertToDto(singleReservationService.getActiveByParkingSpot(parkingSpotId));
     }
 
     /**

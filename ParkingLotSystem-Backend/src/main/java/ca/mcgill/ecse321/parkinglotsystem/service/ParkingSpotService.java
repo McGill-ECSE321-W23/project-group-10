@@ -23,11 +23,11 @@ import ca.mcgill.ecse321.parkinglotsystem.service.exceptions.CustomException;
 public class ParkingSpotService {
     
     @Autowired
-    ParkingSpotRepository parkingSpotRepository;
+    private ParkingSpotRepository parkingSpotRepository;
     @Autowired
-    ParkingSpotTypeRepository parkingSpotTypeRepository;
+    private ParkingSpotTypeRepository parkingSpotTypeRepository;
     @Autowired
-    ReservationRepository reservationRepository;
+    private ReservationRepository reservationRepository;
 
     /**
      * Method to create a parking spot.

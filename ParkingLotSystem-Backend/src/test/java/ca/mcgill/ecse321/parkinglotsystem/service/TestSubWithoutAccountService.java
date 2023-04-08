@@ -6,6 +6,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -478,8 +479,20 @@ public class TestSubWithoutAccountService {
         assertEquals(2, subWithoutAccounts.size());
     }
 
-    
+    @Test
+    public void testGetActiveByParkingSpot() {
+        SubWithoutAccount sub = subWithoutAccountService.getActiveByParkingSpot(ParkingSpot_ID);
+        assertNotNull(sub);
+        assertEquals(ParkingSpot_ID, sub.getParkingSpot().getId());
     }
+
+    @Test
+    public void testHasActiveSingleReservationByParkingSpot() {
+        boolean result = subWithoutAccountService.hasActiveByParkingSpot(ParkingSpot_ID);
+        assertTrue(result);
+    }
+    
+}
 
     
 

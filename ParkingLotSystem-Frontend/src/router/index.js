@@ -4,7 +4,7 @@ import Hello from '@/components/Hello'
 import ServicesAdmin from '@/components/ServicesAdmin.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
 import Employee from '@/components/Employee.vue'
-import Manager from '@/components/Manager.vue'
+import ManagerDashboard from '@/components/ManagerDashboard.vue'
 import MonthlyCustomer from '@/components/MonthlyCustomer.vue'
 
 Vue.use(Router)
@@ -27,9 +27,9 @@ export default new Router({
       component: ServicesCustomer
     },
     {
-      path: '/manager',
+      path: '/manager/dashboard',
       name: "Manager",
-      component: Manager
+      component: ManagerDashboard
     },
     {
       path: '/employee',
