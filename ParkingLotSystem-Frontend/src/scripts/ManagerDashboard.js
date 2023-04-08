@@ -43,15 +43,15 @@ export default {
           radialBar: {
             dataLabels: {
               value: {
-                formatter: function(val) { return val + "%"; }
+                formatter: function(val) { return val + " / 100"; }
               }
             }
           }
         }
       },
-      capacityChartSeries: [81],
+      capacityChartSeries: [25],
 
-      // Floor capacity chart variables
+      // Floor capacity chart variables & settings
       floorCapacityChartOptions: {
         plotOptions: {
           bar: {
@@ -59,12 +59,25 @@ export default {
           }
         },
         xaxis: {
-          categories: ["Floor 5", "Floor 4", "Floor 3", "Floor 2", "Ground"]
+          categories: ["Floor 5", "Floor 4", "Floor 3", "Floor 2", "Ground"],
+          tickAmount: 1,
+          labels: {
+            formatter: function(val) {
+              return val.toFixed(0);
+            }
+          }
+        },
+        tooltip: {
+          y: {
+              formatter: function(val) {
+                  return val.toFixed(0);
+              }
+          }
         }
       },
       floorCapacityChartSeries: [{
         name: 'Reserved spots',
-        data: [30, 40, 45, 50, 49]
+        data: [0, 10, 20, 30, 40]
       }],
     }
   },
@@ -87,18 +100,24 @@ export default {
         let nbrSpots3 = spots.filter(spot => (spot.id >= 3000 && spot.id < 4000)).length;
         let nbrSpots4 = spots.filter(spot => (spot.id >= 4000 && spot.id < 5000)).length;
         let nbrSpots5 = spots.filter(spot => (spot.id >= 5000 && spot.id < 6000)).length;
+
+        // Get all parking spots (for computation purposes)
+        response = await AXIOS.get("/api/parking-spot");
+        let nbrSpotsTotal = response.data.length;
+
+        // Update chart data
         this.floorCapacityChartSeries = [{
-          name: 'Reserved spots',
+          ...this.floorCapacityChartSeries[0],
           data: [nbrSpots5, nbrSpots4, nbrSpots3, nbrSpots2, nbrSpotsG]
         }]
-        this.capacityChartSeries = [nbrSpotsReserved];
+        this.capacityChartSeries = [Math.floor((nbrSpotsReserved / nbrSpotsTotal) * 100)];
         this.capacityChartOptions = {
           ...this.capacityChartOptions, 
           plotOptions: {
             radialBar: {
               dataLabels: {
                 value: {
-                  formatter: function(val) { return nbrSpotsReserved; }
+                  formatter: function(val) { return nbrSpotsReserved + " / " + nbrSpotsTotal; }
                 }
               }
             }
