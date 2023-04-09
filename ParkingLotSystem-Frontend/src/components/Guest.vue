@@ -22,13 +22,20 @@
         </div>
 
         <div v-if="selectedOption=='For Service'">
-            <h2>Hi</h2>
+            <label class="body-label" for="dropdown_service">Service Type:</label>
+            <select id="dropdown_service" v-model="selectedService" style="width: 200x;height:28px">
+                <option value="">--Service--</option>
+                <option v-for="service in services" :key="service" :value="service">{{ service }}</option>
+            </select>
+            <div>
+                <button @click="service_submit" class="submit-button">Proceed Service</button>
+            </div>
         </div>
 
         <div v-if="selectedOption=='For Reservation'" >
             <label class="body-label">
                 Parking Spot Number:
-                <input type="text" v-model="parkingSpotNumber" style="width: 100px;height:28px">
+                <input type="text" v-model="parkingSpotNumber_reservation" style="width: 80px;height:28px">
             </label>
             <div class="row">
                 <label class="body-label" for="dropdown_hour1">Parking Timespan:</label>
@@ -42,13 +49,26 @@
                     <option v-for="minute in minutes" :key="minute.value" :value="minute.value">{{ minute.label }}</option>
                 </select>
             </div>
-                <div>
-                    <button @click="reservation_submit" class="submit-button">Proceed Reservation</button>
-                </div>
+            <div>
+                <button @click="reservation_submit" class="submit-button">Proceed Reservation</button>
             </div>
+        </div>
 
         <div v-if="selectedOption=='For Subscription'">
-            <h2>Hi</h2>
+            <label class="body-label">
+                Parking Spot Number:
+                <input type="text" v-model="parkingSpotNumber_subscription" style="width: 80px;height:28px">
+            </label>
+            <div class="row">
+                <label class="body-label" for="dropdown_subscription">Number of Months:</label>
+                <select id="dropdown_subscription" v-model="selectedMonth" style="width: 80x;height:28px">
+                    <option value="">-Month-</option>
+                    <option v-for="month in subscriptionMonths" :key="month" :value="month">{{ month }}</option>
+                </select>
+            </div>
+            <div>
+                <button @click="subscription_submit" class="submit-button">Proceed Subscription</button>
+            </div>
         </div>
 
     </div>

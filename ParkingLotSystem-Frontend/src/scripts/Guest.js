@@ -16,14 +16,22 @@ export default {
   data() {
     return {
         username: '',
-        licenseNumber: "",
-        parkingSpotNumber:'',
+        licenseNumber: '',
+        parkingSpotNumber_reservation:'',
         reservation_hour: '',
         reservation_minute: '',
-        errorMessage: "",
+        errorMessage: '',
         showError: false,
         options: ['For Service', 'For Reservation', 'For Subscription'],
         selectedOption: '',
+
+        services: ['Tire Changing', 'Car Cleaning', 'Oil Change'],
+        selectedService:'',
+
+        subscriptionMonths:[1,2,3,4,5,6,7,8,9,10,11,12],
+        selectedMonth:'',
+        parkingSpotNumber_subscription:'',
+
 
         hours: [
             { value: 0, label: '00' },
@@ -108,6 +116,12 @@ export default {
 
   methods:{
     reservation_submit(){
+        console.log("a");
+    },
+    service_submit(){
+        console.log("a");
+    },
+    subscription_submit(){
         console.log("a");
     }
   },
