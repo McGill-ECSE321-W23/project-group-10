@@ -1,42 +1,34 @@
 <template>
-  <div>
-
-    <div class="registration">
-        <NavBar 
-            :navItems="[]" 
-            activeNav="payment" 
-            :username="username" 
-        />
-    </div>
-    <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
-
-    <!-- <div class="title-bar">
-      <h1>Parking Lot System---Payment</h1>
-    </div> -->
-
-    <div class="form-container">
-      <form @submit.prevent="pay">
+  <div class="payment">
+    <!-- <form @submit.prevent="pay">
         <div class="input-group">
-          <label for="amount">Amount: $</label>
-          <input type="number" id="amount" step="0.01" min="0" v-model="amount" required />
-        </div>
-
-        <div class="output-group">
-          <label>Current Date:</label>
-          <output>{{ currentDate }}</output>
-        </div>
-
-        <div class="output-group">
-          <label>Payment ID:</label>
-          <output>{{ paymentId }}</output>
+          <label for="amount">Credit Card Number:</label>
+          <input type="text" id="amount" v-model="amount" required />
         </div>
 
         <div class="button-group">
           <button type="submit">Pay</button>
           <button type="button" @click="returnToMenu">Return</button>
         </div>
-      </form>
-    </div>
+      </form> -->
+    <b-form @submit="onSubmit" class="mx-auto" style="max-width: 400px; margin-top: 50px;" @reset="onCancel">
+      <b-form-group
+        id="input-group-1"
+        label="Credit Card Number:"
+        label-for="creditCardInput"
+      >
+        <b-form-input
+          id="creditCardInput"
+          v-model="creditCardNumber"
+          type="text"
+          placeholder="Enter Credit Card Number"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="reset" variant="danger">Cancel</b-button>
+    </b-form>
   </div>
 </template>
 
