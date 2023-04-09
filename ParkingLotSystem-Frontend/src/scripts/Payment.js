@@ -14,19 +14,19 @@ export default {
     name: "payment",
     data() {
         return {
-          amount: '',
-          currentDate: new Date().toLocaleDateString(),
-          paymentId: '', // Generate a unique payment ID when the payment is made
           username: "Marco",
-        };
+          creditCardNumber: ""
+        }
       },
       methods: {
-        pay() {
-          // Handle payment logic here
+        onSubmit() {
+          // TODO: Close page
+          console.log("Submit");
         },
-        returnToMenu() {
-          // Redirect to the main menu
-        },
+        onCancel() {
+          // TODO: Close page
+          console.log("cancel");
+        }
       },
   
     
