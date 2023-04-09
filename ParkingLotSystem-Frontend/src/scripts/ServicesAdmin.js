@@ -26,7 +26,9 @@ export default {
       perPage: 10,
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
       isBusy: false,
+
       username: "Marco", // TODO: Implement authentication
+      
       errorMessage: "",
       showError: false
     }
