@@ -6,6 +6,8 @@ import ServicesAdmin from '@/components/ServicesAdmin.vue'
 import CreateParkingSpotType from '@/components/CreateParkingSpotType.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
 import CreateParkingSpot from '@/components/CreateParkingSpot.vue'
+import LoginPage from '@/components/LoginPage.vue'
+import ListOfReservationPage from '@/components/ListOfReservationPage.vue'
 
 Vue.use(Router)
 
@@ -27,7 +29,7 @@ export default new Router({
       component: ServicesAdmin
     }, 
     {
-      path: '/p', // change to admin/parking-spot-types
+      path: '/admin/parking-types', // change to admin/parking-spot-types
       name: "CreateParkingSpotType",
       component: CreateParkingSpotType
     },
@@ -37,9 +39,19 @@ export default new Router({
       component: ServicesCustomer
     },
     {
-      path: '/ps', // admin/parking-spot
+      path: '/parking-spot', // admin/parking-spot
       name: "CreateParkingSpot",
       component: CreateParkingSpot
+    },
+    {
+      path: '/LoginPage',
+      name: "LoginPage",
+      component: LoginPage
+    },
+    {
+      path: '/ListOfReservationPage',
+      name: "ListOfReservationPage",
+      component: ListOfReservationPage
     }
   ]
 })

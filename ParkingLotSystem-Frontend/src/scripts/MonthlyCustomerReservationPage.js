@@ -50,10 +50,12 @@ export default {
           }
           )
         let reservations = reservationResponse.data;
+        console.log('reservations', reservations);
         parkingSpotsWithIdsInRange.forEach(parkingSpot => {
-          let reservation = reservations.find(reservation => reservation.parkingSpot.id === parkingSpot.id);
+          let reservation = reservations.find(reservation => reservation.parkingSpotDto.id === parkingSpot.id);
           parkingSpot.status = reservation ? 'reserved' : 'available';
         });
+        
         this.parkingSpots = parkingSpotsWithIdsInRange;
     },
     methods: {

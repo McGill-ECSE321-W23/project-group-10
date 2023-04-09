@@ -7,13 +7,11 @@
     <input type="radio" id="sub-without-account" name="reservation-type" value="subWithoutAccount" v-model="reservationType">
     <label for="sub-without-account">subscription without account</label><br>
     <div v-if="reservationType === 'subWithAccount'">
-      <label for="monthly-customer-email">Monthly customer email:</label>
-      <input type="email" id="monthly-customer-email" v-model="monthlyCustomerEmail">
+      <input type="email" id="monthly-customer-email" v-model="monthlyCustomerEmail" placeholder="Enter monthly customer email">
     </div>
 
     <div v-if="reservationType === 'subWithoutAccount'">
-      <label for="license-number">License number:</label>
-      <input type="text" id="license-number" v-model="licenseNumber">
+      <input type="text" id="license-number" v-model="licenseNumber" placeholder="Enter license number">
     </div>
     <div v-if="selectedSpot">
       Selected parking spot: {{ selectedSpot.id }} - {{ selectedSpot.status }}
@@ -37,16 +35,12 @@
         </tbody>
      </table>
     </div>
-    
-     
   </div>
 </template>
 
 <script src="@/scripts/MonthlyCustomerReservationPage.js"> </script>
 
 <style scoped>
-
-
 .monthly-customer-reservation {
   width: 1300px;
   max-height: 300px;
@@ -68,9 +62,4 @@ th {
   border: 1px solid #ddd;
   box-sizing: border-box;
 }
-
-
-
-</style>
-
 </style>

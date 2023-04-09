@@ -146,4 +146,16 @@ public class EmployeeController {
     } 
 
 
+    /**
+     * Controller method to verify an employee's password
+     * * @author Shaun
+     * @param email the email of the employee
+     * @param password the password of the employee
+     * @return true if password is correct, false otherwise
+     */
+    @GetMapping(value = {"/verify", "/verify/"})
+    public boolean verifyEmployee(@RequestParam("email") String email, @RequestParam("password") String password){
+        return employeeService.verifyPassword(email, password);
+    }
+
 }
