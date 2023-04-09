@@ -1,7 +1,7 @@
 <template>
 <div>
   <b-navbar toggleable="md"  fixed="top" sticky>
-    <b-navbar-brand href="#">Parking Lot System</b-navbar-brand>
+    <b-navbar-brand href="#/Welcome">Parking Lot System</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

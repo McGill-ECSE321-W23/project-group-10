@@ -17,11 +17,7 @@ var AXIOS = axios.create({
             parkingSpotType: [],
             service: [],
             navItems: [
-                { text: "Dashboard", href: "#"},
-                { text: "Settings", href: "#"},
-                { text: "Services", href: "#"},
-                { text: "Reservations", href: "#"}
-
+                "dashboard","settings","services-admin","reservations-admin"
             ],
             username: "Mike",
             errorMessage: "",

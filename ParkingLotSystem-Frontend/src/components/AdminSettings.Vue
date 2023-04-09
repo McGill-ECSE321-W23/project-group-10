@@ -79,9 +79,12 @@
             <button type="submit" id="addService" @click="addService()"> Add</button><br><br>
 
             <label for="delete a service"> Delete a service : </label>
-            <select name ="name of the service" id="serviceDelete" :service="service">
-                <option value="">Select an existing service to delete</option>
-            </select><br>
+            <b-form-select
+            id="inline-form-custom-select-pref"
+            class="mb-2 mr-sm-2 mb-sm-0"
+            :options="[{ text: '-', value: null }, ...services]"
+            v-model="selectedService"
+            ></b-form-select><br>
             <button type="submit" id="deleteService"> Delete</button><br><br>
 
             </div>
@@ -163,6 +166,10 @@
         border-radius: 8px;
         margin-left: 22%;
 
+    }
+
+    #inline-form-custom-select-pref{
+        width: 130px;
     }
 
 </style>
