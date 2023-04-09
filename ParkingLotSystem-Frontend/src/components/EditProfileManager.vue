@@ -13,15 +13,15 @@
         <input type="text" id="name" v-model="manager.name" placeholder="Enter New Name">
       </div>
       <div>
-        <label for="name">Email: </label>
+        <label for="email">Email: </label>
         <input type="text" id="email" v-model="manager.email" placeholder="Enter New Email">
       </div>
       <div>
-        <label for="name">Phone Number: </label>
+        <label for="phoneNumber">Phone Number: </label>
         <input type="text" id="phoneNumber" v-model="manager.phone" placeholder="Enter New Phone Number">
       </div>
       <div>
-        <label for="name">Password: </label>
+        <label for="password">Password: </label>
         <input type="text" id="password" v-model="manager.password" placeholder="Enter New Password">
       </div>
       <div class="button">

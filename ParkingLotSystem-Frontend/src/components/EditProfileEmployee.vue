@@ -13,19 +13,19 @@
         <input type="text" id="name" v-model="employee.name" placeholder="Enter New Name">
       </div>
       <div>
-        <label for="name">Email: </label>
+        <label for="email">Email: </label>
         <input type="text" id="email" v-model="employee.email" placeholder="Enter New Email">
       </div>
       <div>
-        <label for="name">Phone Number: </label>
+        <label for="phoneNumber">Phone Number: </label>
         <input type="text" id="phoneNumber" v-model="employee.phone" placeholder="Enter New Phone Number">
       </div>
       <div>
-        <label for="name">Password: </label>
+        <label for="password">Password: </label>
         <input type="text" id="password" v-model="employee.password" placeholder="Enter New Password">
       </div>
       <div class="button"><button v-on:click="updateEmployee">Update</button></div>
-  
+
     </div>
   </div>
 </template>
