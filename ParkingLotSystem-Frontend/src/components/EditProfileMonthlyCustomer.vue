@@ -35,7 +35,7 @@
 
 </template>
 
-<script src="src/scripts/EditProfileMonthlyCustomer.js"></script>
+<script src="../scripts/EditProfileMonthlyCustomer.js"></script>
 
 <style scoped>
 

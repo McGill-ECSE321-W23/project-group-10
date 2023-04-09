@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<script src="src/scripts/EditProfileEmployee.js"></script>
+<script src="../scripts/EditProfileEmployee.js"></script>
 
 <style scoped>
 
