@@ -1,8 +1,8 @@
 <template>
     <div class="monthly-customer">
       <NavBar 
-        :navItems="['dashboard-monthly-customer', 'services-customer', 'reservations-customer']" 
-        activeNav="dashboard-monthly-customer" 
+        :navItems="['monthly-customer', 'services-customer', 'reservations-customer']" 
+        activeNav="monthly-customer" 
         :username="username" 
       />
         <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
@@ -11,7 +11,7 @@
             <br>
             <h2>Welcome,</h2>
             <h2>Customer: {{email}}</h2>
-            <router-link to="/monthly-customer" class="underline-button">Edit My Profile</router-link>
+            <router-link to="/edit-profile-monthly-customer" class="underline-button">Edit My Profile</router-link>
         </div>
     </div>
 </template>

@@ -1,8 +1,8 @@
 <template>
     <div class="guest">
         <NavBar 
-            :navItems="['dashboard-guest', 'reservations-view']" 
-            activeNav="dashboard-guest" 
+            :navItems="['guest', 'reservations-view']" 
+            activeNav="guest" 
             :username="username" 
         />
         <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
