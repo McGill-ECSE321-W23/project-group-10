@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import MonthlyCustomerReservationPage from '@/components/MonthlyCustomerReservationPage'
+import CreateParkingSpotType from '@/components/CreateParkingSpotType.vue'
 import ServicesAdmin from '@/components/ServicesAdmin.vue'
 import CreateParkingSpotType from '@/components/CreateParkingSpotType.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
@@ -19,9 +19,10 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/m', // change to MonthlyCustomerReservationPage
-      name: 'MonthlyCustomerReservationPage',
-      component: MonthlyCustomerReservationPage
+      path: '/CreateMonthlyCustomerReservationPage', 
+      name: "CreateMonthlyCustomerReservationPage",
+      component: CreateMonthlyCustomerReservationPage
+
     },
     {
       path: '/admin/service-requests',

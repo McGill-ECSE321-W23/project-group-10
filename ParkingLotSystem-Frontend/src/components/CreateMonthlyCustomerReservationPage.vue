@@ -38,7 +38,7 @@
   </div>
 </template>
 
-<script src="@/scripts/MonthlyCustomerReservationPage.js"> </script>
+<script src="@/scripts/CreateMonthlyCustomerReservationPage.js"> </script>
 
 <style scoped>
 .monthly-customer-reservation {

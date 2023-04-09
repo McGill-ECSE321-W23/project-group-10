@@ -31,7 +31,7 @@ export default {
                 this.errorEvent = 'wrong password';
                 return;
             }
-            // TODO: how to pass login dto?
+            // TODO: how to pass login dto? send body in request
             //let managerAuthenticationRes = await Axios.post('/api/authentication/login-manager')
             // TODO: navigate to manager page
             //this.$router.push('/ManagerPage');

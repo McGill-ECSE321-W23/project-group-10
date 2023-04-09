@@ -1,3 +1,4 @@
+import NavBar from '@/components/NavBar.vue'
 import axios from 'axios'
 var config = require('../../config')
 
@@ -9,98 +10,29 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
+
 export default {
-    name: 'monthly-customer-reservation',
+    name: "monthly-customer-reservation",
     data() {
-      return {
-        reservationType: "subWithoutAccount",
-        licenseNumber: "",
-        selectedSpot: null,
-        parkingSpots: [],
-        monthlyCustomerEmail: ""
-      };
-    },
-    computed: {
-      isDisabled() {
-        return this.reservationType === "subWithAccount";
-      },
-      isMonthlyCustomerEmailDisabled() {
-        return this.reservationType === 'subWithAccount';
-      }
+        return {
+            reservationId: '',
+            reservationStartDate: '',
+            nrOfMonths: '',
+        }
+        
     },
     async created() {
-        let response = await AXIOS.get(`/api/parking-spot/`);
-        let parkingSpotsWithIdsInRange = response.data.filter(parkingSpot => {
-         
-          return parkingSpot.id >= 2000 && parkingSpot.id <= 3000;
-        }).map(parkingSpot => {
-          // add status property to each parking spot
-          
-          return {
-            ...parkingSpot,
-            status: 'available' // default status can be 'available'
-          };
-        });
-        // see if parking spot is reserved
-        let reservationResponse = await AXIOS.get(
-          `/api/reservation/`, 
-          
-          {
-              headers: { token: "dev" } // TODO: Get token from localStorage
-          }
-          )
-        let reservations = reservationResponse.data;
-        console.log('reservations', reservations);
-        parkingSpotsWithIdsInRange.forEach(parkingSpot => {
-          let reservation = reservations.find(reservation => reservation.parkingSpotDto.id === parkingSpot.id);
-          parkingSpot.status = reservation ? 'reserved' : 'available';
-        });
-        
-        this.parkingSpots = parkingSpotsWithIdsInRange;
+        try {
+            console.log(this.monthlyCustomerEmail)
+            let response = await AXIOS.get(`/api/sub-with-account/active-by-customer/${monthlyCustomerEmail}`)
+        } catch (error) {
+            console.log(error)
+        }
     },
-    methods: {
-      showSelectedSpot(parkingSpot) {
-        this.selectedSpot = parkingSpot;
-      },
-      async createReservation() {
-        if (this.reservationType === 'subWithAccount') {
-          console.log('create reservation with account');
-          try {
-            let response = await AXIOS.post(
-                `/api/sub-with-account/`, 
-                {},
-                {
-                    params: { monthlyCustomerEmail: this.monthlyCustomerEmail, parkingSpotId: this.selectedSpot.id },
-                    headers: { token: "dev" } // TODO: Get token from localStorage
-                }
-                )
-                .then(response => {
-                    console.log('Created Parking Spot:', response.data);
-                    this.parkingSpots.find(parkingSpot => parkingSpot.id === selectedSpot.id).status = 'reserved';
-                });
-          } catch (error) {
-              console.log(error)
-          }
+    computed: {
+        monthlyCustomerEmail() {
+          return JSON.parse(localStorage.getItem('monthlyCustomerEmail'))
         }
-        if (this.reservationType === 'subWithoutAccount') {
-          console.log('create reservation without account');
-          try {
-            let response = await AXIOS.post(
-                `/api/sub-without-account/`, 
-                {},
-                {
-                    params: { licenseNumber: this.licenseNumber, parkingSpotId: this.selectedSpot.id },
-                    // headers: { token: "dev" } // TODO: Get token from localStorage
-                }
-                )
-                .then(response => {
-                    console.log('Created Parking Spot:', response.data);
-                    this.parkingSpots.find(parkingSpot => parkingSpot.id === selectedSpot.id).status = 'reserved';
-                });
-          } catch (error) {
-              console.log(error)
-          }
-        }
-      }
     }
-  }
+
+}
