@@ -32,6 +32,9 @@ export default {
         selectedMonth:'',
         parkingSpotNumber_subscription:'',
 
+        subscription_request: null,
+        service_request:null,
+
 
         hours: [
             { value: 0, label: '00' },
@@ -114,15 +117,68 @@ export default {
     }
   },
 
+
   methods:{
-    reservation_submit(){
-        console.log("a");
+
+    async reservation_submit(){
+      var currentDate = new Date();
+      console.log(currentDate);
+      try {
+        let response = await AXIOS.post(
+          '/api/reservation',
+          {},
+          {
+            params: {
+              date: currentDate,
+              parkingSpotId: this.parkingSpotNumber_reservation,
+            },
+            headers: { token: "dev" } 
+          }
+        );
+        this.service_request = response.data;
+      } catch(e) {
+        this.error(e);
+      }
     },
-    service_submit(){
-        console.log("a");
+
+
+    async service_submit(){
+      try {
+        let response = await AXIOS.post(
+          '/api/service-req-without-account',
+          {},
+          {
+            params: {
+              licenseNumber: this.licenseNumber,
+              description: this.selectedService,
+            },
+            headers: { token: "dev" } 
+          }
+        );
+        this.service_request = response.data;
+      } catch(e) {
+        this.error(e);
+      }
     },
-    subscription_submit(){
-        console.log("a");
+
+
+    async subscription_submit(){
+      try {
+        let response = await AXIOS.post(
+          '/api/sub-without-account',
+          {},
+          {
+            params: {
+              licenseNumber: this.licenseNumber,
+              parkingSpotId: this.parkingSpotNumber_subscription
+            },
+            headers: { token: "dev" } 
+          }
+        );
+        this.subscription_request = response.data;
+      } catch(e) {
+        this.error(e);
+      }
     }
   },
 
