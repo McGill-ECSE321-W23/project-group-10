@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import CreateParkingSpotType from '@/components/CreateParkingSpotType.vue'
 import ServicesAdmin from '@/components/ServicesAdmin.vue'
-import CreateParkingSpotType from '@/components/CreateParkingSpotType.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
 import CreateParkingSpot from '@/components/CreateParkingSpot.vue'
 import LoginPage from '@/components/LoginPage.vue'
@@ -17,7 +16,8 @@ import MonthlyCustomer from '@/components/MonthlyCustomer.vue'
 import Guest from '@/components/Guest.vue'
 import Registration from '@/components/Registration.vue'
 import Payment from '@/components/Payment.vue'
-
+import CreateMonthlyCustomerReservationPage from '@/components/CreateMonthlyCustomerReservationPage.vue'
+import MonthlyCustomerReservation from '@/components/MonthlyCustomerReservation.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -28,7 +28,7 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/CreateMonthlyCustomerReservationPage', 
+      path: '/create-monthly-customer-reservationPage', 
       name: "CreateMonthlyCustomerReservationPage",
       component: CreateMonthlyCustomerReservationPage
 
@@ -39,7 +39,7 @@ export default new Router({
       component: ServicesAdmin
     }, 
     {
-      path: '/admin/parking-types', // change to admin/parking-spot-types
+      path: '/parking-spot-type', // change to admin/parking-spot-types
       name: "CreateParkingSpotType",
       component: CreateParkingSpotType
     },
@@ -108,6 +108,12 @@ export default new Router({
       path: '/payment',
       name: "Payment",
       component: Payment
+    },
+    {
+      path: '/monthly-customer-reservation',
+      name: "MonthlyCustomerReservation",
+      component: MonthlyCustomerReservation
+
     }
   ]
 })

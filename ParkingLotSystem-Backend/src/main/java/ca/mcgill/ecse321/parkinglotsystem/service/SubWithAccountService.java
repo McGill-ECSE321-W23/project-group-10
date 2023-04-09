@@ -104,7 +104,7 @@ public class SubWithAccountService {
         if (!isActive(latestSub)) {
             throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
         }
-
+        
         return latestSub;
     }
 
@@ -125,7 +125,7 @@ public class SubWithAccountService {
         if (!isActive(latestSub)) {
             throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
         }
-
+        
         return latestSub;
     }
 

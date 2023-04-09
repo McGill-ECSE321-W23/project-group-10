@@ -1,4 +1,4 @@
-import NavBar from '@/components/NavBar.vue'
+
 import axios from 'axios'
 var config = require('../../config')
 
@@ -17,14 +17,7 @@ export default {
         parkingSpot: {
             id: '',
             type: ''
-        },
-        username: "Marco",
-        navItems: [
-            { text: "Dashboard", href: "#"},
-            { text: "Settings", href: "#"},
-            { text: "Services", href: "#"},
-            { text: "Reservations", href: "#"}
-          ],
+        }
 
       }
     },
@@ -49,6 +42,5 @@ export default {
                 console.log(error)
             }
         }
-    },
-    components: {NavBar}
+    }
 }

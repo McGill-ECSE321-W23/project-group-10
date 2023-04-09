@@ -93,10 +93,6 @@ export default {
                     // headers: { token: "dev" } // TODO: Get token from localStorage
                 }
                 )
-                .then(response => {
-                    console.log('Created Parking Spot:', response.data);
-                    this.parkingSpots.find(parkingSpot => parkingSpot.id === selectedSpot.id).status = 'reserved';
-                });
           } catch (error) {
               console.log(error)
           }

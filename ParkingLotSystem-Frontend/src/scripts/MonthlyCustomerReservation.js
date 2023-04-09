@@ -17,22 +17,29 @@ export default {
         return {
             reservationId: '',
             reservationStartDate: '',
-            nrOfMonths: '',
+            nbrOfMonths: '',
+            error:'',
         }
         
     },
     async created() {
         try {
             console.log(this.monthlyCustomerEmail)
-            let response = await AXIOS.get(`/api/sub-with-account/active-by-customer/${monthlyCustomerEmail}`)
+            let response = await AXIOS.get(`/api/sub-with-account/active-by-customer/${localStorage.getItem('monthlyCustomerEmail')}`)
+            console.log(response.data)
+            this.reservationId = response.data.reservationId
+            this.reservationStartDate = response.data.date
+            this.nbrOfMonths = response.data.nbrMonths
         } catch (error) {
+            this.reservationId = 'invalid'
+            this.reservationStartDate = 'invalid'
+            this.nbrOfMonths = 'invalid'
+            this.error = 'You have no active subscription'
             console.log(error)
         }
     },
-    computed: {
-        monthlyCustomerEmail() {
-          return JSON.parse(localStorage.getItem('monthlyCustomerEmail'))
-        }
+    methods: {
+        goToPayment
     }
-
+    
 }
