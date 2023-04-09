@@ -11,30 +11,18 @@ var AXIOS = axios.create({
 })
 
 export default {
-  name: "manager",
+  name: "guest",
   data() {
     return {
-      username: "Marco", // TODO: Implement authentication
+      username: "LicenseNumber",
+      licenseNumber: "License Number",
       errorMessage: "",
-      showError: false
+      showError: false,
+      options: ['For Service', 'For Reservation', 'For Subscription'],
+      selectedOption: '',
     }
   },
-  created() {
-    this.refresh();
-  },
-  methods: {
-    async refresh() {
 
-    },
-    error(e) {
-      if(e.hasOwnProperty("response")) {
-        this.errorMessage = e.response.data.message;
-      }
-      else {
-        this.errorMessage = e.message;
-      }
-      this.showError = true;
-    }
-  },
-  components: {NavBar}
+  
+  components:{NavBar}
 }

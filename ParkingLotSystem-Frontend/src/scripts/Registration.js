@@ -11,14 +11,23 @@ var AXIOS = axios.create({
 })
 
 export default {
-  name: "monthly-customer",
+  name: "registration",
   data() {
     return {
-      username: "Weiheng",
-      email: "weiheng.xiao@mail.mcgill.ca",
-      errorMessage: "",
-      showError: false,
-    }
+      name: '',
+      email: '',
+      phone: '',
+      password: '',
+      confirmPassword: '',
+    };
+  },
+  methods: {
+    register() {
+      // Handle registration logic here
+    },
+    returnToLogin() {
+      // Redirect to login page
+    },
   },
 
   

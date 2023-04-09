@@ -130,6 +130,22 @@ public class SubWithAccountService {
     }
 
     /**
+     * Service method to check is there is an active subscription with the given parking spot.
+     * @param parkingSpotId the ID of the parking spot
+     * @return true if there is an active subscription with the given parking spot.
+     */
+    @Transactional
+    public boolean hasActiveByParkingSpot(int parkingSpotId) {
+
+        List<SubWithAccount> subs = getAllByParkingSpot(parkingSpotId);
+        if(subs.size() <= 0) {
+            return false;
+        }
+        SubWithAccount latestSub = subs.get(subs.size() - 1);
+        return isActive(latestSub);
+    }
+
+    /**
      * Service method to get all subscriptions of the given monthly customer.
      * @author Marco
      * @param monthlyCustomerEmail the email of the monthly customer

@@ -17,14 +17,17 @@ export default {
   data() {
     return {
       allNavItems: [
-        { id: "dashboard", text: "Dashboard", href: "#/manager"},
+        { id: "dashboard", text: "Dashboard", href: "#/manager/dashboard"},
         { id: "dashboard-employee", text: "Dashboard", href: "#/employee"},
-        { id: "services-employee", text: "Services", href: "#"},
+        { id: "dashboard-monthly-customer", text: "Dashboard", href: "#/monthly-customer"},
+        { id: "dashboard-guest", text: "Dashboard", href: "#/guest"},
         { id: "settings", text: "Settings", href: "#"},
-        { id: "services-admin", text: "Services", href: "#/admin/service-requests"},
-        { id: "reservations", text: "Reservations", href: "#"},
         { id: "subscription", text: "Subscription", href: "#"},
-        { id: "services-customer", text: "Services", href: "#/service-requests"}
+        { id: "reservations-view", text: "View Reservations", href: "#"},
+        { id: "services-admin", text: "Services", href: "#/admin/service-requests"},
+        { id: "reservations-admin", text: "Reservations", href: "#/admin/reservations"},
+        { id: "services-customer", text: "Services", href: "#/service-requests"},
+        { id: "reservations-customer", text: "Reservations", href: "#/reservations"}
       ]
     }
   },
