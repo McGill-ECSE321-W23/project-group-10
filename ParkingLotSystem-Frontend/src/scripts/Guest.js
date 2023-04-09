@@ -24,7 +24,7 @@ export default {
         showError: false,
         options: ['For Service', 'For Reservation', 'For Subscription'],
         selectedOption: '',
-        services: ['Tire Changing', 'Car Cleaning', 'Oil Change'],
+        services: [],
         selectedService:'',
         parkingSpotNumber_subscription:'',
         subscription_request: null,
@@ -54,6 +54,10 @@ export default {
         ],
 
     }
+  },
+
+  created() {
+    this.refresh();
   },
 
 
@@ -127,10 +131,22 @@ export default {
         this.errorMessage = e.message;
       }
       this.showError = true;
-    }
+    },
+
+    async refresh(){
+      console.log("hi");
+      try{
+        let response = await AXIOS.get('/api/service');
+        let data_list=response.data;
+        data_list.forEach(item => {
+          this.services.push(item.description);
+        });
+      }catch(e) {
+        this.error(e);
+      }
+    },
+
   },
-
-
   
   components:{NavBar}
 }
