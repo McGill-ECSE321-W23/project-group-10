@@ -4,7 +4,6 @@ import Hello from '@/components/Hello'
 import ServicesAdmin from '@/components/ServicesAdmin.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
 import Employee from '@/components/Employee.vue'
-import Manager from '@/components/Manager.vue'
 import EditProfileEmployee from "@/components/EditProfileEmployee.vue";
 import EditProfileMonthlyCustomer from "@/components/EditProfileMonthlyCustomer.vue";
 import EditProfileManager from "@/components/EditProfileManager.vue";
