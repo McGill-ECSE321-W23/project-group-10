@@ -229,7 +229,7 @@ public class TestSubWithoutAccountService {
             error = e.getMessage();
         }
         assertNull(subWithoutAccount);
-        assertEquals("The parking spot is not available for monthly customers.", error);
+        assertEquals("The parking spot is not available for guest customers.", error);
     
     }
 

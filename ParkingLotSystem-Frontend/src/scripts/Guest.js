@@ -179,6 +179,16 @@ export default {
       } catch(e) {
         this.error(e);
       }
+    },
+
+    error(e) {
+      if(e.hasOwnProperty("response")) {
+        this.errorMessage = e.response.data.message;
+      }
+      else {
+        this.errorMessage = e.message;
+      }
+      this.showError = true;
     }
   },
 
