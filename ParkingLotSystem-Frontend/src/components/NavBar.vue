@@ -7,7 +7,7 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item v-for="item in navItems" :key="item.text" :href="item.href" :active="item.active">{{ item.text }}</b-nav-item>
+        <b-nav-item v-for="item in filterNavItems()" :key="item.text" :href="item.href" :active="item.active">{{ item.text }}</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -27,21 +27,7 @@
 </div>
 </template>
 
-<script>
-export default {
-    name: 'navbar',
-    props: {
-      navItems: {
-        type: Array,
-        required: true
-      },
-      username: {
-        type: String,
-        required: true
-      }
-    }
-}
-</script>
+<script src="../scripts/NavBar.js"></script>
 
 <style>
 

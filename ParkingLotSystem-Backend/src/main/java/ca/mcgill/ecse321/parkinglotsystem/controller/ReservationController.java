@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ca.mcgill.ecse321.parkinglotsystem.service.ReservationService;
+import ca.mcgill.ecse321.parkinglotsystem.service.utilities.HelperMethods;
 
 
 @CrossOrigin(origins = "*")
@@ -85,6 +86,16 @@ public List<ReservationDto> getReservationsByParkingSpot(@PathVariable("id") int
         reservationDtos.add(convertToDto(r));
     }
     return reservationDtos;
+}
+
+/**
+ * Controller method to get all reserved parking spots.
+ * @return A list of ParkingSpotDto
+ */
+@GetMapping(value= {"/reserved-parking-spots", "/reserved-parking-spots/"})
+public List<ParkingSpotDto> getReservedParkingSpots() {
+    return reservationService.getReservedParkingSpots().stream().map(
+            HelperMethods::convertParkingSpotToDto).collect(Collectors.toList());
 }
 
 /**

@@ -19,7 +19,7 @@ export default {
       currServiceReq: null,
       paidServiceReqs: [],
       fields: [
-        { key: 'service', label: 'Service', sortDirection: 'desc' },
+        { key: 'service', label: 'Service' },
         { key: 'paymentDate', label: 'Payment date' }
       ],
       totalRows: 1,
@@ -27,10 +27,6 @@ export default {
       perPage: 10,
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
       isBusy: false,
-      navItems: [
-        { text: "Subscription", href: "#"},
-        { text: "Services", href: "#", active: true}
-      ],
       username: "Marco", // TODO: Implement authentication
       userEmail: "test@gmail.com", // TODO: Implement authentication
       errorMessage: "",
@@ -96,7 +92,7 @@ export default {
           let serviceReq = serviceReqs[i];
           response = await AXIOS.get(`/api/payment-service/all-by-service-request/${serviceReq.id}`);
           if(response.data.length) {
-            serviceReq.paymentDate = response.data[0].dateTime.split("T")[0];
+            serviceReq.paymentDate = new Date(response.data[0].dateTime).toLocaleString();
             this.paidServiceReqs.push(serviceReq);
           }
           else {

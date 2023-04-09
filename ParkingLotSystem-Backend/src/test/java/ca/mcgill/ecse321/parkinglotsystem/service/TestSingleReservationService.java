@@ -6,6 +6,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -270,6 +271,21 @@ public class TestSingleReservationService {
     }
 
     @Test
+    public void testCreateSingleReservationWithIncorrectLicenseNumberFormat2() {
+        String licenseNum = "AAAAAAAAAA";
+        String error = null;
+        SingleReservation singleReservation = null;
+        try {
+            singleReservation = singleReservationService.createSingleReservation(licenseNum, parking_time, ParkingSpot_ID);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(singleReservation);
+        assertEquals("Incorrect format for licenseNumber", error);
+    
+    }
+
+    @Test
     public void testCreateSingleReservationWithNegativeParkingTime() {
         int parkingTime = -10;
         String error = null;
@@ -370,6 +386,23 @@ public class TestSingleReservationService {
         String error = null;
         int newParkingTime = 75;
         String licenseNumber = "812!()";
+        SingleReservation singleReservation = null;
+        try {
+            singleReservation = singleReservationService.updateSingleReservation(licenseNumber, newParkingTime);
+        } catch (CustomException e) {
+            error = e.getMessage();
+        }
+        assertNull(singleReservation);
+        assertEquals("Incorrect licenseNumber format", error);
+    
+    }
+
+    @Test
+    public void testUpdateSingleReservationWithIncorrectLicenseFormat2() {
+        assertEquals(2 , singleReservationService.getAllSingleReservations().size());
+        String error = null;
+        int newParkingTime = 75;
+        String licenseNumber = "AAAAAAAAA";
         SingleReservation singleReservation = null;
         try {
             singleReservation = singleReservationService.updateSingleReservation(licenseNumber, newParkingTime);
@@ -529,6 +562,24 @@ public class TestSingleReservationService {
         assertEquals(date1, singleReservation.getDate());
     }
 
+    @Test
+    public void testGetActiveByParkingSpot() {
+        SingleReservation singleReservation = singleReservationService.getActiveByParkingSpot(ParkingSpot_ID);
+        assertNotNull(singleReservation);
+        assertEquals(ParkingSpot_ID, singleReservation.getParkingSpot().getId());
+    }
+
+    @Test
+    public void testGetActiveByParkingSpotInactive() {
+        String errMsg = "";
+        try {
+            singleReservationService.getActiveByParkingSpot(ParkingSpot_ID_UNUSED);
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("There is no active subscription with this parking spot", errMsg);
+    }
+
     
 
     @Test
@@ -557,5 +608,12 @@ public class TestSingleReservationService {
         assertEquals("singleReservation not found", error);
 
     }
+
+    @Test
+    public void testHasActiveSingleReservationByParkingSpot() {
+        boolean result = singleReservationService.hasActiveByParkingSpot(ParkingSpot_ID);
+        assertTrue(result);
     }
+
+}
     
