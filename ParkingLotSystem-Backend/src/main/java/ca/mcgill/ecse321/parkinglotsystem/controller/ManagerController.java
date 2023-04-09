@@ -146,4 +146,16 @@ public class ManagerController {
         return HelperMethods.convertManagerToDto(ma);
     } 
 
+    /**
+     * Controller method to verify a manager's password
+     * @author Shaun
+     * @param email the email of the manager
+     * @param password the password of the manager
+     * @return true if password is correct, false otherwise
+     */
+    @GetMapping(value = {"/verify", "/verify/"})
+    public boolean verifyManager(@RequestParam("email") String email, @RequestParam("password") String password){
+        return managerService.verifyPassword(email, password);
+    }
+
 }

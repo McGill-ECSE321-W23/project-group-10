@@ -166,4 +166,22 @@ public class MonthlyCustomerService {
             return mc;
         }
      }
+
+    /**
+     * method to verify password of a monthly customer by email and password
+     * @author Shaun
+     * @param email the email of the monthly customer
+     * @param password the password of the monthly customer
+     * @return true if password is correct, false otherwise
+     * @throws CustomException if to verify password fail
+     */
+     @Transactional
+     public boolean verifyPassword(String email,String password){
+        MonthlyCustomer mc=monthlyCustomerRepository.findMonthlyCustomerByEmail(email);
+        if(mc==null){
+            throw new CustomException("No monthly customer with that email exists!",HttpStatus.BAD_REQUEST);
+        }else{
+            return mc.getPassword().equals(password);
+        }
+     }
 }
