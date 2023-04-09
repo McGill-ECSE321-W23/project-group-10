@@ -4,6 +4,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -35,6 +36,12 @@ public class TestReservationService {
 private ReservationRepository reservationRepository;
 @Mock
 private ParkingSpotService parkingSpotService;
+@Mock
+private SubWithAccountService subWithAccountService;
+@Mock
+private SubWithoutAccountService subWithoutAccountService;
+@Mock
+private SingleReservationService singleReservationService;
 
 @InjectMocks
 private ReservationService reservationService;
@@ -138,15 +145,35 @@ public void setMockOutput() {
     
 
     lenient().when(parkingSpotService.getParkingSpotById(anyInt())).thenAnswer( (InvocationOnMock invocation) -> {
-            ParkingSpotType type = new ParkingSpotType();
-            type.setFee(0.50);
-            type.setName("regular");
-            ParkingSpot parkingSpot = new ParkingSpot();
-            parkingSpot.setId(invocation.getArgument(0));
-            parkingSpot.setType(type);
-            return parkingSpot;
+        ParkingSpotType type = new ParkingSpotType();
+        type.setFee(0.50);
+        type.setName("regular");
+        ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpot.setId(invocation.getArgument(0));
+        parkingSpot.setType(type);
+        return parkingSpot;
         
     });
+
+    lenient().when(parkingSpotService.getAllParkingSpots()).thenAnswer((InvocationOnMock invocation) -> {
+        List<ParkingSpot> spots = new ArrayList<>();
+        ParkingSpotType type = new ParkingSpotType();
+        type.setFee(0.50);
+        type.setName("regular");
+        ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpot.setId(ParkingSpot_ID);
+        parkingSpot.setType(type);
+        ParkingSpot parkingSpot2 = new ParkingSpot();
+        parkingSpot.setId(0);
+        parkingSpot2.setType(type);
+        spots.add(parkingSpot);
+        spots.add(parkingSpot2);
+        return spots;
+    });
+
+    lenient().when(subWithAccountService.hasActiveByParkingSpot(anyInt())).thenReturn(false);
+    lenient().when(subWithoutAccountService.hasActiveByParkingSpot(anyInt())).thenReturn(false);
+    lenient().when(singleReservationService.hasActiveByParkingSpot(anyInt())).thenReturn(false);
 
     
     Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -245,10 +272,32 @@ public void testGetReservationById() {
 }
 
 @Test
+public void testGetReservationByIdFail() {
+    String errMsg = "";
+    try {
+        reservationService.getReservationById(-1);
+    } catch(Exception e) {
+        errMsg = e.getMessage();
+    }
+    assertEquals("Reservation is not found.", errMsg);
+}
+
+@Test
 public void testGetReservationsByDate() {
     List<Reservation> reservations = reservationService.getReservationsByDate(date1);
     assertNotNull(reservations);
     assertEquals(reservations.get(0).getId(), RESERVATION_ID);
+}
+
+@Test
+public void testGetReservationByDateFail() {
+    String errMsg = "";
+    try {
+        reservationService.getReservationsByDate(Date.valueOf("2022-02-01"));
+    } catch(Exception e) {
+        errMsg = e.getMessage();
+    }
+    assertEquals("Reservation is not found.", errMsg);
 }
 
 @Test
@@ -274,4 +323,17 @@ public void testDeleteAllReservations() {
     assertNotNull(reservations);
     assertEquals(2, reservations.size());
 }
+
+@Test
+public void testGetActiveReservationByParkingSpotFail() {
+    boolean result = reservationService.hasActiveReservationByParkingSpot(1);
+    assertFalse(result);
+}
+
+@Test
+public void testGetReservedParkingSpots() {
+    var spots = reservationService.getReservedParkingSpots();
+    assertNotNull(spots);
+}
+
 }

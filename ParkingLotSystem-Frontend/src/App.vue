@@ -15,6 +15,7 @@ html, body {
   margin:0;
   height:100%;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 body {

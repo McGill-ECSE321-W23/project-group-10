@@ -30,25 +30,16 @@ public class PaymentServiceService {
      * @throws CustomException if to create the payment service fail
      */
     @Transactional
-    public PaymentService createPaymentService(double amount, Timestamp dateTime, int serviceRequestId) {
+    public PaymentService createPaymentService(int serviceRequestId) {
         // Input validation
-        String val_double = amount + "";
-        Timestamp create_time = new Timestamp(1648094400);
-        Timestamp current_time = new Timestamp(System.currentTimeMillis());
-        int compare_create = dateTime.compareTo(create_time);
-        int compare_current = dateTime.compareTo(current_time);
-        if (val_double == null|| amount < 0) {
-            throw new CustomException("payment amount cannot be negative!", HttpStatus.BAD_REQUEST);
-        }
-        if (dateTime == null||compare_create < 0||compare_current>0) {
-            throw new CustomException("payment service date time is wrong!", HttpStatus.BAD_REQUEST);
-        }
         if (serviceRequestRepository.findServiceRequestById(serviceRequestId) == null) {
             throw new CustomException("payment service does not exist in service request repository!", HttpStatus.NOT_FOUND);
         }
         ServiceRequest serviceRequest = serviceRequestRepository.findServiceRequestById(serviceRequestId);
         PaymentService paymentService = new PaymentService();
-        paymentService.setAmount(amount);
+        Timestamp dateTime = new Timestamp(new java.util.Date().getTime());
+
+        paymentService.setAmount(serviceRequest.getService().getPrice());
         paymentService.setDateTime(dateTime);
         paymentService.setServiceReq(serviceRequest);
         paymentServiceRepository.save(paymentService);

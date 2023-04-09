@@ -27,7 +27,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/api/sub-without-account/")
+@RequestMapping(value = "/api/sub-without-account")
 public class SubWithoutAccountController {
     @Autowired
     private SubWithoutAccountService subWithoutAccountService;

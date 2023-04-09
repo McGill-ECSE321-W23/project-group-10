@@ -47,7 +47,6 @@ public class PaymentServiceController {
         for (PaymentService paymentService : paymentServiceService.getAllPaymentService()) {
             paList.add(convertPaymentServiceToDto(paymentService));
         }
-        if (paList.size() == 0) throw new Exception("There are no payment service");
         return paList;
     }
 
@@ -61,11 +60,9 @@ public class PaymentServiceController {
      */
     @PostMapping(value = {"/", ""})
     public PaymentServiceDto createPaymentService(
-        @RequestParam("amount") double amount, 
-        @RequestParam("dateTime") Timestamp dateTime, 
         @RequestParam("serviceRequest") int serviceRequestId) {
         
-        PaymentService paymentService = paymentServiceService.createPaymentService(amount, dateTime, serviceRequestId);
+        PaymentService paymentService = paymentServiceService.createPaymentService(serviceRequestId);
         return convertPaymentServiceToDto(paymentService);
         
     }

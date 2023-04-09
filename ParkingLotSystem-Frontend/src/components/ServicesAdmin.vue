@@ -1,13 +1,16 @@
 <template>
   <div class="services-admin">
-    <NavBar :navItems="navItems" :username="username"/>
+    <NavBar 
+      :navItems="['dashboard', 'settings', 'services-admin', 'reservations-admin']" 
+      activeNav="services-admin" 
+      :username="username" 
+    />
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
-      <h1>Service Requests</h1>
+      <h2>Service Requests</h2>
       <b-container class="mt-3" fluid>
         <!-- Main table element -->
         <b-table
-          ref="servicesTable"
           :busy="isBusy"
           :items="serviceRequests"
           :fields="fields"
@@ -58,7 +61,7 @@
         </b-table>
 
         <!-- User Interface controls -->
-        <b-row>
+        <b-row class="justify-content-center">
           <b-col sm="2" md="3" class="my-1">
             <b-form-group
               label="Per page"
@@ -90,6 +93,7 @@
             ></b-pagination>
           </b-col>
         </b-row>
+        <b-button class="mb-3" variant="light" @click="refresh()">Refresh</b-button>
       </b-container>
     </div>
   </div>
@@ -98,5 +102,7 @@
 <script src="@/scripts/ServicesAdmin.js"></script>
 
 <style>
-
+  h1,h3 {
+    margin-bottom: 30px;
+  }
 </style>
