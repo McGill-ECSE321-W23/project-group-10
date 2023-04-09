@@ -59,13 +59,6 @@
                 Parking Spot Number:
                 <input type="text" v-model="parkingSpotNumber_subscription" style="width: 80px;height:28px">
             </label>
-            <div class="row">
-                <label class="body-label" for="dropdown_subscription">Number of Months:</label>
-                <select id="dropdown_subscription" v-model="selectedMonth" style="width: 80x;height:28px">
-                    <option value="">-Month-</option>
-                    <option v-for="month in subscriptionMonths" :key="month" :value="month">{{ month }}</option>
-                </select>
-            </div>
             <div>
                 <button @click="subscription_submit" class="submit-button">Proceed Subscription</button>
             </div>
