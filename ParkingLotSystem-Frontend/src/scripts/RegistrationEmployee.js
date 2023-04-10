@@ -32,7 +32,7 @@ export default {
           throw new Error("password does not match confirmed password!")
         }
         let response = await AXIOS.post(
-          '/api/employee/${email}',
+          `/api/employee/${email}`,
           {
 
           },
