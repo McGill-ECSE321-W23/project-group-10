@@ -8,10 +8,6 @@ export default {
     activeNav: {
       type: String,
       required: true
-    },
-    username: {
-      type: String,
-      required: true
     }
   },
   data() {
@@ -29,8 +25,18 @@ export default {
         { id: "services-customer", text: "Services", href: "#/service-requests"},
         { id: "employee-registration", text: "Employee Registration", href: "#/registration-employee"},
         { id: "monthly-customer-reservation", text: "Reservation", href: "#/monthly-customer-reservation"},
-      ]
+      ],
+      username: "",
+      profilePageURL: '#',
     }
+  },
+  created() {
+    this.username = localStorage.getItem("username");
+    let personType = localStorage.getItem("personType");
+    if(!this.username) {
+      this.$router.push('/login-page');
+    }
+    this.profilePageURL = `/#/edit-profile-${personType}`;
   },
   methods: {
     filterNavItems() {
@@ -44,6 +50,13 @@ export default {
         }
       });
       return filteredNavItems;
+    },
+    logout() {
+      console.log("Hello world");
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      localStorage.removeItem("email");
+      this.$router.push("/login-page");
     }
   }
 };
