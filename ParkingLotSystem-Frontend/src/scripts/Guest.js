@@ -72,9 +72,8 @@ export default {
     async subscription_update(){
       try {
         console.log(this.parkingSpotNumber_subscription);
-        let response = await AXIOS.get(`/api/sub-without-account/${this.parkingSpotNumber_subscription}`);
-        this.subscriptionPrice = response.data.price;
-        console.log(response.data);
+        let response = await AXIOS.get(`/api/parking-spot/${this.parkingSpotNumber_subscription}`);
+        this.subscriptionPrice = response.data.type.fee;
         this.displaySubscriptionPrice=1;
       } catch(e) {
         this.error(e);
@@ -95,7 +94,7 @@ export default {
     async reservation_update(){
       try {
         let response = await AXIOS.get(`/api/parking-spot/${this.parkingSpotNumber_reservation}`);
-        this.reservationFee = (response.data.type.fee)*(60*this.reservation_hour+this.reservation_minute);
+        this.reservationFee = (response.data.type.fee)*(4*this.reservation_hour+this.reservation_minute/15);
         this.displayReservationPrice=1;
       } catch(e) {
         this.error(e);

@@ -1,10 +1,5 @@
 <template>
     <div class="guest">
-        <NavBar 
-            :navItems="['guest', 'reservations-view']" 
-            activeNav="guest" 
-            :username="username" 
-        />
         <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
         <div class="content">
             <h2>Welcome, Customer !</h2>
@@ -69,6 +64,10 @@
                 Parking Spot Number:
                 <input type="text" v-model="parkingSpotNumber_subscription" style="width: 80px;height:28px">
             </label>
+            <div class="row">
+                <label class="body-label">Price:</label>
+                <label v-if="displaySubscriptionPrice==1" class="body-label">${{subscriptionPrice}}</label>
+            </div>
             <div>
                 <button @click="subscription_update" class="submit-button">Calculate Price</button>
                 <button @click="subscription_submit" class="submit-button">Proceed Subscription</button>
