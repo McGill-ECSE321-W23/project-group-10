@@ -20,8 +20,8 @@
     <p class="error-msg" v-if="error">{{ error }}</p>
 
     <div class="button-group">
-      <button @click="goToPayment" class="btn btn-payment">Proceed to payment</button>
-      <button @click="increaseMonth" class="btn btn-payment">Increase month</button>
+      <button @click="goToPayment" class="btn">Proceed to payment</button>
+      <button @click="increaseMonth" class="btn">Increase month</button>
     </div>
   </div>
 </template>
@@ -57,7 +57,7 @@
   margin-top: 20px;
 }
 
-.btn-payment {
+.btn {
   background-color: #007bff;
   border-color: #007bff;
   color: #fff;
@@ -66,7 +66,7 @@
   font-size: 16px;
 }
 
-.btn-payment:hover {
+.btn:hover {
   background-color: #0069d9;
   border-color: #0062cc;
   color: #fff;
