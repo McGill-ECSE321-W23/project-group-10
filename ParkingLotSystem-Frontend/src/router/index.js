@@ -7,6 +7,9 @@ import ServicesCustomer from '@/components/ServicesCustomer.vue'
 import CreateParkingSpot from '@/components/CreateParkingSpot.vue'
 import LoginPage from '@/components/LoginPage.vue'
 import ListOfReservationPage from '@/components/ListOfReservationPage.vue'
+import AdminSettings from '@/components/AdminSettings.vue'
+import Welcome from '@/components/Welcome.vue'
+
 import Employee from '@/components/Employee.vue'
 import EditProfileEmployee from "@/components/EditProfileEmployee.vue";
 import EditProfileMonthlyCustomer from "@/components/EditProfileMonthlyCustomer.vue";
@@ -64,6 +67,32 @@ export default new Router({
       name: "ListOfReservationPage",
       component: ListOfReservationPage
 
+    },
+    {
+      path: '/parking-spot', // admin/parking-spot
+      name: "CreateParkingSpot",
+      component: CreateParkingSpot
+    },
+    {
+      path: '/login-page',
+      name: "LoginPage",
+      component: LoginPage
+    },
+    {
+      path: '/list-of-reservation-page',
+      name: "ListOfReservationPage",
+      component: ListOfReservationPage
+
+    },
+    {
+      path: '/admin-settings',
+      name: "AdminSettings",
+      component: AdminSettings
+    },
+    {
+      path: '/welcome',
+      name: "Welcome",
+      component: Welcome
     },
     {
       path: '/manager/dashboard',
