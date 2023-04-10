@@ -1,4 +1,5 @@
 import axios from 'axios'
+import NavBar from '@/components/NavBar.vue'
 var config = require('../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
@@ -85,5 +86,6 @@ export default {
         }
         this.showError = true;
       }
-    }
+    },
+    components:{NavBar}
   }
