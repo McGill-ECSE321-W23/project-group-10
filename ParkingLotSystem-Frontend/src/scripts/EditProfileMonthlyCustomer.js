@@ -41,8 +41,8 @@ export default {
           `/api/monthly-customer/${this.monthlyCustomer.email}`,
           {},
           {
-            params: {monthlyCustomerEmail: this.monthlyCustomer.email},
-            headers: {token: "dev"} // TODO: Get token from localStorage
+            params: {name: this.monthlyCustomer.name, phone: this.monthlyCustomer.phoneNumber,
+              password: this.monthlyCustomer.password, licenseNumber: this.monthlyCustomer.licenseNumber}
           }
         )
           .then(response => {
