@@ -40,8 +40,7 @@ export default {
           `/api/employee/${this.employee.email}`,
           {},
           {
-            params: {employeeEmail: this.employee.email},
-            headers: {token: "dev"} // TODO: Get token from localStorage
+            params: {name: this.employee.name, phone: this.employee.phoneNumber, password: this.employee.password}
           }
         )
           .then(response => {
