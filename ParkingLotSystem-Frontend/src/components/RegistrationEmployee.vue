@@ -2,7 +2,7 @@
   <div>
     <div class="registrationEmployee">
         <NavBar 
-            :navItems="['dashboard', 'settings', 'services-admin', 'reservations-admin', 'employee-registration']" 
+            :navItems="['dashboard', 'settings', 'services-admin', 'monthly-customer-reservation', 'employee-registration']" 
             activeNav="registrationEmployee" 
             :username="username" 
         />
