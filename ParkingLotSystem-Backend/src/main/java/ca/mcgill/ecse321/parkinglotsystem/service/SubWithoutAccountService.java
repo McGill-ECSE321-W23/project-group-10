@@ -38,7 +38,7 @@ public class SubWithoutAccountService {
 
         if (!(parkingSpotId >= 2000 && parkingSpotId < 4000)){
             throw new CustomException(
-                "The parking spot is not available for monthly customers.", HttpStatus.BAD_REQUEST);
+                "The parking spot is not available for guest customers.", HttpStatus.BAD_REQUEST);
         }
         if(licenseNumber == null || licenseNumber.length() == 0){
             throw new CustomException("licenseNumber cannot be empty", HttpStatus.BAD_REQUEST);

@@ -1,42 +1,30 @@
 <template>
-  <div>
-
-    <div class="registration">
-        <NavBar 
-            :navItems="[]" 
-            activeNav="payment" 
-            :username="username" 
-        />
-    </div>
-    <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
-
-    <!-- <div class="title-bar">
-      <h1>Parking Lot System---Payment</h1>
-    </div> -->
-
-    <div class="form-container">
-      <form @submit.prevent="pay">
-        <div class="input-group">
-          <label for="amount">Amount: $</label>
-          <input type="number" id="amount" step="0.01" min="0" v-model="amount" required />
-        </div>
-
-        <div class="output-group">
-          <label>Current Date:</label>
-          <output>{{ currentDate }}</output>
-        </div>
-
-        <div class="output-group">
-          <label>Payment ID:</label>
-          <output>{{ paymentId }}</output>
-        </div>
-
-        <div class="button-group">
-          <button type="submit">Pay</button>
-          <button type="button" @click="returnToMenu">Return</button>
-        </div>
+  <div class="payment">
+    <b-button v-b-modal.paymentModal variant="primary" :disabled="disabled">Pay</b-button>
+    <b-modal
+      id="paymentModal"
+      ref="modal"
+      title="Enter Payment Information"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+    >
+      <form ref="form" @submit.stop.prevent="handleSubmit">
+        <b-form-group
+          label="Credit Card Number"
+          label-for="credit-card-input"
+          invalid-feedback="This field is required"
+          :state="valueState"
+        >
+          <b-form-input
+            id="credit-card-input"
+            v-model="creditCardNbr"
+            :state="valueState"
+            required
+          ></b-form-input>
+        </b-form-group>
       </form>
-    </div>
+    </b-modal>
   </div>
 </template>
 

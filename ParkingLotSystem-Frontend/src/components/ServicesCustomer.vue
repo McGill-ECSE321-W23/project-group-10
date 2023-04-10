@@ -11,7 +11,8 @@
       <div class="d-flex justify-content-center">
         <b-card v-if="currServiceReq!=null" :title="currServiceReq.servicesDto.description" class="bg-transparent card">
           <b-card-text>Status: {{ currServiceReq.isAssigned?"Assigned":"Not Assigned" }}</b-card-text>
-          <b-button href="#" variant="primary" @click="payServiceReq()" :disabled="!currServiceReq.isAssigned">Pay</b-button>
+          <!-- <b-button href="#" variant="primary" @click="payServiceReq()" :disabled="!currServiceReq.isAssigned">Pay</b-button> -->
+          <Payment @submit="payServiceReq()" :disabled="!currServiceReq.isAssigned"/>
         </b-card>
         <b-form v-else inline class="form">
           <label class="mr-sm-2" for="inline-form-custom-select-pref">Select service: </label>

@@ -18,9 +18,9 @@ export default {
     return {
       allNavItems: [
         { id: "dashboard", text: "Dashboard", href: "#/manager/dashboard"},
-        { id: "dashboard-employee", text: "Dashboard", href: "#/employee"},
-        { id: "dashboard-monthly-customer", text: "Dashboard", href: "#/monthly-customer"},
-        { id: "dashboard-guest", text: "Dashboard", href: "#/guest"},
+        { id: "employee", text: "Main", href: "#/employee"},
+        { id: "monthly-customer", text: "Main", href: "#/monthly-customer"},
+        { id: "guest", text: "Main", href: "#/guest"},
         { id: "settings", text: "Settings", href: "#"},
         { id: "subscription", text: "Subscription", href: "#"},
         { id: "reservations-view", text: "View Reservations", href: "#"},

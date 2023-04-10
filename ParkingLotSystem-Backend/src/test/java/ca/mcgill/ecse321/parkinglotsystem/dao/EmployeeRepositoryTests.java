@@ -21,7 +21,7 @@ public class EmployeeRepositoryTests {
     }
 
     @Test
-    public void testPersistAndLoadManager() {
+    public void testPersistAndLoadEmployee() {
         // Create object
         String name = "Jesse Pinkman";
         String email = "jesse@outlook.com";
