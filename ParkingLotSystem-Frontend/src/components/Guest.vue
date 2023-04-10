@@ -27,7 +27,12 @@
                 <option value="">--Service--</option>
                 <option v-for="service in services" :key="service" :value="service">{{ service }}</option>
             </select>
+            <div class="row">
+                <label class="body-label">Price:</label>
+                <label v-if="displayServicePrice==1 && selectedService!=''" class="body-label">${{selectedServicePrice}}</label>
+            </div>
             <div>
+                <button @click="service_update" class="submit-button">Calculate Price</button>
                 <button @click="service_submit" class="submit-button">Proceed Service</button>
             </div>
         </div>
@@ -49,7 +54,12 @@
                     <option v-for="minute in minutes" :key="minute.value" :value="minute.value">{{ minute.label }}</option>
                 </select>
             </div>
+            <div class="row">
+                <label class="body-label">Price:</label>
+                <label v-if="displayReservationPrice==1" class="body-label">${{reservationFee}}</label>
+            </div>
             <div>
+                <button @click="reservation_update" class="submit-button">Calculate Price</button>
                 <button @click="reservation_submit" class="submit-button">Proceed Reservation</button>
             </div>
         </div>
@@ -60,6 +70,7 @@
                 <input type="text" v-model="parkingSpotNumber_subscription" style="width: 80px;height:28px">
             </label>
             <div>
+                <button @click="subscription_update" class="submit-button">Calculate Price</button>
                 <button @click="subscription_submit" class="submit-button">Proceed Subscription</button>
             </div>
         </div>
@@ -87,7 +98,7 @@
   }
   .submit-button{
     margin-top: 10px;
-    width: 300px;
+    width: 200px;
   }
   .radio-button-container{
     margin-bottom: 20px;

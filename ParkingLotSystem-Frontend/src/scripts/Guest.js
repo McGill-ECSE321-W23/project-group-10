@@ -18,17 +18,23 @@ export default {
         username: '',
         licenseNumber: '',
         parkingSpotNumber_reservation:'',
-        reservation_hour: '',
-        reservation_minute: '',
+        reservation_hour: 0,
+        reservation_minute: 0,
         errorMessage: '',
         showError: false,
         options: ['For Service', 'For Reservation', 'For Subscription'],
         selectedOption: '',
         services: [],
         selectedService:'',
+        selectedServicePrice:'',
         parkingSpotNumber_subscription:'',
         subscription_request: null,
         service_request:null,
+        displayServicePrice:0,
+        displayReservationPrice:0,
+        reservationFee:0,
+        displaySubscriptionPrice:0,
+        subscriptionPrice:0,
 
 
         hours: [
@@ -63,6 +69,39 @@ export default {
 
   methods:{
 
+    async subscription_update(){
+      try {
+        console.log(this.parkingSpotNumber_subscription);
+        let response = await AXIOS.get(`/api/sub-without-account/${this.parkingSpotNumber_subscription}`);
+        this.subscriptionPrice = response.data.price;
+        console.log(response.data);
+        this.displaySubscriptionPrice=1;
+      } catch(e) {
+        this.error(e);
+      }
+    },
+
+    async service_update(){
+      try {
+        let response = await AXIOS.get(`/api/service/${this.selectedService}`);
+        this.selectedServicePrice = response.data.price;
+        this.displayServicePrice=1;
+      } catch(e) {
+        this.error(e);
+      }
+    },
+
+    
+    async reservation_update(){
+      try {
+        let response = await AXIOS.get(`/api/parking-spot/${this.parkingSpotNumber_reservation}`);
+        this.reservationFee = (response.data.type.fee)*(60*this.reservation_hour+this.reservation_minute);
+        this.displayReservationPrice=1;
+      } catch(e) {
+        this.error(e);
+      }
+    },
+
     async reservation_submit(){
       try {
         let response = await AXIOS.post(
@@ -78,6 +117,7 @@ export default {
           }
         );
         this.service_request = response.data;
+        this.$router.push('/payment');
       } catch(e) {
         this.error(e);
       }
@@ -98,6 +138,7 @@ export default {
           }
         );
         this.service_request = response.data;
+        this.$router.push('/payment');
       } catch(e) {
         this.error(e);
       }
@@ -118,6 +159,7 @@ export default {
           }
         );
         this.subscription_request = response.data;
+        this.$router.push('/payment');
       } catch(e) {
         this.error(e);
       }
