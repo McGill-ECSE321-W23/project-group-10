@@ -12,23 +12,42 @@ var AXIOS = axios.create({
 
 export default {
     name: "payment",
+    props: {
+      disabled: Boolean
+    },
     data() {
         return {
-          amount: '',
-          currentDate: new Date().toLocaleDateString(),
-          paymentId: '', // Generate a unique payment ID when the payment is made
-          username: "Marco",
-        };
+          creditCardNbr: '',
+          valueState: null
+        }
+    },
+    methods: {
+      checkFormValidity() {
+        const valid = this.$refs.form.checkValidity();
+        this.valueState = valid;
+        return valid;
       },
-      methods: {
-        pay() {
-          // Handle payment logic here
-        },
-        returnToMenu() {
-          // Redirect to the main menu
-        },
+      resetModal() {
+        this.creditCardNbr = '';
+        this.valueState = null;
       },
-  
-    
+      handleOk(bvModalEvent) {
+        // Prevent modal from closing
+        bvModalEvent.preventDefault();
+        // Trigger submit handler
+        this.handleSubmit();
+      },
+      handleSubmit() {
+        // Exit when the form isn't valid
+        if (!this.checkFormValidity()) {
+          return;
+        }
+        this.$emit('submit');
+        // Hide the modal manually
+        this.$nextTick(() => {
+          this.$bvModal.hide('paymentModal');
+        })
+      }
+    },
     components:{NavBar}
   }
