@@ -1,7 +1,7 @@
 <template>
   <div class="monthly-customer-reservation">
     <NavBar 
-        :navItems="['monthly-customer']" 
+        :navItems="['monthly-customer', 'services-customer', 'monthly-customer-reservation']" 
         activeNav="'monthly-customer'" 
         :username="username" 
     />
