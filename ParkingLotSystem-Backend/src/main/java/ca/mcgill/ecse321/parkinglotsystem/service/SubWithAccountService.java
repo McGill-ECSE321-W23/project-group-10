@@ -192,19 +192,16 @@ public class SubWithAccountService {
     }
 
     /**
-     * Service method to update the active subscription of the given monthly customer
-     * by incrementing the number of months by one.
+     * Service method to update the number of month of the given monthly customer
      * @author Marco
      * @param monthlyCustomerEmail the email of the monthly customer
      * @return the updated subscription
      */
     @Transactional
-    public SubWithAccount updateSubWithAccount(String monthlyCustomerEmail) {
-
+    public SubWithAccount updateSubWithAccount(String monthlyCustomerEmail, int numberOfMonths) {
         SubWithAccount sub = getActiveByCustomer(monthlyCustomerEmail);
-        sub.setNbrMonths(sub.getNbrMonths() + 1);
+        sub.setNbrMonths(numberOfMonths);
         subWithAccountRepository.save(sub);
-
         return sub;
     }
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -122,6 +123,18 @@ public class SubWithAccountController {
     public void deleteSubWithAccount(@PathVariable int id, @RequestHeader String token) {
         authService.authenticateManager(token);
         service.deleteSubWithAccount(id);
+    }
+
+    /**
+     * Controller method to update the subscription with account with the given 
+     * number of month.
+     * @param email the email of the subscription
+     * @param numberOfMonths the number of months to extend the subscription
+     * @return the updated SubWithAccountDto
+     */
+    @PutMapping(value ={"/{email}", "/{email}/"})
+    public SubWithAccountDto updateSubWithAccount(@PathVariable String email, @RequestParam int numberOfMonths) {
+        return convertSubWithAccountToDto(service.updateSubWithAccount(email, numberOfMonths));
     }
 
 }

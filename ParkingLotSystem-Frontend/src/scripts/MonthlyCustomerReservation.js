@@ -17,8 +17,12 @@ export default {
         return {
             reservationId: '',
             reservationStartDate: '',
-            nbrOfMonths: '',
+            curretNbrOfMonths: '',
             error:'',
+            fee:'',
+            amount: '',
+            newNbrOfMonths: '',
+            amount:'',
         }
         
     },
@@ -29,7 +33,10 @@ export default {
             console.log(response.data)
             this.reservationId = response.data.reservationId
             this.reservationStartDate = response.data.date
-            this.nbrOfMonths = response.data.nbrMonths
+            this.curretNbrOfMonths = response.data.nbrMonths
+            this.newNbrOfMonths = response.data.nbrMonths
+            this.fee = response.data.parkingSpotDto.type.fee
+            this.amount = 0
         } catch (error) {
             this.reservationId = 'invalid'
             this.reservationStartDate = 'invalid'
@@ -39,7 +46,13 @@ export default {
         }
     },
     methods: {
-        goToPayment
+        goToPayment(){
+            // TODO: go to payment page
+        },
+        increaseMonth(){
+            this.newNbrOfMonths++
+            this.amount = this.newNbrOfMonths * this.fee
+        }
     }
     
 }

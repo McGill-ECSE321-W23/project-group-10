@@ -2,18 +2,27 @@
   <div class="monthly-customer-reservation">
     <h1>Monthly Customer Reservation</h1>
     <div class="reservation-info">
-      <label>Reservation ID:</label>
+      <label>Reservation ID: </label>
       <span>{{ reservationId }}</span>
     </div>
     <div class="reservation-info">
-      <label>Start Date:</label>
+      <label>Start Date: </label>
       <span>{{ reservationStartDate }}</span>
     </div>
     <div class="reservation-info">
-      <label>Number of Months:</label>
-      <span>{{ nbrOfMonths }}</span>
+      <label>Number of Months: </label>
+      <span>{{ newNbrOfMonths }}</span>
+    </div>
+    <div class="reservation-info">
+      <label>Amount to pay: </label>
+      <span>{{ amount }}</span>
     </div>
     <p class="error-msg" v-if="error">{{ error }}</p>
+
+    <div class="button-group">
+      <button @click="goToPayment" class="btn btn-payment">Proceed to payment</button>
+      <button @click="increaseMonth" class="btn btn-payment">Increase month</button>
+    </div>
   </div>
 </template>
 <script src="@/scripts/MonthlyCustomerReservation.js"></script>
@@ -47,4 +56,20 @@
   font-weight: bold;
   margin-top: 20px;
 }
+
+.btn-payment {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.btn-payment:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+  color: #fff;
+}
+
 </style>

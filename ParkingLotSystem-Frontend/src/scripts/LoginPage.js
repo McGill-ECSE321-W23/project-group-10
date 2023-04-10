@@ -26,6 +26,7 @@ export default {
         try {
             let managerResponse = await AXIOS.get(`/api/manager/verify/`, 
             {params : {email: this.email, password: this.password}});
+            
             console.log(managerResponse.data);
             if (!managerResponse.data) {
                 this.errorEvent = 'wrong password';
