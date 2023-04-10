@@ -1,4 +1,5 @@
 import NavBar from '@/components/NavBar.vue'
+import Payment from '@/components/Payment.vue'
 import axios from 'axios'
 var config = require('../../config')
 
@@ -57,7 +58,6 @@ export default {
       }
     },
     async payServiceReq() {
-      console.log(this.currServiceReq);
       try {
         let response = await AXIOS.post(
           "/api/payment-service",
@@ -131,6 +131,7 @@ export default {
     }
   },
   components: {
-    NavBar
+    NavBar,
+    Payment
   }
 }

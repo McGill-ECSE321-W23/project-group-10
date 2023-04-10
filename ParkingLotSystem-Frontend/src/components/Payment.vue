@@ -1,34 +1,30 @@
 <template>
   <div class="payment">
-    <!-- <form @submit.prevent="pay">
-        <div class="input-group">
-          <label for="amount">Credit Card Number:</label>
-          <input type="text" id="amount" v-model="amount" required />
-        </div>
-
-        <div class="button-group">
-          <button type="submit">Pay</button>
-          <button type="button" @click="returnToMenu">Return</button>
-        </div>
-      </form> -->
-    <b-form @submit="onSubmit" class="mx-auto" style="max-width: 400px; margin-top: 50px;" @reset="onCancel">
-      <b-form-group
-        id="input-group-1"
-        label="Credit Card Number:"
-        label-for="creditCardInput"
-      >
-        <b-form-input
-          id="creditCardInput"
-          v-model="creditCardNumber"
-          type="text"
-          placeholder="Enter Credit Card Number"
-          required
-        ></b-form-input>
-      </b-form-group>
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Cancel</b-button>
-    </b-form>
+    <b-button v-b-modal.paymentModal variant="primary" :disabled="disabled">Pay</b-button>
+    <b-modal
+      id="paymentModal"
+      ref="modal"
+      title="Enter Payment Information"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+    >
+      <form ref="form" @submit.stop.prevent="handleSubmit">
+        <b-form-group
+          label="Credit Card Number"
+          label-for="credit-card-input"
+          invalid-feedback="This field is required"
+          :state="valueState"
+        >
+          <b-form-input
+            id="credit-card-input"
+            v-model="creditCardNbr"
+            :state="valueState"
+            required
+          ></b-form-input>
+        </b-form-group>
+      </form>
+    </b-modal>
   </div>
 </template>
 
