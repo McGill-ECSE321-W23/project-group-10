@@ -14,7 +14,8 @@ import EditProfileManager from "@/components/EditProfileManager.vue";
 import ManagerDashboard from '@/components/ManagerDashboard.vue'
 import MonthlyCustomer from '@/components/MonthlyCustomer.vue'
 import Guest from '@/components/Guest.vue'
-import Registration from '@/components/Registration.vue'
+import RegistrationCustomer from '@/components/RegistrationCustomer.vue'
+import RegistrationEmployee from '@/components/RegistrationEmployee.vue'
 import Payment from '@/components/Payment.vue'
 import CreateMonthlyCustomerReservationPage from '@/components/CreateMonthlyCustomerReservationPage.vue'
 import MonthlyCustomerReservation from '@/components/MonthlyCustomerReservation.vue'
@@ -54,12 +55,12 @@ export default new Router({
       component: CreateParkingSpot
     },
     {
-      path: '/LoginPage',
+      path: '/login-page',
       name: "LoginPage",
       component: LoginPage
     },
     {
-      path: '/ListOfReservationPage',
+      path: '/list-of-reservation-page',
       name: "ListOfReservationPage",
       component: ListOfReservationPage
 
@@ -100,9 +101,14 @@ export default new Router({
       component: Guest
     },
     {
-      path: '/registration',
-      name: "Registration",
-      component: Registration
+      path: '/registration-customer',
+      name: "RegistrationCustomer",
+      component: RegistrationCustomer
+    },
+    {
+      path: '/registration-employee',
+      name: "RegistrationEmployee",
+      component: RegistrationEmployee
     },
     {
       path: '/payment',

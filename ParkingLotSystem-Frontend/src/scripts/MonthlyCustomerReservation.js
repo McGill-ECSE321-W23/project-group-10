@@ -1,4 +1,5 @@
 import NavBar from '@/components/NavBar.vue'
+import Payment from '@/components/Payment.vue'
 import axios from 'axios'
 var config = require('../../config')
 
@@ -18,42 +19,79 @@ export default {
             reservationId: '',
             reservationStartDate: '',
             curretNbrOfMonths: '',
-            error:'',
+            errorMessage:'',
             fee:'',
             amount: '',
             newNbrOfMonths: '',
             amount:'',
+            username: '',
         }
         
     },
     async created() {
         try {
-            console.log(this.monthlyCustomerEmail)
+
+            let responseFee = await AXIOS.get(`/api/sub-with-account/get-parking-fee/${localStorage.getItem('monthlyCustomerEmail')}`)
+            this.fee = responseFee.data
+            
+            let responseId = await AXIOS.get(`/api/sub-with-account/get-id/${localStorage.getItem('monthlyCustomerEmail')}`)
+            this.reservationId = responseId.data
+
             let response = await AXIOS.get(`/api/sub-with-account/active-by-customer/${localStorage.getItem('monthlyCustomerEmail')}`)
-            console.log(response.data)
-            this.reservationId = response.data.reservationId
             this.reservationStartDate = response.data.date
             this.curretNbrOfMonths = response.data.nbrMonths
             this.newNbrOfMonths = response.data.nbrMonths
-            this.fee = response.data.parkingSpotDto.type.fee
             this.amount = 0
-        } catch (error) {
-            this.reservationId = 'invalid'
+        } catch (e) {
             this.reservationStartDate = 'invalid'
             this.nbrOfMonths = 'invalid'
-            this.error = 'You have no active subscription'
-            console.log(error)
+            this.fee = 70 
+            this.error(e)
         }
     },
     methods: {
-        goToPayment(){
-            // TODO: go to payment page
+        async submitPayment(){
+            try {
+                let paymentResponse = await AXIOS.post(`/api/payment-reservation/`, 
+                {},
+                {
+                    params: {
+                        amount: this.amount, reservationId: this.reservationId
+                    },
+                });
+                let responseUpdate = await AXIOS.put(`/api/sub-with-account/${localStorage.getItem('monthlyCustomerEmail')}`,
+                {},
+                {
+                    params: {
+                        numberOfMonths: this.newNbrOfMonths
+                    },
+                });
+                location.reload();
+
+            }
+            catch (e) {
+                console.log(e)
+                this.error(e)
+            }
+            
         },
         increaseMonth(){
             this.newNbrOfMonths++
             this.amount = (this.newNbrOfMonths - this.curretNbrOfMonths) * this.fee
             // TODO: update currentNrOfMonths and call location.reload();
-        }
+        },
+        error(e) {
+            if(e.hasOwnProperty("response")) {
+              this.errorMessage = e.response.data.message;
+            }
+            else {
+              this.errorMessage = e.message;
+            }
+          }
+    },
+    components: {
+        Payment,
+        NavBar
     }
     
 }

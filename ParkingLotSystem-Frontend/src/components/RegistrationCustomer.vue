@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="registration">
+    <div class="RegistrationCustomer">
         <NavBar 
             :navItems="[]" 
-            activeNav="registration" 
+            activeNav="RegistrationCustomer" 
             :username="username" 
         />
     </div>
@@ -39,6 +39,11 @@
           <input type="password" id="confirm-password" v-model="confirmPassword" required />
         </div>
 
+        <div class="input-group">
+          <label for="license">License Number:</label>
+          <input type="password" id="license" v-model="lisenseNumber" required />
+        </div>
+
         <div class="button-group">
           <button type="submit">Register</button>
           <button type="button" @click="returnToLogin">Return</button>
@@ -48,7 +53,7 @@
   </div>
 </template>
 
-<script src="@/scripts/Registration.js"></script>
+<script src="@/scripts/RegistrationCustomer.js"></script>
 
 
 <style scoped>

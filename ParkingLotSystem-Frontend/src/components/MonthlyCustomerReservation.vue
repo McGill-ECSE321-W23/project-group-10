@@ -1,33 +1,45 @@
 <template>
   <div class="monthly-customer-reservation">
-    <h1>Monthly Customer Reservation</h1>
-    <div class="reservation-info">
-      <label>Reservation ID: </label>
-      <span>{{ reservationId }}</span>
-    </div>
-    <div class="reservation-info">
-      <label>Start Date: </label>
-      <span>{{ reservationStartDate }}</span>
-    </div>
-    <div class="reservation-info">
-      <label>Number of Months: </label>
-      <span>{{ newNbrOfMonths }}</span>
-    </div>
-    <div class="reservation-info">
-      <label>Amount to pay: </label>
-      <span>{{ amount }}</span>
-    </div>
-    <p class="error-msg" v-if="error">{{ error }}</p>
+    <NavBar 
+        :navItems="['monthly-customer']" 
+        activeNav="'monthly-customer'" 
+        :username="username" 
+    />
 
-    <div class="button-group">
-      <button @click="goToPayment" class="btn">Proceed to payment</button>
-      <button @click="increaseMonth" class="btn">Increase month</button>
+    <div class ="main-body"> 
+
+      <h1>Monthly Customer Reservation</h1>
+      <div class="reservation-info">
+        <label>Reservation ID: </label>
+        <span>{{ reservationId }}</span>
+      </div>
+      <div class="reservation-info">
+        <label>Start Date: </label>
+        <span>{{ reservationStartDate }}</span>
+      </div>
+      <div class="reservation-info">
+        <label>Number of Months: </label>
+        <span>{{ newNbrOfMonths }}</span>
+      </div>
+      <div class="reservation-info">
+        <label>Amount to pay: </label>
+        <span>{{ amount }}</span>
+      </div>
+      <p class="error-msg" v-if="errorMessage">{{ errorMessage }}</p>
+
+      <div class="button-group">
+        <Payment @submit=" submitPayment()" />
+        <button @click="increaseMonth" class="btn">Increase month</button>
+      </div>
+
     </div>
+
+    
   </div>
 </template>
 <script src="@/scripts/MonthlyCustomerReservation.js"></script>
 <style scoped>
-.monthly-customer-reservation {
+.main-body {
   display: flex;
   flex-direction: column;
   align-items: center;
