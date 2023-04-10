@@ -5,7 +5,6 @@
         activeNav="employee" 
         :username="username" 
       />
-        <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
         <div class="content">
             <br>
             <br>

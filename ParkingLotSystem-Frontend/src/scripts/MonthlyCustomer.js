@@ -14,13 +14,21 @@ export default {
   name: "monthly-customer",
   data() {
     return {
-      username: "Weiheng",
-      email: "weiheng.xiao@mail.mcgill.ca",
+      username: "",
+      email: "",
       errorMessage: "",
-      showError: false,
     }
   },
-
+  async created() {
+    try {
+      let response = await AXIOS.get(`/api/monthly-customer/${localStorage.getItem('monthlyCustomerEmail')}`)
+      console.log(response.data)
+      this.email = response.data.email
+      this.username = response.data.name
+    } catch (error) {
+      console.log(error)
+    }
+  },
   
   components:{NavBar}
 }

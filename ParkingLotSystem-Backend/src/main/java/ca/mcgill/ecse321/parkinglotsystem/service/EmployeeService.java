@@ -153,4 +153,23 @@ public class EmployeeService {
             return em;
         }
      }
+
+     /**
+      * method to verify password of an employee
+      *@author Shaun
+      * @param email
+      * @param password
+      * @return
+      */
+     @Transactional
+     public boolean verifyPassword(String email,String password){
+        Employee em=employeeRepository.findEmployeeByEmail(email);
+        if(em==null){
+            throw new CustomException("Invalid employee email! ", HttpStatus.BAD_REQUEST);
+        }else{
+            return em.getPassword().equals(password);
+        }
+     }
+
+     
 }

@@ -170,5 +170,8 @@ public class MonthlyCustomerController {
         return HelperMethods.convertMonthlyCustomerToDto(mc);
     } 
 
-
+    @GetMapping(value = {"/verify", "/verify/"})
+    public boolean verifyMonthlyCustomer(@RequestParam("email") String email, @RequestParam("password") String password) {
+        return monthlyCustomerService.verifyPassword(email, password);
+    }
 }

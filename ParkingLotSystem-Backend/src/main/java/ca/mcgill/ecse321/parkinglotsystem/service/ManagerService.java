@@ -154,4 +154,21 @@ public class ManagerService {
             return ma;
         }
      }
+     
+    /**
+    * method to verify the password of a manager
+    * @author Shaun
+    * @param email the email of the manager
+    * @param password the password of the manager
+    * @return true if the password is correct, false otherwise
+    * @throws CustomException if the manager does not exist
+    */
+     @Transactional
+     public boolean verifyPassword(String email, String password) {
+    	 Manager ma = managerRepository.findManagerByEmail(email);
+    	 if(ma == null) {
+    		 throw new CustomException("Invalid manager email! ", HttpStatus.BAD_REQUEST);
+    	 }
+    	 return ma.getPassword().equals(password);
+     }
 }

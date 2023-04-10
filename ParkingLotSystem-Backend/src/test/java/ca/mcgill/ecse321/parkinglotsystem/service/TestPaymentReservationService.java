@@ -136,32 +136,26 @@ public class TestPaymentReservationService {
         PaymentReservation paymentReservation = new PaymentReservation();
         String error = "";
         try {
-			paymentReservation = paymentReservationService.createPaymentReservation(PAYMENT_TIME, PAYMENT_AMOUNT1, RESERVATION_ID1);
+			paymentReservation = paymentReservationService.createPaymentReservation(PAYMENT_AMOUNT1, RESERVATION_ID1);
 		} catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();
 		}
         assertEquals("", error);
         assertNotNull(paymentReservation);
-        assertEquals(PAYMENT_TIME, paymentReservation.getDateTime());
         assertEquals(PAYMENT_AMOUNT1, paymentReservation.getAmount());
     }
 
-    @Test
-    public void testCreatePaymentReservationWithInvalidDate() {
-        testCreatePaymentReservationFailure(null, PAYMENT_AMOUNT1, RESERVATION_ID1, 
-        "no date and time entered! ");
-    }
 
     @Test
     public void testCreatePaymentReservationWithInvalidFee() {
-        testCreatePaymentReservationFailure(PAYMENT_TIME, INVALID_PAYMENT_AMOUNT, RESERVATION_ID1, 
+        testCreatePaymentReservationFailure(INVALID_PAYMENT_AMOUNT, RESERVATION_ID1, 
         "amount should be greater than 0! ");
     }
 
     @Test
     public void testCreatePaymentReservationWithInvalidReservation() {
-        testCreatePaymentReservationFailure(PAYMENT_TIME, PAYMENT_AMOUNT1, INVALID_RESERVATION_ID, 
+        testCreatePaymentReservationFailure(PAYMENT_AMOUNT1, INVALID_RESERVATION_ID, 
         "Reservation is not found. ");
     }
 
@@ -352,11 +346,11 @@ public class TestPaymentReservationService {
     }
 
 
-    private void testCreatePaymentReservationFailure(Timestamp timestamp, double amount, int resId, String message) {
+    private void testCreatePaymentReservationFailure(double amount, int resId, String message) {
         PaymentReservation paymentReservation = null;
         String error = "";
         try {
-			paymentReservation = paymentReservationService.createPaymentReservation(timestamp, amount, resId);
+			paymentReservation = paymentReservationService.createPaymentReservation(amount, resId);
 		} catch (CustomException e) {
 			// Check that no error occurred
 			error = e.getMessage();

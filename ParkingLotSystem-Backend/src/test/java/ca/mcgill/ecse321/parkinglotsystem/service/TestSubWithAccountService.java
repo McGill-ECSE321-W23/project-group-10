@@ -57,7 +57,7 @@ public class TestSubWithAccountService {
         
         lenient().when(repository.findSubWithAccountById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(VALID_ID)) {
-                return dummy(VALID_ID, 1, dummyCustomer(VALID_CUSTOMER_EMAIL_INACTIVE), dummyParkingSpot(VALID_SPOT_ID_INACTIVE));
+                return dummy(VALID_ID, 0, dummyCustomer(VALID_CUSTOMER_EMAIL_INACTIVE), dummyParkingSpot(VALID_SPOT_ID_INACTIVE));
             }
             return null;
         });
@@ -67,7 +67,7 @@ public class TestSubWithAccountService {
                 List<SubWithAccount> subs = new ArrayList<>();
                 MonthlyCustomer customer = invocation.getArgument(0);
                 if(customer.getEmail().equals(VALID_CUSTOMER_EMAIL_INACTIVE)) {
-                    subs.add(dummy(1, 1,customer, dummyParkingSpot(VALID_SPOT_ID_INACTIVE)));
+                    subs.add(dummy(1, 0,customer, dummyParkingSpot(VALID_SPOT_ID_INACTIVE)));
                 }
                 else if(customer.getEmail().equals(VALID_CUSTOMER_EMAIL_ACTIVE)) {
                     subs.add(dummy(1, NBR_MONTHS_ACTIVE,customer, dummyParkingSpot(VALID_SPOT_ID_ACTIVE)));
@@ -80,7 +80,7 @@ public class TestSubWithAccountService {
                 List<SubWithAccount> subs = new ArrayList<>();
                 ParkingSpot spot = invocation.getArgument(0);
                 if(spot.getId() == VALID_SPOT_ID_INACTIVE) {
-                    subs.add(dummy(1, 1, dummyCustomer(VALID_CUSTOMER_EMAIL_INACTIVE), spot));
+                    subs.add(dummy(1, 0, dummyCustomer(VALID_CUSTOMER_EMAIL_INACTIVE), spot));
                 }
                 else if(spot.getId() == VALID_SPOT_ID_ACTIVE) {
                     subs.add(dummy(1, NBR_MONTHS_ACTIVE, dummyCustomer(VALID_CUSTOMER_EMAIL_ACTIVE), spot));
@@ -90,8 +90,8 @@ public class TestSubWithAccountService {
 
         lenient().when(repository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<SubWithAccount> subs = new ArrayList<>();
-            subs.add(dummy(1, 1, null, null));
-            subs.add(dummy(2, 1, null, null));
+            subs.add(dummy(1, 0, null, null));
+            subs.add(dummy(2, 0, null, null));
             return subs;
         });
 
@@ -270,9 +270,9 @@ public class TestSubWithAccountService {
 
     @Test
     public void testUpdateSub() {
-        SubWithAccount sub = service.updateSubWithAccount(VALID_CUSTOMER_EMAIL_ACTIVE);
+        SubWithAccount sub = service.updateSubWithAccount(VALID_CUSTOMER_EMAIL_ACTIVE ,2);
         assertNotNull(sub);
-        assertEquals(NBR_MONTHS_ACTIVE + 1, sub.getNbrMonths());
+        assertEquals(2, sub.getNbrMonths());
     }
 
     @Test
@@ -289,6 +289,45 @@ public class TestSubWithAccountService {
             errMsg = e.getMessage();
         }
         assertEquals("Invalid reservation ID.", errMsg);
+    }
+
+
+    @Test
+    public void testGetReservationParkingSpotPrice() {
+        String errMsg = "";
+        double fee = 0.0;
+        try {
+            fee = service.getReservationParkingSpotPrice(VALID_CUSTOMER_EMAIL_ACTIVE);    
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("", errMsg);
+        assertEquals(1, fee);
+    }
+
+
+    @Test
+    public void testGetReservationParkingSpotPriceFailure() {
+        String errMsg = "";
+        try {
+            service.getReservationParkingSpotPrice(INVALID_CUSTOMER_EMAIL);    
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("There is no active subscription", errMsg);
+    }
+
+    @Test
+    public void testGetReservationId() {
+        String errMsg = "";
+        int id = 0;
+        try {
+            id = service.getReservationId(VALID_CUSTOMER_EMAIL_ACTIVE);    
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("", errMsg);
+        assertEquals(1, id);
     }
 
     private void testCreateSubFailure(String monthlyCustomerEmail, int parkingSpotId, String message) {

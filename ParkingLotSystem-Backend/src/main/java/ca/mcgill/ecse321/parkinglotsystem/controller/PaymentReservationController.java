@@ -60,10 +60,9 @@ public class PaymentReservationController {
      */
     @PostMapping(value = {"", "/"})
     public PaymentReservationDto createPaymentReservationDto(
-        @RequestParam("dateTime") Timestamp timestamp, 
         @RequestParam("amount") double amount, 
         @RequestParam("reservationId") int reservationId) {
-        PaymentReservation paymentReservation = paymentReservationService.createPaymentReservation(timestamp, amount, reservationId); // change reservation
+        PaymentReservation paymentReservation = paymentReservationService.createPaymentReservation(amount, reservationId); // change reservation
         return HelperMethods.convertPaymentReservationToDto(paymentReservation);
 
     }
