@@ -1,23 +1,18 @@
 <template>
   <div class="monthly-customer-reservation">
 
-    <p>Please select the reservation type:</p>
-    <input type="radio" id="sub-with-account" name="reservation-type" value="subWithAccount" v-model="reservationType">
-    <label for="sub-with-account">subscription with account</label><br>
-    <input type="radio" id="sub-without-account" name="reservation-type" value="subWithoutAccount" v-model="reservationType">
-    <label for="sub-without-account">subscription without account</label><br>
-    <div v-if="reservationType === 'subWithAccount'">
-      <input type="email" id="monthly-customer-email" v-model="monthlyCustomerEmail" placeholder="Enter monthly customer email">
-    </div>
+    <p>Create Monthly customer reservation:</p>
 
-    <div v-if="reservationType === 'subWithoutAccount'">
-      <input type="text" id="license-number" v-model="licenseNumber" placeholder="Enter license number">
-    </div>
+    <input type="email" id="monthly-customer-email" v-model="monthlyCustomerEmail" placeholder="Enter monthly customer email">
+
     <div v-if="selectedSpot">
       Selected parking spot: {{ selectedSpot.id }} - {{ selectedSpot.status }}
     </div>
 
     <button v-on:click="createReservation">Submit</button>
+    <p>
+      <span v-if="errorMessage" style="color:red">Error: {{errorMessage}} </span>
+    </p>
 
     <div class = "table">
       <table class="parking-spot-list">
@@ -44,6 +39,7 @@
 .monthly-customer-reservation {
   width: 1300px;
   max-height: 300px;
+  align-content: center;
   
 }
 
@@ -53,6 +49,7 @@
   width: 200px;
   overflow: scroll;
   border-collapse: collapse;
+  margin: 0 auto;
 }
 
 td,

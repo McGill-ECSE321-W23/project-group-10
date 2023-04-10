@@ -17,7 +17,6 @@ export default {
       username: "",
       email: "",
       errorMessage: "",
-      showError: false,
     }
   },
   async created() {

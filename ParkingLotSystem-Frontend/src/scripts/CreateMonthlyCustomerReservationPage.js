@@ -13,20 +13,12 @@ export default {
     name: 'monthly-customer-reservation',
     data() {
       return {
-        reservationType: "subWithoutAccount",
         licenseNumber: "",
         selectedSpot: null,
         parkingSpots: [],
-        monthlyCustomerEmail: ""
+        monthlyCustomerEmail: "",
+        errorMessage: "",
       };
-    },
-    computed: {
-      isDisabled() {
-        return this.reservationType === "subWithAccount";
-      },
-      isMonthlyCustomerEmailDisabled() {
-        return this.reservationType === 'subWithAccount';
-      }
     },
     async created() {
         let response = await AXIOS.get(`/api/parking-spot/`);
@@ -63,40 +55,35 @@ export default {
         this.selectedSpot = parkingSpot;
       },
       async createReservation() {
-        if (this.reservationType === 'subWithAccount') {
-          console.log('create reservation with account');
-          try {
-            let response = await AXIOS.post(
-                `/api/sub-with-account/`, 
-                {},
-                {
-                    params: { monthlyCustomerEmail: this.monthlyCustomerEmail, parkingSpotId: this.selectedSpot.id },
-                    headers: { token: "dev" } // TODO: Get token from localStorage
-                }
-                )
-                .then(response => {
-                    console.log('Created Parking Spot:', response.data);
-                    this.parkingSpots.find(parkingSpot => parkingSpot.id === selectedSpot.id).status = 'reserved';
-                });
-          } catch (error) {
-              console.log(error)
-          }
+        console.log('create reservation with account');
+        try {
+          let response = await AXIOS.post(
+              `/api/sub-with-account/`, 
+              {},
+              {
+                  params: { monthlyCustomerEmail: this.monthlyCustomerEmail, parkingSpotId: this.selectedSpot.id },
+                  headers: { token: "dev" } // TODO: Get token from localStorage
+              }
+              )
+              .then(response => {
+                  console.log('Created Parking Spot:', response.data);
+                  // this.parkingSpots.find(parkingSpot => parkingSpot.id === selectedSpot.id).status = 'reserved';
+                  location.reload();
+              });
+        } catch (error) {
+            console.log(error)
+            this.error(error)
         }
-        if (this.reservationType === 'subWithoutAccount') {
-          console.log('create reservation without account');
-          try {
-            let response = await AXIOS.post(
-                `/api/sub-without-account/`, 
-                {},
-                {
-                    params: { licenseNumber: this.licenseNumber, parkingSpotId: this.selectedSpot.id },
-                    // headers: { token: "dev" } // TODO: Get token from localStorage
-                }
-                )
-          } catch (error) {
-              console.log(error)
-          }
+        
+      },
+      error(e) {
+        if(e.hasOwnProperty("response")) {
+          this.errorMessage = e.response.data.message;
         }
+        else {
+          this.errorMessage = e.message;
+        }
+        this.showError = true;
       }
     }
   }

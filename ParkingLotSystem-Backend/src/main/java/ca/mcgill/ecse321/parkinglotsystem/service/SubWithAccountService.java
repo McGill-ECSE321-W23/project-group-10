@@ -199,10 +199,15 @@ public class SubWithAccountService {
      */
     @Transactional
     public SubWithAccount updateSubWithAccount(String monthlyCustomerEmail, int numberOfMonths) {
-        SubWithAccount sub = getActiveByCustomer(monthlyCustomerEmail);
-        sub.setNbrMonths(numberOfMonths);
-        subWithAccountRepository.save(sub);
-        return sub;
+        MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(monthlyCustomerEmail);
+        List<SubWithAccount> subs = toList(subWithAccountRepository.findSubWithAccountByCustomer(monthlyCustomer));
+        if(subs.size() <= 0) {
+            throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
+        }
+        SubWithAccount latestSub = subs.get(subs.size() - 1);
+        latestSub.setNbrMonths(numberOfMonths);
+        subWithAccountRepository.save(latestSub);
+        return latestSub;
     }
 
     /**
@@ -219,6 +224,37 @@ public class SubWithAccountService {
         subWithAccountRepository.deleteById(id);
     }
 
+
+    /**
+     * Service method to get the price of the reservation parking spot of the given monthly customer.
+     * @author Shaun
+     * @param email the email of the monthly customer
+     * @return the price of the reservation parking spot
+     */
+    public double getReservationParkingSpotPrice(String email) {
+        MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(email);
+        List<SubWithAccount> subs = toList(subWithAccountRepository.findSubWithAccountByCustomer(monthlyCustomer));
+        if(subs.size() <= 0) {
+            throw new CustomException("There is no active subscription", HttpStatus.NOT_FOUND);
+        }
+        SubWithAccount latestSub = subs.get(subs.size() - 1);
+        return latestSub.getParkingSpot().getType().getFee();
+    }
+
+
+    /**
+     * Service method to get the ID of the reservation parking spot of the given monthly customer.
+     * @author Shaun
+     * @param email the email of the monthly customer
+     * @return the ID of the reservation parking spot
+     */
+    public int getReservationId(String email) {
+        MonthlyCustomer monthlyCustomer = monthlyCustomerService.getMonthlyCustomerByEmail(email);
+        List<SubWithAccount> subs = toList(subWithAccountRepository.findSubWithAccountByCustomer(monthlyCustomer));
+        SubWithAccount latestSub = subs.get(subs.size() - 1);
+        return latestSub.getId();
+    }
+
     /**
      * Checks whether the last day of the subscription is after the current day.
      * @author Marco
@@ -231,5 +267,8 @@ public class SubWithAccountService {
         Date lastSubDate = Date.valueOf(sub.getDate().toLocalDate().plusMonths(sub.getNbrMonths()).minusDays(1));
         return lastSubDate.after(date);
     }
+
+
+    
 
 }

@@ -34,8 +34,11 @@ export default {
             }
             // TODO: how to pass login dto? send body in request
             //let managerAuthenticationRes = await Axios.post('/api/authentication/login-manager')
-            // TODO: navigate to manager page
-            //this.$router.push('/ManagerPage');
+            // Store the email of the employee in localStorage
+            localStorage.setItem('managerEmail', this.email);
+
+            // Navigate to the monthly-customer page
+            this.$router.push('/manager/dashboard');
         } catch (e) {
             this.errorEvent = "invalid manager email";
         }
@@ -54,8 +57,11 @@ export default {
             // TODO: how to pass login dto?
             //let managerAuthenticationRes = await Axios.post('/api/authentication/login-manager')
             
-            
-            //this.$router.push('/employeePage');
+            // Store the email of the employee in localStorage
+            localStorage.setItem('employeeEmail', this.email);
+
+            // Navigate to the monthly-customer page
+            this.$router.push('/employee');
         } catch (e) {
             this.errorEvent = "invalid employee email";
         }
@@ -72,7 +78,7 @@ export default {
             // TODO: how to pass login dto?
             //let managerAuthenticationRes = await Axios.post('/api/authentication/login-manager')
        
-            // Store the email of the employee in localStorage
+            // Store the email of the customer in localStorage
             localStorage.setItem('monthlyCustomerEmail', this.email);
 
             // Navigate to the monthly-customer page

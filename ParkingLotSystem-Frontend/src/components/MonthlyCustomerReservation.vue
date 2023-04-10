@@ -17,10 +17,10 @@
       <label>Amount to pay: </label>
       <span>{{ amount }}</span>
     </div>
-    <p class="error-msg" v-if="error">{{ error }}</p>
+    <p class="error-msg" v-if="errorMessage">{{ errorMessage }}</p>
 
     <div class="button-group">
-      <button @click="goToPayment" class="btn">Proceed to payment</button>
+      <Payment @submit=" submitPayment()" />
       <button @click="increaseMonth" class="btn">Increase month</button>
     </div>
   </div>

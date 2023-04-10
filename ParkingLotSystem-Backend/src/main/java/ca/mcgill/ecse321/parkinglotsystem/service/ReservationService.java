@@ -176,7 +176,6 @@ public class ReservationService {
 		return toList(reservations);
 	}
 
-
     /**
 	 * Helper method that converts iterable to list
      * @author Mike Zhang

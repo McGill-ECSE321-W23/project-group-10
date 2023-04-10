@@ -33,12 +33,8 @@ public class PaymentReservationService {
     }
     
     @Transactional
-    public PaymentReservation createPaymentReservation(Timestamp dateTime, double amount, int reservationId ) {
+    public PaymentReservation createPaymentReservation(double amount, int reservationId ) {
         
-        //input validation
-        if (dateTime == null) {
-            throw new CustomException("no date and time entered! ", HttpStatus.BAD_REQUEST);         
-        }
         if (amount < 0) {
             throw new CustomException("amount should be greater than 0! ", HttpStatus.BAD_REQUEST);
         }
@@ -48,6 +44,7 @@ public class PaymentReservationService {
             throw new CustomException("Reservation is not found. ", HttpStatus.NOT_FOUND);
         }
 
+        Timestamp dateTime = new Timestamp(new java.util.Date().getTime());
         paymentReservation.setAmount(amount);
         paymentReservation.setDateTime(dateTime);
         paymentReservation.setReservation(reservation);

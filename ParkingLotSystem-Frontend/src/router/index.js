@@ -54,7 +54,7 @@ export default new Router({
       component: CreateParkingSpot
     },
     {
-      path: '/LoginPage',
+      path: '/login-page',
       name: "LoginPage",
       component: LoginPage
     },

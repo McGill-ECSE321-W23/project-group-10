@@ -291,6 +291,45 @@ public class TestSubWithAccountService {
         assertEquals("Invalid reservation ID.", errMsg);
     }
 
+
+    @Test
+    public void testGetReservationParkingSpotPrice() {
+        String errMsg = "";
+        double fee = 0.0;
+        try {
+            fee = service.getReservationParkingSpotPrice(VALID_CUSTOMER_EMAIL_ACTIVE);    
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("", errMsg);
+        assertEquals(1, fee);
+    }
+
+
+    @Test
+    public void testGetReservationParkingSpotPriceFailure() {
+        String errMsg = "";
+        try {
+            service.getReservationParkingSpotPrice(INVALID_CUSTOMER_EMAIL);    
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("There is no active subscription", errMsg);
+    }
+
+    @Test
+    public void testGetReservationId() {
+        String errMsg = "";
+        int id = 0;
+        try {
+            id = service.getReservationId(VALID_CUSTOMER_EMAIL_ACTIVE);    
+        } catch(Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("", errMsg);
+        assertEquals(1, id);
+    }
+
     private void testCreateSubFailure(String monthlyCustomerEmail, int parkingSpotId, String message) {
         SubWithAccount sub = null;
         String errMsg = "";

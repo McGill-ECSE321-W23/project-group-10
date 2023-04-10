@@ -98,6 +98,29 @@ public class SubWithAccountController {
     public SubWithAccountDto getActiveByParkingSpot(@PathVariable("id") int parkingSpotId) {
         return convertSubWithAccountToDto(service.getActiveByParkingSpot(parkingSpotId));
     }
+
+    /**
+     * Controller method to get the parking fee of the subscription with account of the given monthly customer.
+     * @author Shaun
+     * @param monthlyCustomerEmail the email of the monthly customer
+     * @return the parking fee
+     */
+    @GetMapping(value ={"/get-parking-fee/{email}", "/get-parking-fee/{email}/"})
+    public double getParkingFee(@PathVariable("email") String monthlyCustomerEmail) {
+        return service.getReservationParkingSpotPrice(monthlyCustomerEmail);
+    }
+
+    /**
+     * Controller method to get the reservation id of the subscription with account of the given monthly customer.
+     * @author Shaun
+     * @param monthlyCustomerEmail the email of the monthly customer
+     * @return the reservation id
+     */
+    @GetMapping(value ={"/get-id/{email}", "/get-id/{email}/"})
+    public int getReservationId(@PathVariable("email") String monthlyCustomerEmail){
+        return service.getReservationId(monthlyCustomerEmail);
+    }
+    
     
     /**
      * Controller method to get a subscription with account with the given monthly customer and parking spot.
@@ -124,6 +147,7 @@ public class SubWithAccountController {
         authService.authenticateManager(token);
         service.deleteSubWithAccount(id);
     }
+
 
     /**
      * Controller method to update the subscription with account with the given 
