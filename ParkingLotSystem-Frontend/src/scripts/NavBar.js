@@ -25,7 +25,7 @@ export default {
         { id: "subscription", text: "Subscription", href: "#"},
         { id: "reservations-view", text: "View Reservations", href: "#"},
         { id: "services-admin", text: "Services", href: "#/admin/service-requests"},
-        { id: "reservations-admin", text: "Reservations", href: "#/admin/reservations"},
+        { id: "reservations-admin", text: "Reservations", href: "#/list-of-reservation-page"},
         { id: "services-customer", text: "Services", href: "#/service-requests"},
         { id: "reservations-customer", text: "Reservations", href: "#/reservations"},
         { id: "monthly-customer-reservation", text: "Reservation", href: "#/monthly-customer-reservation"},

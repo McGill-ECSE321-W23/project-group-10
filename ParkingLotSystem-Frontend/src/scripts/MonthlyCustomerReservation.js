@@ -24,6 +24,7 @@ export default {
             amount: '',
             newNbrOfMonths: '',
             amount:'',
+            username: '',
         }
         
     },
@@ -89,7 +90,8 @@ export default {
           }
     },
     components: {
-        Payment
+        Payment,
+        NavBar
     }
     
 }

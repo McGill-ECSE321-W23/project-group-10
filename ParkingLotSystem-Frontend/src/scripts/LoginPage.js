@@ -18,6 +18,7 @@ export default {
         email: '',
         password: '',
         errorEvent: '',
+        userName: '',
       }
     },
     methods: {
@@ -36,6 +37,10 @@ export default {
             //let managerAuthenticationRes = await Axios.post('/api/authentication/login-manager')
             // Store the email of the employee in localStorage
             localStorage.setItem('managerEmail', this.email);
+
+            //set user name
+            let managerNameResponse = await AXIOS.get(`/api/manager/${this.email}`)
+            localStorage.setItem('username', managerNameResponse.data.name);
 
             // Navigate to the monthly-customer page
             this.$router.push('/manager/dashboard');
@@ -60,6 +65,10 @@ export default {
             // Store the email of the employee in localStorage
             localStorage.setItem('employeeEmail', this.email);
 
+            //set user name
+            let employeeNameResponse = await AXIOS.get(`/api/employee/${this.email}`)
+            localStorage.setItem('username', employeeNameResponse.data.name);
+
             // Navigate to the monthly-customer page
             this.$router.push('/employee');
         } catch (e) {
@@ -80,6 +89,10 @@ export default {
        
             // Store the email of the customer in localStorage
             localStorage.setItem('monthlyCustomerEmail', this.email);
+
+            //set user name
+            let cusNameResponse = await AXIOS.get(`/api/monthly-customer/${this.email}`)
+            localStorage.setItem('username', cusNameResponse.data.name);
 
             // Navigate to the monthly-customer page
             this.$router.push('/monthly-customer');

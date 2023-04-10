@@ -59,7 +59,7 @@ export default new Router({
       component: LoginPage
     },
     {
-      path: '/ListOfReservationPage',
+      path: '/list-of-reservation-page',
       name: "ListOfReservationPage",
       component: ListOfReservationPage
 

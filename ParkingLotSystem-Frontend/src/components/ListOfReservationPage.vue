@@ -1,5 +1,11 @@
 <template>
   <div class="list-of-reservation">
+    <NavBar 
+        :navItems="['dashboard']" 
+        activeNav="ListOfReservationPage" 
+        :username="username" 
+      />
+
     <h1>All Reservations</h1>
     
     <div class="table-container">
