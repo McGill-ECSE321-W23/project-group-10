@@ -26,12 +26,13 @@ var AXIOS = axios.create({
     },
     
     methods: {
-        addService: function(){
+        async addService(){
             try{
                 var serviceName = document.getElementById("typeName");
                 var serviceFee = document.getElementById("serviceFee");
-
-                let service = AXIOS.post(`/api/service/${serviceName}`, {serviceFee});
+                console.log(serviceName);
+                console.log(serviceFee);
+                let service = await AXIOS.post(`/api/service/${serviceName}`, {serviceFee});
             } catch(e){
                 this.error(e);
             }
