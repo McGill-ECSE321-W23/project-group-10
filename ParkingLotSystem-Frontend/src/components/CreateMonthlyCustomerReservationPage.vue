@@ -1,11 +1,10 @@
 <template>
   <div class="monthly-customer-reservation">
-
     <NavBar 
-        :navItems="['dashboard']" 
-        activeNav="CreateMonthlyCustomerReservationPage" 
-        :username="username" 
-      />
+      :navItems="['dashboard', 'settings', 'services-admin', 'monthly-customer-reservation', 'employee-registration']" 
+      activeNav="CreateMonthlyCustomerReservationPage" 
+      :username="username" 
+    />
     <p>Create Monthly customer reservation:</p>
 
     <input type="email" id="monthly-customer-email" v-model="monthlyCustomerEmail" placeholder="Enter monthly customer email">
