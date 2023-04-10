@@ -27,7 +27,8 @@ export default {
         { id: "services-admin", text: "Services", href: "#/admin/service-requests"},
         { id: "reservations-admin", text: "Reservations", href: "#/admin/reservations"},
         { id: "services-customer", text: "Services", href: "#/service-requests"},
-        { id: "reservations-customer", text: "Reservations", href: "#/reservations"}
+        { id: "reservations-customer", text: "Reservations", href: "#/reservations"},
+        { id: "employee-registration", text: "Employee Registration", href: "#/registration-employee"}
       ]
     }
   },
