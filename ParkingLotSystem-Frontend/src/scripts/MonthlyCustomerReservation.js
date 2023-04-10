@@ -51,7 +51,8 @@ export default {
         },
         increaseMonth(){
             this.newNbrOfMonths++
-            this.amount = this.newNbrOfMonths * this.fee
+            this.amount = (this.newNbrOfMonths - this.curretNbrOfMonths) * this.fee
+            // TODO: update currentNrOfMonths and call location.reload();
         }
     }
     

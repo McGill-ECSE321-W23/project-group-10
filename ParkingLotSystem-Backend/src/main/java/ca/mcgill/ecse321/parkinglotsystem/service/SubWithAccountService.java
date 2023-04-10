@@ -62,7 +62,7 @@ public class SubWithAccountService {
         Date date = new Date((new java.util.Date()).getTime());
         SubWithAccount subWithAccount = new SubWithAccount();
         subWithAccount.setDate(date);
-        subWithAccount.setNbrMonths(1);
+        subWithAccount.setNbrMonths(0);
         subWithAccount.setParkingSpot(parkingSpot);
         subWithAccount.setCustomer(monthlyCustomer);
         subWithAccount = subWithAccountRepository.save(subWithAccount);
