@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="registration">
+    <div class="registrationEmployee">
         <NavBar 
             :navItems="[]" 
-            activeNav="registration" 
+            activeNav="registrationEmployee" 
             :username="username" 
         />
     </div>
@@ -48,7 +48,7 @@
   </div>
 </template>
 
-<script src="@/scripts/Registration.js"></script>
+<script src="@/scripts/registrationEmployee.js"></script>
 
 
 <style scoped>

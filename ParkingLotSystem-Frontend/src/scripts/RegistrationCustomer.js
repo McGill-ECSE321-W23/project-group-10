@@ -11,7 +11,7 @@ var AXIOS = axios.create({
 })
 
 export default {
-  name: "registration",
+  name: "RegistrationCustomer",
   data() {
     return {
       name: '',
@@ -19,14 +19,17 @@ export default {
       phone: '',
       password: '',
       confirmPassword: '',
+      lisenseNumber: '',
     };
   },
   methods: {
     register() {
       // Handle registration logic here
+
     },
     returnToLogin() {
       // Redirect to login page
+
     },
   },
 
