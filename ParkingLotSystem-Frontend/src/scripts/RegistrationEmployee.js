@@ -24,7 +24,9 @@ export default {
   methods: {
     register() {
       // Handle registration logic here
+      // try{
 
+      // }
     },
     returnToLogin() {
       // Redirect to login page
