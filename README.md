@@ -56,7 +56,7 @@ The parking lot is managed by its owner, who gets their own user account. The lo
 | ------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------|-------|
 | Shaun Soobagrah  | Reservation pages for manager, employee and monthly customer, reserve parking spots page, see reservation page, code maintainance | 18    |
 | Marco Vidalon    | Service pages for manager, employee and monthly customer, assign service request page, view and create service request page, code maintenance | 19   |
-| Weiheng Xiao  | Employee, monthly customer and guest pages, integration tests of additional controller | 17    |
+| Weiheng Xiao  | Employee, monthly customer and guest pages, integration tests for additional controllers | 17    |
 | Jiaxiang E(Luke)  |  Edit Profile pages for manager employee and monthly customer, Readme file, project management, architecture modelling wiki page | 17    |
 | Chenxin Xun | Manager, login, registration and payment pages, architecture modelling wiki page. | 17   |
 | Mike Zhang | Setting page and all its child node, and welcome page, presentation slides.                   | 16    |
