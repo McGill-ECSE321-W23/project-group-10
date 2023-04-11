@@ -11,6 +11,8 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap');
+
 html, body {
   margin:0;
   height:100%;
@@ -19,14 +21,14 @@ html, body {
 }
 
 body {
-  background-image: linear-gradient(135deg, #dbe5f3 0%, #ffffff 100%);
+  background-image: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
 }
 
 #app {
-  font-family: 'Poppins', Helvetica, Arial, sans-serif;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

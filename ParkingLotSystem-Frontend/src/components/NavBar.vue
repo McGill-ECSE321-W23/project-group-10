@@ -1,7 +1,9 @@
 <template>
 <div>
-  <b-navbar toggleable="md"  fixed="top" sticky>
-    <b-navbar-brand href="#/Welcome">Parking Lot System</b-navbar-brand>
+  <b-navbar toggleable="md" variant="light" fixed="top" sticky>
+    <b-navbar-brand href="#/Welcome">
+      <img src="@/assets/parkin_logo_crop.png" width="80px" alt="Parkin">
+    </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

@@ -21,7 +21,7 @@
         <input type="text" id="password" v-model="manager.password" placeholder="Enter New Password">
       </div>
       <div class="button">
-        <b-button v-on:click="updateManager">Update!</b-button>
+        <b-button variant="info" class="mb-3" @click="updateManager">Update</b-button>
       </div>
     </div>
   </div>

@@ -78,6 +78,8 @@
   </div>
 </template>
 
+<script src="@/scripts/ListOfReservationPage.js"></script>
+
 <style scoped>
 
 h1 {
@@ -117,5 +119,3 @@ tbody td {
   border-bottom: 1px solid #ddd;
 }
 </style>
-
-<script src="@/scripts/ListOfReservationPage.js"></script>

@@ -42,8 +42,8 @@
 
 .monthly-customer-reservation h1 {
   font-size: 32px;
-  font-weight: bold;
   margin-bottom: 20px;
+  margin-top: 30px;
 }
 
 .reservation-info {

@@ -29,7 +29,7 @@
         <input type="text" id="licenseNumber" v-model="monthlyCustomer.licenseNumber"
                placeholder="Enter New License Number">
       </div>
-      <div class="button"><b-button v-on:click="updateMonthlyCustomer">Update!</b-button></div>
+      <div class="button"><b-button variant="info" class="mb-3" @click="updateMonthlyCustomer">Update</b-button></div>
     </div>
   </div>
 

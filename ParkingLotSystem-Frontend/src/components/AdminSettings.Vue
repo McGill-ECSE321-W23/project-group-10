@@ -52,7 +52,7 @@
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select><br>
-        <b-button type="submit" class="mb-3" @click="setHours()"> Set</b-button><br>
+        <b-button type="submit" class="mb-3" variant="primary" @click="setHours()"> Set</b-button><br>
 
 
         <h3>Parking Fees</h3>
@@ -68,7 +68,7 @@
           <option value="Month">Month</option>
         </select>
         <br>
-        <b-button type="submit" class="mb-3" @click="setFee()"> Set</b-button>
+        <b-button type="submit" class="mb-3" variant="primary" @click="setFee()"> Set</b-button>
 
         <h3>Available Services</h3>
         <label for="add a service">Add a service : </label><br>
@@ -76,12 +76,12 @@
         <input type="text" v-model="typeName" name="typeName"><br>
         <label for="price of the new service">Price : &nbsp; &nbsp; &nbsp;</label>
         <input type="number" step=".01" v-model="serviceFee" name="serviceFee"><label> &nbsp;in CAD$</label><br>
-        <b-button type="submit" class="mb-3" @click="addService()"> Add</b-button><br><br>
+        <b-button type="submit" class="mb-3" variant="primary" @click="addService()"> Add</b-button><br><br>
 
         <label for="delete a service"> Delete a service : </label>
         <b-form-select id="inline-form-custom-select-pref" class="mb-2 mr-sm-2 mb-sm-0"
           :options="[{ text: '-', value: null }, ...services]" v-model="selectedService"></b-form-select><br>
-        <b-button @click="deleteService()">Delete</b-button><br><br>
+        <b-button variant="danger" @click="deleteService()">Delete</b-button><br><br>
 
       </div>
     </div>
@@ -91,7 +91,7 @@
 <style scoped>
 
 #msg {
-  color: red;
+  color: dodgerblue;
 }
 
 #OH {

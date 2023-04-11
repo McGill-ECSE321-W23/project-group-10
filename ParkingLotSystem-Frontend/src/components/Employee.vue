@@ -8,6 +8,7 @@
         <div class="content">
             <br>
             <br>
+            <br>
             <h2>Welcome,</h2>
             <h2>Employee: {{email}}</h2>
             <router-link to="/edit-profile-employee" class="underline-button">Edit My Profile</router-link>

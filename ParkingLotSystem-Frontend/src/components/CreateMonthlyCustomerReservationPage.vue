@@ -11,7 +11,7 @@
         Selected parking spot: {{ selectedSpot.id }} - {{ selectedSpot.status }}
       </div>
   
-      <b-button @click="createReservation">Submit</b-button>
+      <b-button variant="primary" @click="createReservation">Submit</b-button>
       <p>
         <span v-if="errorMessage" style="color:red">Error: {{errorMessage}} </span>
       </p>
@@ -39,12 +39,6 @@
 <script src="@/scripts/CreateMonthlyCustomerReservationPage.js"> </script>
 
 <style scoped>
-/* .monthly-customer-reservation {
-  width: 1300px;
-  max-height: 300px;
-  align-content: center;
-  
-} */
 
 h2 {
   margin-top: 30px;
@@ -65,5 +59,8 @@ th {
   text-align: left;
   border: 1px solid #ddd;
   box-sizing: border-box;
+}
+td:hover {
+  cursor: pointer;
 }
 </style>

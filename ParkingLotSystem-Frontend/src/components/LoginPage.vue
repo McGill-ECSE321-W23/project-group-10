@@ -8,9 +8,9 @@
       <input type="password" id="password" v-model="password" class="form-control" placeholder="Enter password">
     </div>
     <div class="button-group">
-      <button @click="loginAsManager" class="btn btn-primary">Login as Manager</button>
-      <button @click="loginAsEmployee" class="btn btn-primary">Login as Employee</button>
-      <button @click="loginAsCustomer" class="btn btn-primary">Login as Customer</button>
+      <button @click="loginAsManager" class="btn btn-secondary">Login as Manager</button>
+      <button @click="loginAsEmployee" class="btn btn-secondary">Login as Employee</button>
+      <button @click="loginAsCustomer" class="btn btn-secondary">Login as Customer</button>
     </div>
     <span v-if="errorEvent" style="color:red">Error: {{errorEvent}} </span>
   </div>
@@ -18,7 +18,7 @@
 
 <script src="@/scripts/LoginPage.js"> </script>
 
-<style>
+<style scoped>
 .login-page {
   display: flex;
   flex-direction: column;

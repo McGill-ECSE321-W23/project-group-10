@@ -22,7 +22,7 @@
 
         <div class="input-group">
           <label for="phone">Phone:</label>
-          <input type="tel" id="phone" v-model="phone" required />
+          <input type="text" id="phone" v-model="phone" required />
         </div>
 
         <div class="input-group">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="button-group">
-          <b-button type="submit">Register</b-button>
+          <b-button type="submit" variant="primary">Register</b-button>
           <!-- <button type="button" @click="returnToLogin">Return</button> -->
         </div>
       </form>
