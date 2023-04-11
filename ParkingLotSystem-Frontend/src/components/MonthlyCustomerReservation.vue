@@ -23,10 +23,8 @@
       </div>
       <p class="error-msg" v-if="errorMessage">{{ errorMessage }}</p>
 
-      <div class="button-group">
-        <Payment @submit=" submitPayment()" :disabled="!reservationId"/>
-        <b-button @click="increaseMonth" :disabled="!reservationId">Increase month</b-button>
-      </div>
+      <b-button class="mb-2" @click="increaseMonth" :disabled="!reservationId">Increase month</b-button>
+      <Payment @submit=" submitPayment()" :disabled="!reservationId"/>
 
     </div>
 
