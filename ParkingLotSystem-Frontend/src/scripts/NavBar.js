@@ -18,7 +18,7 @@ export default {
         { id: "monthly-customer", text: "Main", href: "#/monthly-customer"},
         { id: "guest", text: "Main", href: "#/guest"},
         { id: "settings", text: "Settings", href: "#/admin-settings"},
-        { id: "subscription", text: "Subscription", href: "#"},
+        { id: "subscription", text: "Subscription", href: "#/monthly-customer-reservation"},
         { id: "reservations-view", text: "View Reservations", href: "#"},
         { id: "services-admin", text: "Services", href: "#/admin/service-requests"},
         { id: "reservations-admin", text: "Reservations", href: "#/list-of-reservation-page"},
@@ -67,6 +67,7 @@ export default {
       localStorage.removeItem("token");
       localStorage.removeItem("username");
       localStorage.removeItem("email");
+      localStorage.removeItem("personType");
       this.$router.push("/");
     }
   }

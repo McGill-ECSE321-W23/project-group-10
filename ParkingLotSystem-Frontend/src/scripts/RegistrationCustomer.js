@@ -35,7 +35,7 @@ export default {
           throw new Error("password does not match confirmed password!")
         }
         let response = await AXIOS.post(
-          '/api/monthly-customer/${this.email}',
+          `/api/monthly-customer/${this.email}`,
           {
 
           },
@@ -44,17 +44,17 @@ export default {
               name: this.name,
               phone: this.phone,
               password: this.password,
-              licenseNumber: this.licenseNumber},
-            // headers: {}
+              licenseNumber: this.licenseNumber}
           }
         );
+        this.$router.push("/login");
       } catch(e){
         this.error(e);
       }
     },
-    async returnToLogin() {
-      // Redirect to login page
-      this.$router.push({ name: 'Hello' })
+    async returnToWelcome() {
+      // Redirect to welcome page
+      this.$router.push("/")
     },
 
     error(e) {

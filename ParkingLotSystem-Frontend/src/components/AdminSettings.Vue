@@ -52,7 +52,7 @@
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
-        <button type="submit" id="setTime" @click="setHours()"> Set</button><br>
+        <b-button type="submit" id="setTime" @click="setHours()"> Set</b-button><br>
 
 
         <h3>Parking Fees</h3>
@@ -68,20 +68,20 @@
           <option value="Month">Month</option>
         </select>
         <br>
-        <button type="submit" id="setFee" @click="setFee()"> Set</button>
+        <b-button type="submit" id="setFee" @click="setFee()"> Set</b-button>
 
         <h3>Available Services</h3>
         <label for="add a service">Add a service : </label><br>
         <label for="name of the new service">Description : </label>
-        <input type="text" id="typeName" name="typeName"><br>
+        <input type="text" v-model="typeName" name="typeName"><br>
         <label for="price of the new service">Price : &nbsp; &nbsp; &nbsp;</label>
-        <input type="number" step=".01" id="serviceFee" name="serviceFee"><label> &nbsp;in CAD$</label><br>
-        <button type="submit" id="addService" @click="addService()"> Add</button><br><br>
+        <input type="number" step=".01" v-model="serviceFee" name="serviceFee"><label> &nbsp;in CAD$</label><br>
+        <b-button type="submit" id="addService" @click="addService()"> Add</b-button><br><br>
 
         <label for="delete a service"> Delete a service : </label>
         <b-form-select id="inline-form-custom-select-pref" class="mb-2 mr-sm-2 mb-sm-0"
           :options="[{ text: '-', value: null }, ...services]" v-model="selectedService"></b-form-select><br>
-        <button type="submit" id="deleteService"> Delete</button><br><br>
+        <b-button @click="deleteService()">Delete</b-button><br><br>
 
       </div>
     </div>
@@ -89,14 +89,12 @@
 </template>
 <script src="@/scripts/AdminSetting.js"></script>
 <style scoped>
-h2 {
+/* h2 {
   text-align: left;
-}
+} */
 
 #msg {
   color: red;
-  text-align: justify;
-  margin-left: 2%;
 }
 
 #OH {

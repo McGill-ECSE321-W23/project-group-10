@@ -28,7 +28,8 @@ export default {
         {text: "Services", href: "#"},
         {text: "Reservations", href: "#"}
       ],
-
+      showError: false,
+      errorMessage: ""
     }
   },
   methods: {
@@ -49,9 +50,18 @@ export default {
 
         // this.$router.push('/parking-spot-type')
       } catch (error) {
-        console.log(error)
+        this.error(error)
       }
-    }
+    },
+    error(e) {
+      if(e.hasOwnProperty("response")) {
+        this.errorMessage = e.response.data.message;
+      }
+      else {
+        this.errorMessage = e.message;
+      }
+      this.showError = true;
+    },
   },
   components: {NavBar}
 }

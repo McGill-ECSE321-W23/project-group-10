@@ -1,17 +1,10 @@
 <template>
-  <div>
-    <div class="RegistrationCustomer">
-        <NavBar 
-            :navItems="[]" 
-            activeNav="RegistrationCustomer" 
-            :username="username" 
-        />
-    </div>
+  <div class="RegistrationCustomer">
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <!-- <div class="title-bar">
       <h1>Parking Lot System---Registration</h1>
     </div> -->
-
+    <h2>Register</h2>
     <div class="form-container">
       <form @submit.prevent="register">
         <div class="input-group">
@@ -41,12 +34,12 @@
 
         <div class="input-group">
           <label for="license">License Number:</label>
-          <input type="password" id="license" v-model="lisenseNumber" required />
+          <input type="password" id="license" v-model="licenseNumber" required />
         </div>
 
         <div class="button-group">
-          <button type="submit">Register</button>
-          <button type="button" @click="returnToLogin">Return</button>
+          <b-button type="submit">Register</b-button>
+          <b-button type="button" @click="returnToWelcome">Return</b-button>
         </div>
       </form>
     </div>
@@ -57,6 +50,10 @@
 
 
 <style scoped>
+h2 {
+  margin-top: 30px;
+}
+
 .title-bar {
   display: flex;
   justify-content: center;
@@ -75,7 +72,7 @@
 .input-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .label {

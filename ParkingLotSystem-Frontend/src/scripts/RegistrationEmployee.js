@@ -32,7 +32,7 @@ export default {
           throw new Error("password does not match confirmed password!")
         }
         let response = await AXIOS.post(
-          `/api/employee/${email}`,
+          `/api/employee/${this.email}`,
           {
 
           },
@@ -48,11 +48,6 @@ export default {
         this.error(e);
       }
     },
-    // async returnToLogin() {
-    //   // Redirect to login page
-    //   this.$router.push({ name: 'Manager' })
-    // },
-
 
     error(e) {
       if(e.hasOwnProperty("response")) {

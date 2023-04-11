@@ -16,7 +16,7 @@ export default {
     name: "monthly-customer-reservation",
     data() {
         return {
-            reservationId: '',
+            reservationId: null,
             reservationStartDate: '',
             curretNbrOfMonths: '',
             errorMessage:'',
@@ -31,13 +31,13 @@ export default {
     async created() {
         try {
 
-            let responseFee = await AXIOS.get(`/api/sub-with-account/get-parking-fee/${localStorage.getItem('monthlyCustomerEmail')}`)
+            let responseFee = await AXIOS.get(`/api/sub-with-account/get-parking-fee/${localStorage.getItem('email')}`)
             this.fee = responseFee.data
             
-            let responseId = await AXIOS.get(`/api/sub-with-account/get-id/${localStorage.getItem('monthlyCustomerEmail')}`)
+            let responseId = await AXIOS.get(`/api/sub-with-account/get-id/${localStorage.getItem('email')}`)
             this.reservationId = responseId.data
 
-            let response = await AXIOS.get(`/api/sub-with-account/active-by-customer/${localStorage.getItem('monthlyCustomerEmail')}`)
+            let response = await AXIOS.get(`/api/sub-with-account/active-by-customer/${localStorage.getItem('email')}`)
             this.reservationStartDate = response.data.date
             this.curretNbrOfMonths = response.data.nbrMonths
             this.newNbrOfMonths = response.data.nbrMonths

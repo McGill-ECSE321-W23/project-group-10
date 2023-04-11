@@ -1,10 +1,6 @@
 <template>
   <div class="monthly-customer-reservation">
-    <NavBar 
-        :navItems="['monthly-customer']" 
-        activeNav="'monthly-customer'" 
-        :username="username" 
-    />
+    <NavBar activeNav="subscription"/>
 
     <div class ="main-body"> 
 
@@ -28,8 +24,8 @@
       <p class="error-msg" v-if="errorMessage">{{ errorMessage }}</p>
 
       <div class="button-group">
-        <Payment @submit=" submitPayment()" />
-        <button @click="increaseMonth" class="btn">Increase month</button>
+        <Payment @submit=" submitPayment()" :disabled="!reservationId"/>
+        <b-button @click="increaseMonth" :disabled="!reservationId">Increase month</b-button>
       </div>
 
     </div>

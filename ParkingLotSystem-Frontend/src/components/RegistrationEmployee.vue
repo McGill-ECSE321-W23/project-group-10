@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="registrationEmployee">
-      <NavBar activeNav="employee-registration" :username="username" />
+      <NavBar activeNav="employee-registration"/>
     </div>
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <!-- <div class="title-bar">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="button-group">
-          <button type="submit">Register</button>
+          <b-button type="submit">Register</b-button>
           <!-- <button type="button" @click="returnToLogin">Return</button> -->
         </div>
       </form>

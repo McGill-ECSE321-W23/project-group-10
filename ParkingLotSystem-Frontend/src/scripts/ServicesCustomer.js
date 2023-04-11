@@ -28,13 +28,15 @@ export default {
       perPage: 10,
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
       isBusy: false,
-      username: "Marco", // TODO: Implement authentication
-      userEmail: "test@gmail.com", // TODO: Implement authentication
+      username: "",
+      userEmail: "",
       errorMessage: "",
       showError: false
     }
   },
   created() {
+    this.username = localStorage.getItem("username");
+    this.userEmail = localStorage.getItem("email");
     this.refresh();
   },
   methods: {
