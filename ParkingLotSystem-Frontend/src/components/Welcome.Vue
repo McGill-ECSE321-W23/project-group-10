@@ -18,8 +18,7 @@
 
 <style>
 #logo {
-  display: float;
-  width: 10%;
+  width: 20%;
   justify-self: center;
 }
 </style>

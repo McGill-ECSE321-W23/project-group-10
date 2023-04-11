@@ -49,7 +49,7 @@ export default {
           }
         }
       },
-      capacityChartSeries: [25],
+      capacityChartSeries: [0],
 
       // Floor capacity chart variables & settings
       floorCapacityChartOptions: {
@@ -77,7 +77,7 @@ export default {
       },
       floorCapacityChartSeries: [{
         name: 'Reserved spots',
-        data: [0, 10, 20, 30, 40]
+        data: [0, 0, 0, 0, 0]
       }],
     }
   },

@@ -3,9 +3,9 @@
     <NavBar activeNav="settings"/>
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
-      <h2>Parking Lot System Setting</h2>
+      <h2>Parking Lot System Settings</h2>
       <p id="msg">
-        Hello Admin, you can edit the settings below.
+        You can edit the settings below.
       </p>
       <div class="Opening Hours" id="OH">
         <h3>Opening Hours</h3>
@@ -51,8 +51,8 @@
         <select name="time" id="closeTime">
           <option value="AM">AM</option>
           <option value="PM">PM</option>
-        </select>
-        <b-button type="submit" id="setTime" @click="setHours()"> Set</b-button><br>
+        </select><br>
+        <b-button type="submit" class="mb-3" @click="setHours()"> Set</b-button><br>
 
 
         <h3>Parking Fees</h3>
@@ -68,7 +68,7 @@
           <option value="Month">Month</option>
         </select>
         <br>
-        <b-button type="submit" id="setFee" @click="setFee()"> Set</b-button>
+        <b-button type="submit" class="mb-3" @click="setFee()"> Set</b-button>
 
         <h3>Available Services</h3>
         <label for="add a service">Add a service : </label><br>
@@ -76,7 +76,7 @@
         <input type="text" v-model="typeName" name="typeName"><br>
         <label for="price of the new service">Price : &nbsp; &nbsp; &nbsp;</label>
         <input type="number" step=".01" v-model="serviceFee" name="serviceFee"><label> &nbsp;in CAD$</label><br>
-        <b-button type="submit" id="addService" @click="addService()"> Add</b-button><br><br>
+        <b-button type="submit" class="mb-3" @click="addService()"> Add</b-button><br><br>
 
         <label for="delete a service"> Delete a service : </label>
         <b-form-select id="inline-form-custom-select-pref" class="mb-2 mr-sm-2 mb-sm-0"
@@ -89,9 +89,6 @@
 </template>
 <script src="@/scripts/AdminSetting.js"></script>
 <style scoped>
-/* h2 {
-  text-align: left;
-} */
 
 #msg {
   color: red;

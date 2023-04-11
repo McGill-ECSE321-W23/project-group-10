@@ -20,7 +20,7 @@
         <label for="password">Password: </label>
         <input type="text" id="password" v-model="employee.password" placeholder="Enter New Password">
       </div>
-      <div class="button"><button v-on:click="updateEmployee">Update!</button></div>
+      <div class="button"><b-button v-on:click="updateEmployee">Update!</b-button></div>
 
     </div>
   </div>

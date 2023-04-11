@@ -2,74 +2,77 @@
   <div class="list-of-reservation">
     <NavBar activeNav="reservations-admin"/>
 
-    <h1>All Reservations</h1>
-    
-    <div class="table-container">
-      <table>
-        <caption>All Subscriptions With Account</caption>
-        <thead>
-          <tr>
-            <th>Reservation ID</th>
-            <th>Date</th>
-            <th>License Number</th>
-            <th>Customer Email</th>
-            <th>Parking Spot Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="sub in subWithAccounts" :key="sub.reservationId">
-            <td>{{ sub.reservationId }}</td>
-            <td>{{ sub.date }}</td>
-            <td>{{ sub.monthlyCustomer.licenseNumber }}</td>
-            <td>{{ sub.monthlyCustomer.email }}</td>
-            <td>{{ sub.parkingSpotDto.id }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    
-    <div class="table-container">
-      <table>
-        <caption>All Subscriptions Without Account</caption>
-        <thead>
-          <tr>
-            <th>Reservation ID</th>
-            <th>Date</th>
-            <th>License Number</th>
-            <th>Parking Spot Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="sub in subWithoutAccounts" :key="sub.reservationId">
-            <td>{{ sub.reservationId }}</td>
-            <td>{{ sub.date }}</td>
-            <td>{{ sub.licenseNumber }}</td>
-            <td>{{ sub.parkingSpotDto.id }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    
-    <div class="table-container">
-      <table>
-        <caption>All Single Reservations</caption>
-        <thead>
-          <tr>
-            <th>Reservation ID</th>
-            <th>Date</th>
-            <th>License Number</th>
-            <th>Parking Spot Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="reservation in singleReservations" :key="reservation.id">
-            <td>{{ reservation.reservationId }}</td>
-            <td>{{ reservation.date }}</td>
-            <td>{{ reservation.licenseNumber }}</td>
-            <td>{{ reservation.parkingSpotDto.id }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="content">
+
+      <h1>All Reservations</h1>
+      
+      <div class="table-container">
+        <table>
+          <caption>All Subscriptions With Account</caption>
+          <thead>
+            <tr>
+              <th>Reservation ID</th>
+              <th>Date</th>
+              <th>License Number</th>
+              <th>Customer Email</th>
+              <th>Parking Spot Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="sub in subWithAccounts" :key="sub.reservationId">
+              <td>{{ sub.reservationId }}</td>
+              <td>{{ sub.date }}</td>
+              <td>{{ sub.monthlyCustomer.licenseNumber }}</td>
+              <td>{{ sub.monthlyCustomer.email }}</td>
+              <td>{{ sub.parkingSpotDto.id }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="table-container">
+        <table>
+          <caption>All Subscriptions Without Account</caption>
+          <thead>
+            <tr>
+              <th>Reservation ID</th>
+              <th>Date</th>
+              <th>License Number</th>
+              <th>Parking Spot Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="sub in subWithoutAccounts" :key="sub.reservationId">
+              <td>{{ sub.reservationId }}</td>
+              <td>{{ sub.date }}</td>
+              <td>{{ sub.licenseNumber }}</td>
+              <td>{{ sub.parkingSpotDto.id }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="table-container">
+        <table>
+          <caption>All Single Reservations</caption>
+          <thead>
+            <tr>
+              <th>Reservation ID</th>
+              <th>Date</th>
+              <th>License Number</th>
+              <th>Parking Spot Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="reservation in singleReservations" :key="reservation.id">
+              <td>{{ reservation.reservationId }}</td>
+              <td>{{ reservation.date }}</td>
+              <td>{{ reservation.licenseNumber }}</td>
+              <td>{{ reservation.parkingSpotDto.id }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     
   </div>

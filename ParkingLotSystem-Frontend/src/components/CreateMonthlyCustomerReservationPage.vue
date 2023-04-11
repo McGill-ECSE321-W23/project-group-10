@@ -1,34 +1,37 @@
 <template>
   <div class="monthly-customer-reservation">
     <NavBar activeNav="create-customer-reservation"/>
-    <p>Create Monthly customer reservation:</p>
+    <div class="content">
 
-    <input type="email" id="monthly-customer-email" v-model="monthlyCustomerEmail" placeholder="Enter monthly customer email">
-
-    <div v-if="selectedSpot">
-      Selected parking spot: {{ selectedSpot.id }} - {{ selectedSpot.status }}
-    </div>
-
-    <button v-on:click="createReservation">Submit</button>
-    <p>
-      <span v-if="errorMessage" style="color:red">Error: {{errorMessage}} </span>
-    </p>
-
-    <div class = "table">
-      <table class="parking-spot-list">
-        <thead>
-            <tr>
-                <th>Parking Spot ID</th>
-                <th>Parking Spot Status</th>
-            </tr>
-        </thead>
-        <tbody class = "scrollable-parking-spot-list" style="max-height: 200px; overflow-y: scroll;">
-            <tr v-for="parkingSpot in parkingSpots" :key="parkingSpot.id" @click="showSelectedSpot(parkingSpot)">
-                <td>{{ parkingSpot.id }}</td>
-                <td>{{ parkingSpot.status }}</td>
-            </tr>
-        </tbody>
-     </table>
+      <h2>Create Monthly customer reservation:</h2>
+  
+      <input type="email" id="monthly-customer-email" v-model="monthlyCustomerEmail" placeholder="Enter monthly customer email">
+  
+      <div v-if="selectedSpot">
+        Selected parking spot: {{ selectedSpot.id }} - {{ selectedSpot.status }}
+      </div>
+  
+      <b-button @click="createReservation">Submit</b-button>
+      <p>
+        <span v-if="errorMessage" style="color:red">Error: {{errorMessage}} </span>
+      </p>
+  
+      <div class = "table">
+        <table class="parking-spot-list">
+          <thead>
+              <tr>
+                  <th>Parking Spot ID</th>
+                  <th>Parking Spot Status</th>
+              </tr>
+          </thead>
+          <tbody class = "scrollable-parking-spot-list" style="max-height: 200px; overflow-y: scroll;">
+              <tr v-for="parkingSpot in parkingSpots" :key="parkingSpot.id" @click="showSelectedSpot(parkingSpot)">
+                  <td>{{ parkingSpot.id }}</td>
+                  <td>{{ parkingSpot.status }}</td>
+              </tr>
+          </tbody>
+       </table>
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +45,10 @@
   align-content: center;
   
 } */
+
+h2 {
+  margin-top: 30px;
+}
 
 .table {
 

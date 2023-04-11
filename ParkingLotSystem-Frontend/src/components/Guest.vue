@@ -27,8 +27,8 @@
                 <label v-if="displayServicePrice==1 && selectedService!=''" class="body-label">${{selectedServicePrice}}</label>
             </div>
             <div>
-                <button @click="service_update" class="submit-button">Calculate Price</button>
-                <button @click="service_submit" class="submit-button">Proceed Service</button>
+                <b-button @click="service_update" class="submit-button">Calculate Price</b-button>
+                <b-button @click="service_submit" class="submit-button">Proceed Service</b-button>
             </div>
         </div>
 
@@ -54,7 +54,7 @@
                 <label v-if="displayReservationPrice==1" class="body-label">${{reservationFee}}</label>
             </div>
             <div>
-                <b-button @click="reservation_update" class="submit-button">Calculate Price</b-button>
+                <b-button @click="reservation_update" class="submit-button mb-2">Calculate Price</b-button>
                 <Payment @submit="reservation_submit" :disabled="false"/>
             </div>
         </div>
@@ -69,8 +69,8 @@
                 <label v-if="displaySubscriptionPrice==1" class="body-label">${{subscriptionPrice}}</label>
             </div>
             <div>
-                <button @click="subscription_update" class="submit-button">Calculate Price</button>
-                <button @click="subscription_submit" class="submit-button">Proceed Subscription</button>
+                <b-button @click="subscription_update" class="submit-button">Calculate Price</b-button>
+                <b-button @click="subscription_submit" class="submit-button">Proceed Subscription</b-button>
             </div>
         </div>
 
