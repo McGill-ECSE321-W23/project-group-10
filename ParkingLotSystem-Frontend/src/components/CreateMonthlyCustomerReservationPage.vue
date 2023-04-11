@@ -1,10 +1,6 @@
 <template>
   <div class="monthly-customer-reservation">
-    <NavBar 
-      :navItems="['dashboard', 'settings', 'services-admin', 'monthly-customer-reservation', 'employee-registration']" 
-      activeNav="CreateMonthlyCustomerReservationPage" 
-      :username="username" 
-    />
+    <NavBar activeNav="create-customer-reservation"/>
     <p>Create Monthly customer reservation:</p>
 
     <input type="email" id="monthly-customer-email" v-model="monthlyCustomerEmail" placeholder="Enter monthly customer email">
@@ -40,12 +36,12 @@
 <script src="@/scripts/CreateMonthlyCustomerReservationPage.js"> </script>
 
 <style scoped>
-.monthly-customer-reservation {
+/* .monthly-customer-reservation {
   width: 1300px;
   max-height: 300px;
   align-content: center;
   
-}
+} */
 
 .table {
 

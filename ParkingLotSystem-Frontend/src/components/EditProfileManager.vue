@@ -1,10 +1,6 @@
 <template>
   <div class="Edit-Profile-Manager">
-      <NavBar
-        :navItems="['dashboard', 'settings', 'services-admin', 'reservations']"
-        activeNav="services-admin"
-        :username="username"
-      />
+      <NavBar activeNav=""/>
       <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
       <h2>Edit Your Profile (Manager)</h2>

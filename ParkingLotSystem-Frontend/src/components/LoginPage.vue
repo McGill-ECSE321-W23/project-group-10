@@ -1,5 +1,6 @@
 <template>
   <div class="login-page">
+    <h2>Login</h2>
     <div class="form-group">
       <input type="email" id="email" v-model="email" class="form-control" placeholder="Enter email">
     </div>
@@ -24,8 +25,6 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f2f2f2;
-  font-family: Arial, sans-serif;
 }
 
 .form-group {

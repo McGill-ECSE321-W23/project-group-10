@@ -1,9 +1,6 @@
 <template>
   <div class="manager">
-    <NavBar 
-      :navItems="['dashboard', 'settings', 'services-admin', 'monthly-customer-reservation', 'employee-registration']" 
-      activeNav="dashboard"
-    />
+    <NavBar activeNav="dashboard"/>
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
       <h2>Dashboard</h2>

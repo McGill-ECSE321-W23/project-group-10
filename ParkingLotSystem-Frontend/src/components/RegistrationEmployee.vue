@@ -1,11 +1,7 @@
 <template>
   <div>
     <div class="registrationEmployee">
-        <NavBar 
-            :navItems="['dashboard', 'settings', 'services-admin', 'monthly-customer-reservation', 'employee-registration']" 
-            activeNav="registrationEmployee" 
-            :username="username" 
-        />
+      <NavBar activeNav="employee-registration" :username="username" />
     </div>
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <!-- <div class="title-bar">

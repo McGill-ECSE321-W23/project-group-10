@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import Hello from '@/components/Hello' // TODO: Remove and delete page
 import CreateParkingSpotType from '@/components/CreateParkingSpotType.vue'
 import ServicesAdmin from '@/components/ServicesAdmin.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
@@ -9,7 +9,6 @@ import LoginPage from '@/components/LoginPage.vue'
 import ListOfReservationPage from '@/components/ListOfReservationPage.vue'
 import AdminSettings from '@/components/AdminSettings.vue'
 import Welcome from '@/components/Welcome.vue'
-
 import Employee from '@/components/Employee.vue'
 import EditProfileEmployee from "@/components/EditProfileEmployee.vue";
 import EditProfileMonthlyCustomer from "@/components/EditProfileMonthlyCustomer.vue";
@@ -19,20 +18,20 @@ import MonthlyCustomer from '@/components/MonthlyCustomer.vue'
 import Guest from '@/components/Guest.vue'
 import RegistrationCustomer from '@/components/RegistrationCustomer.vue'
 import RegistrationEmployee from '@/components/RegistrationEmployee.vue'
-import Payment from '@/components/Payment.vue'
 import CreateMonthlyCustomerReservationPage from '@/components/CreateMonthlyCustomerReservationPage.vue'
 import MonthlyCustomerReservation from '@/components/MonthlyCustomerReservation.vue'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'Welcome',
+      component: Welcome
     },
     {
-      path: '/create-monthly-customer-reservationPage', 
+      path: '/create-monthly-customer-reservation', 
       name: "CreateMonthlyCustomerReservationPage",
       component: CreateMonthlyCustomerReservationPage
 
@@ -58,23 +57,7 @@ export default new Router({
       component: CreateParkingSpot
     },
     {
-      path: '/login-page',
-      name: "LoginPage",
-      component: LoginPage
-    },
-    {
-      path: '/list-of-reservation-page',
-      name: "ListOfReservationPage",
-      component: ListOfReservationPage
-
-    },
-    {
-      path: '/parking-spot', // admin/parking-spot
-      name: "CreateParkingSpot",
-      component: CreateParkingSpot
-    },
-    {
-      path: '/login-page',
+      path: '/login',
       name: "LoginPage",
       component: LoginPage
     },
@@ -88,11 +71,6 @@ export default new Router({
       path: '/admin-settings',
       name: "AdminSettings",
       component: AdminSettings
-    },
-    {
-      path: '/welcome',
-      name: "Welcome",
-      component: Welcome
     },
     {
       path: '/manager/dashboard',
@@ -138,11 +116,6 @@ export default new Router({
       path: '/registration-employee',
       name: "RegistrationEmployee",
       component: RegistrationEmployee
-    },
-    {
-      path: '/payment',
-      name: "Payment",
-      component: Payment
     },
     {
       path: '/monthly-customer-reservation',

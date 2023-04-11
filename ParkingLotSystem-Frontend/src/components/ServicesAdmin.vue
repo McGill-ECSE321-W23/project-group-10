@@ -1,10 +1,6 @@
 <template>
   <div class="services-admin">
-    <NavBar 
-      :navItems="['dashboard', 'settings', 'services-admin', 'monthly-customer-reservation', 'employee-registration']" 
-      activeNav="services-admin" 
-      :username="username" 
-    />
+    <NavBar activeNav="services-admin"/>
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
       <h2>Service Requests</h2>
@@ -101,7 +97,7 @@
 
 <script src="@/scripts/ServicesAdmin.js"></script>
 
-<style>
+<style scoped>
   h1,h3 {
     margin-bottom: 30px;
   }

@@ -1,4 +1,5 @@
 import NavBar from '@/components/NavBar.vue'
+import Payment from '@/components/Payment.vue'
 import axios from 'axios'
 var config = require('../../config')
 
@@ -137,7 +138,7 @@ export default {
           }
         );
         this.service_request = response.data;
-        this.$router.push('/payment');
+        this.$router.push('/guest');
       } catch(e) {
         this.error(e);
       }
@@ -158,7 +159,6 @@ export default {
           }
         );
         this.subscription_request = response.data;
-        this.$router.push('/payment');
       } catch(e) {
         this.error(e);
       }
@@ -189,5 +189,5 @@ export default {
 
   },
   
-  components:{NavBar}
+  components:{NavBar, Payment}
 }

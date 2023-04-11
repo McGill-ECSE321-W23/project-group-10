@@ -54,8 +54,8 @@
                 <label v-if="displayReservationPrice==1" class="body-label">${{reservationFee}}</label>
             </div>
             <div>
-                <button @click="reservation_update" class="submit-button">Calculate Price</button>
-                <button @click="reservation_submit" class="submit-button">Proceed Reservation</button>
+                <b-button @click="reservation_update" class="submit-button">Calculate Price</b-button>
+                <Payment @submit="reservation_submit" :disabled="false"/>
             </div>
         </div>
 

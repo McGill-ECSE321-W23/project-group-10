@@ -1,10 +1,6 @@
 <template>
   <div class="list-of-reservation">
-    <NavBar 
-        :navItems="['dashboard']" 
-        activeNav="ListOfReservationPage" 
-        :username="username" 
-      />
+    <NavBar activeNav="reservations-admin"/>
 
     <h1>All Reservations</h1>
     
@@ -80,9 +76,6 @@
 </template>
 
 <style scoped>
-.list-of-reservation {
-  margin: 50px;
-}
 
 h1 {
   font-size: 32px;
