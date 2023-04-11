@@ -30,7 +30,6 @@ export default {
               {email: this.email, password: this.password}
             );
             
-            console.log(response.data);
             // save token, email and name in local storage
             localStorage.setItem('token', response.data);
             localStorage.setItem('email', this.email);
@@ -52,7 +51,6 @@ export default {
               {email: this.email, password: this.password}
             );
             
-            console.log(response.data);
             // save token, email and name in local storage
             localStorage.setItem('token', response.data);
             localStorage.setItem('email', this.email);
@@ -74,7 +72,6 @@ export default {
               {email: this.email, password: this.password}
             );
             
-            console.log(response.data);
             // save token, email and name in local storage
             localStorage.setItem('token', response.data);
             localStorage.setItem('email', this.email);
