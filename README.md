@@ -6,14 +6,14 @@ Please check the wiki for information on the architecture of the system.
 
 ## Team Members
 
-| Name           | GitHub username |
-|----------------|-----------------|
-| Luke E         | JiaxiangE       |
-| Weiheng Xiao   | Louis896        |
-| Marco Vidalon  | MarcVida        |
-| Mike Zhang     | Mikez08         |
-| Chenxin Xun    | ChenxinXun-123  |
-| Shaun Soobagrah| Shaun210       |
+| Name           | GitHub username | Role |
+|----------------|-----------------|--------
+| Marco Vidalon  | MarcVida        | Technical Team Lead      |
+| Luke E         | JiaxiangE       | Project Manager          |
+| Weiheng Xiao   | Louis896        | Quality Assurance Tester |
+| Mike Zhang     | Mikez08         | Software Developer       |
+| Chenxin Xun    | ChenxinXun-123  | Software Designer        |
+| Shaun Soobagrah| Shaun210        | Software Architect       |
 
 ***
 
