@@ -102,12 +102,7 @@
 
 <script src="@/scripts/AdminSetting.js"></script>
 <style scoped>
-
 #msg {
   color: dodgerblue;
-}
-
-.custom-width {
-  max-width: 300px;
 }
 </style>

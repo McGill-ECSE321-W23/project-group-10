@@ -1,16 +1,13 @@
 <template>
     <div class="employee">
-      <NavBar 
-        :navItems="['employee', 'services-admin', 'reservations-admin']" 
-        activeNav="employee" 
-        :username="username" 
-      />
+      <NavBar activeNav="employee" :username="username"/>
+      <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
         <div class="content">
             <br>
             <br>
             <br>
             <h2>Welcome,</h2>
-            <h2>Employee: {{email}}</h2>
+            <h2>{{username}}</h2>
             <router-link to="/edit-profile-employee" class="underline-button">Edit My Profile</router-link>
         </div>
     </div>

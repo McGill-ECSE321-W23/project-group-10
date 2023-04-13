@@ -17,19 +17,29 @@ export default {
       username: "",
       email: "",
       errorMessage: "",
+      showError: false
     }
   },
   async created() {
     try {
-      let response = await AXIOS.get(`/api/employee/${localStorage.getItem('employeeEmail')}`)
+      let response = await AXIOS.get(`/api/employee/${localStorage.getItem('email')}`)
       console.log(response.data)
       this.email = response.data.email
       this.username = response.data.name
     } catch (error) {
-      console.log(error)
+      this.error(error);
     }
   },
-
-  
+  methods: {
+    error(e) {
+      if(e.hasOwnProperty("response")) {
+        this.errorMessage = e.response.data.message;
+      }
+      else {
+        this.errorMessage = e.message;
+      }
+      this.showError = true;
+    }
+  },
   components:{NavBar}
 }
