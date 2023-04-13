@@ -1,10 +1,6 @@
 export default {
   name: "navbar",
   props: {
-    /* navItems: {
-      type: Array,
-      required: true
-    }, */
     activeNav: {
       type: String,
       required: true

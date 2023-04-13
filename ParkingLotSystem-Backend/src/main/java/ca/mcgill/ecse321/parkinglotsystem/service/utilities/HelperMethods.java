@@ -276,7 +276,7 @@ public class HelperMethods {
     public static String verifyPhone(String phone) {
         String error = "";
         if (phone.trim().length() != 10) {
-            error = error + "Phone must have exactlty 10 digits! ";
+            error = error + "Phone must have exactly 10 digits! ";
         }
         if (phone.trim().matches("\\d+") == false && phone.trim().length()>0) {
             error = error + "Phone cannot have non-number digits! ";

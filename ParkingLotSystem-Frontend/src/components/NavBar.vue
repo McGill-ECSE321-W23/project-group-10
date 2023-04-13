@@ -1,7 +1,7 @@
 <template>
 <div>
   <b-navbar toggleable="md" variant="light" fixed="top" sticky>
-    <b-navbar-brand href="#/Welcome">
+    <b-navbar-brand href="#">
       <img src="@/assets/parkin_logo_crop.png" width="80px" alt="Parkin">
     </b-navbar-brand>
 
