@@ -34,7 +34,7 @@ export default {
         let response = await AXIOS.get(`/api/parking-spot/`);
         let parkingSpotsWithIdsInRange = response.data.filter(parkingSpot => {
          
-          return parkingSpot.id >= 2000 && parkingSpot.id <= 3000;
+          return parkingSpot.id >= 2000 && parkingSpot.id < 4000;
         }).map(parkingSpot => {
           // add status property to each parking spot
           
