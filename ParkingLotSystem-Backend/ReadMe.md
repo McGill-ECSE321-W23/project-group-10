@@ -12,6 +12,9 @@ gradle --version
 # run the tests
 ./gradlew test
 
+# build backend
+./gradlew build
+
 # run the integration tests
 ./gradlew clean test
 
