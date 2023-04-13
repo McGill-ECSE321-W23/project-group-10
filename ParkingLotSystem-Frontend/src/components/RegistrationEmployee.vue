@@ -1,14 +1,8 @@
 <template>
   <div>
-    <div class="registrationEmployee">
-      <NavBar activeNav="employee-registration"/>
-    </div>
-    <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
-    <!-- <div class="title-bar">
-      <h1>Parking Lot System---Registration</h1>
-    </div> -->
-
-    <div class="form-container">
+    <NavBar activeNav="employee-registration"/>
+    <b-alert v-model="showError" :variant="alertVariant" dismissible>{{ errorMessage }}</b-alert>
+    <div class="form-container content">
       <form @submit.prevent="register">
         <div class="input-group">
           <label for="name">Name:</label>
@@ -37,7 +31,6 @@
 
         <div class="button-group">
           <b-button type="submit" variant="primary">Register</b-button>
-          <!-- <button type="button" @click="returnToLogin">Return</button> -->
         </div>
       </form>
     </div>
@@ -48,33 +41,6 @@
 
 
 <style scoped>
-.exception-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.exception-modal-content {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.title-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  background-color: #f3f3f3;
-}
-
 .form-container {
   display: flex;
   justify-content: center;
@@ -86,10 +52,6 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
-}
-
-.label {
-  margin-bottom: 0.5rem;
 }
 
 .button-group {

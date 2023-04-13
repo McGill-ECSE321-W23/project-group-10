@@ -21,43 +21,55 @@ export default {
       confirmPassword: '',
       showError: false,
       errorMessage: '',
+      alertVariant: "danger"
     };
   },
   methods: {
+    /** Registers an employee. */
     async register() {
-      // Handle registration logic here
       try{
         if (this.password.localeCompare(this.confirmPassword)!=0){
-          // throw exceptionMessage("password does not match confirmed passowrod");
           throw new Error("password does not match confirmed password!")
         }
-        let response = await AXIOS.post(
+        await AXIOS.post(
           `/api/employee/${this.email}`,
-          {
-
-          },
+          {},
           {
             params: {
               name: this.name,
               phone: this.phone,
-              password: this.password},
-            // headers: {}
+              password: this.password
+            }
           }
         );
+        this.success("Registration successful")
+        this.name = "";
+        this.email = "";
+        this.phone = "";
+        this.password = "";
+        this.confirmPassword = "";
       } catch(e){
         this.error(e);
       }
     },
-
+    /** Displays the error message. */
     error(e) {
+      this.alertVariant = "danger";
+      this.errorMessage = "Error: ";
       if(e.hasOwnProperty("response")) {
-        this.errorMessage = e.response.data.message;
+        this.errorMessage += e.response.data.message;
       }
       else {
-        this.errorMessage = e.message;
+        this.errorMessage += e.message;
       }
       this.showError = true;
     },
+    /** Displays the success message. */
+    success(message) {
+      this.alertVariant = "success";
+      this.errorMessage = message;
+      this.showError = true;
+    }
   },
 
   
