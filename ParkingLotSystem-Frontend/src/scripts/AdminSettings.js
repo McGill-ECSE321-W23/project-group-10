@@ -176,7 +176,7 @@ var AXIOS = axios.create({
               this.errorMessage = e.message;
             }
             this.showError = true;
-          }
+        }
     },
     components: {NavBar}
 

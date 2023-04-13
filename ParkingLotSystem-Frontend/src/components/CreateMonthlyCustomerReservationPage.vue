@@ -1,6 +1,7 @@
 <template>
   <div class="monthly-customer-reservation">
     <NavBar activeNav="create-customer-reservation"/>
+    <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
       <p>Please select the reservation type:</p>
       <input type="radio" id="sub-with-account" name="reservation-type" value="subWithAccount" v-model="reservationType">

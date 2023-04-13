@@ -39,7 +39,7 @@ public class SubWithAccountService {
         String monthlyCustomerEmail, int parkingSpotId) {
         
         // Data validation
-        if (!(parkingSpotId >= 2000 && parkingSpotId < 3000)){
+        if (!(parkingSpotId >= 2000 && parkingSpotId < 4000)){
             throw new CustomException(
                 "The parking spot is not available for monthly customers.", HttpStatus.BAD_REQUEST);
         }

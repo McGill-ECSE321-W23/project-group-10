@@ -20,6 +20,7 @@ export default {
         parkingSpots: [],
         monthlyCustomerEmail: "",
         errorMessage: "",
+        showError: false
       };
     },
     computed: {
