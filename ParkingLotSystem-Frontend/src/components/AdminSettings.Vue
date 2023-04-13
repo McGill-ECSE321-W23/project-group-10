@@ -100,7 +100,7 @@
   </div>
 </template>
 
-<script src="@/scripts/AdminSetting.js"></script>
+<script src="@/scripts/AdminSettings.js"></script>
 <style scoped>
 #msg {
   color: dodgerblue;
