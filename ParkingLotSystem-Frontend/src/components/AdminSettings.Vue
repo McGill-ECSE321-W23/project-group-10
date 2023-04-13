@@ -10,59 +10,24 @@
       <div class="Opening Hours" id="OH">
         <h3>Opening Hours</h3>
         <label for="hour">From : </label>
-        <select name="hour" id="startHour">
-          <option value=0>0</option>
-          <option value=1>1</option>
-          <option value=2>2</option>
-          <option value=3>3</option>
-          <option value=4>4</option>
-          <option value=5>5</option>
-          <option value=6>6</option>
-          <option value=7>7</option>
-          <option value=8>8</option>
-          <option value=9>9</option>
-          <option value=10>10</option>
-          <option value=11>11</option>
-          <option value=12>12</option>
-        </select>
+        <b-form-timepicker v-model="openTime" class="mb-2"></b-form-timepicker>
 
-        <select name="time" id="startTime">
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
-        <br>
         <label for="hour">To :&nbsp; &nbsp; &nbsp; </label>
-        <select name="hour" id="closeHour">
-          <option value=0>0</option>
-          <option value=1>1</option>
-          <option value=2>2</option>
-          <option value=3>3</option>
-          <option value=4>4</option>
-          <option value=5>5</option>
-          <option value=6>6</option>
-          <option value=7>7</option>
-          <option value=8>8</option>
-          <option value=9>9</option>
-          <option value=10>10</option>
-          <option value=11>11</option>
-          <option value=12>12</option>
-        </select>
+        <b-form-timepicker v-model="closeTime" class="mb-2"></b-form-timepicker>
 
-        <select name="time" id="closeTime">
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select><br>
         <b-button type="submit" class="mb-3" variant="primary" @click="setHours()"> Set</b-button><br>
 
 
         <h3>Parking Fees</h3>
         <label for="type">Parking Spot Type : </label>
-        <select name="type" id="type" :parkingSpotType="parkingSpotType">
-          <option value="">select a type</option>
-        </select>
+        <b-form-select 
+          class="mb-2 mr-sm-2 mb-sm-0"
+          :options="[{ text: '-', value: null }, ...spotTypes]" 
+          v-model="selectedSpotType">
+        </b-form-select>
         <br>
         <label for="fee">Fee : </label>
-        <input type="number" step=".01" id="parkingFee" name="parkingFee"> <label>in CAD$ per</label>
+        <b-input type="number" step=".01" v-model="spotTypeFee"></b-input> <label>in CAD$ per</label>
         <select name="unit" id="unit">
           <option value="Hour">Hour</option>
           <option value="Month">Month</option>
@@ -73,14 +38,18 @@
         <h3>Available Services</h3>
         <label for="add a service">Add a service : </label><br>
         <label for="name of the new service">Description : </label>
-        <input type="text" v-model="typeName" name="typeName"><br>
+        <input type="text" v-model="serviceDesc" name="serviceDesc"><br>
         <label for="price of the new service">Price : &nbsp; &nbsp; &nbsp;</label>
         <input type="number" step=".01" v-model="serviceFee" name="serviceFee"><label> &nbsp;in CAD$</label><br>
         <b-button type="submit" class="mb-3" variant="primary" @click="addService()"> Add</b-button><br><br>
 
         <label for="delete a service"> Delete a service : </label>
-        <b-form-select id="inline-form-custom-select-pref" class="mb-2 mr-sm-2 mb-sm-0"
-          :options="[{ text: '-', value: null }, ...services]" v-model="selectedService"></b-form-select><br>
+        <b-form-select 
+          class="mb-2 mr-sm-2 mb-sm-0"
+          :options="[{ text: '-', value: null }, ...services]" 
+          v-model="selectedService">
+        </b-form-select>
+        <br>
         <b-button variant="danger" @click="deleteService()">Delete</b-button><br><br>
 
       </div>
@@ -161,9 +130,5 @@ h3 {
   border-radius: 8px;
   margin-left: 22%;
 
-}
-
-#inline-form-custom-select-pref {
-  width: 130px;
 }
 </style>

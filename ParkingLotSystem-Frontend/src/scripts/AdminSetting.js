@@ -14,13 +14,16 @@ var AXIOS = axios.create({
     name: "admin-settings",
     data() {
         return{
-            parkingSpotType: [],
+            openTime: null,
+            closeTime: null,
+            spotTypes: [],
+            selectedSpotType: null,
+            spotTypeFee: 0,
             services: [],
             selectedService: null,
-            username: "Mike",
             errorMessage: "",
             showError: false,
-            typeName: "",
+            serviceDesc: "",
             serviceFee: 0
         }
     },
@@ -33,7 +36,7 @@ var AXIOS = axios.create({
         async addService(){
             try{
                 await AXIOS.post(
-                    `/api/service/${this.typeName}`,
+                    `/api/service/${this.serviceDesc}`,
                     {},
                     {params: {price: this.serviceFee}, headers: {token: "dev"}}
                 );
@@ -54,46 +57,64 @@ var AXIOS = axios.create({
             }
             this.refresh();
         },
-        setFee: function() {
-            return; // TODO: FIX THIS
-            try{
-                var type = document.getElementById("type");
-                var fee = document.getElementById("parkingFee");
-
-                let parkingFee = AXIOS.put(`/api/parking-spot-type/${type}/`, {fee});
-            }catch(e){
+        async setFee() {
+            try {
+                let res = await AXIOS.put(
+                    `/api/parking-spot-type/${this.selectedSpotType}`,
+                    {},
+                    {
+                        params: { fee: this.spotTypeFee },
+                        headers: { token: localStorage.getItem("token")}
+                    }
+                );
+                this.refresh();
+            } catch(e) {
                 this.error(e);
             }
         },
-
-        setHours: function() {
-            return; // TODO: FIX THIS
-            try{
-                var startHour = document.getElementById("startHour");
-                var closeHour = document.getElementById("closeHour");
-                var startTime = document.getElementById("startTime");
-                var closeTime = document.getElementById("closeTime");
-                if (startTime == "PM"){
-                    startHour+=12;
-                }
-                if (closeTime == "PM"){
-                    closeHour+=12;
-                }
-
-                let openingHours = AXIOS.put(`/api/parking-lot-system/${id}/`, {startHour, closeHour});
-            }catch(e){
+        async setHours() {
+            try {
+                await AXIOS.put(
+                    "/api/parking-lot-system/0",
+                    {},
+                    {
+                        params: { openTime: this.openTime, closeTime: this.closeTime },
+                        headers: { token: localStorage.getItem("token")}
+                    }
+                );
+            } catch(e) {
                 this.error(e);
             }
         },
 
         async refresh() {
-            let response = await AXIOS.get("/api/service");
-            this.services = response.data.map(service => {
-                return {
-                value: service.description,
-                text: `${service.description}: $${service.price} CAD`
-                }
-            });
+            try {
+                // Get parking lot system settings
+                let response = await AXIOS.get("/api/parking-lot-system/0");
+                let pls = response.data;
+                this.openTime = pls.openTime;
+                this.closeTime = pls.closeTime;
+
+                // Get parking fees
+                response = await AXIOS.get("/api/parking-spot-type");
+                this.spotTypes = response.data.map(spotType => {
+                    return {
+                    value: spotType.name,
+                    text: `${spotType.name}: $${spotType.fee} CAD`
+                    }
+                });
+
+                // Get services
+                response = await AXIOS.get("/api/service");
+                this.services = response.data.map(service => {
+                    return {
+                    value: service.description,
+                    text: `${service.description}: $${service.price} CAD`
+                    }
+                });
+            } catch(e) {
+                this.error(e);
+            }
         },
 
         error(e) {
