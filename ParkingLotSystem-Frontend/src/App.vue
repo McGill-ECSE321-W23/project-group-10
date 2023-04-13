@@ -38,4 +38,8 @@ body {
 .content {
   margin-top: 60px;
 }
+
+.custom-width {
+  max-width: 300px;
+}
 </style>

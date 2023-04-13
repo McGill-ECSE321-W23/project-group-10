@@ -18,39 +18,51 @@ export default {
       manager: {
         name: '',
         email: '',
-        phoneNumber: '',
+        phone: '',
         password: ''
       },
-      username: "Marco",
-      navItems: [
-        {text: "Dashboard", href: "#"},
-        {text: "Settings", href: "#"},
-        {text: "Services", href: "#"},
-        {text: "Reservations", href: "#"}
-      ],
-
+      errorMessage: "",
+      showError: false,
+      alertVariant: "danger"
+    }
+  },
+  async created() {
+    try {
+      let response = await AXIOS.get(`/api/manager/${localStorage.getItem("email")}`);
+      this.manager = response.data;
+    } catch(e) {
+      this.error(e);
     }
   },
   methods: {
     async updateManager() {
       try {
-        console.log('Update Monthly Customer: ' + this.manager.name + ' ' + this.manager.email + ' '
-          + this.manager.phoneNumber + ' ' + this.manager.password)
         let response = await AXIOS.put(
           `/api/manager/${this.manager.email}`,
           {},
           {
-            params: {name: this.manager.name, phone: this.manager.phoneNumber, password: this.manager.password}
+            params: {name: this.manager.name, phone: this.manager.phone, password: this.manager.password}
           }
         )
-          .then(response => {
-            console.log('Update Manager:', response.data);
-          });
-
-        // this.$router.push('/parking-spot-type')
+        this.success("Update successful");
       } catch (error) {
-        console.log(error)
+        this.error(error);
       }
+    },
+    error(e) {
+      this.alertVariant = "danger";
+      if(e.hasOwnProperty("response")) {
+        this.errorMessage = e.response.data.message;
+      }
+      else {
+        this.errorMessage = e.message;
+      }
+      this.showError = true;
+    },
+    success(message) {
+      this.alertVariant = "success";
+      this.errorMessage = message;
+      this.showError = true;
     }
   },
   components: {NavBar}

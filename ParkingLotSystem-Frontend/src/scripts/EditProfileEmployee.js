@@ -18,42 +18,39 @@ export default {
       employee: {
         name: '',
         email: '',
-        phoneNumber: '',
+        phone: '',
         password: ''
       },
-      username: "Marco",
-      navItems: [
-        {text: "Dashboard", href: "#"},
-        {text: "Settings", href: "#"},
-        {text: "Services", href: "#"},
-        {text: "Reservations", href: "#"}
-      ],
       showError: false,
-      errorMessage: ""
+      errorMessage: "",
+      alertVariant: "danger"
+    }
+  },
+  async created() {
+    try {
+      let response = await AXIOS.get(`/api/employee/${localStorage.getItem("email")}`);
+      this.employee = response.data;
+    } catch(e) {
+      this.error(e);
     }
   },
   methods: {
     async updateEmployee() {
       try {
-        console.log('Update Employee: ' + this.employee.name + ' ' + this.employee.email+ ' '
-          + this.employee.phoneNumber + ' ' + this.employee.password)
         let response = await AXIOS.put(
           `/api/employee/${this.employee.email}`,
           {},
           {
-            params: {name: this.employee.name, phone: this.employee.phoneNumber, password: this.employee.password}
+            params: {name: this.employee.name, phone: this.employee.phone, password: this.employee.password}
           }
         )
-          .then(response => {
-            console.log('Update Employee:', response.data);
-          });
-
-        // this.$router.push('/parking-spot-type')
+        this.success("Update successful");
       } catch (error) {
-        this.error(error)
+        this.error(error);
       }
     },
     error(e) {
+      this.alertVariant = "danger";
       if(e.hasOwnProperty("response")) {
         this.errorMessage = e.response.data.message;
       }
@@ -62,6 +59,11 @@ export default {
       }
       this.showError = true;
     },
+    success(message) {
+      this.alertVariant = "success";
+      this.errorMessage = message;
+      this.showError = true;
+    }
   },
   components: {NavBar}
 }

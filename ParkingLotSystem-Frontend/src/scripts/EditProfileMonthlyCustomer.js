@@ -18,41 +18,58 @@ export default {
       monthlyCustomer: {
         name: '',
         email: '',
-        phoneNumber: '',
+        phone: '',
         password: '',
         licenseNumber: ''
       },
-      username: "Marco",
-      navItems: [
-        {text: "Dashboard", href: "#"},
-        {text: "Settings", href: "#"},
-        {text: "Services", href: "#"},
-        {text: "Reservations", href: "#"}
-      ],
-
+      errorMessage: "",
+      showError: false,
+      alertVariant: "danger"
+    }
+  },
+  async created() {
+    try {
+      let response = await AXIOS.get(`/api/monthly-customer/${localStorage.getItem("email")}`);
+      this.monthlyCustomer = response.data;
+    } catch(e) {
+      this.error(e);
     }
   },
   methods: {
     async updateMonthlyCustomer() {
       try {
-        console.log('Update Monthly Customer: ' + this.monthlyCustomer.name + ' ' + this.monthlyCustomer.email+ ' '
-          + this.monthlyCustomer.phoneNumber + ' ' + this.monthlyCustomer.password + ' ' + this.monthlyCustomer.licenseNumber)
         let response = await AXIOS.put(
           `/api/monthly-customer/${this.monthlyCustomer.email}`,
           {},
           {
-            params: {name: this.monthlyCustomer.name, phone: this.monthlyCustomer.phoneNumber,
-              password: this.monthlyCustomer.password, licenseNumber: this.monthlyCustomer.licenseNumber}
+            params: {
+              name: this.monthlyCustomer.name, 
+              phone: this.monthlyCustomer.phone, 
+              password: this.monthlyCustomer.password,
+              licenseNumber: this.monthlyCustomer.licenseNumber
+            }
           }
         )
-          .then(response => {
-            console.log('Update Monthly Customer:', response.data);
-          });
-
-        // this.$router.push('/parking-spot-type')
+        this.success("Update successful");
       } catch (error) {
-        console.log(error)
+        this.error(error);
       }
+    },
+    error(e) {
+      this.alertVariant = "danger";
+      this.errorMessage = "Error: ";
+      if(e.hasOwnProperty("response")) {
+        this.errorMessage += e.response.data.message;
+      }
+      else {
+        this.errorMessage += e.message;
+      }
+      this.showError = true;
+    },
+    success(message) {
+      this.alertVariant = "success";
+      this.errorMessage = message;
+      this.showError = true;
     }
   },
   components: {NavBar}
