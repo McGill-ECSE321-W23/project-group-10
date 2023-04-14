@@ -14,6 +14,10 @@
         <span>{{ reservationStartDate }}</span>
       </div>
       <div class="reservation-info">
+        <label>End Date: </label>
+        <span>{{ reservationEndDate }}</span>
+      </div>
+      <div class="reservation-info">
         <label>Number of Months: </label>
         <span>{{ newNbrOfMonths }}</span>
       </div>
