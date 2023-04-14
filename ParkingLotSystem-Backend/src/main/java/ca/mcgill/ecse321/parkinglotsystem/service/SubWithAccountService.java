@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.parkinglotsystem.service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -257,14 +258,22 @@ public class SubWithAccountService {
 
     /**
      * Checks whether the last day of the subscription is after the current day.
-     * @author Marco
+     * If the number of months of the subscription is zero, then it assumes the
+     * subscription is active for one day (the person must pay during this time).
+     * @author Marco Vidalon
      * @param sub SubWithAccount
      * @return true if the subscription is still active.
      */
     private boolean isActive(SubWithAccount sub) {
-
-        Date date = new Date((new java.util.Date()).getTime());
-        Date lastSubDate = Date.valueOf(sub.getDate().toLocalDate().plusMonths(sub.getNbrMonths()).minusDays(1));
+        Date date = Date.valueOf(LocalDate.now());
+        int nbrMonths = sub.getNbrMonths();
+        Date lastSubDate;
+        if(nbrMonths > 0) {
+            lastSubDate = Date.valueOf(sub.getDate().toLocalDate().plusMonths(nbrMonths).minusDays(1));
+        }
+        else {
+            lastSubDate = Date.valueOf(sub.getDate().toLocalDate().plusDays(1));
+        }
         return lastSubDate.after(date);
     }
 

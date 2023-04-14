@@ -8,6 +8,8 @@
       <label for="sub-with-account">subscription with account</label><br>
       <input type="radio" id="sub-without-account" name="reservation-type" value="subWithoutAccount" v-model="reservationType">
       <label for="sub-without-account">subscription without account</label><br>
+      
+      <label>License number:</label>
       <div v-if="reservationType === 'subWithAccount'">
         <input type="email" id="monthly-customer-email" v-model="monthlyCustomerEmail" placeholder="Enter monthly customer email">
       </div>
@@ -15,28 +17,16 @@
       <div v-if="reservationType === 'subWithoutAccount'">
         <input type="text" id="license-number" v-model="licenseNumber" placeholder="Enter license number">
       </div>
-      <div v-if="selectedSpot">
-        Selected parking spot: {{ selectedSpot.id }} - {{ selectedSpot.status }}
-      </div>
+
+      <label>Parking spot:</label><br>
+      <b-form-select 
+        class="custom-width mx-auto"
+        v-model="selectedSpot" 
+        :options="parkingSpots" 
+        :select-size="6">
+      </b-form-select><br>
   
       <button v-on:click="createReservation">Submit</button>
-  
-      <div class = "table">
-        <table class="parking-spot-list">
-          <thead>
-              <tr>
-                  <th>Parking Spot ID</th>
-                  <th>Parking Spot Status</th>
-              </tr>
-          </thead>
-          <tbody class = "scrollable-parking-spot-list" style="max-height: 200px; overflow-y: scroll;">
-              <tr v-for="parkingSpot in parkingSpots" :key="parkingSpot.id" @click="showSelectedSpot(parkingSpot)">
-                  <td>{{ parkingSpot.id }}</td>
-                  <td>{{ parkingSpot.status }}</td>
-              </tr>
-          </tbody>
-       </table>
-      </div>
     </div>
   </div>
 </template>
@@ -44,17 +34,11 @@
 <script src="@/scripts/CreateMonthlyCustomerReservationPage.js"> </script>
 
 <style scoped>
-/* .monthly-customer-reservation {
-  width: 1300px;
-  max-height: 300px;
-  
-} */
-
 .table {
 
   height: 200px;
   width: 200px;
-  overflow: scroll;
+  overflow-y: scroll;
   border-collapse: collapse;
   margin: 0 auto;
 }

@@ -63,7 +63,7 @@ public class SubWithoutAccountService {
             SubWithoutAccount subWithoutAccount = new SubWithoutAccount(); 
             subWithoutAccount.setDate(date);
             subWithoutAccount.setLicenseNumber(licenseNumber);
-            subWithoutAccount.setNbrMonths(1);
+            subWithoutAccount.setNbrMonths(0);
             subWithoutAccount.setParkingSpot(parkingSpotService.getParkingSpotById(parkingSpotId));
             subWithoutAccountRepository.save(subWithoutAccount);
             return subWithoutAccount;
@@ -244,7 +244,7 @@ public class SubWithoutAccountService {
 
     /**
 	 * Delete all subscriptions without an account.
-     * @author Mike
+     * @author Mike Zhang
 	 * @return A List of SubWithoutAccount
 	 */
 	@Transactional
@@ -256,13 +256,22 @@ public class SubWithoutAccountService {
 
     /**
      * Checks whether the last day of the subscription is after the current day.
-     * @author Mike
+     * If the number of months of the subscription is zero, then it assumes the
+     * subscription is active for one day (the person must pay during this time).
+     * @author Mike Zhang
      * @param subWithoutAccount the input subscription without an account
      * @return true if the subscription is still active.
      */
     private boolean isActive(SubWithoutAccount subWithoutAccount) {
         Date date = Date.valueOf(LocalDate.now());
-        Date lastSubDate = Date.valueOf(subWithoutAccount.getDate().toLocalDate().plusMonths(subWithoutAccount.getNbrMonths()).minusDays(1));
+        int nbrMonths = subWithoutAccount.getNbrMonths();
+        Date lastSubDate;
+        if(nbrMonths > 0) {
+            lastSubDate = Date.valueOf(subWithoutAccount.getDate().toLocalDate().plusMonths(nbrMonths).minusDays(1));
+        }
+        else {
+            lastSubDate = Date.valueOf(subWithoutAccount.getDate().toLocalDate().plusDays(1));
+        }
         return lastSubDate.after(date);
     }
     /**

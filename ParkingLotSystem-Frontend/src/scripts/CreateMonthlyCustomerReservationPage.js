@@ -23,83 +23,58 @@ export default {
         showError: false
       };
     },
-    computed: {
-      isDisabled() {
-        return this.reservationType === "subWithAccount";
-      },
-      isMonthlyCustomerEmailDisabled() {
-        return this.reservationType === 'subWithAccount';
-      }
-    },
     async created() {
-        let response = await AXIOS.get(`/api/parking-spot/`);
-        let parkingSpotsWithIdsInRange = response.data.filter(parkingSpot => {
-         
-          return parkingSpot.id >= 2000 && parkingSpot.id < 4000;
-        }).map(parkingSpot => {
-          // add status property to each parking spot
-          
-          return {
-            ...parkingSpot,
-            status: 'available' // default status can be 'available'
-          };
-        });
-        // see if parking spot is reserved
-        let reservationResponse = await AXIOS.get(
-          `/api/reservation/`, 
-          
-          {
-              headers: { token: "dev" } // TODO: Get token from localStorage
-          }
-          )
-        let reservations = reservationResponse.data;
-        console.log('reservations', reservations);
-        parkingSpotsWithIdsInRange.forEach(parkingSpot => {
-          let reservation = reservations.find(reservation => reservation.parkingSpotDto.id === parkingSpot.id);
-          parkingSpot.status = reservation ? 'reserved' : 'available';
-        });
-        
-        this.parkingSpots = parkingSpotsWithIdsInRange;
+      this.refresh();
     },
     methods: {
-      showSelectedSpot(parkingSpot) {
-        this.selectedSpot = parkingSpot;
-      },
       async createReservation() {
         if (this.reservationType === 'subWithAccount') {
           console.log('create reservation with account');
           try {
-            let response = await AXIOS.post(
-                `/api/sub-with-account/`, 
-                {},
-                {
-                    params: { monthlyCustomerEmail: this.monthlyCustomerEmail, parkingSpotId: this.selectedSpot.id },
-                    headers: { token: "dev" } // TODO: Get token from localStorage
-                }
-                )
-                .then(response => {
-                    console.log('Created Parking Spot:', response.data);
-                    location.reload();
-                });
+            await AXIOS.post(
+              `/api/sub-with-account/`, 
+              {},
+              {
+                  params: { monthlyCustomerEmail: this.monthlyCustomerEmail, parkingSpotId: this.selectedSpot }
+              }
+            )
+            this.licenseNumber = "";
+            this.refresh();
           } catch (error) {
-              this.error(error)
+            this.error(error)
           }
         }
-        if (this.reservationType === 'subWithoutAccount') {
-          console.log('create reservation without account');
+        else if (this.reservationType === 'subWithoutAccount') {
           try {
-            let response = await AXIOS.post(
-                `/api/sub-without-account/`, 
-                {},
-                {
-                    params: { licenseNumber: this.licenseNumber, parkingSpotId: this.selectedSpot.id },
-                    // headers: { token: "dev" } // TODO: Get token from localStorage
-                }
-                )
+            await AXIOS.post(
+              `/api/sub-without-account/`, 
+              {},
+              {
+                  params: { licenseNumber: this.licenseNumber, parkingSpotId: this.selectedSpot }
+              }
+            )
+            this.licenseNumber = "";
+            this.refresh();
           } catch (error) {
-            console.log(error)
             this.error(error)
         }
+        }
+      },
+      async refresh() {
+        try {
+          // Get available parking spots
+          let response = await AXIOS.get(`/api/reservation/available-parking-spots`);
+          let parkingSpotsWithIdsInRange = response.data.filter(parkingSpot => {
+            return parkingSpot.id >= 2000 && parkingSpot.id < 4000;
+          }).map(parkingSpot => {
+            return {
+              value: parkingSpot.id,
+              text: parkingSpot.id
+            };
+          });
+          this.parkingSpots = parkingSpotsWithIdsInRange;
+        } catch(e) {
+          this.error(e);
         }
       },
       error(e) {

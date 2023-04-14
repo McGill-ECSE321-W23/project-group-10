@@ -128,6 +128,7 @@ public class ReservationService {
 
     /**
      * Method to get all reserved parking spots.
+     * @author Marco Vidalon
      * @return A list of ParkingSpot
      */
     @Transactional
@@ -135,6 +136,22 @@ public class ReservationService {
         List<ParkingSpot> reservedSpots = new ArrayList<>();
         for(ParkingSpot spot : parkingSpotService.getAllParkingSpots()) {
             if(hasActiveReservationByParkingSpot(spot.getId())) {
+                reservedSpots.add(spot);
+            }
+        }
+        return reservedSpots;
+    }
+
+    /**
+     * Method to get all available parking spots.
+     * @author Marco Vidalon
+     * @return A list of ParkingSpot
+     */
+    @Transactional
+    public List<ParkingSpot> getAvailableParkingSpots() {
+        List<ParkingSpot> reservedSpots = new ArrayList<>();
+        for(ParkingSpot spot : parkingSpotService.getAllParkingSpots()) {
+            if(!hasActiveReservationByParkingSpot(spot.getId())) {
                 reservedSpots.add(spot);
             }
         }
