@@ -14,6 +14,7 @@ export default {
     name: 'monthly-customer-reservation',
     data() {
       return {
+        //subscription without account variables
         reservationType: "subWithoutAccount",
         licenseNumber: "",
         selectedSpot: null,
@@ -27,12 +28,13 @@ export default {
       this.refresh();
     },
     methods: {
+      /** Create reservation with either type of subWithAccount or subWithoutAccount. */
       async createReservation() {
         if (this.reservationType === 'subWithAccount') {
           console.log('create reservation with account');
           try {
             await AXIOS.post(
-              `/api/sub-with-account/`, 
+              `/api/sub-with-account/`,
               {},
               {
                   params: { monthlyCustomerEmail: this.monthlyCustomerEmail, parkingSpotId: this.selectedSpot }
@@ -47,7 +49,7 @@ export default {
         else if (this.reservationType === 'subWithoutAccount') {
           try {
             await AXIOS.post(
-              `/api/sub-without-account/`, 
+              `/api/sub-without-account/`,
               {},
               {
                   params: { licenseNumber: this.licenseNumber, parkingSpotId: this.selectedSpot }

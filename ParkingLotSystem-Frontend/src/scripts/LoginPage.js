@@ -22,14 +22,15 @@ export default {
       }
     },
     methods: {
+      /** method to sign in as a manager through authentication */
       async loginAsManager() {
         this.errorEvent = '';
         try {
             let response = await AXIOS.post(
-              "/api/authentication/login-manager", 
+              "/api/authentication/login-manager",
               {email: this.email, password: this.password}
             );
-            
+
             // save token, email and name in local storage
             localStorage.setItem('token', response.data);
             localStorage.setItem('email', this.email);
@@ -43,14 +44,15 @@ export default {
             this.error(e);
         }
       },
+      /** method to sign in as a employee through authentication */
       async loginAsEmployee() {
         this.errorEvent = '';
         try {
             let response = await AXIOS.post(
-              "/api/authentication/login-employee", 
+              "/api/authentication/login-employee",
               {email: this.email, password: this.password}
             );
-            
+
             // save token, email and name in local storage
             localStorage.setItem('token', response.data);
             localStorage.setItem('email', this.email);
@@ -64,14 +66,15 @@ export default {
             this.error(e);
         }
       },
+      /** method to sign in as a customer through authentication */
       async loginAsCustomer() {
         this.errorEvent = '';
         try {
             let response = await AXIOS.post(
-              "/api/authentication/login-customer", 
+              "/api/authentication/login-customer",
               {email: this.email, password: this.password}
             );
-            
+
             // save token, email and name in local storage
             localStorage.setItem('token', response.data);
             localStorage.setItem('email', this.email);

@@ -19,6 +19,7 @@ export default {
       errorMessage: "",
     }
   },
+  /** get the monthly customer from local storage by email */
   async created() {
     try {
       let response = await AXIOS.get(`/api/monthly-customer/${localStorage.getItem('monthlyCustomerEmail')}`)
@@ -29,6 +30,6 @@ export default {
       console.log(error)
     }
   },
-  
+
   components:{NavBar}
 }

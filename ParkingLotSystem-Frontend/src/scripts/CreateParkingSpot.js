@@ -22,11 +22,12 @@ export default {
       }
     },
     methods: {
+      /** create a parking spot with spot id and parking spot type. */
         async createParkingSpot() {
             try {
                 console.log('Creating Parking Spot: ' + this.parkingSpot.id + ' ' + this.parkingSpot.type)
                 let response = await AXIOS.post(
-                    `/api/parking-spot/${this.parkingSpot.id}`, 
+                    `/api/parking-spot/${this.parkingSpot.id}`,
                     {},
                     {
                         params: { parkingSpotTypeName: this.parkingSpot.type},

@@ -69,7 +69,7 @@ export default {
 
 
   methods:{
-
+    /** Get the subscription fee by checking the parking spot type. */
     async subscription_update(){
       try {
         console.log(this.parkingSpotNumber_subscription);
@@ -81,6 +81,7 @@ export default {
       }
     },
 
+    /** Get the service fee for the selected service. */
     async service_update(){
       try {
         let response = await AXIOS.get(`/api/service/${this.selectedService}`);
@@ -91,7 +92,7 @@ export default {
       }
     },
 
-    
+    /** Get the reservation fee for the selected service. */
     async reservation_update(){
       try {
         let response = await AXIOS.get(`/api/parking-spot/${this.parkingSpotNumber_reservation}`);
@@ -113,7 +114,7 @@ export default {
               parkingTime: (this.reservation_hour*60+this.reservation_minute),
               parkingSpotId: this.parkingSpotNumber_reservation,
             },
-            headers: { token: "dev" } 
+            headers: { token: "dev" }
           }
         );
         this.service_request = response.data;
@@ -134,7 +135,7 @@ export default {
               licenseNumber: this.licenseNumber,
               description: this.selectedService,
             },
-            headers: { token: "dev" } 
+            headers: { token: "dev" }
           }
         );
         this.service_request = response.data;
@@ -155,7 +156,7 @@ export default {
               licenseNumber: this.licenseNumber,
               parkingSpotId: this.parkingSpotNumber_subscription
             },
-            headers: { token: "dev" } 
+            headers: { token: "dev" }
           }
         );
         this.subscription_request = response.data;
@@ -188,6 +189,6 @@ export default {
     },
 
   },
-  
+
   components:{NavBar, Payment}
 }

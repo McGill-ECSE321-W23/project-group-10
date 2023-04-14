@@ -26,6 +26,7 @@ export default {
       alertVariant: "danger"
     }
   },
+  /** get the employee from the local database by email. */
   async created() {
     try {
       let response = await AXIOS.get(`/api/employee/${localStorage.getItem("email")}`);
@@ -35,6 +36,7 @@ export default {
     }
   },
   methods: {
+    /** update the employee name, phone and password. */
     async updateEmployee() {
       try {
         let response = await AXIOS.put(
