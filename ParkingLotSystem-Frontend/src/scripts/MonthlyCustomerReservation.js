@@ -22,9 +22,7 @@ export default {
       errorMessage: "",
       fee: "",
       amount: "",
-      newNbrOfMonths: "",
-      amount: "",
-      username: ""
+      newNbrOfMonths: ""
     };
   },
   computed: {

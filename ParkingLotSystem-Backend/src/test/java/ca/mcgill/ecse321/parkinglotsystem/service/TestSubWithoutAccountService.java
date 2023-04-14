@@ -213,7 +213,7 @@ public class TestSubWithoutAccountService {
         }
         assertNotNull(subWithoutAccount);
         assertEquals(license_number2, subWithoutAccount.getLicenseNumber());
-        assertEquals(1, subWithoutAccount.getNbrMonths());
+        assertEquals(0, subWithoutAccount.getNbrMonths());
         assertEquals(ParkingSpot_ID_UNUSED, subWithoutAccount.getParkingSpot().getId());
     
     }
@@ -297,7 +297,7 @@ public class TestSubWithoutAccountService {
 
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(license_number1);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(license_number1,num+1);
         } catch (CustomException e) {
             fail(e.getMessage());
         }
@@ -313,7 +313,7 @@ public class TestSubWithoutAccountService {
         String error = null;;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(license_number2);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(license_number2,1);
         } catch (CustomException e) {
             error = e.getMessage();
         }
@@ -329,7 +329,7 @@ public class TestSubWithoutAccountService {
         String newLicense = null;
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(newLicense);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(newLicense,1);
         } catch (CustomException e) {
             error = e.getMessage();
         }
@@ -345,7 +345,7 @@ public class TestSubWithoutAccountService {
         String newLicense = "$#@";
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(newLicense);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(newLicense,1);
         } catch (CustomException e) {
             error = e.getMessage();
         }
@@ -361,7 +361,7 @@ public class TestSubWithoutAccountService {
         String licenseNumber = "ABC123";
         SubWithoutAccount subWithoutAccount = null;
         try {
-            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(licenseNumber);
+            subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(licenseNumber,1);
         } catch (CustomException e) {
             error = e.getMessage();
         }

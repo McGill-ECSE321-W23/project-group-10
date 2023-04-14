@@ -90,8 +90,7 @@ public class ServiceReqWithoutAccountController {
     @PostMapping(value = { "", "/" })
     public ServiceReqWithoutAccountDto createServiceReqWithoutAccount(
             @RequestParam(value = "licenseNumber") String licenseNumber,
-            @RequestParam(value = "description") String description,
-            @RequestHeader String token) {
+            @RequestParam(value = "description") String description) {
         return convertServiceReqWithoutAccountToDto(service.createServiceReqWithoutAccount(licenseNumber, description));
     }
 

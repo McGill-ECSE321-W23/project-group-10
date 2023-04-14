@@ -109,6 +109,20 @@ public class SubWithoutAccountController {
     }
 
     /** 
+     * method to get active subscription without account by license number
+     * @author Marco Vidalon
+     * @param licenseNumber - the license number
+     * @return the SubWithoutAccount found with the given license number as Dto
+     */
+    @GetMapping(value = { "/active-by-license-number/{licenseNumber}", "/active-by-license-number/{licenseNumber}/"})
+    public SubWithoutAccountDto getActiveByLicenseNumber(@PathVariable String licenseNumber){
+        
+        SubWithoutAccount subWithoutAccount = subWithoutAccountService.getActiveByLicenseNumber(licenseNumber);
+        
+        return convertToDto(subWithoutAccount);
+    }
+
+    /** 
      * method to get a list of Subscription without account with a licenseNumber
      * @author Mike
      * @param licenseNumber - the licenseNumber linked to the SubWithoutAccounts
@@ -125,8 +139,8 @@ public class SubWithoutAccountController {
     }
 
     @PutMapping(value = { "/{licenseNumber}", "/{licenseNumber}/" })
-	public SubWithoutAccountDto updateSubWithoutAccountDto(@PathVariable String licenseNumber) {
-		SubWithoutAccount subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(licenseNumber);
+	public SubWithoutAccountDto updateSubWithoutAccountDto(@PathVariable String licenseNumber, @RequestParam int numberOfMonths) {
+		SubWithoutAccount subWithoutAccount = subWithoutAccountService.updateSubWithoutAccount(licenseNumber, numberOfMonths);
 		return convertToDto(subWithoutAccount);
 	}
 
