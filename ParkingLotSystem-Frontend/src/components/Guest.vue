@@ -60,7 +60,7 @@
     </div>
 
     <div v-if="selectedOption == 'For Subscription'">
-      <b-button @click="refreshSubInfo()">View and pay subscription</b-button>
+      <b-button class="mb-3" @click="refreshSubInfo()">View and pay subscription</b-button>
 
       <div class="reservation-info">
         <label>Reservation ID:&nbsp;</label>

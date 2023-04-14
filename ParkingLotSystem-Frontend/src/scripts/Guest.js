@@ -16,57 +16,57 @@ export default {
 
   data() {
     return {
-        username: '',
-        licenseNumber: '',
-        parkingSpotNumber_reservation:'',
-        reservation_hour: 0,
-        reservation_minute: 0,
-        errorMessage: '',
-        alertVariant: 'danger',
-        showError: false,
-        options: ['For Service', 'For Reservation', 'For Subscription'],
-        selectedOption: '',
-        services: [],
-        selectedService:'',
-        selectedServicePrice:'',
-        parkingSpotNumber_subscription:'',
-        subscription_request: null,
-        service_request:null,
-        displayServicePrice:0,
-        displayReservationPrice:0,
-        reservationFee:0,
-        displaySubscriptionPrice:0,
-        subscriptionPrice:0,
+      // General variables
+      licenseNumber: '',
+      options: ['For Service', 'For Reservation', 'For Subscription'],
+      selectedOption: '',
 
-        reservationId: null,
-        reservationStartDate: "",
-        currentNbrOfMonths: "",
-        fee: "",
-        amount: "",
-        newNbrOfMonths: "",
+      // Service variables
+      services: [],
+      selectedService:'',
+      selectedServicePrice:'',
+      service_request:null,
+      displayServicePrice:0,
+      displayReservationPrice:0,
 
-
-        hours: [
-            { value: 0, label: '00' },
-            { value: 1, label: '01' },
-            { value: 2, label: '02' },
-            { value: 3, label: '03' },
-            { value: 4, label: '04' },
-            { value: 5, label: '05' },
-            { value: 6, label: '06' },
-            { value: 7, label: '07' },
-            { value: 8, label: '08' },
-            { value: 9, label: '09' },
-            { value: 10, label: '10' },
-            { value: 11, label: '11' },
-        ],
-
-        minutes: [
-            { value: 0, label: '00' },
-            { value: 15, label: '15' },
-            { value: 30, label: '30' },
-            { value: 45, label: '45' },
-        ],
+      // Reservation variables
+      parkingSpotNumber_reservation:'',
+      reservation_hour: 0,
+      reservation_minute: 0,
+      reservationFee:0,
+      
+      // Subscription variables
+      reservationId: null,
+      reservationStartDate: "",
+      currentNbrOfMonths: "",
+      fee: "",
+      amount: "",
+      newNbrOfMonths: "",
+      
+      // Other
+      errorMessage: '',
+      alertVariant: 'danger',
+      showError: false,
+      hours: [
+        { value: 0, label: '00' },
+        { value: 1, label: '01' },
+        { value: 2, label: '02' },
+        { value: 3, label: '03' },
+        { value: 4, label: '04' },
+        { value: 5, label: '05' },
+        { value: 6, label: '06' },
+        { value: 7, label: '07' },
+          { value: 8, label: '08' },
+          { value: 9, label: '09' },
+          { value: 10, label: '10' },
+          { value: 11, label: '11' },
+      ],
+      minutes: [
+          { value: 0, label: '00' },
+          { value: 15, label: '15' },
+          { value: 30, label: '30' },
+          { value: 45, label: '45' },
+      ],
 
     }
   },
@@ -89,18 +89,7 @@ export default {
   },
 
   methods:{
-
-    async subscription_update(){
-      try {
-        console.log(this.parkingSpotNumber_subscription);
-        let response = await AXIOS.get(`/api/parking-spot/${this.parkingSpotNumber_subscription}`);
-        this.subscriptionPrice = response.data.type.fee;
-        this.displaySubscriptionPrice=1;
-      } catch(e) {
-        this.error(e);
-      }
-    },
-
+    /** Gets the service info. */
     async service_update(){
       try {
         let response = await AXIOS.get(`/api/service/${this.selectedService}`);
@@ -111,7 +100,7 @@ export default {
       }
     },
 
-    
+    /** Gets the parking spot info. */
     async reservation_update(){
       try {
         let response = await AXIOS.get(`/api/parking-spot/${this.parkingSpotNumber_reservation}`);
@@ -122,6 +111,7 @@ export default {
       }
     },
 
+    /** Creates the payment and single reservation. */
     async reservation_submit(){
       try {
         let response = await AXIOS.post(
@@ -142,7 +132,7 @@ export default {
       }
     },
 
-
+    /** Creates the payment and the service. */
     async service_submit(){
       try {
         let response = await AXIOS.post(
@@ -161,26 +151,7 @@ export default {
         this.error(e);
       }
     },
-
-    async subscription_submit(){
-      try {
-        let response = await AXIOS.post(
-          '/api/sub-without-account',
-          {},
-          {
-            params: {
-              licenseNumber: this.licenseNumber,
-              parkingSpotId: this.parkingSpotNumber_subscription
-            },
-            headers: { token: "dev" } 
-          }
-        );
-        this.subscription_request = response.data;
-      } catch(e) {
-        this.error(e);
-      }
-    },
-
+    /** Gets the data for the subscription. */
     async refreshSubInfo() {
       try {
         // Get the active subscription
@@ -198,8 +169,10 @@ export default {
         this.amount = 0;
       } catch (e) {
         this.reservationId = null;
-        this.reservationStartDate = "invalid";
+        this.reservationStartDate = "Invalid Date";
         this.nbrOfMonths = "invalid";
+        this.currentNbrOfMonths = 0;
+        this.newNbrOfMonths = 0;
         this.fee = 70;
         this.error(e);
       }
@@ -240,6 +213,7 @@ export default {
       this.amount = (this.newNbrOfMonths - this.currentNbrOfMonths) * this.fee;
     },
 
+    /** Displays the error message */
     error(e) {
       this.alertVariant = "danger";
       this.errorMessage = "Error: ";
@@ -259,6 +233,7 @@ export default {
       this.showError = true;
     },
 
+    /** Gets the list of services */
     async refresh(){
       try{
         let response = await AXIOS.get('/api/service');
