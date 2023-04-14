@@ -206,7 +206,7 @@ public class SubWithoutAccountService {
      * @throws CustomException if to update the subscription without an account fail
      */
     @Transactional
-    public SubWithoutAccount updateSubWithoutAccount(String licenseNumber){
+    public SubWithoutAccount updateSubWithoutAccount(String licenseNumber, int numberOfMonths){
         if(licenseNumber == null || licenseNumber.length() == 0){
             throw new CustomException("licenseNumber cannot be empty", HttpStatus.BAD_REQUEST);
         }
@@ -214,7 +214,7 @@ public class SubWithoutAccountService {
             throw new CustomException("Incorrect licenseNumber format", HttpStatus.BAD_REQUEST);
         }
         SubWithoutAccount subWithoutAccount = getActiveByLicenseNumber(licenseNumber);
-        subWithoutAccount.setNbrMonths(subWithoutAccount.getNbrMonths() + 1);
+        subWithoutAccount.setNbrMonths(numberOfMonths);
             subWithoutAccountRepository.save(subWithoutAccount);
             return subWithoutAccount;
         

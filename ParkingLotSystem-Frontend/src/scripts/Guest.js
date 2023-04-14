@@ -22,6 +22,7 @@ export default {
         reservation_hour: 0,
         reservation_minute: 0,
         errorMessage: '',
+        alertVariant: 'danger',
         showError: false,
         options: ['For Service', 'For Reservation', 'For Subscription'],
         selectedOption: '',
@@ -36,6 +37,13 @@ export default {
         reservationFee:0,
         displaySubscriptionPrice:0,
         subscriptionPrice:0,
+
+        reservationId: null,
+        reservationStartDate: "",
+        currentNbrOfMonths: "",
+        fee: "",
+        amount: "",
+        newNbrOfMonths: "",
 
 
         hours: [
@@ -67,6 +75,18 @@ export default {
     this.refresh();
   },
 
+  computed: {
+    reservationEndDate() {
+      if (!this.reservationStartDate) return "";
+      let date = new Date(this.reservationStartDate);
+      let d = date.getDate();
+      date.setMonth(date.getMonth() + +this.newNbrOfMonths);
+      if (date.getDate() != d) {
+        date.setDate(0);
+      }
+      return date.toLocaleDateString();
+    }
+  },
 
   methods:{
 
@@ -112,12 +132,11 @@ export default {
               licenseNumber: this.licenseNumber,
               parkingTime: (this.reservation_hour*60+this.reservation_minute),
               parkingSpotId: this.parkingSpotNumber_reservation,
-            },
-            headers: { token: "dev" } 
+            }
           }
         );
         this.service_request = response.data;
-        this.$router.push('/payment');
+        this.success("Parking spot reserved successfully");
       } catch(e) {
         this.error(e);
       }
@@ -133,17 +152,15 @@ export default {
             params: {
               licenseNumber: this.licenseNumber,
               description: this.selectedService,
-            },
-            headers: { token: "dev" } 
+            }
           }
         );
         this.service_request = response.data;
-        this.$router.push('/guest');
+        this.success("Service request created successfully");
       } catch(e) {
         this.error(e);
       }
     },
-
 
     async subscription_submit(){
       try {
@@ -164,7 +181,68 @@ export default {
       }
     },
 
+    async refreshSubInfo() {
+      try {
+        // Get the active subscription
+        let response = await AXIOS.get(
+          `/api/sub-without-account/active-by-license-number/${this.licenseNumber}`
+        );
+        let sub = response.data;
+        this.reservationId = sub.reservationId;
+        this.fee = sub.parkingSpotDto.type.fee;
+        this.reservationStartDate = new Date(
+          sub.date
+        ).toLocaleDateString();
+        this.currentNbrOfMonths = sub.nbrMonths;
+        this.newNbrOfMonths = sub.nbrMonths;
+        this.amount = 0;
+      } catch (e) {
+        this.reservationId = null;
+        this.reservationStartDate = "invalid";
+        this.nbrOfMonths = "invalid";
+        this.fee = 70;
+        this.error(e);
+      }
+    },
+
+    /** Submits the payment and updates the subscription. */
+    async submitSubscriptionPayment() {
+      try {
+        await AXIOS.post(
+          `/api/payment-reservation/`,
+          {},
+          {
+            params: {
+              amount: this.amount,
+              reservationId: this.reservationId
+            }
+          }
+        );
+        let res = await AXIOS.put(
+          `/api/sub-without-account/${this.licenseNumber}`,
+          {},
+          {
+            params: {
+              numberOfMonths: this.newNbrOfMonths
+            }
+          }
+        );
+        console.log(res.data);
+        this.refreshSubInfo();
+      } catch (e) {
+        this.error(e);
+      }
+    },
+
+    /** Increases the number of months of the subscription. */
+    increaseMonth() {
+      this.newNbrOfMonths++;
+      this.amount = (this.newNbrOfMonths - this.currentNbrOfMonths) * this.fee;
+    },
+
     error(e) {
+      this.alertVariant = "danger";
+      this.errorMessage = "Error: ";
       if(e.hasOwnProperty("response")) {
         this.errorMessage = e.response.data.message;
       }
@@ -174,8 +252,14 @@ export default {
       this.showError = true;
     },
 
+    /** Displays the success message. */
+    success(message) {
+      this.alertVariant = "success";
+      this.errorMessage = message;
+      this.showError = true;
+    },
+
     async refresh(){
-      console.log("hi");
       try{
         let response = await AXIOS.get('/api/service');
         let data_list=response.data;
