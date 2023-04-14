@@ -6,23 +6,23 @@
 
       <h1>Monthly Customer Reservation</h1>
       <div class="reservation-info">
-        <label>Reservation ID: </label>
+        <label>Reservation ID:&nbsp;</label>
         <span>{{ reservationId }}</span>
       </div>
       <div class="reservation-info">
-        <label>Start Date: </label>
+        <label>Start Date:&nbsp;</label>
         <span>{{ reservationStartDate }}</span>
       </div>
       <div class="reservation-info">
-        <label>End Date: </label>
+        <label>End Date:&nbsp;</label>
         <span>{{ reservationEndDate }}</span>
       </div>
       <div class="reservation-info">
-        <label>Number of Months: </label>
+        <label>Number of Months:&nbsp;</label>
         <span>{{ newNbrOfMonths }}</span>
       </div>
       <div class="reservation-info">
-        <label>Amount to pay: </label>
+        <label>Amount to pay:&nbsp;</label>
         <span>{{ amount }}</span>
       </div>
       <p class="error-msg" v-if="errorMessage">{{ errorMessage }}</p>
@@ -32,7 +32,6 @@
 
     </div>
 
-    
   </div>
 </template>
 <script src="@/scripts/MonthlyCustomerReservation.js"></script>
@@ -65,21 +64,6 @@
   font-size: 18px;
   font-weight: bold;
   margin-top: 20px;
-}
-
-.btn {
-  background-color: #007bff;
-  border-color: #007bff;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-}
-
-.btn:hover {
-  background-color: #0069d9;
-  border-color: #0062cc;
-  color: #fff;
 }
 
 </style>

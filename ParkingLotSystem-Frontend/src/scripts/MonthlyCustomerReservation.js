@@ -12,16 +12,6 @@ var AXIOS = axios.create({
   headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
 
-/** Adds months to the provided date */
-function addMonths(date, months) {
-  var d = date.getDate();
-  date.setMonth(date.getMonth() + +months);
-  if (date.getDate() != d) {
-    date.setDate(0);
-  }
-  return date;
-}
-
 export default {
   name: "monthly-customer-reservation",
   data() {
@@ -53,6 +43,7 @@ export default {
     this.refresh();
   },
   methods: {
+    /** Submits the payment and updates the subscription. */
     async submitPayment() {
       try {
         await AXIOS.post(
@@ -79,8 +70,10 @@ export default {
         this.error(e);
       }
     },
+    /** Gets the data from the database and updates relevant fields. */
     async refresh() {
       try {
+        // Get the fee of the subscription
         let responseFee = await AXIOS.get(
           `/api/sub-with-account/get-parking-fee/${localStorage.getItem(
             "email"
@@ -88,15 +81,15 @@ export default {
         );
         this.fee = responseFee.data;
 
+        // Get the ID of the active subscription
         let responseId = await AXIOS.get(
           `/api/sub-with-account/get-id/${localStorage.getItem("email")}`
         );
         this.reservationId = responseId.data;
 
+        // Get the active subscription
         let response = await AXIOS.get(
-          `/api/sub-with-account/active-by-customer/${localStorage.getItem(
-            "email"
-          )}`
+          `/api/sub-with-account/active-by-customer/${localStorage.getItem("email")}`
         );
         this.reservationStartDate = new Date(
           response.data.date
@@ -111,10 +104,12 @@ export default {
         this.error(e);
       }
     },
+    /** Increases the number of months of the subscription. */
     increaseMonth() {
       this.newNbrOfMonths++;
       this.amount = (this.newNbrOfMonths - this.currentNbrOfMonths) * this.fee;
     },
+    /** Displays the error message. */
     error(e) {
       if (e.hasOwnProperty("response")) {
         this.errorMessage = e.response.data.message;
