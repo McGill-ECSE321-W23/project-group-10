@@ -336,4 +336,10 @@ public void testGetReservedParkingSpots() {
     assertNotNull(spots);
 }
 
+@Test
+public void testGetAvailableParkingSpots() {
+    var spots = reservationService.getAvailableParkingSpots();
+    assertNotNull(spots);
+}
+
 }

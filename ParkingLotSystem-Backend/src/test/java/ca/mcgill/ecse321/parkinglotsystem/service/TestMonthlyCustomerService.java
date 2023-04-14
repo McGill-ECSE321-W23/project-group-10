@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.parkinglotsystem.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
@@ -326,7 +327,13 @@ public class TestMonthlyCustomerService {
         }
         assertNull(ma);
         assertEquals("No monthly customer with that email exists!", errMsg);
-    } 
+    }
+
+    @Test
+    public void testVerifyPassword() {
+        boolean result = service.verifyPassword(VALID__EMAIL_ACTIVE, VALID__PASSWORD);
+        assertTrue(result);
+    }
 
 
 
