@@ -26,7 +26,7 @@ export default {
       alertVariant: "danger"
     }
   },
-  /** get the manager from the local database by email. */
+  /** Get the manager from the local database by email. */
   async created() {
     try {
       let response = await AXIOS.get(`/api/manager/${localStorage.getItem("email")}`);
@@ -36,7 +36,7 @@ export default {
     }
   },
   methods: {
-    /** update the manager name, phone and password. */
+    /** Update the manager name, phone and password. */
     async updateManager() {
       try {
         let response = await AXIOS.put(

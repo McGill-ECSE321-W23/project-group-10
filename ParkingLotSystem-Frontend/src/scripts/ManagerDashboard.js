@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       // General + error variables
-      username: "Marco", // TODO: Implement authentication
+      username: "Marco",
       errorMessage: "",
       showError: false,
 
@@ -112,7 +112,7 @@ export default {
         }]
         this.capacityChartSeries = [Math.floor((nbrSpotsReserved / nbrSpotsTotal) * 100)];
         this.capacityChartOptions = {
-          ...this.capacityChartOptions, 
+          ...this.capacityChartOptions,
           plotOptions: {
             radialBar: {
               dataLabels: {

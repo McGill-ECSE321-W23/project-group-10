@@ -1,5 +1,6 @@
 <template>
     <div class="employee">
+      <!--Display at first after an employee login, provide a portal to edit the profile. -->
       <NavBar activeNav="employee" :username="username"/>
       <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
         <div class="content">

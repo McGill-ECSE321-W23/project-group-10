@@ -22,7 +22,7 @@ export default {
       }
     },
     methods: {
-      /** create a parking spot with spot id and parking spot type. */
+      /** Create a parking spot with spot id and parking spot type. */
         async createParkingSpot() {
             try {
                 console.log('Creating Parking Spot: ' + this.parkingSpot.id + ' ' + this.parkingSpot.type)
@@ -31,14 +31,13 @@ export default {
                     {},
                     {
                         params: { parkingSpotTypeName: this.parkingSpot.type},
-                        headers: { token: "dev" } // TODO: Get token from localStorage
+                        headers: { token: "dev" }
                     }
                     )
                     .then(response => {
                         console.log('Created Parking Spot:', response.data);
                     });
 
-                // this.$router.push('/parking-spot-type')
             } catch (error) {
                 console.log(error)
             }

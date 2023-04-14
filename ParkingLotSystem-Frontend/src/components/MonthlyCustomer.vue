@@ -1,9 +1,10 @@
 <template>
     <div class="monthly-customer">
-      <NavBar 
-        :navItems="['monthly-customer', 'services-customer', 'monthly-customer-reservation']" 
-        activeNav="monthly-customer" 
-        :username="username" 
+      <!--Page appear after login as monthly customer. -->
+      <NavBar
+        :navItems="['monthly-customer', 'services-customer', 'monthly-customer-reservation']"
+        activeNav="monthly-customer"
+        :username="username"
       />
         <!-- <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert> -->
         <div class="content">

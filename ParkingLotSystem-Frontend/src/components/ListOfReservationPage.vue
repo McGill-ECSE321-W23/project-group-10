@@ -1,11 +1,12 @@
 <template>
   <div class="list-of-reservation">
+    <!--Page of list of all type of reservations. -->
     <NavBar activeNav="reservations-admin"/>
 
     <div class="content">
 
       <h1>All Reservations</h1>
-      
+
       <div class="table-container">
         <table>
           <caption>All Subscriptions With Account</caption>
@@ -29,7 +30,7 @@
           </tbody>
         </table>
       </div>
-      
+
       <div class="table-container">
         <table>
           <caption>All Subscriptions Without Account</caption>
@@ -51,7 +52,7 @@
           </tbody>
         </table>
       </div>
-      
+
       <div class="table-container">
         <table>
           <caption>All Single Reservations</caption>
@@ -74,7 +75,7 @@
         </table>
       </div>
     </div>
-    
+
   </div>
 </template>
 

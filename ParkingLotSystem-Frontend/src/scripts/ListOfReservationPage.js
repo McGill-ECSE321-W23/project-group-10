@@ -21,6 +21,7 @@ export default {
     };
 
   },
+  /** Get the list of all types of subscriptions. */
   async created() {
         try {
             let withAccountRes = await AXIOS.get(`/api/sub-with-account/`)

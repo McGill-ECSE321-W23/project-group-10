@@ -1,8 +1,9 @@
 <template>
   <div class="monthly-customer-reservation">
+    <!--Page to make subscriptions as a monthly customer. -->
     <NavBar activeNav="subscription"/>
 
-    <div class ="main-body"> 
+    <div class ="main-body">
 
       <h1>Monthly Customer Reservation</h1>
       <div class="reservation-info">

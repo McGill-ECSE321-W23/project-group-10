@@ -1,5 +1,6 @@
 <template>
   <div class="guest">
+    <!--Page to continue as a guest. -->
     <b-alert v-model="showError" :variant="alertVariant" dismissible>{{ errorMessage }}</b-alert>
     <div class="content">
       <h2>Welcome, Customer !</h2>

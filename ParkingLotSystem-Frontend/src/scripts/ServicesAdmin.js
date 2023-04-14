@@ -27,8 +27,8 @@ export default {
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
       isBusy: false,
 
-      username: "Marco", // TODO: Implement authentication
-      
+      username: "Marco",
+
       errorMessage: "",
       showError: false
     }
@@ -37,11 +37,12 @@ export default {
     this.refresh();
   },
   methods: {
+    /** Method to assign a service request. */
     async assign(serviceReq) {
       try {
-        let serviceReqType = 
-          serviceReq.hasOwnProperty("monthlyCustomerDto") ? 
-          "service-req-with-account" : 
+        let serviceReqType =
+          serviceReq.hasOwnProperty("monthlyCustomerDto") ?
+          "service-req-with-account" :
           "service-req-without-account";
 
         let response = await AXIOS.put(
@@ -49,7 +50,7 @@ export default {
           {},
           {
             params: { isAssigned: true },
-            headers: { token: "dev" } // TODO: Get token from localStorage
+            headers: { token: "dev" }
           }
         );
         serviceReq.isAssigned = response.data.isAssigned;

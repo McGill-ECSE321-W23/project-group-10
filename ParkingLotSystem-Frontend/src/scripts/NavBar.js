@@ -28,6 +28,7 @@ export default {
       navItems: []
     }
   },
+  /** Configure profile button for different type of users. */
   created() {
     this.username = localStorage.getItem("username");
     let personType = localStorage.getItem("personType");

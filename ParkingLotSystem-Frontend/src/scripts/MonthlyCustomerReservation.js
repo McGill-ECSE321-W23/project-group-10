@@ -16,6 +16,7 @@ export default {
   name: "monthly-customer-reservation",
   data() {
     return {
+      //monthly customer variables
       reservationId: null,
       reservationStartDate: "",
       currentNbrOfMonths: "",

@@ -1,5 +1,6 @@
 <template>
   <div class="services-admin">
+    <!-- Allows to change the assign status service requests. -->
     <NavBar activeNav="services-admin"/>
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
@@ -24,9 +25,9 @@
           </template>
 
           <template #cell(licenseNumber)="row">
-            <span 
-              v-if="row.item.hasOwnProperty('monthlyCustomerDto')" 
-              v-b-tooltip.hover 
+            <span
+              v-if="row.item.hasOwnProperty('monthlyCustomerDto')"
+              v-b-tooltip.hover
               :title="createTooltip(row.item)"
             >
               {{ row.item.licenseNumber }}

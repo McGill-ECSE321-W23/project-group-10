@@ -27,7 +27,7 @@ export default {
       alertVariant: "danger"
     }
   },
-  /** get the monthly customer from the local database by email. */
+  /** Get the monthly customer from the local database by email. */
   async created() {
     try {
       let response = await AXIOS.get(`/api/monthly-customer/${localStorage.getItem("email")}`);
@@ -37,7 +37,7 @@ export default {
     }
   },
   methods: {
-    /** update the manager name, phone, password and license number. */
+    /** Update the manager name, phone, password and license number. */
     async updateMonthlyCustomer() {
       try {
         let response = await AXIOS.put(

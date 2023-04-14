@@ -17,6 +17,7 @@ export default {
   name: "RegistrationCustomer",
   data() {
     return {
+      //registration customer variables
       name: '',
       email: '',
       phone: '',
@@ -69,6 +70,6 @@ export default {
 
   },
 
-  
+
   components:{NavBar}
 }

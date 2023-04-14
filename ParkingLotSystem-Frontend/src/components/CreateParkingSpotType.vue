@@ -1,5 +1,6 @@
 <template>
   <div class="parking-spot-type">
+    <!--Page to create the parking spot type.-->
     <h1>Create Parking Spot Type</h1>
     <form>
       <div class="form-group">

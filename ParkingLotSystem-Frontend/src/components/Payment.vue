@@ -1,5 +1,6 @@
 <template>
   <div class="payment">
+    <!--Page appear for guests and monthly customers to pay for services/subscriptions. -->
     <b-button v-b-modal.paymentModal variant="primary" :disabled="disabled">Pay</b-button>
     <b-modal
       id="paymentModal"

@@ -1,6 +1,7 @@
 <template>
   <div>
     <NavBar activeNav="employee-registration"/>
+    <!--Page to register an employee, only manager can register for employee. -->
     <b-alert v-model="showError" :variant="alertVariant" dismissible>{{ errorMessage }}</b-alert>
     <div class="form-container content">
       <form @submit.prevent="register">

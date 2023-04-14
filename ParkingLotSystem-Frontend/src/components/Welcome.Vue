@@ -1,5 +1,6 @@
 <template>
   <div class="Welcome">
+    <!--The welcome page, appear first when entering the system. -->
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
       <img src="@/assets/parkin_logo.png" id="logo" alt="logo">

@@ -1,5 +1,6 @@
 <template>
   <div class="manager">
+    <!--Page appear after login as manager, include statistics data of parking lot. -->
     <NavBar activeNav="dashboard"/>
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <div class="content">
@@ -11,8 +12,8 @@
           <VueApexCharts
             class="chart"
             height="300"
-            type="bar" 
-            :options="floorCapacityChartOptions" 
+            type="bar"
+            :options="floorCapacityChartOptions"
             :series="floorCapacityChartSeries">
           </VueApexCharts>
         </b-col>
@@ -21,8 +22,8 @@
           <VueApexCharts
             class="chart"
             height="300"
-            type="radialBar" 
-            :options="capacityChartOptions" 
+            type="radialBar"
+            :options="capacityChartOptions"
             :series="capacityChartSeries">
           </VueApexCharts>
         </b-col>

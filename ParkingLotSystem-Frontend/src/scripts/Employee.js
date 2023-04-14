@@ -20,7 +20,7 @@ export default {
       showError: false
     }
   },
-  /** get the employee from local storage by email */
+  /** Get the employee from local storage by email */
   async created() {
     try {
       let response = await AXIOS.get(`/api/employee/${localStorage.getItem('email')}`)

@@ -1,5 +1,6 @@
 <template>
   <div class="RegistrationCustomer">
+    <!--Page to register as a customer. -->
     <b-alert v-model="showError" variant="danger" dismissible>Error: {{ errorMessage }}</b-alert>
     <!-- <div class="title-bar">
       <h1>Parking Lot System---Registration</h1>

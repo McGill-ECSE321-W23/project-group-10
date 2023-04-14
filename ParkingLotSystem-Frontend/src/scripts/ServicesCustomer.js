@@ -40,6 +40,7 @@ export default {
     this.refresh();
   },
   methods: {
+    /** Method to create a service request. */
     async createServiceReq() {
       console.log(`Button pressed: ${this.selectedService}`);
       try {
@@ -51,7 +52,7 @@ export default {
               monthlyCustomerEmail: this.userEmail,
               description: this.selectedService
             },
-            headers: { token: "dev" } // TODO: Get token from localStorage
+            headers: { token: "dev" }
           }
         );
         this.currServiceReq = response.data;
@@ -59,6 +60,7 @@ export default {
         this.error(e);
       }
     },
+    /** Method to pay for the selected service request. */
     async payServiceReq() {
       try {
         let response = await AXIOS.post(
@@ -68,7 +70,7 @@ export default {
             params: {
               serviceRequest: this.currServiceReq.id
             },
-            headers: { token: "dev" } // TODO: Get token from localStorage
+            headers: { token: "dev" }
           }
         );
         this.currServiceReq = response.data;

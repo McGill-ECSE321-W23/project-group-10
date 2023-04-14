@@ -22,7 +22,7 @@ export default {
       }
     },
     methods: {
-      /** method to sign in as a manager through authentication */
+      /** Method to sign in as a manager through authentication. */
       async loginAsManager() {
         this.errorEvent = '';
         try {
@@ -44,7 +44,7 @@ export default {
             this.error(e);
         }
       },
-      /** method to sign in as a employee through authentication */
+      /** Method to sign in as an employee through authentication. */
       async loginAsEmployee() {
         this.errorEvent = '';
         try {
@@ -66,7 +66,7 @@ export default {
             this.error(e);
         }
       },
-      /** method to sign in as a customer through authentication */
+      /** Method to sign in as a customer through authentication. */
       async loginAsCustomer() {
         this.errorEvent = '';
         try {

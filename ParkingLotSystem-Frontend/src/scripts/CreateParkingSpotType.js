@@ -21,7 +21,7 @@ export default {
       }
     },
     methods: {
-      /** create a parking spot type with charge fee and parking spot type name. */
+      /** Create a parking spot type with charge fee and parking spot type name. */
         async createParkingSpotType() {
             try {
                 console.log('Creating Parking Spot Type: ' + this.parkingSpotType.typeName + ' ' + this.parkingSpotType.fee)
@@ -30,14 +30,12 @@ export default {
                     {},
                     {
                         params: { fee: this.parkingSpotType.fee},
-                        headers: { token: "dev" } // TODO: Get token from localStorage
+                        headers: { token: "dev" }
                     }
                     )
                     .then(response => {
                         console.log('Created Parking Spot Type:', response.data);
                     });
-
-                // this.$router.push('/parking-spot-type')
             } catch (error) {
                 console.log(error)
             }
