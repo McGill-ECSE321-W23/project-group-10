@@ -42,7 +42,7 @@ export default new Router({
       component: ServicesAdmin
     }, 
     {
-      path: '/parking-spot-type', // change to admin/parking-spot-types
+      path: '/admin/parking-spot-type',
       name: "CreateParkingSpotType",
       component: CreateParkingSpotType
     },
@@ -52,7 +52,7 @@ export default new Router({
       component: ServicesCustomer
     },
     {
-      path: '/parking-spot', // admin/parking-spot
+      path: '/admin/parking-spot',
       name: "CreateParkingSpot",
       component: CreateParkingSpot
     },

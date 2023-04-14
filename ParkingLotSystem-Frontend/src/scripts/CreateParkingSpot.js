@@ -31,13 +31,11 @@ export default {
                     {},
                     {
                         params: { parkingSpotTypeName: this.parkingSpot.type},
-                        headers: { token: "dev" }
+                        headers: { token: localStorage.getItem("token") }
                     }
-                    )
-                    .then(response => {
-                        console.log('Created Parking Spot:', response.data);
-                    });
-
+                )
+                console.log('Created Parking Spot:', response.data);
+                console.log(response.data);
             } catch (error) {
                 console.log(error)
             }
