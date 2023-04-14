@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello' // TODO: Remove and delete page
 import CreateParkingSpotType from '@/components/CreateParkingSpotType.vue'
 import ServicesAdmin from '@/components/ServicesAdmin.vue'
 import ServicesCustomer from '@/components/ServicesCustomer.vue'
