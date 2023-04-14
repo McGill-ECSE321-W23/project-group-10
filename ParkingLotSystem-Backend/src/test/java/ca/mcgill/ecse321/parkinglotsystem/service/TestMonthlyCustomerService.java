@@ -211,7 +211,7 @@ public class TestMonthlyCustomerService {
             INVALID__PHONE2,
             VALID__PASSWORD,
             VALID_LICENSE_NUMBER,
-            "Phone must have exactlty 10 digits! ");
+            "Phone must have exactly 10 digits! ");
     }
 
     @Test

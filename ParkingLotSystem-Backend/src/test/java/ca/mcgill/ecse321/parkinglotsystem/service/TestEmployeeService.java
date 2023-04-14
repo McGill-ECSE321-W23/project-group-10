@@ -187,7 +187,7 @@ public class TestEmployeeService {
             VALID__NAME, 
             INVALID__PHONE2,
             VALID__PASSWORD,
-            "Phone must have exactlty 10 digits! ");
+            "Phone must have exactly 10 digits! ");
     }
 
     @Test

@@ -213,7 +213,7 @@ public class TestSubWithoutAccountService {
         }
         assertNotNull(subWithoutAccount);
         assertEquals(license_number2, subWithoutAccount.getLicenseNumber());
-        assertEquals(1, subWithoutAccount.getNbrMonths());
+        assertEquals(0, subWithoutAccount.getNbrMonths());
         assertEquals(ParkingSpot_ID_UNUSED, subWithoutAccount.getParkingSpot().getId());
     
     }

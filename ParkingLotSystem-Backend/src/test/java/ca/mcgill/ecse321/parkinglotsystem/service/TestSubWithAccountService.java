@@ -49,7 +49,7 @@ public class TestSubWithAccountService {
     private static final int VALID_SPOT_ID_INACTIVE = 2500;
     private static final int VALID_SPOT_ID_ACTIVE = 2600;
     private static final int INVALID_SPOT_ID_1 = 1500;
-    private static final int INVALID_SPOT_ID_2 = 3500;
+    private static final int INVALID_SPOT_ID_2 = 4500;
     private static final int NBR_MONTHS_ACTIVE = 999;
 
     @BeforeEach
