@@ -30,7 +30,7 @@ The parking lot is managed by its owner, who gets their own user account. The lo
 
 | Name      | Contribution  | Hours         | 
 | ------------- | ------------- | ------------- |
-| Shaun Soobagrah  | UML, Requirements, Persistence layer testing, Wiki| 16|
+| Shaun Soobagrah  | UML, Requirements, domain model implementation, Persistence layer testing, Sprint report 1 Wiki page| 18|
 | Marco Vidalon    | UML, Requirements, Detailed use cases, Spring framework setup, domain model implementation, Persistence layer testing, Meeting minutes, domain model Wiki page, project creation, issue creation | 21 |
 | Weiheng Xiao  | UML, Requirements, domain model implementation,Persistence layer testing, Project Requirement Wiki page| 17|
 | Jiaxiang E(Luke)  | UML, Requirements, user stories, Persistence layer testing, use case diagram Wiki page, code style formatting| 19|
@@ -54,11 +54,11 @@ The parking lot is managed by its owner, who gets their own user account. The lo
 ## Effort Table of Deliverable 3
 | Name      | Contribution                                                                                                                                          | Hours | 
 | ------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------|-------|
-| Shaun Soobagrah  | Reservation pages for manager, employee and monthly customer, reserve parking spots page, see reservation page, code maintainance | 18    |
+| Shaun Soobagrah  | Reservation pages for manager, employee and monthly customer, reserve parking spots page, see reservation page, login page, code maintainance | 18    |
 | Marco Vidalon    | Service pages for manager, employee and monthly customer, assign service request page, view and create service request page, code maintenance | 19   |
 | Weiheng Xiao  | Employee, monthly customer and guest pages, presentation slides. | 16    |
 | Jiaxiang E(Luke)  |  Edit Profile pages for manager employee and monthly customer, Readme file, project management, architecture modelling wiki page | 17    |
-| Chenxin Xun | Manager, login, registration and payment pages, architecture modelling wiki page. | 17   |
+| Chenxin Xun | Manager, registration and payment pages, architecture modelling wiki page. | 17   |
 | Mike Zhang | Setting page and all its child node, and welcome page, integration tests for additional controllers. | 16    |
 
 ***
