@@ -13,7 +13,7 @@ Please check the wiki for information on the architecture of the system.
 | Weiheng Xiao   | Louis896        | Quality Assurance Tester |
 | Mike Zhang     | Mikez08         | Software Developer       |
 | Chenxin Xun    | ChenxinXun-123  | Software Designer        |
-| Shaun Soobagrah| Shaun210        | Software Architect       |
+| Shaun Soobagrah| Shaun210        | Software Developer       |
 
 ***
 
